@@ -1,5 +1,5 @@
 <?php
-class Kingboard_Kill extends King23_MongoObject
+class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
 {
     protected $_className = __class__;
     
