@@ -16,6 +16,29 @@ class Kingboard_Task extends King23_CLI_Task
      */
     protected $name = "Kingboard";
 
+    public function add_key(array $options)
+    {
+        $key = new Kingboard_EveApiKey();
+        $key['userid'] = $options[0];
+        $key['apikey'] = $options[1];
+        $key->save();
+        $this->cli->positive("key saved");
+    }
+
+    public function list_keys(array $options)
+    {
+        
+    }
+
+    public function test(array $options)
+    {
+        $res = Kingboard_Kill::find();
+        foreach($res as $kill)
+        {
+            echo $kill["victim"]["characterName"];
+        }
+    }
+
     public function import(array $options)
     {
         $this->cli->message("import running");

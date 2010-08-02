@@ -13,4 +13,9 @@ class Kingboard_Kill extends King23_MongoObject
         if(is_null($this->_data)) $this->_data = array(); 
         $this->_data = array_merge($data, $this->_data);
     }
+
+    public static function find()
+    {
+        return self::_find(__class__, array());
+    }
 }
