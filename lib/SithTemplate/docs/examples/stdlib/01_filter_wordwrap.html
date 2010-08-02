@@ -1,0 +1,9 @@
+{# var = "foobar foobar foobar" #}
+
+{{ var|wordwrap:6|linebreaksbr }}
+{% comment %}
+ Will output:
+ foobar<br />
+ foobar<br />
+ foobar
+{% endcomment %}

@@ -1,0 +1,4 @@
+{% call "sha1" "foo" %}            {# => 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33 #}
+{% call "sha1" "foo" as fooHash %} {# will create fooHash variable instead of outputting #}
+
+<p>{{ fooHash }}</p> {# => 0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33 #}

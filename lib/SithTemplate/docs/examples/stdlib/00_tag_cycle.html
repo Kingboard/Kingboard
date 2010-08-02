@@ -1,0 +1,8 @@
+{% for entry in entries %}
+ {% cycle "red" "blue" "green" %}
+{% endfor %}
+
+{% cycle "red" "blue" "green" as rgbCycle %} {# => red #}
+{% cycle rgbCycle %}                         {# => blue #}
+{% cycle rgbCycle %}                         {# => green #}
+{% cycle rgbCycle %}                         {# => red #}

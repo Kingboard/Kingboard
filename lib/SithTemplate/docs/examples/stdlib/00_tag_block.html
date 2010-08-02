@@ -1,0 +1,7 @@
+{% block foo %}
+ <p>Hello</p> {# will be outputted #}
+{% endblock %}
+
+{% block bar store %}
+ <p>world</p> {# will not be outputted #}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% for v in vs %}
+ {% if forloop.first %}first!{% endif %}
+ {% if forloop.last %}last!{% endif %}
+ {{ forloop.counter }}/{{ forloop.counter0 }}
+ {{ forloop.revcounter }}/{{ forloop.revcounter0 }}
+ {% for x in xs %}
+  {{ forloop.parentloop.counter }}
+ {% endfor %}
+{% endfor %}

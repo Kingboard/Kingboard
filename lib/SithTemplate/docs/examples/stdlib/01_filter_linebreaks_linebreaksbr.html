@@ -1,0 +1,24 @@
+{% comment %}
+ var = "foo
+ 
+ bar
+ baz"
+{% endcomment %}
+
+{{ var|linebreaks }}
+{% comment %}
+ Outputs (whitespace may vary):
+ <p>foo</p>
+ 
+ <p>bar<br />
+ baz</p>
+{% endcomment %}
+
+{{ var|linebreaksbr }}
+{% comment %}
+ Outputs (whitespace may vary):
+ foo<br />
+ <br />
+ bar<br />
+ baz
+{% endcomment %}

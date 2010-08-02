@@ -1,0 +1,15 @@
+{# assumptions: entries is a non-empty array, tags is an empty array #}
+
+{# this will output the entries array #}
+{% for entry in entries %}
+ {{ entry }}
+{% empty %}
+ No entries.
+{% endfor %}
+
+{# this will output "No tags." #}
+{% for tag in tags %}
+ {{ tag }}
+{% empty %}
+ No tags.
+{% endfor %}

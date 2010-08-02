@@ -1,0 +1,4 @@
+{# var1 = "foo", var2 = array('a', 'b') #}
+
+{{ var1|length }}                                       {# => 3 #}
+{% if var2|length_is:3 %} yes {% else %} no {% endif %} {# => no #}

@@ -1,0 +1,5 @@
+{# assumptions: foo and bar does not exist, baz exists #}
+{# foo = "foo", bar = "bar", baz = "baz" #}
+
+{% firstof foo bar baz %}    {# => baz #}
+{% firstof foo bar "none" %} {# => none #}
