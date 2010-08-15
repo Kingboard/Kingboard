@@ -50,7 +50,7 @@ class Kingboard_Task extends King23_CLI_Task
             //$pheal = new Pheal('329963', 'tgVRqZdLCYPu6X8dk9YBu2wEzn1T4u4JNL99XmctulJHCQRHGCQ1fQOAn3D5isd7');
             //$pheal = new Pheal('417795', 'kF6hgObGjfmTCCwOVOOxb4p0rctF1nvbSKMpgDbiCO02F92eShtp3WjFc4xBLpxC');
             $pheal->scope = "account";
-            foreach($pheal->Characters()->characers as $char)
+            foreach($pheal->Characters()->characters as $char)
             {
 
                 try {
