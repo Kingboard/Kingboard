@@ -54,7 +54,7 @@ class Kingboard_Task extends King23_CLI_Task
             {
 
                 try {
-                    $this->cli->message('trying corp import on ' . $char->characterName ."...");
+                    $this->cli->message('trying corp import on ' . $char->name ."...");
                     $pheal->scope = 'corp';
                     $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
                 } catch(PhealAPIException $e) {
