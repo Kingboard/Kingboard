@@ -1,5 +1,5 @@
 <?php
-class Kingboard_EveApiKey extends King23_MongoObject
+class Kingboard_EveItem extends King23_MongoObject
 {
     protected $_className = __CLASS__;
 
@@ -13,4 +13,8 @@ class Kingboard_EveApiKey extends King23_MongoObject
         return self::_find(__CLASS__, $criteria);
     }
 
+    public static function getByItemId($invItemID)
+    {
+        return self::_getInstanceByCriteria(__CLASS__, array('typeID' => $invItemID));
+    }
 }

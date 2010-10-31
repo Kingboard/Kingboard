@@ -31,7 +31,19 @@ class EveImport_Task extends King23_CLI_Task
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
-            print_r($row);
+            if(is_null(Kingboard_EveItem::getByItemId($row['typeID'])))
+            {
+                $this->cli->message("{$row['typeID']} not found...");
+                $item = new Kingboard_EveItem();
+                foreach($row as $key => $val)
+                {
+                    $item[$key] = $val;
+                }
+                $item->save();
+                $this->cli->positive($item['typeName'] . " saved");
+            } else {
+                $this->cli->warning($item['typeID'] . " allready in database");
+            }
         }
 
     }
