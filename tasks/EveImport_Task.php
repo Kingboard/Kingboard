@@ -16,19 +16,20 @@ class EveImport_Task extends King23_CLI_Task
      */
     protected $name = "EveImport";
 
-    public function import(array $options)
+    public function items(array $options)
     {
         $this->cli->message('importing items from sqlite');
 
-        if(count($options) < 1 || !file_exists($options[0]) || !($db = sqlite_open($options[0])))
+        if(count($options) < 1 || !file_exists($options[0]) || !($pdo = new PDO("sqlite:" . $options[0], null,null)))
         {
             $this->cli->error('you need to specify a sqlite filename as option');
             return -1;
         }
 
-        $res = sqlite_query(" select * from invTypes a LEFT JOIN invGroups b ON a.groupID = b.groupID LEFT JOIN invCategories c ON b.categoryID = c.categoryID LEFT JOIN invMarketGroups d ON a.marketGroupID = d.marketGroupID LIMIT 1000",$db);
+        $query = "select * from invTypes a LEFT JOIN invGroups b ON a.groupID = b.groupID LEFT JOIN invCategories c ON b.categoryID = c.categoryID LEFT JOIN invMarketGroups d ON a.marketGroupID = d.marketGroupID LIMIT 1000";
+        $stmt = $pdo->query($query);
 
-        while($row = sqlite_fetch_array($res, SQLITE_ASSOC))
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
             print_r($row);
         }
