@@ -60,8 +60,11 @@ class Kingboard_Task extends King23_CLI_Task
                 } catch(PhealAPIException $e) {
                     $this->cli->message('corp failed, trying char import now..');
                     $pheal->scope = 'char';
-                    $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
-
+                    try {
+                      $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
+                    } catch (PhealAPIException $e) {
+                        continue;
+                    }
                 }
                 foreach($kills as $kill)
                 {
@@ -81,7 +84,8 @@ class Kingboard_Task extends King23_CLI_Task
                             "factionID" => $kill->victim->factionID,
                             "factionName" => $kill->victim->factionName,
                             "damageTaken" => $kill->victim->damageTaken,
-                            "shipTypeID"  => $kill->victim->shipTypeID
+                            "shipTypeID"  => $kill->victim->shipTypeID,
+                            "shipType"  => Kingboard_EveItem::getByItemId($kill->victim->shipTypeID)->typeName
                         )
                     );
                     $killdata['attackers'] = array();
@@ -100,7 +104,9 @@ class Kingboard_Task extends King23_CLI_Task
                             "damageDone" => $attacker->damageDone,
                             "finalBlow"  => $attacker->finalBlow,
                             "weaponTypeID" => $attacker->weaponTypeID,
-                            "shipTypeID" => $attacker->shipTypeID
+                            "weaponType" => Kingboard_EveItem::getByItemId($attacker->weaponTypeID)->typeName,
+                            "shipTypeID" => $attacker->shipTypeID,
+                            "shipType"  => Kingboard_EveItem::getByItemId($attacker->shipTypeID)->typeName
                         );
                     }
                     $killdata['items'] = array();
@@ -108,6 +114,7 @@ class Kingboard_Task extends King23_CLI_Task
                     {
                         $killdata['items'][] = array(
                             "typeID" => $item->typeID,
+                            "typeName" => Kingboard_EveItem::getByItemId($item->TypeID)->typeName,
                             "flag" => $item->flag,
                             "qtyDropped" => $item->qtyDropped,
                             "qtyDestroyed" => $item->qtyDestroyed

@@ -10,7 +10,7 @@ $reg = King23_Registry::getInstance();
 $connection = new Mongo('localhost');
 $reg->mongo = array(
     'connection' => $connection,
-    'db' => $connection->ExampleDB
+    'db' => $connection->Kingboard
 );
 
 King23_Classloader::init(APP_PATH . "/lib/Pheal");
