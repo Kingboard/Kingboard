@@ -44,9 +44,9 @@ class EveImport_Task extends King23_CLI_Task
                     $item[$key] = $val;
                 }
                 $item->save();
-                $this->cli->positive($item['typeName'] . " saved");
+                $this->cli->positive($row['typeName'] . " saved");
             } else {
-                $this->cli->warning($item['typeID'] . " allready in database");
+                $this->cli->warning($row['typeID'] . " allready in database");
             }
         }
 
