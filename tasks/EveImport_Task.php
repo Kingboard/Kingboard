@@ -26,7 +26,11 @@ class EveImport_Task extends King23_CLI_Task
             return -1;
         }
 
-        $query = "select * from invTypes a LEFT JOIN invGroups b ON a.groupID = b.groupID LEFT JOIN invCategories c ON b.categoryID = c.categoryID LEFT JOIN invMarketGroups d ON a.marketGroupID = d.marketGroupID LIMIT 1000";
+        $query = "
+            SELECT * FROM invTypes a
+                LEFT JOIN invGroups b ON a.groupID = b.groupID
+                    LEFT JOIN invCategories c ON b.categoryID = c.categoryID
+                LEFT JOIN invMarketGroups d ON a.marketGroupID = d.marketGroupID";
         $stmt = $pdo->query($query);
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
