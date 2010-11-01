@@ -27,16 +27,16 @@
     <tbody>
 {% for kill in data %}
         <tr class="top">
-            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" width="16" height="16"/></td>
+            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" width="20" height="20"/></td>
             <td>{{kill.victim.shipType }}</td>
-            <td><img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_16.png" /></td>
+            <td><img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" width="20" height="20"/></td>
             <td>{{kill.victim.allianceName}}</td>
             <td rowspan="2">{{kill.killTime}}</td>
         </tr>
         <tr class="bottom">
-            <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_16.jpg" /></td>
+            <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" width="20" height="20"/></td>
             <td>{{kill.victim.characterName }}</td>
-            <td><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_16.png" /></td>
+            <td><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" width="20" height="20"/></td>
             <td>{{kill.victim.corporationName }}</td>
         </tr>
 {% endfor %}
