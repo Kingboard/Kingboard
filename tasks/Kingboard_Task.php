@@ -58,6 +58,7 @@ class Kingboard_Task extends King23_CLI_Task
         if(!isset($options[0]) || empty($options[0]))
         {
             $this->cli->error('fail value required');
+            return;
         }
         $keys = Kingboard_EveApiKey::find(array('failed' => array('$gt' => $options[0])));
         foreach($keys as $key)
