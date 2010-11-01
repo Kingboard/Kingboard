@@ -66,7 +66,7 @@ class EveImport_Task extends King23_CLI_Task
             SELECT * FROM
                 mapSolarSystems a
                 LEFT JOIN mapRegions b ON a.regionID = b.regionID
-                LEFT JOIN mapConstallations c ON a.constellationID = c.constellationID
+                LEFT JOIN mapConstellations c ON a.constellationID = c.constellationID
         ";
         $stmt = $pdo->query($query);
 
