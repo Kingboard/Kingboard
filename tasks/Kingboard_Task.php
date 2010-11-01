@@ -9,6 +9,9 @@ class Kingboard_Task extends King23_CLI_Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "import" => "import",
+        "key_add" => "add an apikey, requires userid, apikey",
+        "key_check" => "run through all keys, add marker to those not responding",
+        "key_purge" => "remove all keys who have more than x markers, where x is a parameter"
     );
 
     /**
@@ -18,27 +21,52 @@ class Kingboard_Task extends King23_CLI_Task
 
     public function add_key(array $options)
     {
-        $key = new Kingboard_EveApiKey();
-        $key['userid'] = $options[0];
-        $key['apikey'] = $options[1];
-        $key->save();
-        $this->cli->positive("key saved");
-    }
-
-    public function list_keys(array $options)
-    {
-        
-    }
-
-    public function test(array $options)
-    {
-        $res = Kingboard_Kill::find();
-        foreach($res as $kill)
+        if(isset($options[0]) && !empty($options[0]) && isset($options[1]) && !empty($options[1]))
         {
-            echo $kill["victim"]["characterName"];
+            $key = new Kingboard_EveApiKey();
+            $key['userid'] = $options[0];
+            $key['apikey'] = $options[1];
+            $key->save();
+            $this->cli->positive("key saved");
+        } else {
+            $this->cli->error('two parameters needed (userid, apikey)');
         }
     }
 
+    public function key_check(array $options)
+    {
+        $keys = Kingboard_EveApiKey::find();
+        foreach($keys as $key)
+        {
+            $this->cli->message("testing {$key['userid']}");
+            $pheal = new Pheal($key['userid'], $key['apikey']);
+            try {
+                $pheal->Characters();
+                $this->cli->positive('ok');
+            } catch(PhealApiException $e) {
+                $this->cli->error('failed');
+                if(!isset($key['failed']))
+                    $key['failed'] = 0;
+                $key['failed']++;
+                $key->save();
+            }
+        }
+    }
+
+    public function key_purge(array $options)
+    {
+        if(!isset($options[0]) || empty($options[0]))
+        {
+            $this->cli->error('fail value required');
+        }
+        $keys = Kingboard_EveApiKey::find(array('failed' => array('$gt' => $options[0])));
+        foreach($keys as $key)
+        {
+            $this->cli->message("purging {$key['userid']}");
+            $key->delete();
+        }
+    }
+    
     public function import(array $options)
     {
         $this->cli->message("import running");
@@ -133,7 +161,10 @@ class Kingboard_Task extends King23_CLI_Task
                     }
                 }
             } catch (PhealApiException $e) {
-                
+                if(!isset($key['failed']))
+                    $key['failed'] = 0;
+                $key['failed']++;
+                $key->save();
             }
         }
     }
