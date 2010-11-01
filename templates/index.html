@@ -5,11 +5,11 @@
 {% block content %}
 <table>
     <thead>
-        <tr><th>Killtime</th><th>Solarsystem</th><th>Shiptype</th><th>Victim</th></tr>
+        <tr><th></th><th>Killtime</th><th>Solarsystem</th><th>Shiptype</th><th>Victim</th></tr>
     </thead>
     <tbody>
 {% for kill in data %}
-        <tr><td>{{ kill.killTime}}</td><td>{{kill.solarSystemID}}</td><td>{{ kill.victim.shipType }}</td><td>{{kill.victim.characterName }}/{{kill.victim.corporationName}}</td></tr>
+        <tr><td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" /><img src="https://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" /></td><td>{{ kill.killTime}}</td><td>{{kill.solarSystemID}}</td><td>{{ kill.victim.shipType }}</td><td>{{kill.victim.characterName }}/{{kill.victim.corporationName}}</td></tr>
 {% endfor %}
     </tbody>
 </table>
