@@ -19,7 +19,7 @@ class Kingboard_Task extends King23_CLI_Task
      */
     protected $name = "Kingboard";
 
-    public function add_key(array $options)
+    public function key_add(array $options)
     {
         if(isset($options[0]) && !empty($options[0]) && isset($options[1]) && !empty($options[1]))
         {
