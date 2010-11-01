@@ -50,86 +50,90 @@ class Kingboard_Task extends King23_CLI_Task
             //$pheal = new Pheal('329963', 'tgVRqZdLCYPu6X8dk9YBu2wEzn1T4u4JNL99XmctulJHCQRHGCQ1fQOAn3D5isd7');
             //$pheal = new Pheal('417795', 'kF6hgObGjfmTCCwOVOOxb4p0rctF1nvbSKMpgDbiCO02F92eShtp3WjFc4xBLpxC');
             $pheal->scope = "account";
-            foreach($pheal->Characters()->characters as $char)
-            {
-
-                try {
-                    $this->cli->message('trying corp import on ' . $char->name ."...");
-                    $pheal->scope = 'corp';
-                    $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
-                } catch(PhealAPIException $e) {
-                    $this->cli->message('corp failed, trying char import now..');
-                    $pheal->scope = 'char';
-                    try {
-                      $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
-                    } catch (PhealAPIException $e) {
-                        continue;
-                    }
-                }
-                foreach($kills as $kill)
+            try {
+                foreach($pheal->Characters()->characters as $char)
                 {
-                    $this->cli->message("import of " . $kill->killID);
-                    $killdata = array(
-                        "killID" => $kill->killID,
-                        "solarSystemID" => $kill->solarSystemID,
-                        "killTime" => $kill->killTime,
-                        "moonID" => $kill->moonID,
-                        "victim" => array(
-                            "characterID" => $kill->victim->characterID,
-                            "characterName" => $kill->victim->characterName,
-                            "corporationID" => $kill->victim->corporationID,
-                            "corporationName" => $kill->victim->corporationName,
-                            "allianceID" => $kill->victim->allianceID,
-                            "allianceName" => $kill->victim->allianceName,
-                            "factionID" => $kill->victim->factionID,
-                            "factionName" => $kill->victim->factionName,
-                            "damageTaken" => $kill->victim->damageTaken,
-                            "shipTypeID"  => $kill->victim->shipTypeID,
-                            "shipType"  => Kingboard_EveItem::getByItemId($kill->victim->shipTypeID)->typeName
-                        )
-                    );
-                    $killdata['attackers'] = array();
-                    foreach($kill->attackers as $attacker)
-                    {
-                        $killdata['attackers'][] = array(
-                            "characterID" => $attacker->characterID,
-                            "characterName" => $attacker->characterName,
-                            "corporationID" => $attacker->corporationID,
-                            "corporationName" => $attacker->corporationName,
-                            "allianceID" => $attacker->allianceID,
-                            "allianceName" => $attacker->allianceName,
-                            "factionID" => $attacker->factionID,
-                            "factionName" => $attacker->factionName,
-                            "securityStatus" => $attacker->securityStatus,
-                            "damageDone" => $attacker->damageDone,
-                            "finalBlow"  => $attacker->finalBlow,
-                            "weaponTypeID" => $attacker->weaponTypeID,
-                            "weaponType" => Kingboard_EveItem::getByItemId($attacker->weaponTypeID)->typeName,
-                            "shipTypeID" => $attacker->shipTypeID,
-                            "shipType"  => Kingboard_EveItem::getByItemId($attacker->shipTypeID)->typeName
-                        );
+
+                    try {
+                        $this->cli->message('trying corp import on ' . $char->name ."...");
+                        $pheal->scope = 'corp';
+                        $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
+                    } catch(PhealAPIException $e) {
+                        $this->cli->message('corp failed, trying char import now..');
+                        $pheal->scope = 'char';
+                        try {
+                          $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
+                        } catch (PhealAPIException $e) {
+                            continue;
+                        }
                     }
-                    $killdata['items'] = array();
-                    foreach($kill->items as $item)
+                    foreach($kills as $kill)
                     {
-                        $killdata['items'][] = array(
-                            "typeID" => $item->typeID,
-                            "typeName" => Kingboard_EveItem::getByItemId($item->TypeID)->typeName,
-                            "flag" => $item->flag,
-                            "qtyDropped" => $item->qtyDropped,
-                            "qtyDestroyed" => $item->qtyDestroyed
+                        $this->cli->message("import of " . $kill->killID);
+                        $killdata = array(
+                            "killID" => $kill->killID,
+                            "solarSystemID" => $kill->solarSystemID,
+                            "killTime" => $kill->killTime,
+                            "moonID" => $kill->moonID,
+                            "victim" => array(
+                                "characterID" => $kill->victim->characterID,
+                                "characterName" => $kill->victim->characterName,
+                                "corporationID" => $kill->victim->corporationID,
+                                "corporationName" => $kill->victim->corporationName,
+                                "allianceID" => $kill->victim->allianceID,
+                                "allianceName" => $kill->victim->allianceName,
+                                "factionID" => $kill->victim->factionID,
+                                "factionName" => $kill->victim->factionName,
+                                "damageTaken" => $kill->victim->damageTaken,
+                                "shipTypeID"  => $kill->victim->shipTypeID,
+                                "shipType"  => Kingboard_EveItem::getByItemId($kill->victim->shipTypeID)->typeName
+                            )
                         );
-                    }
-                    if(is_null(Kingboard_Kill::getByKillId($killdata['killID'])))
-                    {
-                        $this->cli->message("new kill, saving");
-                        $killObject = new Kingboard_Kill();
-                        $killObject->injectDataFromMail($killdata);
-                        $killObject->save();
-                    } else {
-                        $this->cli->message("kill allready in database");
+                        $killdata['attackers'] = array();
+                        foreach($kill->attackers as $attacker)
+                        {
+                            $killdata['attackers'][] = array(
+                                "characterID" => $attacker->characterID,
+                                "characterName" => $attacker->characterName,
+                                "corporationID" => $attacker->corporationID,
+                                "corporationName" => $attacker->corporationName,
+                                "allianceID" => $attacker->allianceID,
+                                "allianceName" => $attacker->allianceName,
+                                "factionID" => $attacker->factionID,
+                                "factionName" => $attacker->factionName,
+                                "securityStatus" => $attacker->securityStatus,
+                                "damageDone" => $attacker->damageDone,
+                                "finalBlow"  => $attacker->finalBlow,
+                                "weaponTypeID" => $attacker->weaponTypeID,
+                                "weaponType" => Kingboard_EveItem::getByItemId($attacker->weaponTypeID)->typeName,
+                                "shipTypeID" => $attacker->shipTypeID,
+                                "shipType"  => Kingboard_EveItem::getByItemId($attacker->shipTypeID)->typeName
+                            );
+                        }
+                        $killdata['items'] = array();
+                        foreach($kill->items as $item)
+                        {
+                            $killdata['items'][] = array(
+                                "typeID" => $item->typeID,
+                                "typeName" => Kingboard_EveItem::getByItemId($item->TypeID)->typeName,
+                                "flag" => $item->flag,
+                                "qtyDropped" => $item->qtyDropped,
+                                "qtyDestroyed" => $item->qtyDestroyed
+                            );
+                        }
+                        if(is_null(Kingboard_Kill::getByKillId($killdata['killID'])))
+                        {
+                            $this->cli->message("new kill, saving");
+                            $killObject = new Kingboard_Kill();
+                            $killObject->injectDataFromMail($killdata);
+                            $killObject->save();
+                        } else {
+                            $this->cli->message("kill allready in database");
+                        }
                     }
                 }
+            } catch (PhealApiException $e) {
+                
             }
         }
     }
