@@ -115,7 +115,7 @@ class Kingboard_Task extends King23_CLI_Task
                         {
                             $killdata['items'][] = array(
                                 "typeID" => $item->typeID,
-                                "typeName" => Kingboard_EveItem::getByItemId($item->TypeID)->typeName,
+                                "typeName" => Kingboard_EveItem::getByItemId($item->typeID)->typeName,
                                 "flag" => $item->flag,
                                 "qtyDropped" => $item->qtyDropped,
                                 "qtyDestroyed" => $item->qtyDestroyed
