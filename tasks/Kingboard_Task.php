@@ -11,6 +11,7 @@ class Kingboard_Task extends King23_CLI_Task
         "import" => "import",
         "key_add" => "add an apikey, requires userid, apikey",
         "key_check" => "run through all keys, add marker to those not responding",
+        "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers."
         "key_purge" => "remove all keys who have more than x markers, where x is a parameter"
     );
 
@@ -50,6 +51,21 @@ class Kingboard_Task extends King23_CLI_Task
                 $key->failed++;
                 $key->save();
             }
+        }
+    }
+
+    public function key_purgelist(array $options)
+    {
+        if(!isset($options[0]) || empty($options[0]))
+        {
+            $this->cli->message('no parameter given, assuming to show all who have a fail marker');
+            $options[0] = 0;
+        }
+        $criteria = array('failed' => array('$gt' => (int) $options[0]));
+        $keys = Kingboard_EveApiKey::find($criteria);
+        foreach($keys as $key)
+        {
+            $this->cli->message("{$key['userid']} has {$key['failed']} markers");
         }
     }
 
