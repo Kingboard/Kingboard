@@ -26,6 +26,7 @@ $reg->sith = new TemplateEnviron(array(
     'outputPrefix'           => APP_PATH . "/templates_c/",
     'loadPlugins'            => true,
     'useDefaultPluginsPath'  => true,
+    'pluginsPaths'           => array(APP_PATH . "/lib/ecotra/SithPlugin/"),
     'recompilationMode'      => 1,
     'defaultIODriver'        => "file",
     'autoEscape'             => false,
