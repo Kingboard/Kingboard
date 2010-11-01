@@ -1,5 +1,5 @@
 <?php
-class TemplateSithEcotraPlugin implements ITemplatePlugin {
+class TemplateSithKingboardPlugin implements ITemplatePlugin {
  public function providedTags() {
   return array();
  }
