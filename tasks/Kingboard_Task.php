@@ -119,6 +119,11 @@ class Kingboard_Task extends King23_CLI_Task
                         $killdata = array(
                             "killID" => $kill->killID,
                             "solarSystemID" => $kill->solarSystemID,
+                            "location" => array(
+                                "solarSystem" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->solarSystemName,
+                                "security" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
+                                "region" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->regionName,
+                            ),
                             "killTime" => $kill->killTime,
                             "moonID" => $kill->moonID,
                             "victim" => array(
