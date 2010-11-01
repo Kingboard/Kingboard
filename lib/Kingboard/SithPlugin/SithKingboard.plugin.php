@@ -44,6 +44,7 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
 
     public function handleRound(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args)
     {
+        var_dump($args);
         return 'number_format(%s, ' .$args[0]. ', ".",",")';
     }
 }
