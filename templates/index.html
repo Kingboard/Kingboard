@@ -31,13 +31,14 @@
             <td>{{kill.victim.shipType }}</td>
             <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" width="20" height="20"/></td>
             <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}>{{kill.victim.corporationName }}</td>
-            <td rowspan="2">{{kill.killTime}}</td>
+            <td>{{kill.killTime}}</td>
         </tr>
         <tr class="bottom">
             <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" width="20" height="20"/></td>
             <td>{{kill.victim.characterName }}</td>
             <td>{% if kill.victim.allianceID %}<img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
             <td>{{kill.victim.allianceName}}</td>
+            <td>{% if kill.localtion.region %}{{kill.location.region}} / {% endif %}{{ kill.location.solarSystem }} {{ kill.location.security }}</td>
         </tr>
 {% endfor %}
     </tbody>
