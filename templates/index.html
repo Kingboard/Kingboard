@@ -3,7 +3,15 @@
 {% block title %}Kingboard{% endblock %}
 
 {% block content %}
+<table>
+    <thead>
+        <tr><th>Killtime</th><th>Solarsystem</th><th>Shiptype</th><th>Victim</th></tr>
+    </thead>
+    <tbody>
 {% for kill in data %}
-{{ kill.killTime}}<br />
+        <tr><td>{{ kill.killTime}}</td><td>{{kill.solarSystemID}}</td><td>{{ kill.victim.shipType }}</td><td>{{kill.victim.characterName }}/{{kill.victim.corporationName}}</td></tr>
 {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
