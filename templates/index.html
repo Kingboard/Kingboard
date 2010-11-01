@@ -3,5 +3,7 @@
 {% block title %}Kingboard{% endblock %}
 
 {% block content %}
-{{ data }}
+{% for kill in data %}
+{{ kill.killTime}}<br />
+{% endfor %}
 {% endblock %}
