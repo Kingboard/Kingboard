@@ -12,7 +12,7 @@ class Kingboard_Task extends King23_CLI_Task
         "key_add" => "add an apikey, requires userid, apikey",
         "key_check" => "run through all keys, add marker to those not responding",
         "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers.",
-        "key_purge" => "remove all keys who have more than x markers, where x is a parameter"
+        "key_purge" => "remove all keys who have more than x markers, where x is a parameter" 
     );
 
     /**

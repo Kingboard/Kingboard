@@ -27,5 +27,5 @@
 */
 
 $router = King23_Router::getInstance();
-$router->addRoute("/", "EXAMPLE_Static", "index", array());
+$router->addRoute("/", "Kingboard_Homepage", "index", array());
 
