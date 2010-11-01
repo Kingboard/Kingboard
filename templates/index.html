@@ -5,11 +5,13 @@
 {% block content %}
 <table>
     <thead>
-        <tr><th></th><th>Killtime</th><th>Solarsystem</th><th>Shiptype</th><th>Victim</th></tr>
     </thead>
     <tbody>
 {% for kill in data %}
-        <tr><td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" /><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" /><br /><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" /><img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" /></td><td>{{ kill.killTime}}</td><td>{{kill.solarSystemID}}</td><td>{{ kill.victim.shipType }}</td><td>{{kill.victim.characterName }}/{{kill.victim.corporationName}}</td></tr>
+        <tr>
+            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" /><td>{{kill.victim.shipType }}</td><td><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" /></td><td>{{kill.victim.corporationName }}</td>
+            <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" /><td>{{kill.victim.characterName }}</td><td><img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" /></td><td>{{kill.victim.allianceName}}</td>
+        </tr>
 {% endfor %}
     </tbody>
 </table>
