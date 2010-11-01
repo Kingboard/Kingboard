@@ -46,8 +46,8 @@ class Kingboard_Task extends King23_CLI_Task
             } catch(PhealApiException $e) {
                 $this->cli->error('failed');
                 if(!isset($key['failed']))
-                    $key['failed'] = 0;
-                $key['failed']++;
+                    $key->failed = 0;
+                $key->failed++;
                 $key->save();
             }
         }
@@ -162,8 +162,8 @@ class Kingboard_Task extends King23_CLI_Task
                 }
             } catch (PhealApiException $e) {
                 if(!isset($key['failed']))
-                    $key['failed'] = 0;
-                $key['failed']++;
+                    $key->failed = 0;
+                $key->failed++;
                 $key->save();
             }
         }
