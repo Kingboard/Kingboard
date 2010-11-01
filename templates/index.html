@@ -1,18 +1,36 @@
 {% extends "base.html" %}
 
 {% block title %}Kingboard{% endblock %}
-
+{% block style %}
+<style type="text/css">
+    table.kill_list {
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+    }
+    table.kill_list tr.top {
+        border: none;
+        border-top: black solid;
+        background-color: #ffffff;
+    }
+    table.kill_list tr.bottom {
+        border: none;
+        border-bottom: black solid 1px;
+        background-color: #ffffff;
+    }
+</style>
+{% endblock %}
 {% block content %}
-<table>
+<table class="kill_list">
     <thead>
     </thead>
     <tbody>
 {% for kill in data %}
-        <tr>
-            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" /><td>{{kill.victim.shipType }}</td><td><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" /></td><td>{{kill.victim.corporationName }}</td>
-        </tr>
-        <tr>
+        <tr class="top">
             <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" /><td>{{kill.victim.characterName }}</td><td><img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" /></td><td>{{kill.victim.allianceName}}</td>
+        </tr>
+        <tr class="bottom">
+            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" /><td>{{kill.victim.shipType }}</td><td><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" /></td><td>{{kill.victim.corporationName }}</td>
         </tr>
 {% endfor %}
     </tbody>
