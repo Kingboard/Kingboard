@@ -75,7 +75,7 @@ class EveImport_Task extends King23_CLI_Task
             if(is_null(Kingboard_EveSolarSystem::getBySolarSystemId($row['solarSystemID'])))
             {
                 $this->cli->message("{$row['solarSystemID']} not found...");
-                $item = new Kingboard_EveItem();
+                $item = new Kingboard_EveSolarSystem();
                 foreach($row as $key => $val)
                 {
                     $item[$key] = $val;
