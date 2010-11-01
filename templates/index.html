@@ -29,7 +29,7 @@
         <tr class="top">
             <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" width="20" height="20"/></td>
             <td>{{kill.victim.shipType }}</td>
-            <td><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" width="20" height="20"/></td>
+            <td{% if not kill.victim.allianceID %}rowspan="2"{% endif %}><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" width="20" height="20"/></td>
             <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}>{{kill.victim.corporationName }}</td>
             <td rowspan="2">{{kill.killTime}}</td>
         </tr>
