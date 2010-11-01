@@ -60,7 +60,9 @@ class Kingboard_Task extends King23_CLI_Task
             $this->cli->error('fail value required');
             return;
         }
-        $keys = Kingboard_EveApiKey::find(array('failed' => array('$gt' => $options[0])));
+        $criteria = array('failed' => array('$gt' => $options[0]));
+        var_dump($criteria);
+        $keys = Kingboard_EveApiKey::find();
         foreach($keys as $key)
         {
             $this->cli->message("purging {$key['userid']}");
