@@ -27,7 +27,8 @@ $reg->sith = new TemplateEnviron(array(
     'loadPlugins'            => true,
     'useDefaultPluginsPath'  => true,
     'pluginsPaths'           => array(APP_PATH . "/lib/Kingboard/SithPlugin/"),
-    'recompilationMode'      => 1,
+//    'recompilationMode'      => 1,
+    'recompilationMode'      => -1,
     'defaultIODriver'        => "file",
     'autoEscape'             => false,
 ));
