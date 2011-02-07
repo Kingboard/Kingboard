@@ -36,5 +36,3 @@ $reg->sith = new TemplateEnviron(array(
 
 require_once("routes.php");
 
-// uncomment the next line if you have Doctrine installed, and configured in the doctrine.php
-//require_once("doctrine.php");
