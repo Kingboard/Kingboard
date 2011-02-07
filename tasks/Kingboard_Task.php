@@ -88,7 +88,8 @@ class Kingboard_Task extends King23_CLI_Task
     public function import(array $options)
     {
         $this->cli->message("import running");
-
+        $newkills = 0;
+        $oldkills = 0;
         $keys = Kingboard_EveApiKey::find();
         foreach($keys as $key)
         {
@@ -178,7 +179,9 @@ class Kingboard_Task extends King23_CLI_Task
                             $killObject = new Kingboard_Kill();
                             $killObject->injectDataFromMail($killdata);
                             $killObject->save();
+                            $newkills++;
                         } else {
+                            $oldkills++;
                             $this->cli->message("kill allready in database");
                         }
                     }
@@ -190,5 +193,7 @@ class Kingboard_Task extends King23_CLI_Task
                 $key->save();
             }
         }
+        $totalkills = $oldkills + $newkills;
+        $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added");
     }
 }
