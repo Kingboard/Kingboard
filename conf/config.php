@@ -5,6 +5,8 @@ if(!defined("APP_PATH"))
 King23_Classloader::init(APP_PATH . "/lib/King23/lib");
 King23_Classloader::init(APP_PATH . "/views");
 King23_Classloader::init(APP_PATH . "/lib/Kingboard");
+King23_Classloader::init(APP_PATH . "/model");
+
 $reg = King23_Registry::getInstance();
 
 $connection = new Mongo('localhost');
