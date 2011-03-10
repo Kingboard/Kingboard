@@ -15,6 +15,6 @@ class Kingboard_EveItem extends King23_MongoObject
 
     public static function getByItemId($invItemID)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array('typeID' => $invItemID));
+        return self::_getInstanceByCriteria(__CLASS__, array('typeID' => (int)$invItemID));
     }
 }

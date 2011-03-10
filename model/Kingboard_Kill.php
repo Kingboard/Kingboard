@@ -18,4 +18,9 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
     {
         return self::_find(__class__, array());
     }
+
+    public static function count()
+    {
+        return self::_find(__class__, array())->count();
+    }
 }

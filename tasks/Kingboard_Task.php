@@ -98,7 +98,6 @@ class Kingboard_Task extends King23_CLI_Task
             try {
                 foreach($pheal->Characters()->characters as $char)
                 {
-
                     try {
                         $this->cli->message('trying corp import on ' . $char->name ."...");
                         $pheal->scope = 'corp';
@@ -115,13 +114,19 @@ class Kingboard_Task extends King23_CLI_Task
                     foreach($kills as $kill)
                     {
                         $this->cli->message("import of " . $kill->killID);
-                        $killdata = array(
+                        if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
+                        {
+    			    $oldkills++;
+                            $this->cli->message("kill allready in database");	
+			    continue;
+			}
+			$killdata = array(
                             "killID" => $kill->killID,
                             "solarSystemID" => $kill->solarSystemID,
                             "location" => array(
-                                "solarSystem" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->solarSystemName,
+                                "solarSystem" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->itemName,
                                 "security" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
-                                "region" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->regionName,
+                                "region" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->Region['itemName'],
                             ),
                             "killTime" => $kill->killTime,
                             "moonID" => $kill->moonID,
@@ -189,7 +194,10 @@ class Kingboard_Task extends King23_CLI_Task
                     $key->failed = 0;
                 $key->failed++;
                 $key->save();
-            }
+            } catch (PhealException $pe) {
+		$this->cli->message("PhealException caught, auch!");
+		continue;
+	    }
         }
         $totalkills = $oldkills + $newkills;
         $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added");
