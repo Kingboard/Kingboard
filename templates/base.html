@@ -2,11 +2,19 @@
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>{% block title %}Default Title{% endblock %}</title>
-  {% block style %}{% endblock %}
+  <title>{% block title %}Kingboard{% endblock %}</title>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  {% block style %}
+  <link href="/css/main.css" media="screen" rel="stylesheet" type="text/css" />
+  {% endblock %}
 </head>
 <body>
-    {% block content %}Default Content{% endblock %}
+<div id="container">
+    <div id="header"><img src="/images/kingboard.png" /></div>
+    <div id="nav"><ul><li><a href="/index/">Start</a></li></ul></div>
+    <div id="main"><div id="content">{% block content %}Default Content{% endblock %}</div></div>
+    <div id="footer">&copy; 2011, EVSCO / The Kingboard Team</div>
+</div>
+
 </body>
 </html>
