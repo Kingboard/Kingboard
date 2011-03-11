@@ -84,15 +84,30 @@ table.kill_list {
     border-color: #666666;
     border-collapse: collapse;
     padding: 5px;
-    margin: 0px;
+    margin: 1px;
     margin-left: 0px;
     margin-right: 0px;
     width: 100%;
 }
+
+table.kill_list th {
+    border-bottom: black solid 1px;
+
+}
+
 table.kill_list tr.top {
     border: none;
 }
 table.kill_list tr.bottom {
     border: none;
     border-bottom: black solid 1px;
+}
+
+table.kill_list td.count {
+    border-right: black solid 1px;
+    text-align: right;
+}
+table.kill_list td.ship {
+    border-left: black solid 1px;
+    text-align: left;
 }

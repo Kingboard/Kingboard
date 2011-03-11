@@ -3,11 +3,36 @@
 
 {% block title %}Kingboard{% endblock %}
 {% block content %}
+        <h1>Ships killed, total</h1>
+<table class="kill_list">
+    <thead><tr>
+        <th>Ship</th><th>Killed</th>
+        <th>Ship</th><th>Killed</th>
+        <th>Ship</th><th>Killed</th>
+        <th>Ship</th><th>Killed</th>
+    </tr></thead>
+    <tbody>
+    <tr class="bottom">
+    {% for ship in stats %}
+        {% if forloop.first %}
+        {% else %}
+        {% cycle "" "" ""  "</tr><tr class="bottom">" %}
+        {% endif %}
+            <td class="ship">{{ ship._id }}</td>
+            <td class="count">{{ ship.value }}</td>
+        {% if forloop.last %}</tr>{% endif %}
+    {% endfor %}
+    </tr>
+    </tbody>
+</table>
+
+
+<h1>Last few Kills</h1>
 <table class="kill_list">
     <thead>
     </thead>
     <tbody>
-Database contains {{count}} kills.<br/>
+
 {% for kill in data %}
         <tr class="top">
             <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" width="20" height="20"/></td>
