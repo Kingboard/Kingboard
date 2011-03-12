@@ -1,0 +1,56 @@
+{% load SithKingboard %}
+{% extends "base.html" %}
+
+{% block title %}Kingboard{% endblock %}
+{% block content %}<h1>Ships killed, total</h1>
+<table class="kill_list">
+    <thead><tr>
+        <th>Ship</th><th>Killed</th>
+        <th>Ship</th><th>Killed</th>
+        <th>Ship</th><th>Killed</th>
+        <th>Ship</th><th>Killed</th>
+    </tr></thead>
+    <tbody>
+    <tr class="bottom">
+    {% for ship in stats %}
+        {% if forloop.first %}
+        {% else %}
+        {% cycle "" "" ""  "</tr><tr class="bottom">" %}
+        {% endif %}
+            <td class="ship">{{ ship._id }}</td>
+            <td class="count">{{ ship.value }}</td>
+        {% if forloop.last %}</tr>{% endif %}
+    {% endfor %}
+    </tr>
+    </tbody>
+</table>
+
+
+<h1>Last few Kills</h1>
+<table class="kill_list">
+    <thead>
+    </thead>
+    <tbody>
+
+{% for kill in data %}
+        <tr class="top">
+            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" width="20" height="20"/></td>
+            <td>{{kill.victim.shipType }}</td>
+            <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" width="20" height="20"/></td>
+            <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}>{{kill.victim.corporationName }}</td>
+            <td>{{kill.killTime}}</td>
+        </tr>
+        <tr class="bottom">
+            <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" width="20" height="20"/></td>
+            <td>{{kill.victim.characterName }}</td>
+            {% if kill.victim.allianceID %}
+                <td>{% if kill.victim.allianceID %}<img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
+                <td>{{kill.victim.allianceName}}</td>
+            {% endif %}
+            <td>{% if kill.location.region %}{{kill.location.region}} / {% endif %}{{ kill.location.solarSystem }} {{ kill.location.security|round:1 }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
