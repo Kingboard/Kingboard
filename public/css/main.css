@@ -1,6 +1,25 @@
 body {
     background-color: #000000;
     font-family: Arial, Sans-Serif;
+    font-size: 11px;
+}
+
+table {
+    width: 720px;
+    background-color: #ffe3ed;
+}
+
+tr {
+    background-color: #EFEFEF;
+}
+th{
+    text-align: left;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+td {
+    background-color: #FFFFFF;
 }
 
 #content {

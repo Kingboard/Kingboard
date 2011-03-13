@@ -1,56 +1,118 @@
 {% load SithKingboard %}
 {% extends "base.html" %}
 
-{% block title %}Kingboard{% endblock %}
-{% block content %}<h1>Ships killed, total</h1>
-<table class="kill_list">
-    <thead><tr>
-        <th>Ship</th><th>Killed</th>
-        <th>Ship</th><th>Killed</th>
-        <th>Ship</th><th>Killed</th>
-        <th>Ship</th><th>Killed</th>
-    </tr></thead>
-    <tbody>
-    <tr class="bottom">
-    {% for ship in stats %}
-        {% if forloop.first %}
-        {% else %}
-        {% cycle "" "" ""  "</tr><tr class="bottom">" %}
-        {% endif %}
-            <td class="ship">{{ ship._id }}</td>
-            <td class="count">{{ ship.value }}</td>
-        {% if forloop.last %}</tr>{% endif %}
-    {% endfor %}
+{% block title %}Kingboard: {{killdata.killID}}{% endblock %}
+{% block content %}
+{{ killdata.killTime }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}
+<table>
+    <tr>
+        <th>Victim:</th>
+        <td>{{ killdata.victim.characterName }}</td>
+        <td rowspan="3">
+             <img src="https://image.eveonline.com/Character/{{killdata.victim.characterID}}_64.jpg" />
+             <img src="https://image.eveonline.com/Corporation/{{killdata.victim.corporationID}}_64.png" />
+             <img src="https://image.eveonline.com/Alliance/{{killdata.victim.allianceID}}_64.png" />
+         </td>
     </tr>
-    </tbody>
+    <tr>
+        <th>Corporation:</th>
+        <td>{{ killdata.victim.corporationName }}</td>
+    </tr>
+    <tr>
+        <th>Alliance:</th>
+        <td>{{ killdata.victim.allianceName }}</td>
+    </tr>
+    {% if killdata.victim.faction %}
+    <tr>
+        <th>Faction:</th>
+        <td>{{ killdata.victim.faction }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+        <th>Ship:</th>
+        <td>{{ killdata.victim.shipType }}</td>
+        <td rowspan="3">
+             <img src="http://cdn.evsco.net/Types/{{killdata.victim.shipTypeID}}_64.png" width="64" height="64"/>
+         </td>
+    </tr>
+    <tr>
+        <th>Damage Taken:</th>
+        <td>{{ killdata.victim.damageTaken }}</td>
+    </tr>
 </table>
 
+<div id="tabs">
+	<ul>
+		<li><a href="#involved-stats">Involved Stats</a></li>
+		<li><a href="#involved-pilots">Involved Pilots</a></li>
+		<li><a href="#victim-assets">Victim Assets</a></li>
+	</ul>
+	<div id="involved-stats">
+		{% for alliance, corporations in stats %}
+        <table>
+            <tr>
+                <th colspan="2">{{ alliance }}</th>
+            </tr>
+            <tr>
+                <th>Corporation</th>
+                <th>Pilots</th>
+            </tr>
+            {% for corporation, value in corporations %}
+                <tr><td>{{ corporation }}</td><td>{{ value }}</td></tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+	</div>
+	<div id="involved-pilots">
+        <table>
+            {% for attacker in killdata.attackers %}
+            <tr>
+                <td rowspan="3">
+                     <img src="https://image.eveonline.com/Alliance/{{attacker.allianceID}}_64.png" />
+                     <img src="https://image.eveonline.com/Corporation/{{attacker.corporationID}}_64.png" />
+                     <img src="https://image.eveonline.com/Character/{{attacker.characterID}}_64.jpg" />
+                     <img src="http://cdn.evsco.net/Types/{{attacker.shipTypeID}}_64.png" width="64" height="64"/>
+                </td>
+                <th>Attacker:</th>
+                <td>{{ attacker.characterName }}</td>
+                <th>Damage Done:</th>
+                <td>{{ attacker.damageDone }}</td>
+            </tr>
+            <tr>
+                <th>Corporation:</th>
+                <td>{{ attacker.corporationName }}</td>
+                <th>Ship:</th>
+                <td>{{ attacker.shipType }}</td>
+            </tr>
+            <tr>
+                <th>Alliance:</th>
+                <td>{{ attacker.allianceName }}</td>
+                <th>Weapon:</th>
+                <td>{{ attacker.weaponType }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+	</div>
+	<div id="victim-assets">
+        <table>
 
-<h1>Last few Kills</h1>
-<table class="kill_list">
-    <thead>
-    </thead>
-    <tbody>
-
-{% for kill in data %}
-        <tr class="top">
-            <td><img src="http://eve-kill.net/img/ships/32_32/{{kill.victim.shipTypeID}}.png" width="20" height="20"/></td>
-            <td>{{kill.victim.shipType }}</td>
-            <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}><img src="http://image.eveonline.com/Corporation/{{kill.victim.corporationID}}_32.png" width="20" height="20"/></td>
-            <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}>{{kill.victim.corporationName }}</td>
-            <td>{{kill.killTime}}</td>
+        {% for item in killdata.items %}
+        <tr>
+            <td><img src="http://cdn.evsco.net/Types/{{ item.typeID }}_32.png"/></td>
+            <th>{{ item.typeName }}</th>
+            <td>{{ item.qtyDropped }}</td>
+            <td>{{ item.qtyDestroyed }}</td>
         </tr>
-        <tr class="bottom">
-            <td><img src="http://image.eveonline.com/Character/{{kill.victim.characterID}}_32.jpg" width="20" height="20"/></td>
-            <td>{{kill.victim.characterName }}</td>
-            {% if kill.victim.allianceID %}
-                <td>{% if kill.victim.allianceID %}<img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
-                <td>{{kill.victim.allianceName}}</td>
-            {% endif %}
-            <td>{% if kill.location.region %}{{kill.location.region}} / {% endif %}{{ kill.location.solarSystem }} {{ kill.location.security|round:1 }}</td>
-        </tr>
-{% endfor %}
-    </tbody>
-</table>
+        {% endfor %}
+        </table>
+	</div>
+</div>
+{% endblock %}
 
+{% block script %}
+<script>
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>
 {% endblock %}
