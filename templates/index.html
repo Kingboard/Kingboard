@@ -5,23 +5,16 @@
 {% block content %}<h1>Ships killed, total {{count}}</h1>
 <table class="kill_list">
     <thead><tr>
-        <th>Ship</th><th>Killed</th>
-        <th>Ship</th><th>Killed</th>
-        <th>Ship</th><th>Killed</th>
-        <th>Ship</th><th>Killed</th>
+    <th>Times killed</th><th>Ship</th>
     </tr></thead>
     <tbody>
-    <tr class="bottom">
     {% for ship in stats %}
-        {% if forloop.first %}
-        {% else %}
-        {% cycle "" "" ""  "</tr><tr class="bottom">" %}
-        {% endif %}
-            <td class="ship">{{ ship._id }}</td>
-            <td class="count">{{ ship.value }}</td>
-        {% if forloop.last %}</tr>{% endif %}
-    {% endfor %}
+    <tr class="bottom">
+            <td class="count">{{ ship.value.value }}</td>
+            <td class="ship"><img src="http://cdn.evsco.net/Types/{{ ship._id }}_32.png" />&nbsp;{{ ship.value.shipName }}</td>
     </tr>
+    {% endfor %}
+
     </tbody>
 </table>
 
@@ -45,9 +38,9 @@
             <td>{{kill.victim.characterName }}</td>
             {% if kill.victim.allianceID %}
                 <td>{% if kill.victim.allianceID %}<img src="http://image.eveonline.com/Alliance/{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
-                <td>{{kill.victim.allianceName}}</td> 
+                <td>{{kill.victim.allianceName}}</td>
             {% endif %}
-            <td>{% if kill.location.region %}{{kill.location.region}} / {% endif %}{{ kill.location.solarSystem }} {{ kill.location.security|round:1 }}</td>
+            <td>{% if kill.location.region %}{{kill.location.region}} / {% endif %}{{ kill.location.solarSystem }} / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.killID }}/">Details..</a></td>
         </tr>
 {% endfor %}
     </tbody>

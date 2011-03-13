@@ -27,5 +27,6 @@
 */
 
 $router = King23_Router::getInstance();
-$router->addRoute("/", "Kingboard_Homepage", "index", array());
+$router->addRoute("/", "Kingboard_Homepage_View", "index", array());
+$router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));
 

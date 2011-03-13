@@ -1,0 +1,124 @@
+{% load SithKingboard %}
+{% extends "base.html" %}
+
+{% block title %}Kingboard: {{killdata.killID}}{% endblock %}
+{% block content %}
+{{ killdata.killTime }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}
+<table>
+    <tr>
+        <th>Victim:</th>
+        <td>{{ killdata.victim.characterName }}</td>
+        <td rowspan="3">
+             <img src="https://image.eveonline.com/Character/{{killdata.victim.characterID}}_64.jpg" />
+             <img src="https://image.eveonline.com/Corporation/{{killdata.victim.corporationID}}_64.png" />
+             <img src="https://image.eveonline.com/Alliance/{{killdata.victim.allianceID}}_64.png" />
+         </td>
+    </tr>
+    <tr>
+        <th>Corporation:</th>
+        <td>{{ killdata.victim.corporationName }}</td>
+    </tr>
+    <tr>
+        <th>Alliance:</th>
+        <td>{{ killdata.victim.allianceName }}</td>
+    </tr>
+    {% if killdata.victim.faction %}
+    <tr>
+        <th>Faction:</th>
+        <td>{{ killdata.victim.faction }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+        <th>Ship:</th>
+        <td>{{ killdata.victim.shipType }}</td>
+        <td rowspan="3">
+             <img src="http://cdn.evsco.net/Types/{{killdata.victim.shipTypeID}}_64.png" width="64" height="64"/>
+         </td>
+    </tr>
+    <tr>
+        <th>Damage Taken:</th>
+        <td>{{ killdata.victim.damageTaken }}</td>
+    </tr>
+</table>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#involved-stats">Involved Stats</a></li>
+		<li><a href="#involved-pilots">Involved Pilots</a></li>
+		<li><a href="#victim-assets">Victim Assets</a></li>
+	</ul>
+	<div id="involved-stats">
+        <table>
+		{% for alliance, corporations in stats %}
+            <tr>
+                <th colspan="2">{{ alliance }}</th>
+            </tr>
+            <tr>
+                <th>Corporation</th>
+                <th>Pilots</th>
+            </tr>
+            {% for corporation, value in corporations %}
+                <tr><td>{{ corporation }}</td><td>{{ value }}</td></tr>
+            {% endfor %}
+        {% endfor %}
+        </table>
+	</div>
+	<div id="involved-pilots">
+        <table>
+            {% for attacker in killdata.attackers %}
+            <tr>
+                <th rowspan="6" width="132">
+                     <img src="https://image.eveonline.com/Alliance/{{attacker.allianceID}}_64.png" />
+                     <img src="https://image.eveonline.com/Corporation/{{attacker.corporationID}}_64.png" /><br/>
+                     <img src="https://image.eveonline.com/Character/{{attacker.characterID}}_64.jpg" />
+                     <img src="http://cdn.evsco.net/Types/{{attacker.shipTypeID}}_64.png" width="64" height="64"/>
+                </th>
+                <th>Attacker:</th>
+                <td>{{ attacker.characterName }}</td>
+            </tr>
+            <tr>
+                <th>Corporation:</th>
+                <td>{{ attacker.corporationName }}</td>
+            </tr>
+            <tr>
+                <th>Alliance:</th>
+                <td>{{ attacker.allianceName }}</td>
+            </tr>
+            <tr>
+                <th>Ship:</th>
+                <td>{{ attacker.shipType }}</td>
+            </tr>
+            <tr>
+                <th>Weapon:</th>
+                <td>{{ attacker.weaponType }}</td>
+            </tr>
+            <tr>
+                <th>Damage Done:</th>
+                <td>{{ attacker.damageDone }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+	</div>
+	<div id="victim-assets">
+        <table>
+
+        {% for item in killdata.items %}
+        <tr>
+            <td><img src="http://cdn.evsco.net/Types/{{ item.typeID }}_32.png"/></td>
+            <th>{{ item.typeName }}</th>
+            <td>{{ item.qtyDropped }}</td>
+            <td>{{ item.qtyDestroyed }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>
+{% endblock %}

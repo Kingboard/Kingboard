@@ -23,22 +23,4 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
     {
         return self::_find(__class__, array())->count();
     }
-
-    public static function mrShipsLost()
-    {
-        $map = new MongoCode("function () {
-            emit(this.victim.shipType, 1);
-        }");
-
-
-        $reduce = new MongoCode("function (k, vals) {
-            var sum = 0;
-            for (var i in vals) {
-                sum += vals[i];
-            }
-            return sum;
-        }");
-
-        
-    }
 }
