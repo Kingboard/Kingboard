@@ -67,28 +67,34 @@
         <table>
             {% for attacker in killdata.attackers %}
             <tr>
-                <td rowspan="3">
+                <th rowspan="6" width="132">
                      <img src="https://image.eveonline.com/Alliance/{{attacker.allianceID}}_64.png" />
-                     <img src="https://image.eveonline.com/Corporation/{{attacker.corporationID}}_64.png" />
+                     <img src="https://image.eveonline.com/Corporation/{{attacker.corporationID}}_64.png" /><br/>
                      <img src="https://image.eveonline.com/Character/{{attacker.characterID}}_64.jpg" />
                      <img src="http://cdn.evsco.net/Types/{{attacker.shipTypeID}}_64.png" width="64" height="64"/>
-                </td>
+                </th>
                 <th>Attacker:</th>
                 <td>{{ attacker.characterName }}</td>
-                <th>Damage Done:</th>
-                <td>{{ attacker.damageDone }}</td>
             </tr>
             <tr>
                 <th>Corporation:</th>
                 <td>{{ attacker.corporationName }}</td>
-                <th>Ship:</th>
-                <td>{{ attacker.shipType }}</td>
             </tr>
             <tr>
                 <th>Alliance:</th>
                 <td>{{ attacker.allianceName }}</td>
+            </tr>
+            <tr>
+                <th>Ship:</th>
+                <td>{{ attacker.shipType }}</td>
+            </tr>
+            <tr>
                 <th>Weapon:</th>
                 <td>{{ attacker.weaponType }}</td>
+            </tr>
+            <tr>
+                <th>Damage Done:</th>
+                <td>{{ attacker.damageDone }}</td>
             </tr>
             {% endfor %}
         </table>
