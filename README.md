@@ -19,15 +19,14 @@ assume a MIT Style license
 - Pheal
 
 ## INSTALLATION
-1. clone it from github git://github.com/ppetermann/Kingboard.git
-2. symlink lib/King23 to a King23 installation (see King23s readme for more information), also ensure you have the king23 script in path
-3. symlink lib/Pheal to a Pheal installation (see Pheal docs for that)
+1. Clone it from github git://github.com/ppetermann/Kingboard.git
+2. Symlink lib/King23 to a King23 installation (see King23s readme for more information), also ensure you have the king23 script in path
+3. Symlink lib/Pheal to a Pheal installation (see Pheal docs for that)
 4. Alternative to 2&3, clone them their with the respective names
-5. create folders cache and templates_c, make sure they are writeable by your webserver
-6. get a sqlite eve database dump
-7. run king23 EveImport:items path/to/sqlitefile
-8. run king23 EveImport:solarsystems path/to/sqlitefile
-9. make your apache point to public/ path
+5. Create folders cache and templates_c, make sure they are writeable by your webserver
+6. Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
+7. Extract the zip file and run mongorestore <ExtractPath>
+8. Make your apache point to public/ path
 
 ## USAGE
 run king23 Kingboard for a list of avaiable commands,
