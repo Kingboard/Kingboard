@@ -35,6 +35,12 @@ $reg->sith = new TemplateEnviron(array(
     'autoEscape'             => false,
 ));
 
+$reg->imagePaths = array(
+    'items' => 'http://cdn.evsco.net/Types/',
+    'characters' => 'http://image.eveonline.com/Character/',
+    'corporations' => 'http://image.eveonline.com/Corporation/',
+    'alliances' => 'http://image.eveonline.com/Alliance/'
+);
 
 require_once("routes.php");
 
