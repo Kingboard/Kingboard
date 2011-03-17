@@ -14,9 +14,9 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         $this->_data = array_merge($data, $this->_data);
     }
 
-    public static function find()
+    public static function find($search = array())
     {
-        return self::_find(__class__, array());
+        return self::_find(__class__, $search);
     }
 
     public static function count()
