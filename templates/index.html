@@ -32,7 +32,7 @@
         </tr>
         <tr class="bottom">
             <td><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" width="20" height="20"/></td>
-            <td>{{kill.victim.characterName }}</td>
+            <td><a href="http://{{ kill.victim.characterID }}.pilot.{{ baseHost }}">{{kill.victim.characterName }}</a></td>
             {% if kill.victim.allianceID %}
                 <td>{% if kill.victim.allianceID %}<img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
                 <td>{{kill.victim.allianceName}}</td>

@@ -6,5 +6,6 @@ class Kingboard_Base_View extends King23_TemplateView
         parent::__construct();
         $reg = King23_Registry::getInstance();
         $this->_context['images'] = $reg->imagePaths;
+        $this->_context['baseHost'] = $reg->baseHost;
     }
 }

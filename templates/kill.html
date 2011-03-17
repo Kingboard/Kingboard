@@ -7,7 +7,7 @@
 <table>
     <tr>
         <th>Victim:</th>
-        <td>{{ killdata.victim.characterName }}</td>
+        <td><a href="http://{{ killdata.victim.characterID }}.pilot.{{ baseHost }}">{{ killdata.victim.characterName }}</a></td>
         <td rowspan="3">
              <img src="{{ images.characters }}{{killdata.victim.characterID}}_64.jpg" />
              <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_64.png" />
@@ -74,7 +74,7 @@
                      <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="64" height="64"/>
                 </th>
                 <th>Attacker:</th>
-                <td>{{ attacker.characterName }}</td>
+                <td><a href="http://{{ attacker.characterID }}.pilot.{{ baseHost }}">{{ attacker.characterName }}</a></td>
             </tr>
             <tr>
                 <th>Corporation:</th>

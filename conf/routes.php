@@ -27,7 +27,7 @@
 */
 
 $router = King23_Router::getInstance();
-$router->setBaseHost('kings-of-eve.com');
+$router->setBaseHost(King23_Registry::getInstance()->baseHost);
 $router->addRoute("/", "Kingboard_Homepage_View", "index", array(), array('htype', 'hid'));
 $router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));
 

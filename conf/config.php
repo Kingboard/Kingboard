@@ -9,6 +9,9 @@ King23_Classloader::init(APP_PATH . "/model");
 
 $reg = King23_Registry::getInstance();
 
+// set this to your host
+$reg->baseHost = "kings-of-eve.com";
+
 $connection = new Mongo('localhost');
 $reg->mongo = array(
     'connection' => $connection,
