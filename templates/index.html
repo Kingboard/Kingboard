@@ -3,22 +3,19 @@
 
 {% block title %}Kingboard{% endblock %}
 {% block content %}<h1>Ships killed, total {{count}}</h1>
-<table class="kill_list">
-    <thead><tr>
-    <th>Times killed</th><th>Ship</th>
-    </tr></thead>
-    <tbody>
+<div>
+<ul class="killed-ships-list">
     {% for ship in stats %}
-    <tr class="bottom">
-            <td class="count">{{ ship.value.value }}</td>
-            <td class="ship"><img src="{{ images.items }}{{ ship._id }}_32.png" />&nbsp;{{ ship.value.shipName }}</td>
-    </tr>
+    <li style="border: 1px; border-color: #000000; border-style:solid;">
+        <div>
+            <div style="float: left;"><img src="{{ images.items }}{{ ship._id }}_32.png" /></div>
+            {{ ship.value.shipName|truncate:24 }}<div style="width:32px; float:right;">{{ ship.value.value }}</div><div style="clear:both;"></div>
+        </div>
+    </li>
     {% endfor %}
-
-    </tbody>
-</table>
-
-
+</ul>
+    <div style="clear: both"></div>
+</div>
 <h1>Last few Kills</h1>
 <table class="kill_list">
     <thead>
@@ -40,10 +37,18 @@
                 <td>{% if kill.victim.allianceID %}<img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
                 <td>{{kill.victim.allianceName}}</td>
             {% endif %}
-            <td>{% if kill.location.region %}{{kill.location.region}} / {% endif %}{{ kill.location.solarSystem }} / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.killID }}/">Details..</a></td>
+            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region }}" target="_blank">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem }}" target="_blank">{{ kill.location.solarSystem }}</a> / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.killID }}/">Details..</a></td>
         </tr>
 {% endfor %}
     </tbody>
 </table>
 
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.killed-ships-list').easyListSplitter({ colNumber: 5, direction: 'horizontal' });
+});
+</script>
 {% endblock %}

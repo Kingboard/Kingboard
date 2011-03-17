@@ -130,3 +130,11 @@ table.kill_list td.ship {
     border-left: black solid 1px;
     text-align: left;
 }
+
+.killed-ships-list {
+    float: left;
+    width: 150px;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}

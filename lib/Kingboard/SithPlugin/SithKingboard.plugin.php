@@ -11,7 +11,8 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
             'iskm'   => array('handler' => 'handleFISKM', 'minArgs' => 0),
             'iskb'   => array('handler' => 'handleFISKB', 'minArgs' => 0),
             'isk'    => array('handler' => 'handleFISK', 'minArgs' => 0),
-            'round'  => array('handler' => 'handleRound', 'minArgs' => 1)
+            'round'  => array('handler' => 'handleRound', 'minArgs' => 1),
+            'truncate' => array('handler' => 'handleTruncate', 'minArgs' => 0)
         );
     }
     public function providedHooks()
@@ -45,5 +46,13 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
     public function handleRound(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args)
     {
         return 'number_format(%s, ' .$args[0][1]. ', ".",",")';
+    }
+
+    public function handleTruncate(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args)
+    {
+        if(isset($args[0][1]))
+            $len = $args[0][1];
+        else $len = 10;
+        return 'substr(%s, 0, ' . $len .')';
     }
 }
