@@ -13,4 +13,8 @@ class Kingboard_EveApiKey extends King23_MongoObject
         return self::_find(__CLASS__, $criteria);
     }
 
+    public static function getByUserId($userID)
+    {
+        return self::_getInstanceByCriteria(__CLASS__, array('userid' => $userID));
+    }
 }

@@ -24,11 +24,23 @@ class Kingboard_Task extends King23_CLI_Task
     {
         if(isset($options[0]) && !empty($options[0]) && isset($options[1]) && !empty($options[1]))
         {
-            $key = new Kingboard_EveApiKey();
-            $key['userid'] = $options[0];
-            $key['apikey'] = $options[1];
-            $key->save();
-            $this->cli->positive("key saved");
+            // Load the key if it exists (we might already know it)
+            $key = Kingboard_EveApiKey::getByUserId($options[0]);
+            if (!is_null($key))
+            {
+                $key['apikey'] = $options[1];
+                $key->save();
+                $this->cli->positive("key updated");
+            }
+            else
+            {
+                $key = new Kingboard_EveApiKey();
+                $key['userid'] = $options[0];
+                $key['apikey'] = $options[1];
+                $key->save();
+                $this->cli->positive("key saved");
+            }
+
         } else {
             $this->cli->error('two parameters needed (userid, apikey)');
         }
