@@ -19,10 +19,10 @@ assume a MIT Style license
 - Pheal
 
 ## INSTALLATION
-1. Clone it from github git://github.com/ppetermann/Kingboard.git
-2. Symlink lib/King23 to a King23 installation (see King23s readme for more information), also ensure you have the king23 script in path
-3. Symlink lib/Pheal to a Pheal installation (see Pheal docs for that)
-4. Alternative to 2&3, clone them their with the respective names
+1. Clone it from github `git clone git://github.com/ppetermann/Kingboard.git`
+2. Move into KingBoard `cd Kingboard`
+3. Initiate Submodules `git submodule init`
+4. Update Submodules `git submodule update`
 5. Create folders cache and templates_c, make sure they are writeable by your webserver
 6. Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
 7. Extract the zip file and run mongorestore <ExtractPath>
