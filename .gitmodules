@@ -1,0 +1,6 @@
+[submodule "lib/King23"]
+	path = lib/King23
+	url = https://github.com/ppetermann/king23.git
+[submodule "lib/Pheal"]
+	path = lib/Pheal
+	url = https://github.com/ppetermann/pheal.git
