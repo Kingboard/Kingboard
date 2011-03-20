@@ -19,6 +19,27 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         return self::_find(__class__, $search);
     }
 
+    public static function getPilotNameFromId($id)
+    {
+        // find a random kill with characterID $id
+        $kill = self::_findOne(__CLASS__, array('$or' => array(
+                          array('victim.characterID' => $id),
+                          array('attackers.characterID' => $id)
+        )));
+
+        if($kill['victim']['characterID'] == $id)
+            return $kill['victim']['characterName'];
+        else
+        {
+            foreach($kill['attackers'] as $attacker)
+            {
+                if($attacker['characterID'] == $id)
+                    return $attacker['characterName'];
+            }
+        }
+        return false;
+    }
+
     public static function count()
     {
         return self::_find(__class__, array())->count();
