@@ -8,8 +8,8 @@
     {% for ship in stats %}
     <li style="border: 1px; border-color: #000000; border-style:solid;">
         <div>
-            <div style="float: left;"><img src="{{ images.items }}{{ ship._id }}_32.png" /></div>
-            {{ ship.value.shipName|truncate:24 }}<div style="width:32px; float:right;">{{ ship.value.value }}</div><div style="clear:both;"></div>
+            <!--div style="float: left;"><img src="{{ images.items }}{{ ship._id }}_32.png" /></div-->
+            {{ ship._id|truncate:24 }}<div style="width:32px; float:right; text-align:right;">{{ ship.value }}</div><div style="clear:both;"></div>
         </div>
     </li>
     {% endfor %}
