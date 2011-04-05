@@ -16,15 +16,26 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
     {
         $map = "function () {
             var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)});
+            var info = {}
+            info[this.victim.shipType] = 1;
             if(ship != null && ship.marketGroup != null)
-                emit(ship.marketGroup.parentGroup.marketGroupName, 1);
-        }"; 
+                emit(ship.marketGroup.parentGroup.marketGroupName, info);
+        }";
         $reduce = "function (k, vals) {
-            var sum = 0;
-            for (var i in vals) {
-                sum += vals[i];
-            }
-            return sum;
+            var sums = {}
+            var total = 0;
+            vals.forEach(function(info) {
+                info[\"total\"] = 0;
+                for (var key in info)
+                {
+                    if(sums[key] === undefined)
+                        sums[key] = 0;
+                    sums[key] += info[key];
+                    total += info[key];
+                }
+            });
+            sums[\"total\"] = total;
+            return sums;
         }";
         King23_Mongo::mapReduce("Kingboard_Kill", __CLASS__, $map, $reduce);
     }

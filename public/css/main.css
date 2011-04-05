@@ -148,3 +148,9 @@ table.kill_list td.ship {
     padding: 0px;
     margin: 0px;
 }
+
+.tooltip {
+	display:none;
+    background-color: #000000;
+	color:#fff;
+}

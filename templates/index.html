@@ -5,12 +5,19 @@
 {% block content %}<h1>Ships killed, total {{count}}</h1>
 <div>
 <ul class="killed-ships-list">
-    {% for ship in stats %}
+    {% for group in stats %}
     <li style="border: 1px; border-color: #000000; border-style:solid;">
-        <div>
+        <div id="item{{ forloop.counter }}">
             <!--div style="float: left;"><img src="{{ images.items }}{{ ship._id }}_32.png" /></div-->
-            {{ ship._id|truncate:24 }}<div style="width:32px; float:right; text-align:right;">{{ ship.value }}</div><div style="clear:both;"></div>
+            {{ group._id|truncate:24 }}<div style="width:32px; float:right; text-align:right;">{{ group.value.total }}</div><div style="clear:both;"></div>
         </div>
+    <div class="tooltip">
+        {% for ship, amount in group.value %}
+        {% if ship neq "total" %}
+            <div style="width: 140px;">{{ ship|truncate:18 }} <div style="width:32px; float:right; text-align:right;">{{ amount }}</div><div style="clear:both;"></div>
+        {% endif %}
+        {% endfor %}
+    </div>
     </li>
     {% endfor %}
 </ul>
@@ -49,6 +56,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('.killed-ships-list').easyListSplitter({ colNumber: 5, direction: 'horizontal' });
+{% for group in stats %}
+    $("#item{{ forloop.counter }}").tooltip();
+{% endfor %}
 });
+
+
 </script>
 {% endblock %}
