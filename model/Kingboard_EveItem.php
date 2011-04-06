@@ -8,6 +8,11 @@ class Kingboard_EveItem extends King23_MongoObject
         return self::_getInstanceById(__CLASS__, $id);
     }
 
+    public static function getInstanceByCriteria($criteria)
+    {
+        return self::_getInstanceByCriteria(__CLASS__, $criteria);
+    }
+
     public static function find($criteria = array())
     {
         return self::_find(__CLASS__, $criteria);

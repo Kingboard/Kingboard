@@ -13,6 +13,11 @@ class Kingboard_EveSolarSystem extends King23_MongoObject
         return self::_find(__CLASS__, $criteria);
     }
 
+    public static function getInstanceByCriteria($criteria)
+    {
+        return self::_getInstanceByCriteria(__CLASS__, $criteria);
+    }
+
     public static function getBySolarSystemId($solarSystemID)
     {
         return self::_getInstanceByCriteria(__CLASS__, array('itemID' => (int)$solarSystemID));

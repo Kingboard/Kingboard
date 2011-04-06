@@ -7,7 +7,12 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
     {
         return self::_getInstanceByCriteria(__class__, array("killID" => $killid));    
     }
-  
+
+    public static function getInstanceByIdHash($hash)
+    {
+        return self::_getInstanceByCriteria(__class__, array("idHash" => $hash));
+    }
+
     public function injectDataFromMail(array $data)
     {
         if(is_null($this->_data)) $this->_data = array(); 
@@ -17,6 +22,11 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
     public static function find($search = array())
     {
         return self::_find(__class__, $search);
+    }
+
+    public static function findOne($criteria)
+    {
+        return self::_findOne(__CLASS__, $criteria);
     }
 
     public static function getPilotNameFromId($id)
