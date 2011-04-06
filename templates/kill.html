@@ -108,6 +108,16 @@
             <th>{{ item.typeName }}</th>
             <td>{{ item.qtyDropped }}</td>
             <td>{{ item.qtyDestroyed }}</td>
+            {% if item.items %}
+                {% for containeritem in item.items %}
+                    <tr>
+                        <td><img src="{{ images.items }}{{ item.typeID }}_32.png"/><img src="{{ images.items }}{{ containeritem.typeID }}_32.png"/></td>
+                        <th>{{ containeritem.typeName }}</th>
+                        <td>{{ containeritem.qtyDropped }}</td>
+                        <td>{{ containeritem.qtyDestroyed }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </tr>
         {% endfor %}
         </table>

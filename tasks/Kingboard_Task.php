@@ -118,7 +118,7 @@ class Kingboard_Task extends King23_CLI_Task
                         $this->cli->message('corp failed, trying char import now..');
                         $pheal->scope = 'char';
                         try {
-                          $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
+                            $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
                         } catch (PhealAPIException $e) {
                             continue;
                         }
@@ -128,11 +128,11 @@ class Kingboard_Task extends King23_CLI_Task
                         $this->cli->message("import of " . $kill->killID);
                         if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
                         {
-    			    $oldkills++;
+    	        		    $oldkills++;
                             $this->cli->message("kill allready in database");	
-			    continue;
-			}
-			$killdata = array(
+    			            continue;
+        	    		}
+		            	$killdata = array(
                             "killID" => $kill->killID,
                             "solarSystemID" => $kill->solarSystemID,
                             "location" => array(
@@ -178,16 +178,12 @@ class Kingboard_Task extends King23_CLI_Task
                             );
                         }
                         $killdata['items'] = array();
+                        $container1 = false;
                         foreach($kill->items as $item)
                         {
-                            $killdata['items'][] = array(
-                                "typeID" => $item->typeID,
-                                "typeName" => Kingboard_EveItem::getByItemId($item->typeID)->typeName,
-                                "flag" => $item->flag,
-                                "qtyDropped" => $item->qtyDropped,
-                                "qtyDestroyed" => $item->qtyDestroyed
-                            );
+                            $killdata['items'][] = $this->ParseItem($item);
                         }
+                        
                         if(is_null(Kingboard_Kill::getByKillId($killdata['killID'])))
                         {
                             $this->cli->message("new kill, saving");
@@ -207,11 +203,34 @@ class Kingboard_Task extends King23_CLI_Task
                 $key->failed++;
                 $key->save();
             } catch (PhealException $pe) {
-		$this->cli->message("PhealException caught, auch!");
-		continue;
-	    }
+        		$this->cli->message("PhealException caught, auch!");
+    	    	continue;
+	        }
         }
         $totalkills = $oldkills + $newkills;
         $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added");
+    }
+
+    private function ParseItem($row)
+    {
+        // Build the standard item
+        $item = array(
+            "typeID" => $row->typeID,
+            "typeName" => Kingboard_EveItem::getByItemId($row->typeID)->typeName,
+            "flag" => $row->flag,
+            "qtyDropped" => $row->qtyDropped,
+            "qtyDestroyed" => $row->qtyDestroyed
+        );
+
+        // Check for nested items (container)
+        if (isset($row['items']))
+        {
+            $item['items'] = array();
+            foreach($row['items'] as $innerRow)
+            {
+                $item['items'][] = $this->ParseItem($innerRow);
+            }
+        }
+        return $item;
     }
 }
