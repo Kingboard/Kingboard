@@ -6,3 +6,4 @@ nbproject
 data
 .idea
 cache
+tests/phpunit.xml
