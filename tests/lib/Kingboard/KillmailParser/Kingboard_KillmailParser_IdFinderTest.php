@@ -35,7 +35,7 @@ class Kingboard_KillmailParser_IdFinderTest extends PHPUnit_Framework_TestCase {
     /**
      *
      * @test
-     * @expectedException UnexpectedValueException
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function getCharacterIdWithInvalidNameRaisesException() {
         $this->object->getCharacterId('Bartholomeus Mauritius');
@@ -60,7 +60,7 @@ class Kingboard_KillmailParser_IdFinderTest extends PHPUnit_Framework_TestCase {
     /**
      *
      * @test
-     * @expectedException UnexpectedValueException
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function getSolarSystemIdWithInvalidNameRaisesException() {
         $this->object->getSolarSystemId('Some solar system');
@@ -87,7 +87,7 @@ class Kingboard_KillmailParser_IdFinderTest extends PHPUnit_Framework_TestCase {
     /**
      * 
      * @test
-     * @expectedException UnexpectedValueException
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function getFactionIdWithInvalidNameRaisesException() {
         $this->object->getFactionId('Some non existing faction');
@@ -114,7 +114,7 @@ class Kingboard_KillmailParser_IdFinderTest extends PHPUnit_Framework_TestCase {
     /**
      *
      * @test
-     * @expectedException UnexpectedValueException
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function getCorporationIdWithInvalidNameRaisesException() {
         $this->object->getCorporationId('Some non existing corp');
@@ -141,7 +141,7 @@ class Kingboard_KillmailParser_IdFinderTest extends PHPUnit_Framework_TestCase {
     /**
      *
      * @test
-     * @expectedException UnexpectedValueException
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function getAllianceIdWithInvalidNameRaisesException() {
         $this->object->getAllianceId('Some non existing alli');
@@ -168,7 +168,7 @@ class Kingboard_KillmailParser_IdFinderTest extends PHPUnit_Framework_TestCase {
     /**
      *
      * @test
-     * @expectedException UnexpectedValueException
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function getItemIdWithInvalidNameRaisesException() {
         $this->object->getAllianceId('Some non existing alli');

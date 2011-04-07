@@ -255,7 +255,7 @@ class Kingboard_KillmailParser_Parser
                          break;
                 }
             }
-            catch (UnexpectedValueException $e) {
+            catch (Kingboard_KillmailParser_KillmailErrorException $e) {
                 $this->errors[] = $e->getMessage();
                 continue;
             }

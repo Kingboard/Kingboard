@@ -36,7 +36,7 @@ class Kingboard_KillmailParser_IdFinder
     /**
      * Find an ID in the kill collections for name of type key
      *
-     * @throws UnexpectedValueException
+     * @throws Kingboard_KillmailParser_KillmailErrorException
      * @param string $name
      * @param string $key
      * @return integer
@@ -67,14 +67,14 @@ class Kingboard_KillmailParser_IdFinder
             }
         }
 
-        throw new UnexpectedValueException('No result for typeName ' . $name . ' in the kills collection');
+        throw new Kingboard_KillmailParser_KillmailErrorException('No result for typeName ' . $name . ' in the kills collection');
     }
 
 
     /**
      * Find an ID in the API
      *
-     * @throws UnexpectedValueException
+     * @throws Kingboard_KillmailParser_KillmailErrorException
      * @param string $name
      * @return integer
      */
@@ -86,13 +86,13 @@ class Kingboard_KillmailParser_IdFinder
         if ((int) $result[0]['characterID'] > 0) {
             return (int) $result[0]['characterID'];
         }
-        throw new UnexpectedValueException('No API result for typeName ' . $name);
+        throw new Kingboard_KillmailParser_KillmailErrorException('No API result for typeName ' . $name);
     }
 
    /**
     * Get the character id
     *
-    * @throws UnexpectedValueException
+    * @throws Kingboard_KillmailParser_KillmailErrorException
     * @param string $name
     * @return integer
     */
@@ -102,20 +102,20 @@ class Kingboard_KillmailParser_IdFinder
       try {
           return (int) $this->queryKillCollections($name, 'character');
       }
-      catch (UnexpectedValueException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
             // Nothing found, ask the API
           try {
               return (int) $this->queryNameToIdApi($name);
           }
-          catch (UnexpectedValueException $e) {}
+          catch (Kingboard_KillmailParser_KillmailErrorException $e) {}
       }
-      throw new UnexpectedValueException('No character found with the name ' . $name);
+      throw new Kingboard_KillmailParser_KillmailErrorException('No character found with the name ' . $name);
    }
 
    /**
     * Find the ID of an alliance
     *
-    * @throws UnexpectedValueException
+    * @throws Kingboard_KillmailParser_KillmailErrorException
     * @param string $name
     * @return integer
     */
@@ -124,19 +124,19 @@ class Kingboard_KillmailParser_IdFinder
       try {
           return (int) $this->queryKillCollections($name, 'alliance');
       }
-      catch (UnexpectedValueException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
           try {
               return (int) $this->queryNameToIdApi($name);
-          } catch (UnexpectedValueException $e) {
+          } catch (Kingboard_KillmailParser_KillmailErrorException $e) {
           }
       }
-      throw new UnexpectedValueException('No alliance found with the name ' . $name);
+      throw new Kingboard_KillmailParser_KillmailErrorException('No alliance found with the name ' . $name);
    }
 
    /**
     * Find the ID of a corporation
     *
-    * @throws UnexpectedValueException
+    * @throws Kingboard_KillmailParser_KillmailErrorException
     * @param string $name
     * @return integer
     */
@@ -145,20 +145,20 @@ class Kingboard_KillmailParser_IdFinder
       try {
           return (int) $this->queryKillCollections($name, 'corporation');
       }
-      catch (UnexpectedValueException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
           try {
               return (int) $this->queryNameToIdApi($name);
-          } catch (UnexpectedValueException $e) {
+          } catch (Kingboard_KillmailParser_KillmailErrorException $e) {
           }
       }
-      throw new UnexpectedValueException('No corporation found with the name ' . $name);
+      throw new Kingboard_KillmailParser_KillmailErrorException('No corporation found with the name ' . $name);
    }
 
    /**
     * Find the ID of an item
     * Can be a ship, weapon, drone or any cargo item
     *
-    * @throws UnexpectedValueException
+    * @throws Kingboard_KillmailParser_KillmailErrorException
     * @param string $name
     * @return integer
     */
@@ -174,9 +174,9 @@ class Kingboard_KillmailParser_IdFinder
         // Not found, try the api
         try {
             return (int) $this->queryNameToIdApi($name);
-        } catch(UnexpectedValueException $e){
+        } catch(Kingboard_KillmailParser_KillmailErrorException $e){
         }
-        throw new UnexpectedValueException('No item found with the name ' . $name);
+        throw new Kingboard_KillmailParser_KillmailErrorException('No item found with the name ' . $name);
    }
 
    /**
@@ -195,15 +195,15 @@ class Kingboard_KillmailParser_IdFinder
        try {
            return (int) $this->queryNameToIdApi($name);
        }
-       catch(UnexpectedValueException $e) {
+       catch(Kingboard_KillmailParser_KillmailErrorException $e) {
        }
-       throw new UnexpectedValueException('No system found with the name ' . $name);
+       throw new Kingboard_KillmailParser_KillmailErrorException('No system found with the name ' . $name);
    }
 
    /**
     * Find the ID of a faction
     *
-    * @throws UnexpectedValueException
+    * @throws Kingboard_KillmailParser_KillmailErrorException
     * @param string $name
     * @return integer
     */
@@ -213,12 +213,12 @@ class Kingboard_KillmailParser_IdFinder
       try {
           return (int) $this->queryKillCollections($name, 'faction');
       }
-      catch (UnexpectedValueException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
             // Nothing found, ask the API
           return (int) $this->queryNameToIdApi($name);
       }
 
       // Nothing here yet, that cannot be right
-      throw new UnexpectedValueException('No faction found with the name ' . $name);
+      throw new Kingboard_KillmailParser_KillmailErrorException('No faction found with the name ' . $name);
    }
 }
