@@ -274,12 +274,14 @@ class Kingboard_KillmailParser_LineTest extends PHPUnit_Framework_TestCase {
 
     public function itemsDataProvider() {
         return array(
-            array('10M Afterburner I', '10M Afterburner I', 1, false, false),
-            array('10M Afterburner I, Qty: 10', '10M Afterburner I', 10, false, false),
-            array('10M Afterburner I (Drone Bay)', '10M Afterburner I', 1, true, false),
-            array('10M Afterburner I, Qty: 10 (Drone Bay)', '10M Afterburner I', 10, true, false),
-            array('10M Afterburner I (Cargo)', '10M Afterburner I', 1, false, true),
-            array('10M Afterburner I, Qty: 10 (Cargo)', '10M Afterburner I', 10, false, true),
+            array('10M Afterburner I', '10M Afterburner I', 1, false, false, false),
+            array('10M Afterburner I, Qty: 10', '10M Afterburner I', 10, false, false, false),
+            array('10M Afterburner I (Drone Bay)', '10M Afterburner I', 1, true, false, false),
+            array('10M Afterburner I, Qty: 10 (Drone Bay)', '10M Afterburner I', 10, true, false, false),
+            array('10M Afterburner I (Cargo)', '10M Afterburner I', 1, false, true, false),
+            array('10M Afterburner I, Qty: 10 (Cargo)', '10M Afterburner I', 10, false, true, false),
+            array('    10M Afterburner I (In Container)', '10M Afterburner I', 1, false, false, true),
+            array('    10M Afterburner I, Qty: 10 (In Container)', '10M Afterburner I', 10, false, false, true),
         );
     }
 
@@ -288,13 +290,13 @@ class Kingboard_KillmailParser_LineTest extends PHPUnit_Framework_TestCase {
      * @test
      * @dataProvider itemsDataProvider
      */
-    public function detectItemAndProperties($line, $expectedValue, $expectedQty, $expectedDrone, $expectedCargo) {
+    public function detectItemAndProperties($line, $expectedValue, $expectedQty, $expectedDrone, $expectedCargo, $expectedContainer) {
         $line = new Kingboard_KillmailParser_Line($line, $this->tokens);
         $this->assertEquals($expectedValue, $line->getValue(), 'Item value not correct');
         $this->assertEquals($expectedQty, $line->getQty(), 'Item qty not correct');
         $this->assertEquals($expectedDrone, $line->isDrone(), 'Item drone not correct');
-        $this->assertEquals($expectedCargo, $line->isCargo(), 'Item cargo not correct');
         $this->assertEquals(Kingboard_KillmailParser_Line::TYPE_ITEM, $line->getType(), 'Item type not correct');
+        $this->assertEquals($expectedContainer, $line->inContainer(), 'container not correct');
     }
 }
 

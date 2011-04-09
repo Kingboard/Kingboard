@@ -72,7 +72,7 @@ class Kingboard_KillmailParser_IdHashTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGenerateHashWithoutParamsRaisesException() {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->setExpectedException('Kingboard_KillmailParser_KillmailErrorException');
         $this->object->generateHash();
     }
 

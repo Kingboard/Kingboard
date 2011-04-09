@@ -166,4 +166,18 @@ interface Kingboard_KillmailParser_TokenInterface
      * @return string
      */
     public function drone();
+
+    /**
+     * Token that shows an item inside a container
+     *
+     * @return string
+     */
+    public function container();
+
+    /**
+     * Token that shows the moon, only for pos
+     * 
+     * @return string
+     */
+    public function moon();
 }

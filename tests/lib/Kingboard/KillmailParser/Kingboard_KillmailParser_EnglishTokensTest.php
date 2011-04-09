@@ -136,6 +136,18 @@ class Kingboard_KillmailParser_EnglishTokensTest extends PHPUnit_Framework_TestC
         $actual = $this->object->cargo();
         $this->assertEquals($expected, $actual, 'Cargo bay token not valid');
     }
+
+    public function testContainer() {
+        $expected = '(In Container)';
+        $actual = $this->object->container();
+        $this->assertEquals($expected, $actual, 'In container token not valid');
+    }
+
+    public function testMoon() {
+        $expected = 'Moon:';
+        $actual = $this->object->moon();
+        $this->assertEquals($expected, $actual, 'Moon token not valid');
+    }
 }
 
 ?>

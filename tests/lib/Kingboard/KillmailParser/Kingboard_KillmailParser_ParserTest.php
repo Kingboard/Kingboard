@@ -236,6 +236,7 @@ Cap Recharger II, Qty: 2
     public function testParse() {
         
         $this->object->parse($this->testmail);
+        
         // Test validity of the victim dataa
         $victim = $this->object->getVictim();
         
@@ -280,14 +281,69 @@ Cap Recharger II, Qty: 2
         $items = $this->object->getItems();
         $this->assertEquals(19, count($items));
 
-        $this->assertEquals(true, $items[18]['droneBay']);
-        $this->assertEquals(true, $items[16]['cargoBay']);
+        $this->assertEquals(87, $items[18]['flag']);
+        $this->assertEquals(5, $items[16]['flag']);
         $this->assertEquals(1, $items[16]['qtyDropped']);
         $this->assertEquals(0, $items[16]['qtyDestroyed']);
         $this->assertEquals(2, $items[5]['qtyDropped']);
         $this->assertEquals(1, $items[5]['qtyDestroyed']);
         $this->assertEquals('Capital Remote Armor Repair System I', $items[0]['typeName']);
         $this->assertEquals(24569, $items[0]['typeID']);
+   }
+
+   public function mailInputProvider() {
+       $dir = __DIR__ . '/data/mails/*.txt';
+       $mails = glob($dir);
+       $data = array();
+       foreach ($mails as $mailFile) {
+            $resultFile = substr($mailFile, 0 , -3) . 'php';
+            if (is_file($resultFile)) {
+                $result = require $resultFile;
+                $result['plainMail'] = file_get_contents($mailFile);
+                $data[] = array(
+                    $result['plainMail'],
+                    $result
+                );
+            }
+       }
+       return $data;
+   }
+
+   /**
+    * Not strict equal
+    * Values can have different offsets, as long as they have the same key
+    *
+    * @param array $expected
+    * @param array $actual
+    * @return boolean
+    */
+   protected function compareArrays($expected, $actual, $parentIndex = '') {
+       foreach ($expected as $key => $value) {
+           if (!isset($actual[$key])) {
+               throw new UnexpectedValueException("Invalid in $parentIndex $key, empty");
+           }
+           if (is_array($value)) {
+               if (!is_array($actual[$key])) {
+                   throw new UnexpectedValueException("Invalid in $parentIndex $key, items missing");
+               }
+               $result = $this->compareArrays($value, $actual[$key], $parentIndex . '.' . $key);
+           }
+           else {
+               if ($value !== $actual[$key]) {
+                   throw new UnexpectedValueException("Invalid in $parentIndex . $key, \nShould: '$value'\nIs: '{$actual[$key]}'\n");
+               }
+           }
+       }
+       return true;
+   }
+
+   /**
+    * @test
+    * @dataProvider mailInputProvider
+    */
+   public function parseActualMailInput($mail, $expected) {
+       $actual = $this->object->parse($mail)->getDataArray();
+       $this->assertTrue($this->compareArrays($expected, $actual));
    }
 }
 

@@ -80,11 +80,15 @@ class Kingboard_KillmailParser_IdFinder
      */
     protected function queryNameToIdApi($name)
     {
-        PhealConfig::getInstance()->http_post = FALSE;
-        $request = new Pheal();
-        $result = $request->eveScope->CharacterID(array('names' => $name))->characters->toArray();
-        if ((int) $result[0]['characterID'] > 0) {
-            return (int) $result[0]['characterID'];
+        try {
+            PhealConfig::getInstance()->http_post = FALSE;
+            $request = new Pheal();
+            $result = $request->eveScope->CharacterID(array('names' => $name))->characters->toArray();
+            if ((int) $result[0]['characterID'] > 0) {
+                return (int) $result[0]['characterID'];
+            }
+        }
+        catch (PhealAPIException $e) {
         }
         throw new Kingboard_KillmailParser_KillmailErrorException('No API result for typeName ' . $name);
     }
@@ -109,6 +113,14 @@ class Kingboard_KillmailParser_IdFinder
           }
           catch (Kingboard_KillmailParser_KillmailErrorException $e) {}
       }
+      
+      // Nothing found here, we just presume it's an npc which are stored as types
+      try {
+          return $this->getItemId($name);
+      }
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+      }
+
       throw new Kingboard_KillmailParser_KillmailErrorException('No character found with the name ' . $name);
    }
 
@@ -169,6 +181,19 @@ class Kingboard_KillmailParser_IdFinder
 
         if ($result) {
             return (int) $result->typeID;
+        }
+
+        // Try to find in kills
+        $result  = Kingboard_Kill::findOne(array(
+            'items.typeName' => $name
+        ));
+
+        if(!empty($kill['items'])) {
+            foreach ($kill['items'] as $item) {
+                if ($item['typeName'] == $name) {
+                    return (int) $item['typeID'];
+                }
+            }
         }
 
         // Not found, try the api

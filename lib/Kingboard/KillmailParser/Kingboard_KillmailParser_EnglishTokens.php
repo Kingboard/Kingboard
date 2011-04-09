@@ -109,4 +109,12 @@ class Kingboard_KillmailParser_EnglishTokens implements Kingboard_KillmailParser
     public function drone() {
         return '(Drone Bay)';
     }
+
+    public function container() {
+        return '(In Container)';
+    }
+
+    public function moon() {
+        return 'Moon:';
+    }
 }

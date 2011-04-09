@@ -11,7 +11,7 @@ class Kingboard_KillmailParser_FactoryTest extends PHPUnit_Framework_TestCase {
 
     public function testFindTokensForEnglishMail() {
         $tokens = Kingboard_KillmailParser_Factory::findTokensForMail('Alliance:    Corp:');
-        $this->assertType('Kingboard_KillmailParser_EnglishTokens', $tokens);
+        $this->assertInstanceOf('Kingboard_KillmailParser_EnglishTokens', $tokens);
     }
 
     public function testFindTokensForRussionMail() {
@@ -241,7 +241,7 @@ Ogre II (Drone Bay)
 Cap Recharger II, Qty: 2
 ";
 
-        $this->assertType('Kingboard_Kill', Kingboard_KillmailParser_Factory::parseTextMail($mail));
+        $this->assertInstanceOf('Kingboard_Kill', Kingboard_KillmailParser_Factory::parseTextMail($mail));
     }
 
 }

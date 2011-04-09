@@ -43,12 +43,13 @@ class Kingboard_KillmailParser_Line
     const TYPE_SHIP             = 8; // Both attacker and victims destoryed
     const TYPE_SECURITY         = 9;
     const TYPE_SYSTEM           = 10;
-    const TYPE_DAMAGE           = 11; // Both damage taken and done
-    const TYPE_WEAPON           = 12;
-    const TYPE_SWITCH_ATTACKERS = 13;
-    const TYPE_SWITCH_ITEMS     = 14;
-    const TYPE_SWITCH_DROPPED   = 15;
-    const TYPE_ITEM             = 16; // All three, cargo, fitted and drone bay. where an item belongs to is set by the according properties
+    const TYPE_MOON             = 11;
+    const TYPE_DAMAGE           = 12; // Both damage taken and done
+    const TYPE_WEAPON           = 13;
+    const TYPE_SWITCH_ATTACKERS = 14;
+    const TYPE_SWITCH_ITEMS     = 15;
+    const TYPE_SWITCH_DROPPED   = 16;
+    const TYPE_ITEM             = 17; // All three, cargo, fitted and drone bay. where an item belongs to is set by the according properties
 
     /**
      *
@@ -105,25 +106,32 @@ class Kingboard_KillmailParser_Line
     protected static $validator;
 
     /**
+     * If the item was inside a container
+     * 
+     * @var boolean
+     */
+    protected $container = false;
+
+    /**
      * Constructor
      * Parse the line and set the according properties
      */
     public function __construct($line, Kingboard_KillmailParser_TokenInterface $tokens)
     {
+        // Set as a property
+        $this->line = $line;
+        
         // Clean it up a little
         $line = preg_replace('/\s+/', ' ', $line);
         $line = preg_replace('/\s*\:\s*/', ':', $line);
         $line = trim($line);
-
-        // Set as a property
-        $this->line = $line;
 
         // If not empty, search for values
         if ($line != '') {
             $dateHits = array();
 
             // If we find a time line
-            // Use reges, strtotime is not strict enough
+            // Use regex, strtotime is not strict enough
             if (preg_match('/([0-9]{4})\.([0-9]{2})\.([0-9]{2})\s+([0-9]{2})\:([0-9]{2})/', $line, $dateHits)) {
                 array_shift($dateHits);
                 
@@ -212,6 +220,16 @@ class Kingboard_KillmailParser_Line
                     }
                     unset($value);
                 }
+                // Test if there is a moon
+                elseif ($this->match($tokens->moon())) {
+                    $value = $this->extractValue($tokens->moon());
+                    if (strlen($value) > 1) {
+                        $this->value = $value;
+                        $this->type = self::TYPE_MOON;
+                    } else {
+                        $this->error = 'Invalid moon value';
+                    }
+                }
                 // Test if we have a security value
                 elseif ($this->match($tokens->security())) {
                     $value = trim($this->extractValue($tokens->security()));
@@ -296,6 +314,11 @@ class Kingboard_KillmailParser_Line
                 // Everything else is an item
                 else {
                     $value = $line;
+                    // Look if this item belongs inside a container
+                    if ($this->match($tokens->container())) {
+                        $this->container = true;
+                        $value = trim(str_replace($tokens->container(), '', $value));
+                    }
                     // Look if this item was in cargo bay
                     if ($this->match($tokens->cargo())) {
                         $this->cargo = true;
@@ -515,5 +538,14 @@ class Kingboard_KillmailParser_Line
      */
     public function hasFinalBlow() {
         return $this->finalBlow;
+    }
+
+    /**
+     * If the item was inside a container
+     *
+     * @return boolean
+     */
+    public function inContainer() {
+        return $this->container;
     }
 }

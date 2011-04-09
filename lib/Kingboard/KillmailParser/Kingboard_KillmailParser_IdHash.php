@@ -181,7 +181,7 @@ class Kingboard_KillmailParser_IdHash
     public function generateHash()
     {
         if (count($this->attackerIds) < 1 || !$this->time || !$this->victimId || !$this->finalBlowAttackerId) {
-            throw new InvalidArgumentException('Needed hash arguments are missing');
+            throw new Kingboard_KillmailParser_KillmailErrorException('Needed hash arguments are missing');
         }
         sort($this->attackerIds);
         return sha1($this->time . $this->victimId . implode('', $this->attackerIds) . $this->finalBlowAttackerId);
