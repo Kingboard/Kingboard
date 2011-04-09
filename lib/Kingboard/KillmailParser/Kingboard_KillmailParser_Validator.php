@@ -195,18 +195,30 @@ class Kingboard_KillmailParser_Validator
      */
     public function validateVictim($victim)
     {
-        if (!$this->isTypeEntryValid($victim, 'character')) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('No character information for victim found');
+        $isStructure = false;
+        if (isset($victim['shipType'])) {
+            $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $victim['shipType']));
+            if ($result) {
+                if ($result->typeName == $victim['shipType'] && (int) $victim['shipTypeID'] === (int) $result->typeID && (int) $result->Group['categoryID'] === 23) {
+                    $isStructure = true;
+                }
+            }
         }
 
-        if (!$this->validateCharacterName($victim['characterName'])) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid victim character name');
-        }
+        if (!$isStructure || $victim['characterName'] != '' || $victim['characterID'] > 0) {
 
-        if (!$this->isIdValid($victim, 'character')) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character ID for victim');
-        }
+            if (!$this->isTypeEntryValid($victim, 'character')) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('No character information for victim found');
+            }
 
+            if (!$this->validateCharacterName($victim['characterName'])) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid victim character name');
+            }
+
+            if (!$this->isIdValid($victim, 'character')) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character ID for victim');
+            }
+        }
         if (!$this->isTypeEntryValid($victim, 'corporation')) {
             throw new Kingboard_KillmailParser_KillmailErrorException('No corporation data for victim found');
         }

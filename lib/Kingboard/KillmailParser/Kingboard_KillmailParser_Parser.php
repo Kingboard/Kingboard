@@ -362,12 +362,6 @@ class Kingboard_KillmailParser_Parser
                         $mergedItem['qtyDropped'] += $item['qtyDropped'];
                         $mergedItem['qtyDestroyed'] += $item['qtyDestroyed'];
                         $merged = true;
-    //                    if (isset($item['items'])) {
-    //                        if (!isset($merged['items'])) {
-    //                            $merged['items'] = array();
-    //                        }
-    //                        $merged['items'] = $this->cleanItemsArray($merged['items'], $item['items']);
-    //                    }
                         break;
                     }
                 }

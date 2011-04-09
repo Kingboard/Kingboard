@@ -281,6 +281,8 @@ Cap Recharger II, Qty: 2
         $data = array(
             'characterName' => '',
             'characterID' => 123,
+            'shipType' => '',
+            'shipTypeID' => 0
         );
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateVictim($data);
@@ -295,6 +297,8 @@ Cap Recharger II, Qty: 2
         $data = array(
             'characterName' => 'asd_ asd_',
             'characterID' => 123234223,
+            'shipType' => '',
+            'shipTypeID' => 0
         );
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateVictim($data);
@@ -309,6 +313,8 @@ Cap Recharger II, Qty: 2
         $data = array(
             'characterName' => 'Some Char',
             'characterID' => '123234223',
+            'shipType' => '',
+            'shipTypeID' => 0
         );
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateVictim($data);
@@ -323,10 +329,13 @@ Cap Recharger II, Qty: 2
         $data = array(
             'characterName' => 'Some Char',
             'characterID' => 123,
+            'shipType' => '',
+            'shipTypeID' => 0
         );
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateVictim($data);
     }
+
 
     /**
      *
@@ -338,7 +347,7 @@ Cap Recharger II, Qty: 2
             'characterName' => 'Some Char',
             'characterID' => 1234567,
             'corporationName' => '',
-            'corporationID' => 0
+            'corporationID' => 0,
         );
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateVictim($data);
@@ -499,6 +508,51 @@ Cap Recharger II, Qty: 2
         );
         $v = new Kingboard_KillmailParser_Validator();
         $this->assertTrue($v->validateVictim($data));
+    }
+
+    /**
+     *
+     * @test
+     */
+    public function victimCharacterIsOptionalIfShipTypeIsAStructure() {
+        $data = array(
+            'characterName' => '',
+            'characterID' => 0,
+            'corporationName' => 'Some Corporation',
+            'corporationID' => 112354,
+            'allianceName' => 'Some Alliance',
+            'allianceID' => 123556,
+            'factionName' => 'Some Faction',
+            'factionID' => 123455,
+            'damageTaken' => 1234,
+            'shipType' => 'Minmatar Control Tower',
+            'shipTypeID' => 16214,
+        );
+        $v = new Kingboard_KillmailParser_Validator();
+        $this->assertTrue($v->validateVictim($data));
+    }
+
+    /**
+     *
+     * @test
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
+     */
+    public function victimCharacterMustBeValidIfSetOnStructure() {
+        $data = array(
+            'characterName' => 'Some Char',
+            'characterID' => 0,
+            'corporationName' => 'Some Corporation',
+            'corporationID' => 112354,
+            'allianceName' => 'Some Alliance',
+            'allianceID' => 123556,
+            'factionName' => 'Some Faction',
+            'factionID' => 123455,
+            'damageTaken' => 1234,
+            'shipType' => 'Minmatar Control Tower',
+            'shipTypeID' => 16214,
+        );
+        $v = new Kingboard_KillmailParser_Validator();
+        $v->validateVictim($data);
     }
 
     /**
@@ -907,6 +961,31 @@ Cap Recharger II, Qty: 2
            'characterName' => 'Some char',
            'characterID' => 12123,
            'corporationName' => 'Some corp',
+           'corporationID' => 12334,
+           'allianceName' => 'Some alli',
+           'allianceID' => 234934,
+           'factionName' => '',
+           'factionID' => 3,
+           'damageDone' => 2345,
+           'shipTypeID' => 12345,
+           'shipType' => 'Rifter',
+           'weaponType' => 'Light Ion Blaster I',
+           'weaponTypeID' => 34445,
+           'securityStatus' => -3.45,
+           'finalBlow' => false
+       );
+       $v = new Kingboard_KillmailParser_Validator();
+       $this->assertTrue($v->validateAttacker($attacker));
+    }
+
+    /**
+     * @test
+     */
+    public function validAttackerCanBeATypeNpc() {
+       $attacker = array(
+           'characterName' => 'Blood Diviner',
+           'characterID' => 1000134,
+           'corporationName' => 'Blood Raiders',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
            'allianceID' => 234934,
