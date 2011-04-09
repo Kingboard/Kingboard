@@ -40,7 +40,7 @@ class Kingboard_KillmailParser_Line
     const TYPE_CORP             = 5;
     const TYPE_ALLIANCE         = 6;
     const TYPE_FACTION          = 7;
-    const TYPE_SHIP             = 8; // Both attacker and victims destoryed
+    const TYPE_SHIP             = 8; // Both attacker and victim
     const TYPE_SECURITY         = 9;
     const TYPE_SYSTEM           = 10;
     const TYPE_MOON             = 11;
@@ -212,7 +212,7 @@ class Kingboard_KillmailParser_Line
                 // Test if we have a system
                 elseif ($this->match($tokens->system())) {
                     $value = $this->extractValue($tokens->system());
-                    if (strlen($value) > 1) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 1) {
                         $this->value = $value;
                         $this->type = self::TYPE_SYSTEM;
                     } else {
@@ -223,7 +223,7 @@ class Kingboard_KillmailParser_Line
                 // Test if there is a moon
                 elseif ($this->match($tokens->moon())) {
                     $value = $this->extractValue($tokens->moon());
-                    if (strlen($value) > 1) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 1) {
                         $this->value = $value;
                         $this->type = self::TYPE_MOON;
                     } else {
@@ -234,7 +234,7 @@ class Kingboard_KillmailParser_Line
                 elseif ($this->match($tokens->security())) {
                     $value = trim($this->extractValue($tokens->security()));
                     $floatVal = (float) $value;
-                    if (strlen($value) > 0 && $floatVal <= 10.0 && $floatVal >= -10.0) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 0 && $floatVal <= 10.0 && $floatVal >= -10.0) {
                         $this->value = $floatVal;
                         $this->type = self::TYPE_SECURITY;
                     } else {
@@ -294,7 +294,7 @@ class Kingboard_KillmailParser_Line
                 // Test for a main weapon
                 elseif ($this->match($tokens->weapon())) {
                     $value = $this->extractValue($tokens->weapon());
-                    if (strlen($value) > 3) { // @todo: is it save to presume a weapon has mor than three letters?
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 3) { // @todo: is it save to presume a weapon has mor than three letters?
                         $this->value = $value;
                         $this->type = self::TYPE_WEAPON;
                     }
@@ -335,7 +335,7 @@ class Kingboard_KillmailParser_Line
                         $value = trim(substr($value, 0, stripos($value, $tokens->qty())));
                         unset($parts);
                     }
-                    if (strlen($value) > 2) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 2) {
                         $this->value = $value;
                         $this->type = self::TYPE_ITEM;
                     }
@@ -377,8 +377,7 @@ class Kingboard_KillmailParser_Line
      */
     protected function validOrganisationValue($value) {
         return $this->validCorporationName($value) || 
-               strtolower($value) === 'none' ||
-               strtolower($value) === 'unknown';
+               $this->isEmptyToken($value);
     }
 
     /**
@@ -440,8 +439,24 @@ class Kingboard_KillmailParser_Line
     {
         return $this->type == self::TYPE_EMPTY ||
                $this->type == self::TYPE_UNKNOWN ||
-               strtolower((string) $this->value) === 'none' ||
-               strtolower((string) $this->value) === 'unknown';
+               $this->isEmptyToken($this->value);
+    }
+
+    /**
+     * Check if a token indicates an empty value
+     *
+     * @param string $str
+     * @return boolean
+     */
+    protected function isEmptyToken($str) {
+        return trim($str) === '' || in_array(
+            Kingboard_Helper_String::getInstance()->lower($str),
+            array(
+                'unknown', 'none',      // English
+                'неизвестно', 'нет',    // Russian
+                'unbekannt', 'keine'    // German
+            )
+        );
     }
 
     /**
@@ -453,7 +468,7 @@ class Kingboard_KillmailParser_Line
      */
     protected function match($string)
     {
-        return stripos($this->line, $string) !== false;
+        return mb_stripos($this->line, $string, NULL, 'UTF-8') !== false;
     }
 
     /**
@@ -464,7 +479,7 @@ class Kingboard_KillmailParser_Line
      */
     protected  function extractValue($token)
     {
-        return trim(substr($this->line, strlen($token)));
+        return trim(mb_substr($this->line, Kingboard_Helper_String::getInstance()->strlen($token, 'UTF-8')), NULL, 'UTF-8');
     }
 
     /**
@@ -475,8 +490,10 @@ class Kingboard_KillmailParser_Line
      */
     protected function extractQty($token)
     {
-        $qty = (int) substr($this->line, strpos($this->line, $token) + strlen($token));
-        if ($qty == 0) {
+        $offset = Kingboard_Helper_String::getInstance()->strpos($this->line, $token) +
+                  Kingboard_Helper_String::getInstance()->strlen($token);
+        $qty = (int) Kingboard_Helper_String::getInstance()->substr($this->line,  $offset);
+        if ($qty < 1) {
             $qty = 1;
         }
         return $qty;

@@ -303,19 +303,19 @@ class Kingboard_KillmailParser_Parser
                          break;
 
                      case Kingboard_KillmailParser_Line::TYPE_SYSTEM:
-                         $this->location['solarSystemName'] = $line->getValue();
                          $this->location['solarSystemID']   = $ids->getSolarSystemId($line->getValue());
+                         $this->location['solarSystemName'] = $line->getValue();
                          break;
 
-                     case Kingboard_KillmailParser_Line::TYPE_SYSTEM:
+                     case Kingboard_KillmailParser_Line::TYPE_MOON:
                          if (!$line->isEmpty()) {
                             $system = Kingboard_EveSolarSystem::getInstanceByCriteria(array('Moons.itemName' => $line->getValue()));
                             if ($system) {
                                 $moons = $system->Moons;
                                 foreach ($moons as $moon) {
                                     if ($moon['itemName'] == $line->getValue()) {
-                                        $this->location['moon'] = $line->getValue();
-                                        $this->location['solarSystemID']   = $moon['itemID'];
+                                        $this->location['moon']   = $line->getValue();
+                                        $this->location['moonID'] = $moon['itemID'];
                                         break;
                                     }
                                 }

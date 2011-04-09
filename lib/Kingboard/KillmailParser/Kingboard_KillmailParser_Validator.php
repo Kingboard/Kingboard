@@ -137,13 +137,26 @@ class Kingboard_KillmailParser_Validator
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character for attacker given');
         }
 
-
-        if (!$this->isTypeEntryValid($attacker, 'corporation')) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('No corporation data for attacker found');
+        $isSleeper = false;
+        $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['characterName']));
+        if ($result) {
+            $isSleeper =
+                stripos($attacker['characterName'], 'sleep') !== false &&
+                (int) $result->typeID === $attacker['characterID'] &&
+                (int) $result->Group['CategoryID'] === 11;
         }
 
-        if (!$this->isIdValid($attacker, 'corporation') || !$this->validateOrganisationName($attacker['corporationName'])) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid corporation data for attacker');
+        if (!$isSleeper) {
+            if (!$this->isTypeEntryValid($attacker, 'corporation')) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('No corporation data for attacker found');
+            }
+
+            if (!$this->isIdValid($attacker, 'corporation') || !$this->validateOrganisationName($attacker['corporationName'])) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid corporation data for attacker');
+            }
+        }
+        elseif ($this->isTypeEntryValid($attacker, 'corporation')) {
+            throw new Kingboard_KillmailParser_KillmailErrorException('Sleepers must not have a corporation');
         }
 
         // Alliance and faction are optional, but must be valid if set
@@ -199,9 +212,10 @@ class Kingboard_KillmailParser_Validator
         if (isset($victim['shipType'])) {
             $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $victim['shipType']));
             if ($result) {
-                if ($result->typeName == $victim['shipType'] && (int) $victim['shipTypeID'] === (int) $result->typeID && (int) $result->Group['categoryID'] === 23) {
-                    $isStructure = true;
-                }
+                $isStructure =
+                    $result->typeName == $victim['shipType'] &&
+                    (int) $victim['shipTypeID'] === (int) $result->typeID &&
+                    in_array((int) $result->Group['categoryID'], array(23,39,40));
             }
         }
 
@@ -219,6 +233,7 @@ class Kingboard_KillmailParser_Validator
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character ID for victim');
             }
         }
+
         if (!$this->isTypeEntryValid($victim, 'corporation')) {
             throw new Kingboard_KillmailParser_KillmailErrorException('No corporation data for victim found');
         }
