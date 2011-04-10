@@ -138,12 +138,25 @@ class Kingboard_KillmailParser_Validator
         }
 
         $isSleeper = false;
+        $isNpc = false;
         $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['characterName']));
         if ($result) {
-            $isSleeper =
-                stripos($attacker['characterName'], 'sleep') !== false &&
-                (int) $result->typeID === $attacker['characterID'] &&
-                (int) $result->Group['CategoryID'] === 11;
+            if ($result->typeID && isset($result->Group['categoryID'])) {
+                $isNpc = true;
+                $isSleeper =
+                    stripos($attacker['characterName'], 'sleep') !== false &&
+                    (int) $result->typeID === $attacker['characterID'] &&
+                    (int) $result->Group['categoryID'] === 11;
+            }
+        }
+        $isBubble = false;
+        if (isset($attacker['weaponType'])) {
+            $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['weaponType']));
+            if ($result) {
+                if (isset($result->Group['categoryID'])) {
+                    $isBubble = (int) $result->Group['categoryID'] === 8;
+                }
+            }
         }
 
         if (!$isSleeper) {
@@ -178,19 +191,22 @@ class Kingboard_KillmailParser_Validator
         }
 
         if (!is_int($attacker['damageDone']) || $attacker['damageDone'] < 0) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid value for done damage');
+            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid value for damage done');
         }
 
-        if (!$this->isTypeEntryValid($attacker, 'shipType')) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid ship for attacker given');
+        if (!$isBubble && !$isNpc) {
+            if (!$this->isTypeEntryValid($attacker, 'shipType')) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid ship for attacker given');
+            }
         }
+        if (!$isNpc) {
+            if (!$this->isTypeEntryValid($attacker, 'weaponType')) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid weapon for attacker given');
+            }
 
-        if (!$this->isTypeEntryValid($attacker, 'weaponType')) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid weapon for attacker given');
-        }
-
-        if (!is_float($attacker['securityStatus']) || $attacker['securityStatus'] < -10 || $attacker['securityStatus'] > 10) {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid security status for attacker');
+            if (!is_float($attacker['securityStatus']) || $attacker['securityStatus'] < -10.0 || $attacker['securityStatus'] > 10.0) {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid security status for attacker');
+            }
         }
 
         if (!is_bool($attacker['finalBlow'])) {

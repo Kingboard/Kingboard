@@ -1,0 +1,44 @@
+2011.04.08 10:15:00
+
+Victim: sbyq
+Corp: Hedion University
+Alliance: Unknown
+Faction: Unknown
+Destroyed: Inquisitor
+System: 6Q-R50
+Security: -0.1
+Damage Taken: 1068
+
+Involved parties:
+
+Name: Ktorn Sinus (laid the final blow)
+Security: -9.3
+Corp: SniggWaffe
+Alliance: FREE KARTTOON NOW
+Faction: NONE
+Ship: Ishkur
+Weapon: Hobgoblin II
+Damage Done: 1068
+
+Name: Nuel Suspect
+Security: 5.0
+Corp: Abstract Speed
+Alliance: NONE
+Faction: NONE
+Ship: Unknown
+Weapon: Warp Disrupt Probe
+Damage Done: 0
+
+Destroyed items:
+
+Small Salvage Tackle I, Qty: 3
+1MN MicroWarpdrive I
+Nanofiber Internal Structure I
+Salvager I
+Prototype Cloaking Device I
+
+Dropped items:
+
+Small Armor Repairer I
+Nanofiber Internal Structure I
+Salvager I, Qty: 2

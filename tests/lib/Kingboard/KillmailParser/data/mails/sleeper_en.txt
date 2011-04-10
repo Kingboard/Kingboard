@@ -1,0 +1,35 @@
+2010.04.19 04:36:00
+
+Victim: Mia Andreana
+Corp: Twilight Military Industrial Complex
+Alliance: Twilight Military Industrial Complex Alliance
+Faction: NONE
+Destroyed: Basilisk
+System: J122056
+Security: 0.0
+Damage Taken: 19316
+
+Involved parties:
+
+Name: Sleepless Safeguard / Unknown (laid the final blow)
+Damage Done: 19316
+
+Destroyed items:
+
+True Sansha Reactor Control Unit
+Medium Egress Port Maximizer II
+Large Energy Transfer Array II
+Medium Core Defence Field Extender II
+Light Shield Maintenance Bot I (Cargo)
+Large Shield Extender II
+Large S95a Partial Shield Transporter
+
+Dropped items:
+
+Republic Fleet 10MN Afterburner
+Damage Control II
+Large 'Regard' I Power Projector, Qty: 2
+Invulnerability Field II, Qty: 2
+ECCM - Gravimetric II
+Medium Shield Maintenance Bot I, Qty: 2 (Cargo)
+Large S95a Partial Shield Transporter, Qty: 2

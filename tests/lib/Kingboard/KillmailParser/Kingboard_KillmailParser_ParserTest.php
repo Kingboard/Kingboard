@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/../../../../lib/Kingboard/KillmailParser/Kingboard_KillmailParser_Parser.php';
+require_once 'Kingboard_KillmailParser_Testmails.php';
 
 /**
  * Test class for Kingboard_KillmailParser_Parser.
@@ -292,49 +293,8 @@ Cap Recharger II, Qty: 2
    }
 
    public function mailInputProvider() {
-       $dir = __DIR__ . '/data/mails/*.txt';
-       $mails = glob($dir);
-       $data = array();
-       foreach ($mails as $mailFile) {
-            $resultFile = substr($mailFile, 0 , -3) . 'php';
-            if (is_file($resultFile)) {
-                $result = require $resultFile;
-                $result['plainMail'] = file_get_contents($mailFile);
-                $data[] = array(
-                    $result['plainMail'],
-                    $result
-                );
-            }
-       }
-       return $data;
-   }
-
-   /**
-    * Not strict equal
-    * Values can have different offsets, as long as they have the same key
-    *
-    * @param array $expected
-    * @param array $actual
-    * @return boolean
-    */
-   protected function compareArrays($expected, $actual, $parentIndex = '') {
-       foreach ($expected as $key => $value) {
-           if (!isset($actual[$key])) {
-               throw new UnexpectedValueException("Invalid in $parentIndex $key, empty");
-           }
-           if (is_array($value)) {
-               if (!is_array($actual[$key])) {
-                   throw new UnexpectedValueException("Invalid in $parentIndex $key, items missing");
-               }
-               $result = $this->compareArrays($value, $actual[$key], $parentIndex . '.' . $key);
-           }
-           else {
-               if ($value !== $actual[$key]) {
-                   throw new UnexpectedValueException("Invalid in $parentIndex . $key, \nShould: '$value'\nIs: '{$actual[$key]}'\n");
-               }
-           }
-       }
-       return true;
+       $mails = new Kingboard_KillmailParser_Testmails();
+       return $mails->getTestmails();
    }
 
    /**
@@ -342,8 +302,9 @@ Cap Recharger II, Qty: 2
     * @dataProvider mailInputProvider
     */
    public function parseActualMailInput($mail, $expected) {
+       $mails = new Kingboard_KillmailParser_Testmails();
        $actual = $this->object->parse($mail)->getDataArray();
-       $this->assertTrue($this->compareArrays($expected, $actual));
+       $this->assertTrue($mails->compareArrays($expected, $actual));
    }
 }
 
