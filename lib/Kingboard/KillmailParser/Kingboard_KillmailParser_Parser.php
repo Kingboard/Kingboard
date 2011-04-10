@@ -138,11 +138,20 @@ class Kingboard_KillmailParser_Parser
                 // after the backslash is the corporation name
                 // This is done for NPC names and their corps, and a backslash
                 // is no valid item name, yet is valid in a killmail
-                if (stripos($plainLine, $tokens->name()) !== false && strpos($plainLine, '/') !== false) {
+                $strTools = Kingboard_Helper_String::getInstance();
+                if ($strTools->stripos($tokens->name(), $plainLine) !== false && $strTools->strpos('/', $plainLine) !== false) {
                     $parts = explode('/', $plainLine);
-                    $plainLine = $parts[0];
-                    array_unshift($lines, $tokens->corp() . $parts[1]);
-                    unset($parts);
+                    $plainLine = array_shift($parts);
+                    $corp = $tokens->corp() . implode('/', $parts);
+
+                    // If the final blow token is present, move it from the corp name to attacker name
+                    if ($strTools->stripos($tokens->finalBlow(), $corp)) {
+                        $plainLine .= ' ' . $tokens->finalBlow();
+                        $corp = str_replace($tokens->finalBlow(), '', $corp);
+                    }
+                    array_unshift($lines, $corp);
+                    reset($lines);
+                    unset($parts, $corp);
                 }
                 
                 $line = new Kingboard_KillmailParser_Line($plainLine, $tokens);

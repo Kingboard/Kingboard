@@ -28,7 +28,9 @@ class Kingboard_KillmailParser_GermanTokensTest extends PHPUnit_Framework_TestCa
     }
 
     public function testCargo() {
-        $this->markTestIncomplete('Still need that token');
+        $expected = '(Fracht)';
+        $actual = $this->fixture->cargo();
+        $this->assertEquals($expected, $actual);
     }
 
     public function testContainer() {

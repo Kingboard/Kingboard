@@ -38,7 +38,7 @@ class Kingboard_KillmailParser_GermanTokens implements Kingboard_KillmailParser_
     }
 
     public function cargo() {
-        return '(Cargo)';
+        return '(Fracht)';
     }
 
     public function container() {
