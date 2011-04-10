@@ -381,8 +381,9 @@ class Kingboard_KillmailParser_Parser
     protected function getIdHash()
     {
         if (!$this->idHash) {
+            $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
             $this->idHash = new Kingboard_KillmailParser_IdHash();
-            $this->idHash->setVictimId(!empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'])
+            $this->idHash->setVictimId($victimId)
                          ->setTime($this->killTime);
 
             foreach ($this->attackers as $attacker) {

@@ -58,6 +58,7 @@ class Kingboard_Helper_String implements King23_Singleton
 
     final protected function __construct()
     {
+        mb_internal_encoding('UTF-8');
     }
 
     final private function __clone()
@@ -71,7 +72,7 @@ class Kingboard_Helper_String implements King23_Singleton
      * @return integer
      */
     public function strlen($str) {
-        return mb_strlen($str, 'UTF-8');
+        return mb_strlen($str);
     }
 
     /**
@@ -83,7 +84,11 @@ class Kingboard_Helper_String implements King23_Singleton
      * @return string
      */
     public function substr($str, $start, $length = null) {
-        return mb_substr($str, $start, $length, 'UTF-8');
+        if (is_int($length)) {
+            return mb_substr($str, $start, $length);
+        } else {
+            return mb_substr($str, $start);
+        }
     }
 
     /**
@@ -93,7 +98,7 @@ class Kingboard_Helper_String implements King23_Singleton
      * @return string
      */
     public function lower($str) {
-        return mb_strtolower($str, 'UTF-8');
+        return mb_strtolower($str);
     }
 
     /**
@@ -105,7 +110,11 @@ class Kingboard_Helper_String implements King23_Singleton
      * @return integer|boolean
      */
     public function strpos($needle, $haystack, $offset = null) {
-        return mb_strpos($haystack, $needle, $offset, 'UTF-8');
+        if (is_int($offset)) {
+            return mb_strpos($haystack, $needle, $offset);
+        } else {
+            return mb_strpos($haystack, $needle);
+        }
     }
 
     /**
@@ -117,6 +126,10 @@ class Kingboard_Helper_String implements King23_Singleton
      * @return integer|boolean
      */
     public function stripos($needle, $haystack, $offset = null) {
-        return mb_stripos($haystack, $needle, $offset, 'UTF-8');
+        if (is_int($offset)) {
+            return mb_stripos($haystack, $needle, $offset);
+        } else {
+            return mb_stripos($haystack, $needle);
+        }
     }
 }

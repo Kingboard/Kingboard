@@ -484,8 +484,8 @@ class Kingboard_KillmailParser_Line
      */
     protected  function extractValue($token)
     {
-        $offset = Kingboard_Helper_String::getInstance()->strlen($token);
-        $value = Kingboard_Helper_String::getInstance()->substr($this->value, $offset);
+        $start = Kingboard_Helper_String::getInstance()->strlen($token);
+        $value = Kingboard_Helper_String::getInstance()->substr($this->line, $start);
         return trim($value);
     }
 
@@ -497,9 +497,9 @@ class Kingboard_KillmailParser_Line
      */
     protected function extractQty($token)
     {
-        $offset = Kingboard_Helper_String::getInstance()->strpos($token, $this->line) +
+        $start = Kingboard_Helper_String::getInstance()->strpos($token, $this->line) +
                   Kingboard_Helper_String::getInstance()->strlen($token);
-        $qty = (int) Kingboard_Helper_String::getInstance()->substr($this->line,  $offset);
+        $qty = (int) Kingboard_Helper_String::getInstance()->substr($this->line,  $start);
         if ($qty < 1) {
             $qty = 1;
         }
