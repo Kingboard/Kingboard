@@ -246,18 +246,18 @@ class Kingboard_KillmailParser_Line
                 elseif ($this->match($tokens->damageTaken())) {
                     $value = $this->extractValue($tokens->damageTaken());
                     $intVal = (int) $value;
-                    if ($intVal > 10 && $intVal < 1000000000) {
+                    if ($intVal > 10 && $intVal < 100000000) {
                         $this->type = self::TYPE_DAMAGE;
                         $this->value = $intVal;
                     } else {
                         $this->error = 'Invalid damage taken value';
                     }
                 }
-                // Test if we have a damage taken done
+                // Test if we have a damage done
                 elseif ($this->match($tokens->damageDone())) {
                     $value = $this->extractValue($tokens->damageDone());
                     $intVal = (int) $value;
-                    if ($intVal >= 0 && $intVal < 1000000000) {
+                    if ($intVal >= 0 && $intVal < 100000000) {
                         $this->type = self::TYPE_DAMAGE;
                         $this->value = $intVal;
                     } else {
@@ -294,7 +294,7 @@ class Kingboard_KillmailParser_Line
                 // Test for a main weapon
                 elseif ($this->match($tokens->weapon())) {
                     $value = $this->extractValue($tokens->weapon());
-                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 3) { // @todo: is it save to presume a weapon has mor than three letters?
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 3) {
                         $this->value = $value;
                         $this->type = self::TYPE_WEAPON;
                     }
@@ -332,7 +332,8 @@ class Kingboard_KillmailParser_Line
                     // Look if we have a qty value
                     if ($this->match($tokens->qty())) {
                         $this->qty = $this->extractQty($tokens->qty());
-                        $value = trim(substr($value, 0, stripos($value, $tokens->qty())));
+                        $offset = Kingboard_Helper_String::getInstance()->stripos($tokens->qty(), $value);
+                        $value = trim(Kingboard_Helper_String::getInstance()->substr($value, 0, $offset));
                         unset($parts);
                     }
                     if (Kingboard_Helper_String::getInstance()->strlen($value) > 2) {
@@ -375,7 +376,8 @@ class Kingboard_KillmailParser_Line
      * @param string $value
      * @return boolean
      */
-    protected function validOrganisationValue($value) {
+    protected function validOrganisationValue($value)
+    {
         return $this->validCorporationName($value) || 
                $this->isEmptyToken($value);
     }
@@ -400,7 +402,8 @@ class Kingboard_KillmailParser_Line
      * @param string $name
      * @return boolean
      */
-    protected function validCorporationName($name) {
+    protected function validCorporationName($name)
+    {
         try {
             return $this->getValidator()->validateOrganisationName($name);
         }
@@ -415,7 +418,8 @@ class Kingboard_KillmailParser_Line
      *
      * @return string
      */
-    public function getError() {
+    public function getError()
+    {
         return (string) $this->error;
     }
 
@@ -448,7 +452,8 @@ class Kingboard_KillmailParser_Line
      * @param string $str
      * @return boolean
      */
-    protected function isEmptyToken($str) {
+    protected function isEmptyToken($str)
+    {
         return trim($str) === '' || in_array(
             Kingboard_Helper_String::getInstance()->lower($str),
             array(
@@ -468,7 +473,7 @@ class Kingboard_KillmailParser_Line
      */
     protected function match($string)
     {
-        return mb_stripos($this->line, $string, NULL, 'UTF-8') !== false;
+        return Kingboard_Helper_String::getInstance()->stripos($string, $this->line) !== false;
     }
 
     /**
@@ -479,7 +484,9 @@ class Kingboard_KillmailParser_Line
      */
     protected  function extractValue($token)
     {
-        return trim(mb_substr($this->line, Kingboard_Helper_String::getInstance()->strlen($token, 'UTF-8')), NULL, 'UTF-8');
+        $offset = Kingboard_Helper_String::getInstance()->strlen($token);
+        $value = Kingboard_Helper_String::getInstance()->substr($this->value, $offset);
+        return trim($value);
     }
 
     /**
@@ -490,7 +497,7 @@ class Kingboard_KillmailParser_Line
      */
     protected function extractQty($token)
     {
-        $offset = Kingboard_Helper_String::getInstance()->strpos($this->line, $token) +
+        $offset = Kingboard_Helper_String::getInstance()->strpos($token, $this->line) +
                   Kingboard_Helper_String::getInstance()->strlen($token);
         $qty = (int) Kingboard_Helper_String::getInstance()->substr($this->line,  $offset);
         if ($qty < 1) {
@@ -525,7 +532,8 @@ class Kingboard_KillmailParser_Line
      * 
      * @return mixed
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -534,7 +542,8 @@ class Kingboard_KillmailParser_Line
      *
      * @return boolean
      */
-    public function isDrone() {
+    public function isDrone()
+    {
         return $this->drone;
     }
     
@@ -543,7 +552,8 @@ class Kingboard_KillmailParser_Line
      * 
      * @return boolean
      */
-    public function isCargo() {
+    public function isCargo()
+    {
         return $this->cargo;
     }
 
@@ -553,7 +563,8 @@ class Kingboard_KillmailParser_Line
      *
      * @return boolean
      */
-    public function hasFinalBlow() {
+    public function hasFinalBlow()
+    {
         return $this->finalBlow;
     }
 
@@ -562,7 +573,8 @@ class Kingboard_KillmailParser_Line
      *
      * @return boolean
      */
-    public function inContainer() {
+    public function inContainer()
+    {
         return $this->container;
     }
 }

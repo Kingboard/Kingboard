@@ -339,7 +339,7 @@ class Kingboard_KillmailParser_Validator
     public function validateOrganisationName($name)
     {
         // Only letters, numbers, spaces, dots, single quotes and hyphens
-        // In a range between 4 and 50 characters
+        // In a range between 2 and 50 characters
         if (!preg_match("/^([a-zA-Z0-9 \-\.\']{2,50})$/", $name)) {
             throw new Kingboard_KillmailParser_KillmailErrorException('Name has invalid length or contains invalid characters');
         }

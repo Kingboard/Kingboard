@@ -56,8 +56,13 @@ class Kingboard_Helper_String implements King23_Singleton
      * Enforcing the singleton
      */
 
-    final protected function __construct();
-    final private function __clone();
+    final protected function __construct()
+    {
+    }
+
+    final private function __clone()
+    {
+    }
 
     /**
      * Mesure the length of a string
@@ -101,5 +106,17 @@ class Kingboard_Helper_String implements King23_Singleton
      */
     public function strpos($needle, $haystack, $offset = null) {
         return mb_strpos($haystack, $needle, $offset, 'UTF-8');
+    }
+
+    /**
+     * Find the needle in the haystack, case - sensitive
+     *
+     * @param string $needle
+     * @param string $haystack
+     * @param integer $offset
+     * @return integer|boolean
+     */
+    public function stripos($needle, $haystack, $offset = null) {
+        return mb_stripos($haystack, $needle, $offset, 'UTF-8');
     }
 }

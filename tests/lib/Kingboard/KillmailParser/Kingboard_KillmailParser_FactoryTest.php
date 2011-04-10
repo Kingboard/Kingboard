@@ -13,19 +13,17 @@ class Kingboard_KillmailParser_FactoryTest extends PHPUnit_Framework_TestCase {
         $tokens = Kingboard_KillmailParser_Factory::findTokensForMail('Alliance:    Corp:');
         $this->assertInstanceOf('Kingboard_KillmailParser_EnglishTokens', $tokens);
     }
-
-    public function testFindTokensForRussionMail() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
+// @todo: Do we need ru tokens?
+//    public function testFindTokensForRussionMail() {
+//        // Remove the following lines when you implement this test.
+//        $this->markTestIncomplete(
+//                'This test has not been implemented yet.'
+//        );
+//    }
 
     public function testFindTokensForGermanMail() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $tokens = Kingboard_KillmailParser_Factory::findTokensForMail('Allianz:    Fraktion: Ziel: Zerstört: Zerstörte Gegenstände: Beteiligte Parteien:');
+        $this->assertInstanceOf('Kingboard_KillmailParser_GermanTokens', $tokens);
     }
 
     public function testParseTextMail() {
