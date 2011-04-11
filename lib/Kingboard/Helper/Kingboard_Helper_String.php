@@ -45,8 +45,10 @@ class Kingboard_Helper_String implements King23_Singleton
      *
      * @return Kingboard_Helper_String
      */
-    public static function getInstance() {
-        if (self::$instance === null) {
+    public static function getInstance()
+    {
+        if (self::$instance === null)
+        {
             self::$instance = new Kingboard_Helper_String();
         }
         return self::$instance;
@@ -71,7 +73,8 @@ class Kingboard_Helper_String implements King23_Singleton
      * @param string $str
      * @return integer
      */
-    public function strlen($str) {
+    public function strlen($str)
+    {
         return mb_strlen($str);
     }
 
@@ -84,9 +87,12 @@ class Kingboard_Helper_String implements King23_Singleton
      * @return string
      */
     public function substr($str, $start, $length = null) {
-        if (is_int($length)) {
+        if (is_int($length))
+        {
             return mb_substr($str, $start, $length);
-        } else {
+        }
+        else
+        {
             return mb_substr($str, $start);
         }
     }
@@ -97,7 +103,8 @@ class Kingboard_Helper_String implements King23_Singleton
      * @param string $str
      * @return string
      */
-    public function lower($str) {
+    public function lower($str)
+    {
         return mb_strtolower($str);
     }
 
@@ -109,10 +116,14 @@ class Kingboard_Helper_String implements King23_Singleton
      * @param integer $offset
      * @return integer|boolean
      */
-    public function strpos($needle, $haystack, $offset = null) {
-        if (is_int($offset)) {
+    public function strpos($needle, $haystack, $offset = null)
+    {
+        if (is_int($offset))
+        {
             return mb_strpos($haystack, $needle, $offset);
-        } else {
+        }
+        else
+        {
             return mb_strpos($haystack, $needle);
         }
     }
@@ -125,10 +136,14 @@ class Kingboard_Helper_String implements King23_Singleton
      * @param integer $offset
      * @return integer|boolean
      */
-    public function stripos($needle, $haystack, $offset = null) {
-        if (is_int($offset)) {
+    public function stripos($needle, $haystack, $offset = null)
+    {
+        if (is_int($offset))
+        {
             return mb_stripos($haystack, $needle, $offset);
-        } else {
+        }
+        else
+        {
             return mb_stripos($haystack, $needle);
         }
     }

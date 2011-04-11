@@ -43,38 +43,46 @@ class Kingboard_KillmailParser_Validator
     public function validateKillmailData(array $data)
     {
         // Validate the killtime
-        if (empty($data['killtime'])) {
+        if (empty($data['killtime']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('No killtime');
         }
         $this->validateKilltime($data['killtime']);
 
         // Validate the basic structure of the array
-        if (empty($data['victim']) || empty($data['location']) || empty($data['attackers'])) {
+        if (empty($data['victim']) || empty($data['location']) || empty($data['attackers']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Required data entry is missing');
         }
 
         // Validate the victim data
-        if (!is_array($data['victim']) || count($data['victim']) < 5) {
+        if (!is_array($data['victim']) || count($data['victim']) < 5)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Victim is missing data entries');
         }
         $this->validateVictim($data['victim']);
 
         // Validate the attackers
-        if (!is_array($data['attackers']) || count($data['attackers']) < 1) {
+        if (!is_array($data['attackers']) || count($data['attackers']) < 1)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Attackers are missing');
         }
 
-        foreach($data['attackers'] as $attacker) {
+        foreach($data['attackers'] as $attacker)
+        {
             $this->validateAttacker($attacker);
         }
 
         // Validate items
-        if (!is_array($data['items'])) {
+        if (!is_array($data['items']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Items not set');
         }
 
-        foreach ($data['items'] as $item) {
-            if (!is_array($item)) {
+        foreach ($data['items'] as $item)
+        {
+            if (!is_array($item))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid item entry');
             }
             $this->validateItem($item);
@@ -93,7 +101,9 @@ class Kingboard_KillmailParser_Validator
     {
         $minTime = mktime(0, 0, 0, 5, 1, 2003); // Must be after the creation of the universe
         $maxTime = time() - 10; // Must be older than now
-        if (!is_int($time) || $time < $minTime || $time > $maxTime) {
+
+        if (!is_int($time) || $time < $minTime || $time > $maxTime)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid date given');
         }
         return true;
@@ -107,17 +117,21 @@ class Kingboard_KillmailParser_Validator
      */
     public function validateItem(array $item)
     {
-        if (count($item) < 4) {
+        if (count($item) < 4)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid item data');
         }
 
-        if (!$this->isTypeEntryValid($item, 'type')) {
+        if (!$this->isTypeEntryValid($item, 'type'))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Unknown type entry for item');
         }
 
-        if (!is_int($item['qtyDropped']) || !is_int($item['qtyDestroyed']) || ($item['qtyDropped'] == 0 && $item['qtyDestroyed'] == 0)) {
+        if (!is_int($item['qtyDropped']) || !is_int($item['qtyDestroyed']) || ($item['qtyDropped'] == 0 && $item['qtyDestroyed'] == 0))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid qty value for item');
         }
+
         return true;
     }
 
@@ -129,19 +143,24 @@ class Kingboard_KillmailParser_Validator
      */
     public function validateAttacker(array $attacker)
     {
-        if (!$this->isTypeEntryValid($attacker, 'character')) {
+        if (!$this->isTypeEntryValid($attacker, 'character'))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('No character for attacker given');
         }
 
-        if (!$this->validateCharacterName($attacker['characterName']) || !$this->isIdValid($attacker, 'character')) {
+        if (!$this->validateCharacterName($attacker['characterName']) || !$this->isIdValid($attacker, 'character'))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character for attacker given');
         }
 
         $isSleeper = false;
         $isNpc = false;
         $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['characterName']));
-        if ($result) {
-            if ($result->typeID && isset($result->Group['categoryID'])) {
+
+        if ($result)
+        {
+            if ($result->typeID && isset($result->Group['categoryID']))
+            {
                 $isNpc = true;
                 $isSleeper =
                     stripos($attacker['characterName'], 'sleep') !== false &&
@@ -150,66 +169,85 @@ class Kingboard_KillmailParser_Validator
             }
         }
         $isBubble = false;
-        if (isset($attacker['weaponType'])) {
+        if (isset($attacker['weaponType']))
+        {
             $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['weaponType']));
-            if ($result) {
-                if (isset($result->Group['categoryID'])) {
+            if ($result)
+            {
+                if (isset($result->Group['categoryID']))
+                {
                     $isBubble = (int) $result->Group['categoryID'] === 8;
                 }
             }
         }
 
-        if (!$isSleeper) {
-            if (!$this->isTypeEntryValid($attacker, 'corporation')) {
+        if (!$isSleeper)
+        {
+            if (!$this->isTypeEntryValid($attacker, 'corporation'))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('No corporation data for attacker found');
             }
 
-            if (!$this->isIdValid($attacker, 'corporation') || !$this->validateOrganisationName($attacker['corporationName'])) {
+            if (!$this->isIdValid($attacker, 'corporation') || !$this->validateOrganisationName($attacker['corporationName']))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid corporation data for attacker');
             }
         }
-        elseif ($this->isTypeEntryValid($attacker, 'corporation')) {
+        elseif ($this->isTypeEntryValid($attacker, 'corporation'))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Sleepers must not have a corporation');
         }
 
         // Alliance and faction are optional, but must be valid if set
 
-        if ($this->isTypeEntryValid($attacker, 'alliance')) {
-           if (!$this->isIdValid($attacker, 'alliance') || !$this->validateOrganisationName($attacker['allianceName'])) {
+        if ($this->isTypeEntryValid($attacker, 'alliance'))
+        {
+           if (!$this->isIdValid($attacker, 'alliance') || !$this->validateOrganisationName($attacker['allianceName']))
+           {
                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid alliance data for attacker');
            }
         }
 
-        if ($this->isTypeEntryValid($attacker, 'faction')) {
-           if (!$this->isIdValid($attacker, 'faction') || !$this->validateOrganisationName($attacker['factionName'])) {
+        if ($this->isTypeEntryValid($attacker, 'faction'))
+        {
+           if (!$this->isIdValid($attacker, 'faction') || !$this->validateOrganisationName($attacker['factionName']))
+           {
                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid faction data for attacker');
            }
         }
 
-        if (!isset($attacker['damageDone'])) {
+        if (!isset($attacker['damageDone']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Damage done of attacker is missing');
         }
 
-        if (!is_int($attacker['damageDone']) || $attacker['damageDone'] < 0) {
+        if (!is_int($attacker['damageDone']) || $attacker['damageDone'] < 0)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid value for damage done');
         }
 
-        if (!$isBubble && !$isNpc) {
-            if (!$this->isTypeEntryValid($attacker, 'shipType')) {
+        if (!$isBubble && !$isNpc)
+        {
+            if (!$this->isTypeEntryValid($attacker, 'shipType'))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid ship for attacker given');
             }
         }
-        if (!$isNpc) {
-            if (!$this->isTypeEntryValid($attacker, 'weaponType')) {
+        if (!$isNpc)
+        {
+            if (!$this->isTypeEntryValid($attacker, 'weaponType'))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid weapon for attacker given');
             }
 
-            if (!is_float($attacker['securityStatus']) || $attacker['securityStatus'] < -10.0 || $attacker['securityStatus'] > 10.0) {
+            if (!is_float($attacker['securityStatus']) || $attacker['securityStatus'] < -10.0 || $attacker['securityStatus'] > 10.0)
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid security status for attacker');
             }
         }
 
-        if (!is_bool($attacker['finalBlow'])) {
+        if (!is_bool($attacker['finalBlow']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('No final blow information');
         }
         
@@ -225,9 +263,11 @@ class Kingboard_KillmailParser_Validator
     public function validateVictim($victim)
     {
         $isStructure = false;
-        if (isset($victim['shipType'])) {
+        if (isset($victim['shipType']))
+        {
             $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $victim['shipType']));
-            if ($result) {
+            if ($result)
+            {
                 $isStructure =
                     $result->typeName == $victim['shipType'] &&
                     (int) $victim['shipTypeID'] === (int) $result->typeID &&
@@ -235,50 +275,62 @@ class Kingboard_KillmailParser_Validator
             }
         }
 
-        if (!$isStructure || $victim['characterName'] != '' || $victim['characterID'] > 0) {
-
-            if (!$this->isTypeEntryValid($victim, 'character')) {
+        if (!$isStructure || $victim['characterName'] != '' || $victim['characterID'] > 0)
+        {
+            if (!$this->isTypeEntryValid($victim, 'character'))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('No character information for victim found');
             }
 
-            if (!$this->validateCharacterName($victim['characterName'])) {
+            if (!$this->validateCharacterName($victim['characterName']))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid victim character name');
             }
 
-            if (!$this->isIdValid($victim, 'character')) {
+            if (!$this->isIdValid($victim, 'character'))
+            {
                 throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character ID for victim');
             }
         }
 
-        if (!$this->isTypeEntryValid($victim, 'corporation')) {
+        if (!$this->isTypeEntryValid($victim, 'corporation'))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('No corporation data for victim found');
         }
 
-        if (!$this->isIdValid($victim, 'corporation') || !$this->validateOrganisationName($victim['corporationName'])) {
+        if (!$this->isIdValid($victim, 'corporation') || !$this->validateOrganisationName($victim['corporationName']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid corporation data for victim');
         }
 
-        if ($this->isTypeEntryValid($victim, 'alliance')) {
-           if (!$this->isIdValid($victim, 'alliance') || !$this->validateOrganisationName($victim['allianceName'])) {
+        if ($this->isTypeEntryValid($victim, 'alliance'))
+        {
+           if (!$this->isIdValid($victim, 'alliance') || !$this->validateOrganisationName($victim['allianceName']))
+           {
                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid alliance data for victim');
            }
         }
 
-        if ($this->isTypeEntryValid($victim, 'faction')) {
-           if (!$this->isIdValid($victim, 'faction') || !$this->validateOrganisationName($victim['factionName'])) {
+        if ($this->isTypeEntryValid($victim, 'faction'))
+        {
+           if (!$this->isIdValid($victim, 'faction') || !$this->validateOrganisationName($victim['factionName']))
+           {
                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid faction data for victim');
            }
         }
 
-        if (empty($victim['damageTaken'])) {
+        if (empty($victim['damageTaken']))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Damage taken of victim is missing');
         }
 
-        if (!is_int($victim['damageTaken']) || $victim['damageTaken'] < 1) {
+        if (!is_int($victim['damageTaken']) || $victim['damageTaken'] < 1)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid value for taken damage');
         }
 
-        if (!$this->isTypeEntryValid($victim, 'shipType')) {
+        if (!$this->isTypeEntryValid($victim, 'shipType'))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid ship for victim given');
         }
 
@@ -308,7 +360,8 @@ class Kingboard_KillmailParser_Validator
      */
     protected function isTypeEntryValid($data, $key)
     {
-        if (!empty($data[$key . 'Name']) || !empty($data[$key])) {
+        if (!empty($data[$key . 'Name']) || !empty($data[$key]))
+        {
             return !empty($data[$key . 'ID']);
         }
         return false;
@@ -325,17 +378,20 @@ class Kingboard_KillmailParser_Validator
     {
         // Only chars, numbers spaces and single quotes
         // Length between 4 and 24
-        if (!preg_match("/^([a-zA-Z0-9 \']{4,24})$/", $name)) {
+        if (!preg_match("/^([a-zA-Z0-9 \']{4,24})$/", $name))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Name has invalid length or invalid characters');
         }
         // No spaces and quotes at the start or the end
-        if (preg_match("/^(\s|\')|(\s|\')$/", $name)) { // Spaces at start and end are trimmed anyway, validate this though?
+        if (preg_match("/^(\s|\')|(\s|\')$/", $name)) // Spaces at start and end are trimmed anyway, validate this though?
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Name has invalid character at start or end');
         }
 
         // Only one space per name
         $hits = array();
-        if (preg_match_all('/\s+/', $name, $hits) > 1) {
+        if (preg_match_all('/\s+/', $name, $hits) > 1)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Name has more than one space character');
         }
 
@@ -356,13 +412,15 @@ class Kingboard_KillmailParser_Validator
     {
         // Only letters, numbers, spaces, dots, single quotes and hyphens
         // In a range between 2 and 50 characters
-        if (!preg_match("/^([a-zA-Z0-9 \-\.\']{2,50})$/", $name)) {
+        if (!preg_match("/^([a-zA-Z0-9 \-\.\']{2,50})$/", $name))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Name has invalid length or contains invalid characters');
         }
 
         // No spaces, hypens, dots and single quotes at the start
         // The same applies for the end, except for a dot, it can be the last letter
-        if (preg_match('/^(\s|\-|\.|\')|(\s|\-|\')$/', $name)) {
+        if (preg_match('/^(\s|\-|\.|\')|(\s|\-|\')$/', $name))
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Name has invalid characters at the start or the end');
         }
         return true;

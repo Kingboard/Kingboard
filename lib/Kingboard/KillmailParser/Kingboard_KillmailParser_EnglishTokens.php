@@ -25,7 +25,7 @@
  OTHER DEALINGS IN THE SOFTWARE.
 
 */
-require_once 'Kingboard_KillmailParser_TokenInterface.php';
+
 /**
  * Tokens for english killmails
  *
@@ -34,87 +34,108 @@ require_once 'Kingboard_KillmailParser_TokenInterface.php';
  */
 class Kingboard_KillmailParser_EnglishTokens implements Kingboard_KillmailParser_TokenInterface
 {
-    public function alliance() {
+    public function alliance()
+	{
         return 'Alliance:';
     }
 
-    public function corp() {
+    public function corp()
+	{
         return 'Corp:';
     }
 
-    public function damageDone() {
+    public function damageDone()
+	{
         return 'Damage Done:';
     }
 
-    public function damageTaken() {
+    public function damageTaken()
+	{
         return 'Damage Taken:';
     }
 
-    public function destroyed() {
+    public function destroyed()
+	{
         return 'Destroyed:';
     }
 
-    public function destroyedItems() {
+    public function destroyedItems()
+	{
         return 'Destroyed items:';
     }
 
-    public function droppedItems() {
+    public function droppedItems()
+	{
         return 'Dropped items:';
     }
 
-    public function faction() {
+    public function faction()
+	{
         return 'Faction:';
     }
 
-    public function involvedParties() {
+    public function involvedParties()
+	{
         return 'Involved parties:';
     }
 
-    public function name() {
+    public function name()
+	{
         return 'Name:';
     }
 
-    public function qty() {
+    public function qty()
+	{
         return ', Qty:';
     }
 
-    public function security() {
+    public function security()
+	{
         return 'Security:';
     }
 
-    public function ship() {
+    public function ship()
+	{
         return 'Ship:';
     }
 
-    public function system() {
+    public function system()
+	{
         return 'System:';
     }
 
-    public function victim() {
+    public function victim()
+	{
         return 'Victim:';
     }
 
-    public function weapon() {
+    public function weapon()
+	{
         return 'Weapon:';
     }
 
-    public function finalBlow() {
+    public function finalBlow()
+	{
         return '(laid the final blow)';
     }
 
-    public function cargo() {
+    public function cargo()
+	{
         return '(Cargo)';
     }
 
-    public function drone() {
+    public function drone()
+	{
         return '(Drone Bay)';
     }
 
-    public function container() {
+    public function container()
+	{
         return '(In Container)';
     }
 
-    public function moon() {
+    public function moon()
+	{
         return 'Moon:';
     }
 }

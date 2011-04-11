@@ -127,12 +127,14 @@ class Kingboard_KillmailParser_Line
         $line = trim($line);
 
         // If not empty, search for values
-        if ($line != '') {
+        if ($line != '')
+        {
             $dateHits = array();
 
             // If we find a time line
             // Use regex, strtotime is not strict enough
-            if (preg_match('/([0-9]{4})\.([0-9]{2})\.([0-9]{2})\s+([0-9]{2})\:([0-9]{2})/', $line, $dateHits)) {
+            if (preg_match('/([0-9]{4})\.([0-9]{2})\.([0-9]{2})\s+([0-9]{2})\:([0-9]{2})/', $line, $dateHits))
+            {
                 array_shift($dateHits);
                 
                 // Generate a timestamp
@@ -140,139 +142,186 @@ class Kingboard_KillmailParser_Line
                 $mintime = mktime(0, 0, 0, 5, 1, 2003);
 
                 // Only valid if it is after the eve launch and before now
-                if ($killtime <= $mintime) {
+                if ($killtime <= $mintime)
+                {
                     $this->error = "Time seems to be before the birth of the universe";
                 } 
                 // Not valid if it is in the future
                 // @todo: We need an API to work with EVE time!
-                elseif ($killtime >= time()) {
+                elseif ($killtime >= time())
+                {
                     $this->error = "Time is in the future, you cannot post your planned kills";
                 }
                 // In between is allowed
-                else {
+                else
+                {
                     $this->type = self::TYPE_TIME;
                     $this->value = $killtime;
                 }
                 unset($dateHits, $mintime);
             }
-            else {
+            else
+            {
                 // Test if we have a victim line
-                if ($this->match($tokens->victim())) {
+                if ($this->match($tokens->victim()))
+                {
                     $value = trim($this->extractValue($tokens->victim()));
-                    if ($this->validCharacterName($value)) {
+                    if ($this->validCharacterName($value))
+                    {
                         $this->type = self::TYPE_NAME;
                         $this->value = $value;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Victim detected, but invalid value given';
                     }
                     unset($value);
                 }
                 // Test if we have a corporation
-                elseif ($this->match($tokens->corp())) {
+                elseif ($this->match($tokens->corp()))
+                {
                     $value = $this->extractValue($tokens->corp());
-                    if ($this->validOrganisationValue($value)) {
+                    if ($this->validOrganisationValue($value))
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_CORP;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid corporation value';
                     }
                     unset($value);
                 }
                 // Test if we have an alliance
-                elseif ($this->match($tokens->alliance())) {
+                elseif ($this->match($tokens->alliance()))
+                {
                     $value = $this->extractValue($tokens->alliance());
-                    if ($this->validOrganisationValue($value)) {
+                    if ($this->validOrganisationValue($value))
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_ALLIANCE;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid alliance value';
                     }
                     unset($value);
                 }
                 // Test if we have a faction
-                elseif ($this->match($tokens->faction())) {
+                elseif ($this->match($tokens->faction()))
+                {
                     $value = $this->extractValue($tokens->faction());
-                    if ($this->validOrganisationValue($value)) {
+                    if ($this->validOrganisationValue($value))
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_FACTION;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid faction value';
                     }
                 }
                 // Test if we have a destroyed ship
-                elseif ($this->match($tokens->destroyed())) {
+                elseif ($this->match($tokens->destroyed()))
+                {
                     $value = $this->extractValue($tokens->destroyed());
-                    if (!empty($value)) {
+                    if (!empty($value))
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_SHIP;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid destroyed ship value';
                     }
                 }
                 // Test if we have a system
-                elseif ($this->match($tokens->system())) {
+                elseif ($this->match($tokens->system()))
+                {
                     $value = $this->extractValue($tokens->system());
-                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 1) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 1)
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_SYSTEM;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid system name value';
                     }
                     unset($value);
                 }
                 // Test if there is a moon
-                elseif ($this->match($tokens->moon())) {
+                elseif ($this->match($tokens->moon()))
+                {
                     $value = $this->extractValue($tokens->moon());
-                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 1) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 1)
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_MOON;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid moon value';
                     }
                 }
                 // Test if we have a security value
-                elseif ($this->match($tokens->security())) {
+                elseif ($this->match($tokens->security()))
+                {
                     $value = trim($this->extractValue($tokens->security()));
                     $floatVal = (float) $value;
-                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 0 && $floatVal <= 10.0 && $floatVal >= -10.0) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 0 && $floatVal <= 10.0 && $floatVal >= -10.0)
+                    {
                         $this->value = $floatVal;
                         $this->type = self::TYPE_SECURITY;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid security value';
                     }
                     unset($value, $floatVal);
                 }
                 // Test if we have a damage taken value
-                elseif ($this->match($tokens->damageTaken())) {
+                elseif ($this->match($tokens->damageTaken()))
+                {
                     $value = $this->extractValue($tokens->damageTaken());
                     $intVal = (int) $value;
-                    if ($intVal > 10 && $intVal < 100000000) {
+                    if ($intVal > 10 && $intVal < 100000000)
+                    {
                         $this->type = self::TYPE_DAMAGE;
                         $this->value = $intVal;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid damage taken value';
                     }
                 }
                 // Test if we have a damage done
-                elseif ($this->match($tokens->damageDone())) {
+                elseif ($this->match($tokens->damageDone()))
+                {
                     $value = $this->extractValue($tokens->damageDone());
                     $intVal = (int) $value;
-                    if ($intVal >= 0 && $intVal < 100000000) {
+                    if ($intVal >= 0 && $intVal < 100000000)
+                    {
                         $this->type = self::TYPE_DAMAGE;
                         $this->value = $intVal;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid damage done value';
                     }
                 }
                 // Test if we have an attacker name
-                elseif ($this->match($tokens->name())) {
+                elseif ($this->match($tokens->name()))
+                {
                     $value = $this->extractValue($tokens->name());
                     $finalBlow = false;
-                    if ($this->match($tokens->finalBlow())) {
+                    if ($this->match($tokens->finalBlow()))
+                    {
                         $finalBlow = true;
                         $value = trim(str_replace($tokens->finalBlow(), '', $value));
                     }
-                    if ($this->validCharacterName($value)) {
+                    if ($this->validCharacterName($value))
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_NAME;
                         $this->finalBlow = $finalBlow;
@@ -281,74 +330,91 @@ class Kingboard_KillmailParser_Line
                     }
                 }
                 // Test if we have an attacker ship
-                elseif ($this->match($tokens->ship())) {
+                elseif ($this->match($tokens->ship()))
+                {
                     $value = $this->extractValue($tokens->ship());
-                    if (!empty($value)) {
+                    if (!empty($value))
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_SHIP;
-                    } else {
+                    }
+                    else
+                    {
                         $this->error = 'Invalid attacker ship value';
                     }
                     unset($value);
                 }
                 // Test for a main weapon
-                elseif ($this->match($tokens->weapon())) {
+                elseif ($this->match($tokens->weapon()))
+                {
                     $value = $this->extractValue($tokens->weapon());
-                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 3) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 3)
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_WEAPON;
                     }
                 }
                 // Look for attackers switch
-                elseif ($this->match($tokens->involvedParties())) {
+                elseif ($this->match($tokens->involvedParties()))
+                {
                     $this->type = self::TYPE_SWITCH_ATTACKERS;
                 }
                 // Look for dropped items switch
-                elseif ($this->match($tokens->droppedItems())) {
+                elseif ($this->match($tokens->droppedItems()))
+                {
                     $this->type = self::TYPE_SWITCH_DROPPED;
                 }
                 // Look for destroyed items switch
-                elseif ($this->match($tokens->destroyedItems())) {
+                elseif ($this->match($tokens->destroyedItems()))
+                {
                     $this->type = self::TYPE_SWITCH_ITEMS;
                 }
                 // Everything else is an item
                 else {
                     $value = $line;
                     // Look if this item belongs inside a container
-                    if ($this->match($tokens->container())) {
+                    if ($this->match($tokens->container()))
+                    {
                         $this->container = true;
                         $value = trim(str_replace($tokens->container(), '', $value));
                     }
                     // Look if this item was in cargo bay
-                    if ($this->match($tokens->cargo())) {
+                    if ($this->match($tokens->cargo()))
+                    {
                         $this->cargo = true;
                         $value = trim(str_replace($tokens->cargo(), '', $value));
                     }
                     // Log if this item was in drone bay
-                    if ($this->match($tokens->drone())) {
+                    if ($this->match($tokens->drone()))
+                    {
                         $this->drone = true;
                         $value = trim(str_replace($tokens->drone(), '', $value));
                     }
                     // Look if we have a qty value
-                    if ($this->match($tokens->qty())) {
+                    if ($this->match($tokens->qty()))
+                    {
                         $this->qty = $this->extractQty($tokens->qty());
                         $offset = Kingboard_Helper_String::getInstance()->stripos($tokens->qty(), $value);
                         $value = trim(Kingboard_Helper_String::getInstance()->substr($value, 0, $offset));
                         unset($parts);
                     }
-                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 2) {
+                    if (Kingboard_Helper_String::getInstance()->strlen($value) > 2)
+                    {
                         $this->value = $value;
                         $this->type = self::TYPE_ITEM;
                     }
                     unset($value);
                 }
             }
-        } else {
+        }
+        else
+        {
             $this->type = self::TYPE_EMPTY;
         }
         unset($line);
         // If no type value has been set yet, the lines properties are unknown
-        if (!$this->type) {
+        if (!$this->type)
+        {
             $this->type = self::TYPE_UNKNOWN;
         }
     }
@@ -361,10 +427,12 @@ class Kingboard_KillmailParser_Line
      */
     protected function validCharacterName($name)
     {
-        try {
+        try
+        {
             return $this->getValidator()->validateCharacterName($name);
         }
-        catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+        catch (Kingboard_KillmailParser_KillmailErrorException $e)
+        {
             return false;
         }
     }
@@ -389,7 +457,8 @@ class Kingboard_KillmailParser_Line
      */
     protected function getValidator()
     {
-        if (!self::$validator) {
+        if (!self::$validator)
+        {
             self::$validator = new Kingboard_KillmailParser_Validator();
         }
         return self::$validator;
@@ -404,10 +473,12 @@ class Kingboard_KillmailParser_Line
      */
     protected function validCorporationName($name)
     {
-        try {
+        try
+        {
             return $this->getValidator()->validateOrganisationName($name);
         }
-        catch(Kingboard_KillmailParser_KillmailErrorException $e) {
+        catch(Kingboard_KillmailParser_KillmailErrorException $e)
+        {
             return false;
         }
     }
@@ -500,7 +571,9 @@ class Kingboard_KillmailParser_Line
         $start = Kingboard_Helper_String::getInstance()->strpos($token, $this->line) +
                   Kingboard_Helper_String::getInstance()->strlen($token);
         $qty = (int) Kingboard_Helper_String::getInstance()->substr($this->line,  $start);
-        if ($qty < 1) {
+        
+        if ($qty < 1)
+        {
             $qty = 1;
         }
         return $qty;

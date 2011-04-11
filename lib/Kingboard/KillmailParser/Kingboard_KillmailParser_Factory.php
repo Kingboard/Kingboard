@@ -43,7 +43,8 @@ class Kingboard_KillmailParser_Factory
     public static function findTokensForMail($mail)
     {
         $tokens = new Kingboard_KillmailParser_GermanTokens();
-        if (Kingboard_Helper_String::getInstance()->stripos($tokens->involvedParties(), $mail) !== FALSE) {
+        if (Kingboard_Helper_String::getInstance()->stripos($tokens->involvedParties(), $mail) !== FALSE)
+		{
             return $tokens;
         }
         return new Kingboard_KillmailParser_EnglishTokens();

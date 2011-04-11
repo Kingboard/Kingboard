@@ -79,7 +79,8 @@ class Kingboard_KillmailParser_IdHash
      */
     public function setTime($time)
     {
-        if ((int) $time > 0) {
+        if ((int) $time > 0)
+        {
             $this->time = $time;
         }
         return $this;
@@ -104,7 +105,8 @@ class Kingboard_KillmailParser_IdHash
     public function setVictimId($victimId)
     {
         $victimId = (int) $victimId;
-        if ($victimId > 0) {
+        if ($victimId > 0)
+        {
             $this->victimId = $victimId;
         }
         return $this;
@@ -128,7 +130,8 @@ class Kingboard_KillmailParser_IdHash
      */
     public function setAttackerIds(array $attackerIds)
     {
-        foreach ($attackerIds as $id) {
+        foreach ($attackerIds as $id)
+        {
             $this->addAttackerId($id);
         }
         return $this;
@@ -142,7 +145,8 @@ class Kingboard_KillmailParser_IdHash
      */
     public function addAttackerId($id)
     {
-        if ((int) $id > 0 && !in_array($id, $this->attackerIds, true)) {
+        if ((int) $id > 0 && !in_array($id, $this->attackerIds, true))
+        {
             $this->attackerIds[] = $id;
         }
         return $this;
@@ -167,7 +171,8 @@ class Kingboard_KillmailParser_IdHash
     public function setFinalBlowAttackerId($finalBlowAttackerId)
     {
         $finalBlowAttackerId = (int) $finalBlowAttackerId;
-        if ($finalBlowAttackerId > 0 && in_array($finalBlowAttackerId, $this->attackerIds, true)) {
+        if ($finalBlowAttackerId > 0 && in_array($finalBlowAttackerId, $this->attackerIds, true))
+        {
             $this->finalBlowAttackerId = (int) $finalBlowAttackerId;
         }
         return $this;
@@ -180,7 +185,8 @@ class Kingboard_KillmailParser_IdHash
      */
     public function generateHash()
     {
-        if (count($this->attackerIds) < 1 || !$this->time || !$this->victimId || !$this->finalBlowAttackerId) {
+        if (count($this->attackerIds) < 1 || !$this->time || !$this->victimId || !$this->finalBlowAttackerId)
+        {
             throw new Kingboard_KillmailParser_KillmailErrorException('Needed hash arguments are missing');
         }
         sort($this->attackerIds);

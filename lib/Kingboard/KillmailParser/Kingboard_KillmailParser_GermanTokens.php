@@ -33,87 +33,108 @@
  */
 class Kingboard_KillmailParser_GermanTokens implements Kingboard_KillmailParser_TokenInterface
 {
-    public function alliance() {
+    public function alliance()
+	{
         return 'Allianz:';
     }
 
-    public function cargo() {
+    public function cargo()
+	{
         return '(Fracht)';
     }
 
-    public function container() {
+    public function container()
+	{
         return '(In Container)';
     }
 
-    public function corp() {
+    public function corp()
+	{
         return 'Corporation:';
     }
 
-    public function damageDone() {
+    public function damageDone()
+	{
         return 'Verursachter Schaden:';
     }
 
-    public function damageTaken() {
+    public function damageTaken()
+	{
         return 'Erlittener Schaden:';
     }
 
-    public function destroyed() {
+    public function destroyed()
+	{
         return 'Zerstört:';
     }
 
-    public function destroyedItems() {
+    public function destroyedItems()
+	{
         return 'Zerstörte Gegenstände:';
     }
 
-    public function drone() {
+    public function drone()
+	{
         return '(Drohnenhangar)';
     }
 
-    public function droppedItems() {
+    public function droppedItems()
+	{
         return 'Hinterlassene Gegenstände:';
     }
 
-    public function faction() {
+    public function faction()
+	{
         return 'Fraktion:';
     }
 
-    public function finalBlow() {
+    public function finalBlow()
+	{
         return '(gab den letzten Schuss ab)';
     }
 
-    public function involvedParties() {
+    public function involvedParties()
+	{
         return 'Beteiligte Parteien:';
     }
 
-    public function moon() {
+    public function moon()
+	{
         return 'Mond:';
     }
 
-    public function name() {
+    public function name()
+	{
         return 'Name:';
     }
 
-    public function qty() {
+    public function qty()
+	{
         return ', Anz.:';
     }
 
-    public function security() {
+    public function security()
+	{
         return 'Sicherheit:';
     }
 
-    public function ship() {
+    public function ship()
+	{
         return 'Schiff:';
     }
 
-    public function system() {
+    public function system()
+	{
         return 'System:';
     }
 
-    public function victim() {
+    public function victim()
+	{
         return 'Ziel:';
     }
 
-    public function weapon() {
+    public function weapon()
+	{
         return 'Waffe:';
     }
 }

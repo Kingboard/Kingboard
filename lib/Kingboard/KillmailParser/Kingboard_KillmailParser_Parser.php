@@ -117,7 +117,6 @@ class Kingboard_KillmailParser_Parser
         $this->plainMail = $mail;
         
         $victimActive    = false;
-        $attackerActive  = false;
         $involed         = false;
         $destroyed       = false;
         $dropped         = false;
@@ -133,19 +132,22 @@ class Kingboard_KillmailParser_Parser
         while (count($lines) > 0)
         {
             $plainLine = array_shift($lines);
-            try {
+            try
+            {
                 // If it has a name token and a backslash, we presume the contents
                 // after the backslash is the corporation name
                 // This is done for NPC names and their corps, and a backslash
                 // is no valid item name, yet is valid in a killmail
                 $strTools = Kingboard_Helper_String::getInstance();
-                if ($strTools->stripos($tokens->name(), $plainLine) !== false && $strTools->strpos('/', $plainLine) !== false) {
+                if ($strTools->stripos($tokens->name(), $plainLine) !== false && $strTools->strpos('/', $plainLine) !== false)
+                {
                     $parts = explode('/', $plainLine);
                     $plainLine = array_shift($parts);
                     $corp = $tokens->corp() . implode('/', $parts);
 
                     // If the final blow token is present, move it from the corp name to attacker name
-                    if ($strTools->stripos($tokens->finalBlow(), $corp)) {
+                    if ($strTools->stripos($tokens->finalBlow(), $corp))
+                    {
                         $plainLine .= ' ' . $tokens->finalBlow();
                         $corp = str_replace($tokens->finalBlow(), '', $corp);
                     }
@@ -156,18 +158,16 @@ class Kingboard_KillmailParser_Parser
                 
                 $line = new Kingboard_KillmailParser_Line($plainLine, $tokens);
 
-                switch ($line->getType()) {
-                    case Kingboard_KillmailParser_Line::TYPE_EMPTY:
-                        $attackerActive = false;
-                        break;
-
+                switch ($line->getType())
+                {
                     case Kingboard_KillmailParser_Line::TYPE_TIME:
                         $this->killTime = $line->getValue();
                         $victimActive = true;
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_NAME:
-                        if ($involed) {
+                        if ($involed)
+                        {
                             $currentAttacker++;
                             $this->attackers[$currentAttacker] = array(
                                 'corporationName' => '',
@@ -185,7 +185,9 @@ class Kingboard_KillmailParser_Parser
                             $this->attackers[$currentAttacker]['characterName'] = $line->getValue();
                             $this->attackers[$currentAttacker]['characterID']   = $ids->getCharacterId($line->getValue());
                             $this->attackers[$currentAttacker]['finalBlow']     = $line->hasFinalBlow();
-                        } else {
+                        }
+                        else
+                        {
                             $victimActive = TRUE;
                             $this->victim['characterName'] = $line->getValue();
                             $this->victim['characterID'] = $ids->getCharacterId($line->getValue());
@@ -193,65 +195,86 @@ class Kingboard_KillmailParser_Parser
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_ALLIANCE:
-                        if ($victimActive) {
+                        if ($victimActive)
+                        {
                             $record =& $this->victim;
                         }
-                        elseif ($involed) {
+                        elseif ($involed)
+                        {
                             $record =& $this->attackers[$currentAttacker];
                         }
-                        if (!$line->isEmpty()) {
+                        
+                        if (!$line->isEmpty())
+                        {
                             $record['allianceName'] = $line->getValue();
                             $record['allianceID'] = $ids->getAllianceId($line->getValue());
                         }
+
                         unset($record);
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_CORP:
-                         if ($victimActive) {
+                        if ($victimActive)
+                        {
                             $record =& $this->victim;
                         }
-                        elseif ($involed) {
+                        elseif ($involed)
+                        {
                             $record =& $this->attackers[$currentAttacker];
                         }
-                        if (!$line->isEmpty()) {
+
+                        if (!$line->isEmpty())
+                        {
                             $record['corporationID'] = $ids->getCorporationId($line->getValue());
                             $record['corporationName'] = $line->getValue();
                         }
+
                         unset($record);
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_DAMAGE:
-                         if ($victimActive) {
+                        if ($victimActive)
+                        {
                             $this->victim['damageTaken'] = $line->getValue();
                         }
-                        elseif ($involed) {
+                        elseif ($involed)
+                        {
                             $this->attackers[$currentAttacker]['damageDone'] = $line->getValue();
                         }
+
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_FACTION:
-                         if ($victimActive) {
+                        if ($victimActive)
+                        {
                             $record =& $this->victim;
                         }
-                        elseif ($involed) {
+                        elseif ($involed)
+                        {
                             $record =& $this->attackers[$currentAttacker];
                         }
-                        if (!$line->isEmpty()) {
+
+                        if (!$line->isEmpty())
+                        {
                             $record['factionID'] = $ids->getFactionId($line->getValue());
                             $record['factionName'] = $line->getValue();
                         }
+
                         unset($record);
                         break;
 
                      case Kingboard_KillmailParser_Line::TYPE_ITEM:
 
                          $flag = 0;
-                         if ($line->isDrone()) {
+                         if ($line->isDrone())
+                         {
                              $flag = 87;
                          }
-                         elseif ($line->isCargo()) {
+                         elseif ($line->isCargo())
+                         {
                              $flag = 5;
                          }
+
                          $item = array(
                              'typeID' => $ids->getItemId($line->getValue()),
                              'typeName' => $line->getValue(),
@@ -260,15 +283,22 @@ class Kingboard_KillmailParser_Parser
                              'flag' => $flag
                          );
 
-                         if ($line->inContainer()) {
-                             if (!isset($this->items[$lastMainItem])) {
+                         if ($line->inContainer())
+                         {
+                             if (!isset($this->items[$lastMainItem]))
+                             {
                                  throw new Kingboard_KillmailParser_KillmailErrorException('Container for item not found');
                              }
-                             if (!isset($this->items[$lastMainItem]['items'])) {
+
+                             if (!isset($this->items[$lastMainItem]['items']))
+                             {
                                  $this->items[$lastMainItem]['items'] = array();
                              }
+
                              $this->items[$lastMainItem]['items'][] = $item;
-                         } else {
+                         }
+                         else
+                         {
                              $lastMainItem = count($this->items);
                              $this->items[] = $item;
                          }
@@ -278,32 +308,39 @@ class Kingboard_KillmailParser_Parser
 
                      case Kingboard_KillmailParser_Line::TYPE_SECURITY:
                          $value = (float) $line->getValue();
-                         if ($victimActive) {
-                            $this->location['security'] = $value;
-                        }
-                        elseif ($involed) {
-                            $this->attackers[$currentAttacker]['securityStatus'] = $value;
-                        }
-                        unset($value);
-                        break;
+                         if ($victimActive)
+                         {
+                             $this->location['security'] = $value;
+                         }
+                         elseif ($involed)
+                         {
+                             $this->attackers[$currentAttacker]['securityStatus'] = $value;
+                         }
+
+                         unset($value);
+                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_SHIP:
-                        if ($victimActive) {
+                        if ($victimActive)
+                        {
                             $record =& $this->victim;
                         }
-                        elseif ($involed) {
+                        elseif ($involed)
+                        {
                             $record =& $this->attackers[$currentAttacker];
                         }
-                        if (!$line->isEmpty()) {
+
+                        if (!$line->isEmpty())
+                        {
                             $record['shipType'] = $line->getValue();
                             $record['shipTypeID'] = $ids->getItemId($line->getValue());
                         }
+
                         unset($record);
                         break;
 
                      case Kingboard_KillmailParser_Line::TYPE_SWITCH_ATTACKERS:
                          $victimActive = false;
-                         $attackerActive = false;
                          $involed = true;
                          break;
 
@@ -317,12 +354,16 @@ class Kingboard_KillmailParser_Parser
                          break;
 
                      case Kingboard_KillmailParser_Line::TYPE_MOON:
-                         if (!$line->isEmpty()) {
+                         if (!$line->isEmpty())
+                         {
                             $system = Kingboard_EveSolarSystem::getInstanceByCriteria(array('Moons.itemName' => $line->getValue()));
-                            if ($system) {
+                            if ($system)
+                            {
                                 $moons = $system->Moons;
-                                foreach ($moons as $moon) {
-                                    if ($moon['itemName'] == $line->getValue()) {
+                                foreach ($moons as $moon)
+                                {
+                                    if ($moon['itemName'] == $line->getValue())
+                                    {
                                         $this->location['moon']   = $line->getValue();
                                         $this->location['moonID'] = $moon['itemID'];
                                         break;
@@ -333,18 +374,20 @@ class Kingboard_KillmailParser_Parser
                          break;
 
                      case Kingboard_KillmailParser_Line::TYPE_WEAPON:
-                         $this->attackers[$currentAttacker]['weaponType'] = $line->getValue();
                          $this->attackers[$currentAttacker]['weaponTypeID'] = $ids->getItemId($line->getValue());
+                         $this->attackers[$currentAttacker]['weaponType'] = $line->getValue();
                          break;
                 }
             }
-            catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+            catch (Kingboard_KillmailParser_KillmailErrorException $e)
+            {
                 $this->errors[] = $e->getMessage();
                 continue;
             }
 
             // Save errors for log / output
-            if ($line->hasError()) {
+            if ($line->hasError())
+            {
                 $this->errors[] = $line->getError();
             }
         }
@@ -361,13 +404,18 @@ class Kingboard_KillmailParser_Parser
      * @param array $items
      * @return array
      */
-    protected function cleanItemsArray($items) {
+    protected function cleanItemsArray($items)
+    {
         $newItems = array();
-        foreach ($items as $item) {
+        foreach ($items as $item)
+        {
             $merged = false;
-            if (!isset($item['items'])) {
-                foreach ($newItems as &$mergedItem) {
-                    if ($item['typeName'] == $mergedItem['typeName'] && $item['flag'] == $mergedItem['flag']) {
+            if (!isset($item['items']))
+            {
+                foreach ($newItems as &$mergedItem)
+                {
+                    if ($item['typeName'] == $mergedItem['typeName'] && $item['flag'] == $mergedItem['flag'])
+                    {
                         $mergedItem['qtyDropped'] += $item['qtyDropped'];
                         $mergedItem['qtyDestroyed'] += $item['qtyDestroyed'];
                         $merged = true;
@@ -375,7 +423,9 @@ class Kingboard_KillmailParser_Parser
                     }
                 }
             }
-            if (!$merged) {
+
+            if (!$merged)
+            {
                 $newItems[] = $item;
             }
         }
@@ -389,15 +439,18 @@ class Kingboard_KillmailParser_Parser
      */
     protected function getIdHash()
     {
-        if (!$this->idHash) {
+        if (!$this->idHash)
+        {
             $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
             $this->idHash = new Kingboard_KillmailParser_IdHash();
             $this->idHash->setVictimId($victimId)
                          ->setTime($this->killTime);
 
-            foreach ($this->attackers as $attacker) {
+            foreach ($this->attackers as $attacker)
+            {
                 $this->idHash->addAttackerId($attacker['characterID']);
-                if ($attacker['finalBlow']) {
+                if ($attacker['finalBlow'])
+                {
                     $this->idHash->setFinalBlowAttackerId($attacker['characterID']);
                 }
             }
@@ -434,7 +487,8 @@ class Kingboard_KillmailParser_Parser
     public function getModel()
     {
         $model = Kingboard_Kill::getInstanceByIdHash(array('idHash' => $this->getIdHash()));
-        if (!$model) {
+        if (!$model)
+        {
             $model = new Kingboard_Kill();
         }
         $model->injectDataFromMail($this->getDataArray());
@@ -447,7 +501,8 @@ class Kingboard_KillmailParser_Parser
      *
      * @return array
      */
-    public function getVictim() {
+    public function getVictim()
+    {
         return $this->victim;
     }
 
@@ -456,7 +511,8 @@ class Kingboard_KillmailParser_Parser
      *
      * @return array
      */
-    public function getLocation() {
+    public function getLocation()
+    {
         return $this->location;
     }
 
@@ -465,7 +521,8 @@ class Kingboard_KillmailParser_Parser
      *
      * @return array
      */
-    public function getAttackers() {
+    public function getAttackers()
+    {
         return $this->attackers;
     }
 
@@ -474,7 +531,8 @@ class Kingboard_KillmailParser_Parser
      *
      * @return array
      */
-    public function getItems() {
+    public function getItems()
+    {
         return $this->items;
     }
 
@@ -483,7 +541,8 @@ class Kingboard_KillmailParser_Parser
      *
      * @return string
      */
-    public function getPlainMail() {
+    public function getPlainMail()
+    {
         return $this->plainMail;
     }
 
@@ -492,7 +551,8 @@ class Kingboard_KillmailParser_Parser
      *
      * @return integer
      */
-    public function getTime() {
+    public function getTime()
+    {
         return $this->killTime;
     }
 

@@ -54,14 +54,19 @@ class Kingboard_KillmailParser_IdFinder
             )
         )));
         
-        if(!empty($kill['victim'][$keyId]) && $result['victim'][$keyName] == $name) {
+        if(!empty($kill['victim'][$keyId]) && $result['victim'][$keyName] == $name)
+		{
             return (int) $kill['victim'][$keyId];
         }
-        else {
-            if (is_array($result['attackers'])) {
-                foreach($result['attackers'] as $attacker) {
-                    if($attacker[$keyName] == $name) {
-                        return (int) $attacker[$keyName];
+        else
+        {
+            if (is_array($result['attackers']))
+            {
+                foreach($result['attackers'] as $attacker)
+                {
+                    if($attacker[$keyName] == $name)
+                    {
+                        return (int) $attacker[$keyId];
                     }
                 }
             }
@@ -80,15 +85,18 @@ class Kingboard_KillmailParser_IdFinder
      */
     protected function queryNameToIdApi($name)
     {
-        try {
-            PhealConfig::getInstance()->http_post = FALSE;
+        try
+        {
             $request = new Pheal();
             $result = $request->eveScope->CharacterID(array('names' => $name))->characters->toArray();
-            if ((int) $result[0]['characterID'] > 0) {
+            
+            if ((int) $result[0]['characterID'] > 0)
+            {
                 return (int) $result[0]['characterID'];
             }
         }
-        catch (PhealAPIException $e) {
+        catch (PhealAPIException $e)
+        {
         }
         throw new Kingboard_KillmailParser_KillmailErrorException('No API result for typeName ' . $name);
     }
@@ -103,22 +111,29 @@ class Kingboard_KillmailParser_IdFinder
    public function getCharacterId($name)
    {
       // Try to find in kills collection
-      try {
+      try
+      {
           return (int) $this->queryKillCollections($name, 'character');
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e)
+      {
             // Nothing found, ask the API
-          try {
+          try
+          {
               return (int) $this->queryNameToIdApi($name);
           }
-          catch (Kingboard_KillmailParser_KillmailErrorException $e) {}
+          catch (Kingboard_KillmailParser_KillmailErrorException $e)
+          {
+          }
       }
       
       // Nothing found here, we just presume it's an npc which are stored as types
-      try {
+      try
+      {
           return $this->getItemId($name);
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e)
+      {
       }
 
       throw new Kingboard_KillmailParser_KillmailErrorException('No character found with the name ' . $name);
@@ -133,13 +148,18 @@ class Kingboard_KillmailParser_IdFinder
     */
    public function getAllianceId($name)
    {
-      try {
+      try
+      {
           return (int) $this->queryKillCollections($name, 'alliance');
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
-          try {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e)
+      {
+          try
+          {
               return (int) $this->queryNameToIdApi($name);
-          } catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+          }
+          catch (Kingboard_KillmailParser_KillmailErrorException $e)
+          {
           }
       }
       throw new Kingboard_KillmailParser_KillmailErrorException('No alliance found with the name ' . $name);
@@ -154,13 +174,18 @@ class Kingboard_KillmailParser_IdFinder
     */
    public function getCorporationId($name)
    {
-      try {
+      try
+      {
           return (int) $this->queryKillCollections($name, 'corporation');
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
-          try {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e)
+      {
+          try
+          {
               return (int) $this->queryNameToIdApi($name);
-          } catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+          }
+          catch (Kingboard_KillmailParser_KillmailErrorException $e)
+          {
           }
       }
       throw new Kingboard_KillmailParser_KillmailErrorException('No corporation found with the name ' . $name);
@@ -179,7 +204,8 @@ class Kingboard_KillmailParser_IdFinder
        // Try in kills collection
         $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName'  => $name));
 
-        if ($result) {
+        if ($result)
+        {
             return (int) $result->typeID;
         }
 
@@ -188,18 +214,24 @@ class Kingboard_KillmailParser_IdFinder
             'items.typeName' => $name
         ));
 
-        if(!empty($kill['items'])) {
-            foreach ($kill['items'] as $item) {
-                if ($item['typeName'] == $name) {
+        if(!empty($kill['items']))
+        {
+            foreach ($kill['items'] as $item)
+            {
+                if ($item['typeName'] == $name)
+                {
                     return (int) $item['typeID'];
                 }
             }
         }
 
         // Not found, try the api
-        try {
+        try
+        {
             return (int) $this->queryNameToIdApi($name);
-        } catch(Kingboard_KillmailParser_KillmailErrorException $e){
+        }
+        catch(Kingboard_KillmailParser_KillmailErrorException $e)
+        {
         }
         throw new Kingboard_KillmailParser_KillmailErrorException('No item found with the name ' . $name);
    }
@@ -213,14 +245,17 @@ class Kingboard_KillmailParser_IdFinder
    public function getSolarSystemId($name)
    {
        $result = Kingboard_EveSolarSystem::getInstanceByCriteria(array('itemName' => $name));
-       if (is_object($result)) {
+       if (is_object($result))
+       {
            return (int) $result->itemID;
        }
        
-       try {
+       try
+       {
            return (int) $this->queryNameToIdApi($name);
        }
-       catch(Kingboard_KillmailParser_KillmailErrorException $e) {
+       catch(Kingboard_KillmailParser_KillmailErrorException $e)
+       {
        }
        throw new Kingboard_KillmailParser_KillmailErrorException('No system found with the name ' . $name);
    }
@@ -235,10 +270,12 @@ class Kingboard_KillmailParser_IdFinder
    public function getFactionId($name)
    {
       // Try to find in kills collection
-      try {
+      try
+      {
           return (int) $this->queryKillCollections($name, 'faction');
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e) {
+      catch (Kingboard_KillmailParser_KillmailErrorException $e)
+      {
             // Nothing found, ask the API
           return (int) $this->queryNameToIdApi($name);
       }
