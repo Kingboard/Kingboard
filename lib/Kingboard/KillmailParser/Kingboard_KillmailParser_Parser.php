@@ -134,9 +134,9 @@ class Kingboard_KillmailParser_Parser
             $plainLine = array_shift($lines);
             try
             {
-                // If it has a name token and a backslash, we presume the contents
-                // after the backslash is the corporation name
-                // This is done for NPC names and their corps, and a backslash
+                // If it has a name token and a slash, we presume the contents
+                // after the slash is the corporation name
+                // This is done for NPC names and their corps, and a slash
                 // is no valid item name, yet is valid in a killmail
                 $strTools = Kingboard_Helper_String::getInstance();
                 if ($strTools->stripos($tokens->name(), $plainLine) !== false && $strTools->strpos('/', $plainLine) !== false)

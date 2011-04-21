@@ -55,7 +55,7 @@ class Kingboard_KillmailParser_Factory
      * the according Kingboard_Kill object
      *
      * @param string $mail
-     * @return Kingboard_KillmailParser_Parser
+     * @return Kingboard_Kill
      */
     public static function parseTextMail($mail)
     {
