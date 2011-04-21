@@ -465,7 +465,7 @@ class Kingboard_KillmailParser_Line
     }
     
     /**
-     * Determne if the given name is a valid corporation name
+     * Determine if the given name is a valid corporation name
      * according to http://support.eveonline.com/Pages/KB/Article.aspx?id=37
      * 
      * @param string $name
