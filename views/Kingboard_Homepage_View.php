@@ -10,17 +10,17 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 if(!empty($request['hid']))
                 {
                     $count = Kingboard_Kill::find(
-                        array('attackers.characterID' => $request['hid'])
+                        array('attackers.characterID' => (int) $request['hid'])
                     )->count();
 
                     $data = Kingboard_Kill::find(
                       array('$or' => array(
-                          array('victim.characterID' => $request['hid']),
-                          array('attackers.characterID' => $request['hid'])
+                          array('victim.characterID' => (int) $request['hid']),
+                          array('attackers.characterID' => (int)  $request['hid'])
                       ))
                     )->sort(array('killTime' => -1));
                     $data = $data->limit(20);
-                    Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduce($request['hid']);
+                    Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduce((int) $request['hid']);
                     $stats = Kingboard_Kill_MapReduce_KillsByShipByPilot::find();
                     $template = "pilot_home.html";
                     $info = array(

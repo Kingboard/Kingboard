@@ -33,8 +33,8 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
     {
         // find a random kill with characterID $id
         $kill = self::_findOne(__CLASS__, array('$or' => array(
-                          array('victim.characterID' => $id),
-                          array('attackers.characterID' => $id)
+                          array('victim.characterID' => (int) $id),
+                          array('attackers.characterID' => (int) $id)
         )));
 
         if($kill['victim']['characterID'] == $id)

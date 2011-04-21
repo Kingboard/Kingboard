@@ -44,7 +44,7 @@
                 <td>{% if kill.victim.allianceID %}<img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
                 <td>{{kill.victim.allianceName}}</td>
             {% endif %}
-            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region }}" target="_blank">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem }}" target="_blank">{{ kill.location.solarSystem }}</a> / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.killID }}/">Details..</a></td>
+            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region }}" target="_blank">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem }}" target="_blank">{{ kill.location.solarSystem }}</a> / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.idHash }}/">Details..</a></td>
         </tr>
 {% endfor %}
     </tbody>

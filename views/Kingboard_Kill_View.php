@@ -4,7 +4,7 @@ class Kingboard_Kill_View extends Kingboard_Base_View
     public function index($request)
     {
         $context = array();
-        $context['killdata'] = Kingboard_Kill::getByKillId($request['killID']);
+        $context['killdata'] = Kingboard_Kill::getInstanceByIdHash($request['killID']);
 
         foreach($context['killdata']['attackers'] as $attacker)
         {
@@ -16,7 +16,7 @@ class Kingboard_Kill_View extends Kingboard_Base_View
         }
         ksort($stats);
         $context['stats'] = $stats;
-        
+
         return $this->render('kill.html', $context);
     }
 }

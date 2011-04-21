@@ -12,7 +12,9 @@ class Kingboard_Task extends King23_CLI_Task
         "key_add" => "add an apikey, requires userid, apikey",
         "key_check" => "run through all keys, add marker to those not responding",
         "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers.",
-        "key_purge" => "remove all keys who have more than x markers, where x is a parameter" 
+        "key_purge" => "remove all keys who have more than x markers, where x is a parameter",
+        "feed_add" => "add a feed to the feeds to be pulled",
+        "feed_pull" => "pull feeds"
     );
 
     /**
@@ -160,20 +162,20 @@ class Kingboard_Task extends King23_CLI_Task
                         foreach($kill->attackers as $attacker)
                         {
                             $killdata['attackers'][] = array(
-                                "characterID" => $attacker->characterID,
+                                "characterID" => (int) $attacker->characterID,
                                 "characterName" => $attacker->characterName,
-                                "corporationID" => $attacker->corporationID,
+                                "corporationID" => (int) $attacker->corporationID,
                                 "corporationName" => $attacker->corporationName,
-                                "allianceID" => $attacker->allianceID,
+                                "allianceID" => (int) $attacker->allianceID,
                                 "allianceName" => $attacker->allianceName,
-                                "factionID" => $attacker->factionID,
+                                "factionID" => (int) $attacker->factionID,
                                 "factionName" => $attacker->factionName,
                                 "securityStatus" => $attacker->securityStatus,
                                 "damageDone" => $attacker->damageDone,
                                 "finalBlow"  => $attacker->finalBlow,
-                                "weaponTypeID" => $attacker->weaponTypeID,
+                                "weaponTypeID" => (int) $attacker->weaponTypeID,
                                 "weaponType" => Kingboard_EveItem::getByItemId($attacker->weaponTypeID)->typeName,
-                                "shipTypeID" => $attacker->shipTypeID,
+                                "shipTypeID" => (int) $attacker->shipTypeID,
                                 "shipType"  => Kingboard_EveItem::getByItemId($attacker->shipTypeID)->typeName
                             );
                         }
@@ -232,5 +234,63 @@ class Kingboard_Task extends King23_CLI_Task
             }
         }
         return $item;
+    }
+
+    public function feed_add($options)
+    {
+        $this->cli->header('adding new feed');
+        if(count($options) != 1)
+        {
+            $this->cli->error('exactly one parameter (url) should be given');
+            return;
+        }
+
+        if(!is_null(Kingboard_EdkFeed::findByUrl($options[0])))
+        {
+            $this->cli->error('a feed by this url allready exists!');
+            return;
+        }
+
+        $feed = new Kingboard_EdkFeed();
+        $feed->url = $options[0];
+        $feed->save();
+        $this->cli->positive('done');
+    }
+
+    public function feed_pull($options)
+    {
+        $this->cli->header('pulling all feeds');
+        $feeds = Kingboard_EdkFeed::find();
+        foreach($feeds as $feed)
+        {
+
+            $url = $feed->url;
+            $this->cli->message('pulling ' . $url);
+            $sxo =simplexml_load_file($url);
+            $processed = 0;
+            $killcount = count($sxo->channel->item);
+            $this->cli->message("processing $killcount kills.");
+            foreach($sxo->channel->item as $item)
+            {
+                $this->cli->message('processing ' . ++$processed . ' out of ' .  $killcount);
+                $mailtext = trim((string) $item->description);
+                if(isset($item->apiID))
+                    $apiId = (string) $item->apiID;
+                else
+                    $apiId = null;
+
+                try {
+                    $mail = Kingboard_KillmailParser_Factory::parseTextMail($mailtext);
+                    $mail->killID = $apiId;
+                    $mail->save();
+                } catch(Kingboard_KillmailParser_KillmailErrorException $e) {
+                    $this->cli->error("Exception caught, mail was not processed");
+                    $this->cli->error($e->getMessage());
+                    $this->cli->error($e->getFile() . '::' . $e->getLine());
+                }
+
+            }
+            $this->cli->positive('done');
+        }
     }
 }
