@@ -43,11 +43,11 @@ class Kingboard_KillmailParser_Validator
     public function validateKillmailData(array $data)
     {
         // Validate the killtime
-        if (empty($data['killtime']))
+        if (empty($data['killTime']))
         {
             throw new Kingboard_KillmailParser_KillmailErrorException('No killtime');
         }
-        $this->validateKilltime($data['killtime']);
+        $this->validateKilltime($data['killTime']);
 
         // Validate the basic structure of the array
         if (empty($data['victim']) || empty($data['location']) || empty($data['attackers']))

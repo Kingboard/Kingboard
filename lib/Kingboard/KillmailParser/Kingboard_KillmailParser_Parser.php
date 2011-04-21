@@ -468,7 +468,7 @@ class Kingboard_KillmailParser_Parser
     {
         return array(
             'idHash'    => $this->getIdHash(),
-            'killtime'  => $this->getTime(),
+            'killTime'  => $this->getTime(),
             'victim'    => $this->getVictim(),
             'attackers' => $this->getAttackers(),
             'items'     => $this->getItems(),
