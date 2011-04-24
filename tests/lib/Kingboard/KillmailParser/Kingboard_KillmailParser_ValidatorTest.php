@@ -662,6 +662,7 @@ Cap Recharger II, Qty: 2
      * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
     public function characterNameMustNotContainMoreThanOneSpace() {
+        $this->markTestSkipped('Disabled this check since character names can be type names if an attacker is a NPC');
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateCharacterName('1234 56789 0poiudfghjkl');
     }

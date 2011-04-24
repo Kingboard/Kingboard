@@ -2,7 +2,7 @@
 return array(
     'idHash' => sha1('1198350000170694538811041137923271137923271'),
     'errors' => array(),
-    'killtime' => 1198350000,
+    'killTime' => 1198350000,
     'location' => array(
         'solarSystemID' => 30005212,
         'solarSystemName' => 'Toon',

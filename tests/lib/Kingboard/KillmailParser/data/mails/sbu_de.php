@@ -2,7 +2,7 @@
 return array(
     'idHash' => '755ce544f1aed88fb784ce671393769b884649dc',
     'errors' => array(),
-    'killtime' => 1279105320,
+    'killTime' => 1279105320,
     'location' => array(
         'solarSystemID' => 30000772,
         'solarSystemName' => 'C-J6MT',

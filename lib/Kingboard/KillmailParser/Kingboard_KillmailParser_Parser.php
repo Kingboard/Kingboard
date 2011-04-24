@@ -116,7 +116,7 @@ class Kingboard_KillmailParser_Parser
     {
         $this->plainMail = $mail;
         
-        $victimActive    = false;
+        $victimActive    = true;
         $involed         = false;
         $destroyed       = false;
         $dropped         = false;
@@ -162,7 +162,6 @@ class Kingboard_KillmailParser_Parser
                 {
                     case Kingboard_KillmailParser_Line::TYPE_TIME:
                         $this->killTime = $line->getValue();
-                        $victimActive = true;
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_NAME:
@@ -180,7 +179,8 @@ class Kingboard_KillmailParser_Parser
                                 'factionID'       => 0,
                                 'weaponType'      => '',
                                 'weaponTypeID'    => 0,
-                                'finalBlow'       => false
+                                'finalBlow'       => false,
+                                'securityStatus'  => 0.0
                             );
                             $this->attackers[$currentAttacker]['characterName'] = $line->getValue();
                             $this->attackers[$currentAttacker]['characterID']   = $ids->getCharacterId($line->getValue());
@@ -188,7 +188,6 @@ class Kingboard_KillmailParser_Parser
                         }
                         else
                         {
-                            $victimActive = TRUE;
                             $this->victim['characterName'] = $line->getValue();
                             $this->victim['characterID'] = $ids->getCharacterId($line->getValue());
                         }

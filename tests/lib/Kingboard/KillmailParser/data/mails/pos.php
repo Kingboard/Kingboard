@@ -2,7 +2,7 @@
 return array(
     'idHash' => '11dac3f76574d163d0423c1c56f0bfe9aaff6920',
     'errors' => array(),
-    'killtime' => 1301692260,
+    'killTime' => 1301692260,
     'location' => array(
         'solarSystemID' => 30003971,
         'solarSystemName' => 'P4-3TJ',

@@ -389,11 +389,12 @@ class Kingboard_KillmailParser_Validator
         }
 
         // Only one space per name
-        $hits = array();
-        if (preg_match_all('/\s+/', $name, $hits) > 1)
-        {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Name has more than one space character');
-        }
+        // @TODO Check if it is safe to disable the one space only check. Disabled because typeNames can be attacker names (eg: a POS or a NPC)
+//        $hits = array();
+//        if (preg_match_all('/\s+/', $name, $hits) > 1)
+//        {
+//            throw new Kingboard_KillmailParser_KillmailErrorException('Name has more than one space character');
+//        }
 
         // Passed every test, must be valid
         return true;
