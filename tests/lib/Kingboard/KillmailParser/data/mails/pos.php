@@ -2,14 +2,9 @@
 return array(
     'idHash' => '11dac3f76574d163d0423c1c56f0bfe9aaff6920',
     'errors' => array(),
-    'killTime' => 1301692260,
-    'location' => array(
-        'solarSystemID' => 30003971,
-        'solarSystemName' => 'P4-3TJ',
-        'security' => 0.0,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1301692260),
+    'solarSystemID' => 30003971,
+    'moonID' => 0,
     'victim' => array(
         'corporationName' => 'The Ostrogoths',
         'corporationID' => 834777647,

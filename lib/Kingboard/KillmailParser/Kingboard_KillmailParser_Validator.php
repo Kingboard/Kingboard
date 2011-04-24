@@ -101,6 +101,7 @@ class Kingboard_KillmailParser_Validator
     {
         $minTime = mktime(0, 0, 0, 5, 1, 2003); // Must be after the creation of the universe
         $maxTime = time() - 10; // Must be older than now
+        $time    = strtotime($time);
 
         if (!is_int($time) || $time < $minTime || $time > $maxTime)
         {

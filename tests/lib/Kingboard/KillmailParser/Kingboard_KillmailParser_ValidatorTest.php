@@ -238,9 +238,9 @@ Cap Recharger II, Qty: 2
      * @test
      * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
-    public function killTimeMustBeInteger() {
+    public function killTimeMustBeAParseableString() {
         $v = new Kingboard_KillmailParser_Validator();
-        $v->validateKilltime('1234567890');
+        $v->validateKilltime('tomorrow evening');
     }
 
     /**
@@ -250,7 +250,7 @@ Cap Recharger II, Qty: 2
      */
     public function killTimeMustBeAfterTheEveRelease() {
         $v = new Kingboard_KillmailParser_Validator();
-        $v->validateKilltime(20);
+        $v->validateKilltime(date('Y-m-d H:i:s', 20));
     }
 
     /**
@@ -260,7 +260,7 @@ Cap Recharger II, Qty: 2
      */
     public function killTimeMustNotBeInTheFuture() {
         $v = new Kingboard_KillmailParser_Validator();
-        $v->validateKilltime(time() + 100);
+        $v->validateKilltime(date('Y-m-d H:i:s', time() + 100));
     }
 
     /**
@@ -269,7 +269,7 @@ Cap Recharger II, Qty: 2
      */
     public function validKillTimeReturnsTrue() {
         $v = new Kingboard_KillmailParser_Validator();
-        $this->assertTrue($v->validateKilltime(time() - 3600));
+        $this->assertTrue($v->validateKilltime(date('Y-m-d H:i:s', time() - 3600)));
     }
 
     /**
@@ -655,16 +655,6 @@ Cap Recharger II, Qty: 2
     public function characterNameMustNotContainValidSpecialCharacterAtTheEnd() {
         $v = new Kingboard_KillmailParser_Validator();
         $v->validateCharacterName('1234567890poiudfghjkl\'');
-    }
-
-    /**
-     * @test
-     * @expectedException Kingboard_KillmailParser_KillmailErrorException
-     */
-    public function characterNameMustNotContainMoreThanOneSpace() {
-        $this->markTestSkipped('Disabled this check since character names can be type names if an attacker is a NPC');
-        $v = new Kingboard_KillmailParser_Validator();
-        $v->validateCharacterName('1234 56789 0poiudfghjkl');
     }
 
     /**

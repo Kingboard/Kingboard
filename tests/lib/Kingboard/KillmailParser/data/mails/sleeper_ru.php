@@ -2,14 +2,9 @@
 return array(
     'idHash' => sha1('127164456010953700633019530195'),
     'errors' => array(),
-    'killTime' => 1271644560,
-    'location' => array(
-        'solarSystemID' => 31001838,
-        'solarSystemName' => 'J122056',
-        'security' => -0.0,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1271644560),
+    'solarSystemID' => 31001838,
+    'moonID' => 0,
     'victim' => array(
         'characterName' => 'Mia Andreana',
         'characterID' => 1095370063,

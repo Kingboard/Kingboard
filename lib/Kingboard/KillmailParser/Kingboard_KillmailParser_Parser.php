@@ -465,15 +465,18 @@ class Kingboard_KillmailParser_Parser
      */
     public function getDataArray()
     {
+        $location = $this->getLocation();
         return array(
-            'idHash'    => $this->getIdHash(),
-            'killTime'  => $this->getTime(),
-            'victim'    => $this->getVictim(),
-            'attackers' => $this->getAttackers(),
-            'items'     => $this->getItems(),
-            'location'  => $this->getLocation(),
-            'errors'    => $this->errors,
-            'plainMail' => $this->plainMail
+            'idHash'        => $this->getIdHash(),
+            'killTime'      => date('d-m-Y H:i:s', $this->getTime()),
+            'solarSystemID' => $location['solarSystemID'],
+            'moonID'        => $location['moonID'],
+            'victim'        => $this->getVictim(),
+            'attackers'     => $this->getAttackers(),
+            'items'         => $this->getItems(),
+            'location'      => $this->getLocation(),
+            'errors'        => $this->errors,
+            'plainMail'     => $this->plainMail
         );
     }
 

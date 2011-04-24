@@ -2,14 +2,9 @@
 return array(
     'idHash' => '755ce544f1aed88fb784ce671393769b884649dc',
     'errors' => array(),
-    'killTime' => 1279105320,
-    'location' => array(
-        'solarSystemID' => 30000772,
-        'solarSystemName' => 'C-J6MT',
-        'security' => -0.3,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1279105320),
+    'solarSystemID' => 30000772,
+    'moonID' => 0,
     'victim' => array(
         'corporationName' => 'A-Priori',
         'corporationID' => 447700759,

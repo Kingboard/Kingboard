@@ -2,14 +2,9 @@
 return array(
     'idHash' => sha1('1198350000170694538811041137923271137923271'),
     'errors' => array(),
-    'killTime' => 1198350000,
-    'location' => array(
-        'solarSystemID' => 30005212,
-        'solarSystemName' => 'Toon',
-        'security' => 0.4,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1198350000),
+    'solarSystemID' => 30005212,
+    'moonID' => 0,
     'victim' => array(
         'characterName' => 'Zeik Vethien',
         'characterID' => 1706945388,

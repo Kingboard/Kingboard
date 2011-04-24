@@ -2,14 +2,9 @@
 return array(
     'idHash' => sha1('130225050090558917100109932419125827321001099324'),
     'errors' => array(),
-    'killTime' => 1302250500,
-    'location' => array(
-        'solarSystemID' => 30004740,
-        'solarSystemName' => '6Q-R50',
-        'security' => -0.1,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1302250500),
+    'solarSystemID' => 30004740,
+    'moonID' => 0,
     'victim' => array(
         'characterName' => 'sbyq',
         'characterID' => 90558917,

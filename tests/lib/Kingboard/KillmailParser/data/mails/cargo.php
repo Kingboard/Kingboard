@@ -2,14 +2,9 @@
 return array(
     'idHash' => sha1('130201260038178615816881525501688152550'),
     'errors' => array(),
-    'killTime' => 1302012600,
-    'location' => array(
-        'solarSystemID' => 30003962,
-        'solarSystemName' => 'MKD-O8',
-        'security' => 0.0,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1302012600),
+    'solarSystemID' => 30003962,
+    'moonID' => 0,
     'victim' => array(
         'characterName' => 'WiReZ',
         'characterID' => 381786158,

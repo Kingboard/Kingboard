@@ -2,14 +2,9 @@
 return array(
     'idHash' => '3ff7793d63f2fe017e0e7dcf36e961f3422e9227',
     'errors' => array(),
-    'killTime' => 1303121580,
-    'location' => array(
-        'solarSystemID' => 30000277,
-        'solarSystemName' => 'IR-DYY',
-        'security' => 0.0,
-        'moon' => '',
-        'moonID' => 0
-    ),
+    'killTime' => date('d-m-Y H:i:s', 1303121580),
+    'solarSystemID' => 30000277,
+    'moonID' => 0,
     'victim' => array(
         'characterID' => 471129156,
         'characterName' => 'Blastfizzle',
