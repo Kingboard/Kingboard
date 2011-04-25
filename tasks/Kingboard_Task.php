@@ -180,7 +180,7 @@ class Kingboard_Task extends King23_CLI_Task
                             );
                         }
                         $killdata['items'] = array();
-                        $container1 = false;
+                        
                         foreach($kill->items as $item)
                         {
                             $killdata['items'][] = $this->ParseItem($item);
