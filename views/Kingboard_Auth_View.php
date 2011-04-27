@@ -26,7 +26,7 @@ class Kingboard_Auth_View extends Kingboard_Base_View
             }
         }
         // not logged in yet, show login page
-        $this->render("static/login.html", $context);
+        $this->render("user/login.html", $context);
     }
 
     public function logout($request)
