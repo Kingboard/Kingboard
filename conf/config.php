@@ -47,3 +47,4 @@ $reg->imagePaths = array(
 
 require_once("routes.php");
 
+session_start();

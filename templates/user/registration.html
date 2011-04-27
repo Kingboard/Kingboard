@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Register as a new User</h1>
+        <form name="registration" method="post" action="/user/registration">
+            <fieldset>
+                <input type="hidden" name="XSRF" value="{{ XSRF }}" />
+                <legend>User Information</legend>
+        {% if registration_failed %}
+        <div style="color: #FF0000; margin-left:auto; margin-right: auto; width: 260px;">{{ registration_failed }}</div>
+        {% endif %}
+                <ul>
+                    <li>
+                        <label for="login">email/login</label>
+                        <input id="login" name="login" type="email" placeholder="email/login" value="{{ login }}">
+                    </li>
+                    <li>
+                        <label for="passwd">password</label>
+                        <input id="passwd" name="passwd" type="password" placeholder="password" value="{{ passwd }}">
+                    </li>
+                    <li>
+                        <label for="passwd">password confirmation</label>
+                        <input id="passwdc" name="passwd2" type="password" placeholder="password confirmation" value="{{ passwd2 }}">
+                    </li>
+                    <li><input type="submit" value="Register"></li>
+                </ul>
+            </fieldset>
+        </form>
+{% endblock %}

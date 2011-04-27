@@ -98,6 +98,24 @@ class Kingboard_Task extends King23_CLI_Task
             $key->delete();
         }
     }
+
+
+    public function standings(array $options)
+    {
+        foreach(Kingboard_EveApiKey::find() as $key)
+        {
+            $userid = $key['userid'];
+            $apikey = $key['apikey'];
+            $pheal = new Pheal($userid, $apikey, 'account');
+
+            foreach($pheal->Characters()->characters as $char)
+            {
+                $pheal->scope = "corp";
+                print_r($pheal->ContactList(array('characterID' => $char->characterID))->toArray());
+            }
+        }
+
+    }
     
     public function import(array $options)
     {

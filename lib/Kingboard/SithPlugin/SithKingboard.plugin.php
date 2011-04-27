@@ -12,7 +12,8 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
             'iskb'   => array('handler' => 'handleFISKB', 'minArgs' => 0),
             'isk'    => array('handler' => 'handleFISK', 'minArgs' => 0),
             'round'  => array('handler' => 'handleRound', 'minArgs' => 1),
-            'truncate' => array('handler' => 'handleTruncate', 'minArgs' => 0)
+            'truncate' => array('handler' => 'handleTruncate', 'minArgs' => 0),
+            'jsonify' => array('handler' => 'handleJsonify', 'minArgs' => 0)
         );
     }
     public function providedHooks()
@@ -42,6 +43,7 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
     {
         return 'number_format(%s, 2, ".",",") ." ISK"';
     }
+    
 
     public function handleRound(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args)
     {
@@ -54,5 +56,10 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
             $len = $args[0][1];
         else $len = 10;
         return 'substr(%s, 0, ' . $len .')';
+    }
+
+    public function handleJsonify(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args) 
+    {
+        return 'json_encode(%s)';
     }
 }

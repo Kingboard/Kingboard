@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <form name="login" method="post" action="/login">
+            <fieldset>
+                <legend>Login</legend>
+        {% if login_failed %}
+        <div style="color: #FF0000; margin-left:auto; margin-right: auto; width: 260px;">Login/Password combination wrong!</div>
+        {% endif %}
+                <ul>
+                    <li>
+                        <label for="login">email/login</label>
+                        <input id="login" name="login" type="email" placeholder="email/login">
+                    </li>
+                    <li>
+                        <label for="passwd">password</label>
+                        <input id="passwd" name="passwd" type="password" placeholder="password">
+                    </li>
+                    <li><input type="submit" value="Login"></li>
+                </ul>
+                <a href="/user/registration">Register</a>
+            </fieldset>
+        </form>
+{% endblock %}

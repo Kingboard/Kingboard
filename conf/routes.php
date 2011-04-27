@@ -31,3 +31,9 @@ $router->setBaseHost(King23_Registry::getInstance()->baseHost);
 $router->addRoute("/", "Kingboard_Homepage_View", "index", array(), array('htype', 'hid'));
 $router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));
 
+// registration
+$router->addRoute("/user/registration", "Kingboard_Auth_View", 'registerForm');
+$router->addRoute("/user/activate/", "Kingboard_Auth_View", 'activateUser',array('activationkey'));
+// authentication
+$router->addRoute("/login", "Kingboard_Auth_View", "login");
+$router->addRoute("/logout", "Kingboard_Auth_View", "logout");
