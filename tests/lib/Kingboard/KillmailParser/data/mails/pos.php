@@ -2,7 +2,7 @@
 return array(
     'idHash' => '11dac3f76574d163d0423c1c56f0bfe9aaff6920',
     'errors' => array(),
-    'killTime' => date('d-m-Y H:i:s', 1301692260),
+    'killTime' => new MongoDate(1301692260),
     'solarSystemID' => 30003971,
     'moonID' => 0,
     'victim' => array(

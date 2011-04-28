@@ -31,9 +31,10 @@ class Kingboard_KillmailParser_IdHashTest extends PHPUnit_Framework_TestCase {
 
     public function testTime() {
         $time = time();
-        $this->object->setTime($time);
+        $this->object->setTime(new MongoDate($time));
         $this->assertEquals($time, $this->object->getTime());
-        $this->object->setTime(-3);
+        $time = time() - 20;
+        $this->object->setTime(new MongoDate($time));
         $this->assertEquals($time, $this->object->getTime());
     }
 
@@ -65,9 +66,10 @@ class Kingboard_KillmailParser_IdHashTest extends PHPUnit_Framework_TestCase {
 
 
     public function testGenerateHash() {
-        $this->object->setAttackerIds(array(1,4))->setTime(2)->setVictimId(3)->setFinalBlowAttackerId(4);
+        $time = time() - 4000;
+        $this->object->setAttackerIds(array(1,4))->setTime(new MongoDate($time))->setVictimId(3)->setFinalBlowAttackerId(4);
         $actual = $this->object->generateHash();
-        $expected = sha1('23144');
+        $expected = sha1($time . '3144');
         $this->assertEquals($expected, $actual);
     }
 
@@ -77,7 +79,7 @@ class Kingboard_KillmailParser_IdHashTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToString() {
-        $this->object->setAttackerIds(array(1,4))->setTime(2)->setVictimId(3)->setFinalBlowAttackerId(4);
+        $this->object->setAttackerIds(array(1,4))->setTime(new MongoDate(time() - 4000))->setVictimId(3)->setFinalBlowAttackerId(4);
         $expected = $this->object->generateHash();
         $actual = (string) $this->object;
         $this->assertEquals($expected, $actual);

@@ -74,12 +74,16 @@ class Kingboard_KillmailParser_IdHash
     /**
      * Setter for killtime
      *
-     * @param integer $time
+     * @param MongoDate $time
      * @return Kingboard_KillmailParser_IdHash
      */
-    public function setTime($time)
+    public function setTime(MongoDate $time)
     {
-        if ((int) $time > 0)
+        // Extract the seconds
+        $timeString = (string) $time;
+        $parts = explode(' ', $timeString);
+        $time = (int) $parts[1];
+        if ($time > 0)
         {
             $this->time = $time;
         }

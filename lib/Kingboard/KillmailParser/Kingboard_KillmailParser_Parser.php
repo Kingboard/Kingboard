@@ -443,7 +443,7 @@ class Kingboard_KillmailParser_Parser
             $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
             $this->idHash = new Kingboard_KillmailParser_IdHash();
             $this->idHash->setVictimId($victimId)
-                         ->setTime($this->killTime);
+                         ->setTime($this->getTime());
 
             foreach ($this->attackers as $attacker)
             {
@@ -468,7 +468,7 @@ class Kingboard_KillmailParser_Parser
         $location = $this->getLocation();
         return array(
             'idHash'        => $this->getIdHash(),
-            'killTime'      => date('d-m-Y H:i:s', $this->getTime()),
+            'killTime'      => $this->getTime(),
             'solarSystemID' => $location['solarSystemID'],
             'moonID'        => $location['moonID'],
             'location'      => array(
@@ -556,11 +556,11 @@ class Kingboard_KillmailParser_Parser
     /**
      * Get the kill time as timestamp
      *
-     * @return integer
+     * @return MongoDate
      */
     public function getTime()
     {
-        return $this->killTime;
+        return new MongoDate((int) $this->killTime);
     }
 
     /**

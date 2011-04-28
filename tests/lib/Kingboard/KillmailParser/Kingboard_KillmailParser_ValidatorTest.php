@@ -228,19 +228,7 @@ Cap Recharger II, Qty: 2
         $parser = new Kingboard_KillmailParser_Parser();
         $result = $parser->parse($this->testmail)->getDataArray();
         $v = new Kingboard_KillmailParser_Validator();
-//        print_r($result);
         $this->assertTrue($v->validateKillmailData($result));
-    }
-
-
-    /**
-     *
-     * @test
-     * @expectedException Kingboard_KillmailParser_KillmailErrorException
-     */
-    public function killTimeMustBeAParseableString() {
-        $v = new Kingboard_KillmailParser_Validator();
-        $v->validateKilltime('tomorrow evening');
     }
 
     /**
@@ -250,7 +238,7 @@ Cap Recharger II, Qty: 2
      */
     public function killTimeMustBeAfterTheEveRelease() {
         $v = new Kingboard_KillmailParser_Validator();
-        $v->validateKilltime(date('Y-m-d H:i:s', 20));
+        $v->validateKilltime(new MongoDate(20));
     }
 
     /**
@@ -260,7 +248,7 @@ Cap Recharger II, Qty: 2
      */
     public function killTimeMustNotBeInTheFuture() {
         $v = new Kingboard_KillmailParser_Validator();
-        $v->validateKilltime(date('Y-m-d H:i:s', time() + 100));
+        $v->validateKilltime(new MongoDate(time() + 100));
     }
 
     /**
@@ -269,7 +257,7 @@ Cap Recharger II, Qty: 2
      */
     public function validKillTimeReturnsTrue() {
         $v = new Kingboard_KillmailParser_Validator();
-        $this->assertTrue($v->validateKilltime(date('Y-m-d H:i:s', time() - 3600)));
+        $this->assertTrue($v->validateKilltime(new MongoDate(time() - 3600)));
     }
 
     /**
