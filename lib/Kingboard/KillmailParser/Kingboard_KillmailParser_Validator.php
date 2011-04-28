@@ -94,14 +94,18 @@ class Kingboard_KillmailParser_Validator
     /**
      * Validates the killtime, as a UNIX timestamp in a valid range
      *
-     * @param integer $time
+     * @param MongoDate $time
      * @return boolean
      */
-    public function validateKilltime($time)
+    public function validateKilltime(MongoDate $time)
     {
         $minTime = mktime(0, 0, 0, 5, 1, 2003); // Must be after the creation of the universe
         $maxTime = time() - 10; // Must be older than now
-        $time    = strtotime($time);
+
+        // Extract timestamp
+        $time = (string) $time;
+        $parts = explode(' ', $time);
+        $time    = (int) $parts[1];
 
         if (!is_int($time) || $time < $minTime || $time > $maxTime)
         {

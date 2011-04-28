@@ -2,7 +2,7 @@
 return array(
     'idHash' => sha1('1198350000170694538811041137923271137923271'),
     'errors' => array(),
-    'killTime' => date('d-m-Y H:i:s', 1198350000),
+    'killTime' => new MongoDate(1198350000),
     'solarSystemID' => 30005212,
     'moonID' => 0,
     'victim' => array(

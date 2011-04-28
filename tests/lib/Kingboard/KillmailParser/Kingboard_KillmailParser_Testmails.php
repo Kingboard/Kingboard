@@ -73,7 +73,7 @@ class Kingboard_KillmailParser_Testmails
                $result = $this->compareArrays($value, $actual[$key], $parentIndex . '.' . $key);
            }
            else {
-               if ($value !== $actual[$key]) {
+               if ((string) $value !== (string) $actual[$key]) {
                    throw new UnexpectedValueException("Invalid in $parentIndex . $key, \nShould: '$value'\nIs: '{$actual[$key]}'\n");
                }
            }
