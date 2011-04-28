@@ -471,6 +471,11 @@ class Kingboard_KillmailParser_Parser
             'killTime'      => date('d-m-Y H:i:s', $this->getTime()),
             'solarSystemID' => $location['solarSystemID'],
             'moonID'        => $location['moonID'],
+            'location'      => array(
+                'solarSystem' => $location['solarSystemName'],
+                'security'    => $location['security'],
+                'region'      => Kingboard_EveSolarSystem::getBySolarSystemId($location['solarSystemID'])->Region['itemName']
+            ),
             'victim'        => $this->getVictim(),
             'attackers'     => $this->getAttackers(),
             'items'         => $this->getItems(),
