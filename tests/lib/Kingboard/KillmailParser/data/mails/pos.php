@@ -20,6 +20,7 @@ return array(
         array(
             'characterID' => 1218378562,
             'characterName' => 'Tekashi Ka',
+            'entityType' => 'char',
             'securityStatus' => -1.0,
             'corporationName' => 'Sniggerdly',
             'corporationID' => 828800677,
@@ -37,6 +38,7 @@ return array(
         array(
             'characterID' => 1081996709,
             'characterName' => 'Mistress Viper',
+            'entityType' => 'char',
             'corporationName' => 'GK inc.',
             'corporationID' => 627225053,
             'damageDone' => 4229893,
@@ -54,6 +56,7 @@ return array(
         array(
             'characterID' => 1302629506,
             'characterName' => 'Soul7aker',
+            'entityType' => 'char',
             'corporationName' => 'Black Omega Security',
             'corporationID' => 263585335,
             'damageDone' => 3900000,

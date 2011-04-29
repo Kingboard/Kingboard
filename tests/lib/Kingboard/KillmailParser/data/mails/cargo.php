@@ -22,6 +22,7 @@ return array(
         array(
             'characterID' => 1688152550,
             'characterName' => 'db T',
+            'entityType' => 'char',
             'securityStatus' => 0.6,
             'corporationName' => 'SniggWaffe',
             'corporationID' => 116777001,

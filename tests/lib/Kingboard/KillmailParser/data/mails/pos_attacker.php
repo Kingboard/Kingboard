@@ -22,6 +22,7 @@ return array(
         array(
             'characterID' => 90533163,
             'characterName' => 'Amarr Control Tower',
+            'entityType' => 'structure',
             'securityStatus' => 0.0,
             'corporationName' => 'x13',
             'corporationID' => 538004967,
