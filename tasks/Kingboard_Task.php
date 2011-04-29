@@ -164,6 +164,7 @@ class Kingboard_Task extends King23_CLI_Task
                             $killdata['attackers'][] = array(
                                 "characterID" => (int) $attacker->characterID,
                                 "characterName" => $attacker->characterName,
+                                "entityType" => Kingboard_Helper_EntityType::getEntityTypeByEntityId((int) $attacker->characterID),
                                 "corporationID" => (int) $attacker->corporationID,
                                 "corporationName" => $attacker->corporationName,
                                 "allianceID" => (int) $attacker->allianceID,

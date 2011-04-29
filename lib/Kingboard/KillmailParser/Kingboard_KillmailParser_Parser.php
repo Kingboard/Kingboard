@@ -185,6 +185,10 @@ class Kingboard_KillmailParser_Parser
                             $this->attackers[$currentAttacker]['characterName'] = $line->getValue();
                             $this->attackers[$currentAttacker]['characterID']   = $ids->getCharacterId($line->getValue());
                             $this->attackers[$currentAttacker]['finalBlow']     = $line->hasFinalBlow();
+                            $this->attackers[$currentAttacker]['entityType']    = Kingboard_Helper_EntityType::getEntityTypeByEntityId(
+                                $this->attackers[$currentAttacker]['characterID']
+                            );
+
                         }
                         else
                         {
