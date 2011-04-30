@@ -74,7 +74,7 @@ class Kingboard_KillmailParser_Parser
     /**
      * ID Hash of a killmail
      *
-     * @var Kingboard_KillmailParser_IdHash
+     * @var Kingboard_KillmailHash_IdHash
      */
     protected $idHash = null;
 
@@ -446,7 +446,7 @@ class Kingboard_KillmailParser_Parser
         if (!$this->idHash)
         {
             $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
-            $this->idHash = new Kingboard_KillmailParser_IdHash();
+            $this->idHash = new Kingboard_KillmailHash_IdHash();
             $this->idHash->setVictimId($victimId)
                          ->setTime($this->getTime());
 

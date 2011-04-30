@@ -31,7 +31,7 @@
  * @author Georg Grossberger
  * @package Kingboard
  */
-class Kingboard_KillmailParser_IdHash
+class Kingboard_KillmailHash_IdHash
 {
     /**
      * Unix timestamp of the killtime
@@ -75,7 +75,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for killtime
      *
      * @param MongoDate $time
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setTime(MongoDate $time)
     {
@@ -104,7 +104,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for victim character ID
      *
      * @param integer $victimId
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setVictimId($victimId)
     {
@@ -130,7 +130,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for all attacker character IDs
      *
      * @param array $attackerIds
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setAttackerIds(array $attackerIds)
     {
@@ -145,7 +145,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for a single attacker character ID
      *
      * @param integer $id
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function addAttackerId($id)
     {
@@ -170,7 +170,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for the attacker character ID that landed the final blow
      *
      * @param integer $finalBlowAttackerId
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setFinalBlowAttackerId($finalBlowAttackerId)
     {
