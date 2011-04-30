@@ -448,8 +448,14 @@ class Kingboard_KillmailParser_Parser
             $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
             $this->idHash = new Kingboard_KillmailHash_IdHash();
             $this->idHash->setVictimId($victimId)
+                         ->setVictimShip($this->victim['shipTypeID'])
                          ->setTime($this->getTime());
 
+            foreach ($this->items as $item)
+            {
+                $this->idHash->addItem($item);
+            }
+            
             foreach ($this->attackers as $attacker)
             {
                 $this->idHash->addAttackerId($attacker['characterID']);
