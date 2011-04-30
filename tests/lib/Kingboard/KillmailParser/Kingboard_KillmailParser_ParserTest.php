@@ -304,7 +304,11 @@ Cap Recharger II, Qty: 2
    public function parseActualMailInput($mail, $expected) {
        $mails = new Kingboard_KillmailParser_Testmails();
        $actual = $this->object->parse($mail)->getDataArray();
-       $this->assertTrue($mails->compareArrays($expected, $actual));
+       try {
+           $this->assertTrue($mails->compareArrays($expected, $actual));
+       } catch (UnexpectedValueException $e) {
+           $this->fail($e->getMessage());
+       }
    }
 }
 
