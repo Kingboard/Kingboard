@@ -128,7 +128,7 @@ class Kingboard_KillmailParser_Parser
         $ids = new Kingboard_KillmailParser_IdFinder();
         $lastMainItem = null;
         reset($lines);
-        
+
         while (count($lines) > 0)
         {
             $plainLine = array_shift($lines);
@@ -169,6 +169,8 @@ class Kingboard_KillmailParser_Parser
                         {
                             $currentAttacker++;
                             $this->attackers[$currentAttacker] = array(
+                                'characterName'   => '',
+                                'characterID'     => 0,
                                 'corporationName' => '',
                                 'corporationID'   => 0,
                                 'allianceName'    => '',
@@ -182,13 +184,12 @@ class Kingboard_KillmailParser_Parser
                                 'finalBlow'       => false,
                                 'securityStatus'  => 0.0
                             );
+                            $this->attackers[$currentAttacker]['finalBlow']     = $line->hasFinalBlow();
                             $this->attackers[$currentAttacker]['characterName'] = $line->getValue();
                             $this->attackers[$currentAttacker]['characterID']   = $ids->getCharacterId($line->getValue());
-                            $this->attackers[$currentAttacker]['finalBlow']     = $line->hasFinalBlow();
                             $this->attackers[$currentAttacker]['entityType']    = Kingboard_Helper_EntityType::getEntityTypeByEntityId(
                                 $this->attackers[$currentAttacker]['characterID']
                             );
-
                         }
                         else
                         {

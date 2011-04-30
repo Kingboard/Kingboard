@@ -320,8 +320,15 @@ class Kingboard_KillmailParser_Line
                         $finalBlow = true;
                         $value = trim(str_replace($tokens->finalBlow(), '', $value));
                     }
-                    if ($this->validCharacterName($value))
+                    $hits = array();
+                    if ($this->validCharacterName($value) || preg_match_all('/([\-]{1})/', $value, $hits) === 1)
                     {
+                        if (count($hits) > 0)
+                        {
+                            $parts = explode('-', $value);
+                            $value = trim($parts[1]);
+                            unset($parts);
+                        }
                         $this->value = $value;
                         $this->type = self::TYPE_NAME;
                         $this->finalBlow = $finalBlow;

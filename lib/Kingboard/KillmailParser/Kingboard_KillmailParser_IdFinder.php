@@ -115,26 +115,21 @@ class Kingboard_KillmailParser_IdFinder
       {
           return (int) $this->queryKillCollections($name, 'character');
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e)
-      {
-            // Nothing found, ask the API
-          try
-          {
-              return (int) $this->queryNameToIdApi($name);
-          }
-          catch (Kingboard_KillmailParser_KillmailErrorException $e)
-          {
-          }
-      }
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {}
       
       // Nothing found here, we just presume it's an npc which are stored as types
       try
       {
           return $this->getItemId($name);
       }
-      catch (Kingboard_KillmailParser_KillmailErrorException $e)
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {}
+      
+      // Nothing found, ask the API
+      try
       {
+          return (int) $this->queryNameToIdApi($name);
       }
+      catch (Kingboard_KillmailParser_KillmailErrorException $e) {}
 
       throw new Kingboard_KillmailParser_KillmailErrorException('No character found with the name ' . $name);
    }
