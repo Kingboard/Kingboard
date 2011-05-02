@@ -490,7 +490,7 @@ class Kingboard_KillmailParser_Parser
             'victim'        => $this->getVictim(),
             'attackers'     => $this->getAttackers(),
             'items'         => $this->getItems(),
-            'location'      => $this->getLocation(),
+            //'location'      => $this->getLocation(),
             'errors'        => $this->errors,
             'plainMail'     => $this->plainMail
         );
