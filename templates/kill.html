@@ -3,7 +3,7 @@
 
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 {% block content %}
-{{ killdata.killTime }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}
+{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}
 <table>
     <tr>
         <th>Victim:</th>

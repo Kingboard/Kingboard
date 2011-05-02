@@ -3,7 +3,7 @@ class Kingboard_Auth_View extends Kingboard_Base_View
 {
     public function __construct()
     {
-        parent::__construct(false);
+        parent::__construct();
     }
 
     public function login($request)
