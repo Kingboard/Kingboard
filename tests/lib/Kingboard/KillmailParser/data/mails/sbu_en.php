@@ -20,6 +20,7 @@ return array(
         array(
             'characterID' => 124240115,
             'characterName' => 'LinMei',
+            'entityType' => 'char',
             'securityStatus' => 5.0,
             'corporationName' => 'The All-Seeing Eye',
             'corporationID' => 859923679,
@@ -37,6 +38,7 @@ return array(
         array(
             'characterID' => 244227927,
             'characterName' => 'Varrakk',
+            'entityType' => 'char',
             'finalBlow' => false,
             'securityStatus' => -3.1,
             'corporationName' => 'Arcana Imperii Ltd.',
@@ -54,6 +56,7 @@ return array(
         array(
             'characterID' => 248433235,
             'characterName' => 'Shaleen',
+            'entityType' => 'char',
             'finalBlow' => false,
             'securityStatus' => -0.8,
             'corporationName' => 'Beach Boys',
@@ -71,6 +74,7 @@ return array(
         array(
             'characterID' => 1547815692,
             'characterName' => 'Dhaaran',
+            'entityType' => 'char',
             'finalBlow' => true,
             'securityStatus' => 1.8,
             'corporationName' => 'MicroFunks',
@@ -88,6 +92,7 @@ return array(
         array(
             'characterID' => 1328177155,
             'characterName' => 'cuffdawg',
+            'entityType' => 'char',
             'finalBlow' => false,
             'securityStatus' => 5.0,
             'corporationName' => 'CyberShield Inc',
@@ -105,6 +110,7 @@ return array(
         array(
             'characterID' => 360629959,
             'characterName' => 'ShinjiKonai',
+            'entityType' => 'char',
             'finalBlow' => false,
             'securityStatus' => -0.7,
             'corporationName' => 'Princeps Corp',
@@ -122,6 +128,7 @@ return array(
         array(
             'characterID' => 1392118079,
             'characterName' => 'NSA Bivas',
+            'entityType' => 'char',
             'finalBlow' => false,
             'securityStatus' => 0.7,
             'corporationName' => 'Rionnag Alba',

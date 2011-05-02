@@ -31,7 +31,7 @@
  * @author Georg Grossberger
  * @package Kingboard
  */
-class Kingboard_KillmailParser_IdHash
+class Kingboard_KillmailHash_IdHash
 {
     /**
      * Unix timestamp of the killtime
@@ -46,6 +46,13 @@ class Kingboard_KillmailParser_IdHash
      * @var integer
      */
     protected $victimId = 0;
+    
+    /**
+     * Type ID of the victim's destroyed ship
+     * 
+     * @var integer
+     */
+    protected $victimShip = 0;
 
     /**
      * Character IDs of the attackers
@@ -60,6 +67,13 @@ class Kingboard_KillmailParser_IdHash
      * @var integer
      */
     protected $finalBlowAttackerId = 0;
+    
+    /**
+     * Items destroyed and dropped
+     * 
+     * @var array
+     */
+    protected $items = array();
 
     /**
      * Getter for killtime
@@ -75,7 +89,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for killtime
      *
      * @param MongoDate $time
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setTime(MongoDate $time)
     {
@@ -104,7 +118,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for victim character ID
      *
      * @param integer $victimId
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setVictimId($victimId)
     {
@@ -114,6 +128,32 @@ class Kingboard_KillmailParser_IdHash
             $this->victimId = $victimId;
         }
         return $this;
+    }
+    
+    /**
+     * Setter for victim ship ID
+     * 
+     * @param type $shipId
+     * @return Kingboard_KillmailHash_IdHash 
+     */
+    public function setVictimShip($shipId)
+    {
+        $shipId = (int) $shipId;
+        if ($shipId > 0)
+        {
+            $this->victimShip = $shipId;
+        }
+        return $this;
+    }
+    
+    /**
+     * Getter for victim ship ID
+     * 
+     * @return integer
+     */
+    public function getVictimShip()
+    {
+        return $this->victimShip;
     }
 
     /**
@@ -130,7 +170,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for all attacker character IDs
      *
      * @param array $attackerIds
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setAttackerIds(array $attackerIds)
     {
@@ -145,7 +185,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for a single attacker character ID
      *
      * @param integer $id
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function addAttackerId($id)
     {
@@ -170,7 +210,7 @@ class Kingboard_KillmailParser_IdHash
      * Setter for the attacker character ID that landed the final blow
      *
      * @param integer $finalBlowAttackerId
-     * @return Kingboard_KillmailParser_IdHash
+     * @return Kingboard_KillmailHash_IdHash
      */
     public function setFinalBlowAttackerId($finalBlowAttackerId)
     {
@@ -189,12 +229,26 @@ class Kingboard_KillmailParser_IdHash
      */
     public function generateHash()
     {
-        if (count($this->attackerIds) < 1 || !$this->time || !$this->victimId || !$this->finalBlowAttackerId)
+        if (count($this->attackerIds) < 1 || !$this->time || !$this->victimId || !$this->finalBlowAttackerId || empty($this->victimShip))
         {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Needed hash arguments are missing');
+            throw new Kingboard_KillmailHash_ErrorException('Needed hash arguments are missing');
         }
-        sort($this->attackerIds);
-        return sha1($this->time . $this->victimId . implode('', $this->attackerIds) . $this->finalBlowAttackerId);
+        natsort($this->attackerIds);
+        natsort($this->items);
+        return sha1($this->time . $this->victimId . implode('', $this->attackerIds) . $this->finalBlowAttackerId . implode('', $this->items));
+    }
+    
+    /**
+     * Add an item
+     * 
+     * @param array $item
+     * @return Kingboard_KillmailHash_IdHash 
+     */
+    public function addItem(array $item)
+    {
+        $key = $item['typeID'] . $item['flag'] . $item['qtyDropped'] . $item['qtyDestroyed'];
+        $this->items[] = $key;
+        return $this;
     }
 
     /**

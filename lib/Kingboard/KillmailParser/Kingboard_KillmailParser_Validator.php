@@ -148,14 +148,29 @@ class Kingboard_KillmailParser_Validator
      */
     public function validateAttacker(array $attacker)
     {
-        if (!$this->isTypeEntryValid($attacker, 'character'))
+        if (!$this->isTypeEntryValid($attacker, 'character', true))
         {
             throw new Kingboard_KillmailParser_KillmailErrorException('No character for attacker given');
         }
-
-        if (!$this->validateCharacterName($attacker['characterName']) || !$this->isIdValid($attacker, 'character'))
+        
+        $validEntityTypes = array(
+            Kingboard_Helper_EntityType::ENTITY_CHARACTER,
+            Kingboard_Helper_EntityType::ENTITY_DEPLOYABLE,
+            Kingboard_Helper_EntityType::ENTITY_NPC,
+            Kingboard_Helper_EntityType::ENTITY_STRUCTURE
+        );
+        
+        if (!in_array($attacker['entityType'], $validEntityTypes, true))
         {
-            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character for attacker given');
+            throw new Kingboard_KillmailParser_KillmailErrorException('Invalid entity type for attacker given');
+        }
+        
+        if (!in_array($attacker['entityType'], array(Kingboard_Helper_EntityType::ENTITY_STRUCTURE, Kingboard_Helper_EntityType::ENTITY_DEPLOYABLE), true)) 
+        {
+            if (!$this->validateCharacterName($attacker['characterName']) || !$this->isIdValid($attacker, 'character'))
+            {
+                throw new Kingboard_KillmailParser_KillmailErrorException('Invalid character for attacker given');
+            }
         }
 
         $isSleeper = false;
@@ -361,15 +376,16 @@ class Kingboard_KillmailParser_Validator
      *
      * @param array $data
      * @param string $key
+     * @param boolean $onlyIssetCheck
      * @return boolean
      */
-    protected function isTypeEntryValid($data, $key)
+    protected function isTypeEntryValid($data, $key, $onlyIssetCheck = false)
     {
-        if (!empty($data[$key . 'Name']) || !empty($data[$key]))
+        if ($onlyIssetCheck)
         {
-            return !empty($data[$key . 'ID']);
+            return isset($data[$key . 'ID']) && (isset($data[$key]) || isset($data[$key . 'Name']));
         }
-        return false;
+        return !empty($data[$key . 'ID']) && (!empty($data[$key]) || !empty($data[$key . 'Name']));
     }
 
     /**

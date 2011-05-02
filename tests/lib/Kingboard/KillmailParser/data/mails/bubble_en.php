@@ -22,6 +22,7 @@ return array(
         array(
             'characterID' => 1001099324,
             'characterName' => 'Ktorn Sinus',
+            'entityType' => 'char',
             'securityStatus' => -9.3,
             'corporationName' => 'SniggWaffe',
             'corporationID' => 116777001,
@@ -39,6 +40,7 @@ return array(
         array(
             'characterID' => 1912582732,
             'characterName' => 'Nuel Suspect',
+            'entityType' => 'char',
             'securityStatus' => 5.0,
             'corporationName' => 'Abstract Speed',
             'corporationID' => 98014433,

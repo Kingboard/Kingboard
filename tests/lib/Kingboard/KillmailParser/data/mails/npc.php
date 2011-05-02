@@ -22,6 +22,7 @@ return array(
         array(
             'characterID' => 137923271,
             'characterName' => 'Goober70',
+            'entityType' => 'char',
             'securityStatus' => 4.0,
             'corporationName' => 'League of Gentlemen',
             'corporationID' => 370979777,
@@ -39,6 +40,7 @@ return array(
         array(
             'characterID' => 11041,
             'characterName' => 'Blood Diviner',
+            'entityType' => 'npc',
             'corporationName' => 'Blood Raiders',
             'corporationID' => 1000134,
             'damageDone' => 2918,

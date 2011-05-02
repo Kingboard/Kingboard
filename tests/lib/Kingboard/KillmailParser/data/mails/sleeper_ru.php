@@ -22,6 +22,7 @@ return array(
         array(
             'characterID' => 30195,
             'characterName' => 'Sleepless Safeguard',
+            'entityType' => 'npc',
             'damageDone' => 19316,
             'finalBlow' => true
         ),

@@ -62,8 +62,15 @@ class Kingboard_KillmailParser_Factory
         $parser = new Kingboard_KillmailParser_Parser();
         $parser->parse($mail);
 
-        $validator = new Kingboard_KillmailParser_Validator();
-        $validator->validateKillmailData($parser->getDataArray());
+        try 
+        {
+            $validator = new Kingboard_KillmailParser_Validator();
+            $validator->validateKillmailData($parser->getDataArray());
+        }
+        catch (Kingboard_KillmailHash_ErrorException $e)
+        {
+            throw new Kingboard_KillmailParser_KillmailErrorException($e->getMessage());
+        }
 
         return $parser->getModel();
     }

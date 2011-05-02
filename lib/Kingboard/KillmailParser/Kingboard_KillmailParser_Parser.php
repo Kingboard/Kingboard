@@ -74,7 +74,7 @@ class Kingboard_KillmailParser_Parser
     /**
      * ID Hash of a killmail
      *
-     * @var Kingboard_KillmailParser_IdHash
+     * @var Kingboard_KillmailHash_IdHash
      */
     protected $idHash = null;
 
@@ -128,7 +128,7 @@ class Kingboard_KillmailParser_Parser
         $ids = new Kingboard_KillmailParser_IdFinder();
         $lastMainItem = null;
         reset($lines);
-        
+
         while (count($lines) > 0)
         {
             $plainLine = array_shift($lines);
@@ -169,6 +169,8 @@ class Kingboard_KillmailParser_Parser
                         {
                             $currentAttacker++;
                             $this->attackers[$currentAttacker] = array(
+                                'characterName'   => '',
+                                'characterID'     => 0,
                                 'corporationName' => '',
                                 'corporationID'   => 0,
                                 'allianceName'    => '',
@@ -182,9 +184,12 @@ class Kingboard_KillmailParser_Parser
                                 'finalBlow'       => false,
                                 'securityStatus'  => 0.0
                             );
+                            $this->attackers[$currentAttacker]['finalBlow']     = $line->hasFinalBlow();
                             $this->attackers[$currentAttacker]['characterName'] = $line->getValue();
                             $this->attackers[$currentAttacker]['characterID']   = $ids->getCharacterId($line->getValue());
-                            $this->attackers[$currentAttacker]['finalBlow']     = $line->hasFinalBlow();
+                            $this->attackers[$currentAttacker]['entityType']    = Kingboard_Helper_EntityType::getEntityTypeByEntityId(
+                                $this->attackers[$currentAttacker]['characterID']
+                            );
                         }
                         else
                         {
@@ -441,10 +446,16 @@ class Kingboard_KillmailParser_Parser
         if (!$this->idHash)
         {
             $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
-            $this->idHash = new Kingboard_KillmailParser_IdHash();
+            $this->idHash = new Kingboard_KillmailHash_IdHash();
             $this->idHash->setVictimId($victimId)
+                         ->setVictimShip($this->victim['shipTypeID'])
                          ->setTime($this->getTime());
 
+            foreach ($this->items as $item)
+            {
+                $this->idHash->addItem($item);
+            }
+            
             foreach ($this->attackers as $attacker)
             {
                 $this->idHash->addAttackerId($attacker['characterID']);

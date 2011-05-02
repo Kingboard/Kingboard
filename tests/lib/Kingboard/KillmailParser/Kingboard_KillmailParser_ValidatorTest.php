@@ -725,7 +725,8 @@ Cap Recharger II, Qty: 2
     public function attackerCharacterNameMustBeValid() {
        $attacker = array(
            'characterName' => 'sad_',
-           'characterID' => 12345
+           'characterID' => 12345,
+           'entityType' => 'char',
        );
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
@@ -738,8 +739,25 @@ Cap Recharger II, Qty: 2
     public function attackerCharacterIdMustBeValid() {
        $attacker = array(
            'characterName' => 'Some char',
-           'characterID' => '12'
+           'characterID' => '12',
+           'entityType' => 'char'
        );
+       $v = new Kingboard_KillmailParser_Validator();
+       $v->validateAttacker($attacker);
+    }
+
+    /**
+     * @test
+     * @expectedException Kingboard_KillmailParser_KillmailErrorException
+     */
+    public function attackerMustHaveAValidEntityType() {
+       $attacker = array(
+           'characterName' => 'Some char',
+           'entityType' => 'herp a derp',
+           'characterID' => 12123,
+           'corporationName' => '',
+           'corporationID' => 12334
+       ); 
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
     }
@@ -751,6 +769,7 @@ Cap Recharger II, Qty: 2
     public function attackerMustHaveACorporation() {
        $attacker = array(
            'characterName' => 'Some char',
+           'entityType' => 'char',
            'characterID' => 12123,
            'corporationName' => '',
            'corporationID' => 12334
@@ -767,6 +786,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'as',
@@ -784,6 +804,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -803,6 +824,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -823,6 +845,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -843,6 +866,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -865,6 +889,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -889,6 +914,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -914,6 +940,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -939,6 +966,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Some char',
            'characterID' => 12123,
+           'entityType' => 'char',
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',
@@ -964,6 +992,7 @@ Cap Recharger II, Qty: 2
        $attacker = array(
            'characterName' => 'Blood Diviner',
            'characterID' => 1000134,
+           'entityType' => 'npc',
            'corporationName' => 'Blood Raiders',
            'corporationID' => 12334,
            'allianceName' => 'Some alli',

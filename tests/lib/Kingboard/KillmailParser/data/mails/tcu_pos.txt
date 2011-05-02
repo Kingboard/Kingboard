@@ -1,0 +1,223 @@
+2011.04.18 14:39
+
+Victim: 6RQ9-A
+Corp: Stella Polar Holdings
+Alliance: Stella Polaris.
+Faction: NONE
+Destroyed: Territorial Claim Unit
+System: 6RQ9-A
+Security: 0.0
+Damage Taken: 19896044
+
+Involved parties:
+
+Name: paterBob
+Security: 5.0
+Corp: Los Primitivos
+Alliance: United Pod Service
+Faction: NONE
+Ship: Nyx
+Weapon: Cyclops
+Damage Done: 1485000
+
+Name: DaMiGe
+Security: -0.8
+Corp: FinFleet
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Malleus
+Damage Done: 1350000
+
+Name: Mr Funkadelic
+Security: -1.4
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 1350000
+
+Name: Zardiem
+
+Security: 5.0
+Corp: The Ankou
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 1215000
+
+Name: Amandas Dream
+Security: 3.7
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 1200000
+
+Name: Leorden
+Security: 5.0
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Mantis
+Damage Done: 1200000
+
+Name: Grasfer Industry
+Security: 5.0
+Corp: FinFleet
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Malleus
+Damage Done: 1140000
+
+Name: Kindora
+
+Security: 3.6
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 1050000
+
+Name: Sir Rup
+Security: 2.8
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 1050000
+
+Name: Lunikoff GER
+Security: 2.8
+Corp: Bruderschaft freier Radikale
+Alliance: United Pod Service
+Faction: NONE
+Ship: Aeon
+Weapon: Tyrfing
+Damage Done: 972000
+
+Name: Sidila
+Security: 3.9
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Aeon
+Weapon: Tyrfing
+Damage Done: 972000
+
+Name: Ventosus
+
+Security: -0.9
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 930000
+
+Name: Spacersplitter
+Security: 4.3
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Wyvern
+Weapon: Cyclops
+Damage Done: 912600
+
+Name: Abraham Goldstein
+Security: -0.3
+Corp: Endstati0n
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 900000
+
+Name: Too Ducky
+Security: -8.9
+Corp: FinFleet
+Alliance: Raiden.
+Faction: NONE
+Ship: Nyx
+Weapon: Tyrfing
+Damage Done: 900000
+
+Name: Huntet Lifeform
+
+Security: 3.7
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Aeon
+Weapon: Malleus
+Damage Done: 864000
+
+Name: The Supremacy
+Security: 2.0
+Corp: x13
+Alliance: Raiden.
+Faction: NONE
+Ship: Aeon
+Weapon: Tyrfing
+Damage Done: 864000
+
+Name: Tadari
+Security: 4.0
+Corp: Operations Control
+Alliance: United Pod Service
+Faction: NONE
+Ship: Wyvern
+Weapon: Tyrfing
+Damage Done: 432000
+
+Name: Los Primitivos - Minmatar Control Tower
+Security: 0.0
+Corp: Los Primitivos
+Alliance: None
+Faction: NONE
+Ship: Unknown
+Weapon: Minmatar Control Tower
+Damage Done: 271768
+
+Name: kyle wolf
+Security: 5.0
+Corp: Los Primitivos
+Alliance: United Pod Service
+Faction: NONE
+Ship: Revelation
+Weapon: Revelation
+Damage Done: 110694
+
+Name: DjinnMoa
+Security: 4.9
+Corp: Bruderschaft freier Radikale
+Alliance: United Pod Service
+Faction: NONE
+Ship: Moros
+Weapon: Moros
+Damage Done: 104420
+
+Name: Thaliya Dejar
+Security: 5.0
+Corp: Full Contact
+Alliance: United Pod Service
+Faction: NONE
+Ship: Revelation
+Weapon: Revelation
+Damage Done: 101362
+
+Name: Ricolucas (laid the final blow)
+Security: 5.0
+Corp: Dragon Corporation
+Alliance: United Pod Service
+Faction: NONE
+Ship: Chimera
+Weapon: Einherji
+Damage Done: 94879
