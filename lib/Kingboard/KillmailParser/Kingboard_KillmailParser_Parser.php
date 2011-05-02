@@ -504,7 +504,7 @@ class Kingboard_KillmailParser_Parser
      */
     public function getModel()
     {
-        $model = Kingboard_Kill::getInstanceByIdHash(array('idHash' => $this->getIdHash()));
+        $model = Kingboard_Kill::getInstanceByIdHash($this->getIdHash());
         if (!$model)
         {
             $model = new Kingboard_Kill();
