@@ -160,7 +160,7 @@ class Kingboard_Task extends King23_CLI_Task
                                 "security" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
                                 "region" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->Region['itemName'],
                             ),
-                            "killTime" => new MongoDate($kill->killTime),
+                            "killTime" => new MongoDate(strtotime($kill->killTime)),
                             "moonID" => $kill->moonID,
                             "victim" => array(
                                 "characterID" => $kill->victim->characterID,
@@ -205,7 +205,10 @@ class Kingboard_Task extends King23_CLI_Task
                             $killdata['items'][] = $this->ParseItem($item);
                         }
                         
-                        if(is_null(Kingboard_Kill::getByKillId($killdata['killID'])))
+                        $hash = Kingboard_KillmailHash_IdHash::getByData($killdata);
+                        $killdata['idHash'] = (String) $hash;
+
+                        if(is_null(Kingboard_Kill::getInstanceByIdHash($killdata['idHash'])))
                         {
                             $this->cli->message("new kill, saving");
                             $killObject = new Kingboard_Kill();

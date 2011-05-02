@@ -260,4 +260,35 @@ class Kingboard_KillmailHash_IdHash
     {
         return $this->generateHash();
     }
+
+    /**
+     * Method that takes an associative array with killmail data and creates a hash for that.
+     * @static
+     * @param  $data
+     * @return Kingboard_KillmailHash_IdHash
+     */
+    public static function getByData($data)
+    {
+        $victimId = !empty($data['victim']['characterID']) ? $data['victim']['characterID'] : $data['victim']['corporationID'];
+        $idHash = new Kingboard_KillmailHash_IdHash();
+        $idHash->setVictimId($victimId)
+                     ->setVictimShip($data['victim']['shipTypeID'])
+                     ->setTime($data['killTime']);
+
+        foreach ($data['items'] as $item)
+        {
+            $idHash->addItem($item);
+        }
+
+        foreach ($data['attackers'] as $attacker)
+        {
+            $idHash->addAttackerId($attacker['characterID']);
+            if ($attacker['finalBlow'])
+            {
+                $idHash->setFinalBlowAttackerId($attacker['characterID']);
+            }
+        }
+        
+        return $idHash;
+    }
 }
