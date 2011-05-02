@@ -160,7 +160,7 @@ class Kingboard_Task extends King23_CLI_Task
                                 "security" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
                                 "region" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->Region['itemName'],
                             ),
-                            "killTime" => $kill->killTime,
+                            "killTime" => new MongoDate($kill->killTime),
                             "moonID" => $kill->moonID,
                             "victim" => array(
                                 "characterID" => $kill->victim->characterID,
