@@ -1,28 +1,29 @@
 {% load SithKingboard %}
 {% extends "base.html" %}
 
-{% block title %}Kingboard{% endblock %}
-{% block content %}<h1>Ships killed, total {{count}}</h1>
+{% block title %}Kingboard / Home{% endblock %}
+
+{% block header %}
+    <fieldset>
+        <legend>Global Statistics</legend>
+        <table>
+            <tr>
+                {% for group in stats %}
+                <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
+                {% if forloop.counter|divisibleby:6 and not forloop.last %}
+                    </tr><tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ count }}</td></tr>
+        </table>
+    </fieldset>
+{% endblock %}
+
+
+{% block content %}
 <div>
-<ul class="killed-ships-list">
-    {% for group in stats %}
-    <li style="border: 1px; border-color: #000000; border-style:solid;">
-        <div id="item{{ forloop.counter }}">
-            <!--div style="float: left;"><img src="{{ images.items }}{{ ship._id }}_32.png" /></div-->
-            {{ group._id|truncate:24 }}<div style="width:32px; float:right; text-align:right;">{{ group.value.total }}</div><div style="clear:both;"></div>
-        </div>
-    <div class="tooltip">
-        {% for ship, amount in group.value %}
-        {% if ship neq "total" %}
-            <div style="width: 140px;">{{ ship|truncate:18 }} <div style="width:32px; float:right; text-align:right;">{{ amount }}</div><div style="clear:both;"></div>
-        {% endif %}
-        {% endfor %}
-    </div>
-    </li>
-    {% endfor %}
-</ul>
-    <div style="clear: both"></div>
-</div>
+
 <h1>Last few Kills/Losses</h1>
 <table class="kill_list">
     <thead>
@@ -39,7 +40,7 @@
         </tr>
         <tr class="bottom">
             <td><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" width="20" height="20"/></td>
-            <td><a href="http://{{ kill.victim.characterID }}.pilot.{{ baseHost }}">{{kill.victim.characterName }}</a></td>
+            <td><a href="http://{{ baseHost }}/pilot/{{ kill.victim.characterID }}">{{kill.victim.characterName }}</a></td>
             {% if kill.victim.allianceID %}
                 <td>{% if kill.victim.allianceID %}<img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" width="20" height="20"/>{% endif %}</td>
                 <td>{{kill.victim.allianceName}}</td>
@@ -49,13 +50,13 @@
 {% endfor %}
     </tbody>
 </table>
-
+</div>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.killed-ships-list').easyListSplitter({ colNumber: 5, direction: 'horizontal' });
+    //$('.killed-ships-list').easyListSplitter({ colNumber: 5, direction: 'horizontal' });
 {% for group in stats %}
     $("#item{{ forloop.counter }}").tooltip();
 {% endfor %}

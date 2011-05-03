@@ -6,48 +6,48 @@ class Kingboard_Kill_MapReduce_KillsByShipByPilot extends King23_MongoObject imp
 {
     protected $_className = "Kingboard_Kill_MapReduce_KillsByShipByPilot";
 
+    public static function mapReduceKills($pilotid)
+    {
+        return self::mapReduce($pilotid, array('attackers.characterID' => $pilotid));
+    }
+
+    public static function mapReduceLosses($pilotid)
+    {
+        return self::mapReduce($pilotid, array('victim.characterID' => $pilotid));
+    }
 
     /**
      * run the map/reduce
      * @static
      * @return void
      */
-    public static function mapReduce($pilotid)
+    public static function mapReduce($pilotid, $filter)
     {
         $map = "function () {
-            emit(this.victim.shipTypeID, {shipName: this.victim.shipType, value : 1});
+            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)});
+            var info = {}
+            info[this.victim.shipType] = 1;
+            info[\"total\"] = 1;
+            if(ship != null && ship.marketGroup != null)
+                emit(ship.marketGroup.parentGroup.marketGroupName, info);
         }";
         $reduce = "function (k, vals) {
-            var sum = 0;
-            var shipName = '';
-            for (var i in vals) {
-                sum += vals[i].value;
-            }
-
-            return {shipName: vals[i].shipName, value: sum };
+            var sums = {}
+            var total = 0;
+            vals.forEach(function(info) {
+                info[\"total\"] = 0;
+                for (var key in info)
+                {
+                    if(sums[key] === undefined)
+                        sums[key] = 0;
+                    sums[key] += info[key];
+                    total += info[key];
+                }
+            });
+            sums[\"total\"] = total;
+            return sums;
         }";
-        King23_Mongo::mapReduce("Kingboard_Kill", __CLASS__, $map, $reduce, array('attackers.characterID' => $pilotid));
-    }
-
-
-    /**
-     * find all ships and their value
-     * @static
-     * @return King23_MongoResult
-     */
-    public static function find()
-    {
-        return self::_find(__class__, array());
-    }
-
-    /**
-     * counts the amount of m/r results
-     * @static
-     * @return int
-     */
-    public static function count()
-    {
-        return self::_find(__class__, array())->count();
+        return King23_Mongo::mapReduce("Kingboard_Kill", array('inline' => 1), $map, $reduce, $filter);
     }
 
 }

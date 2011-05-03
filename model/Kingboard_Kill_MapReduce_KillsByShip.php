@@ -18,6 +18,7 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
             var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)});
             var info = {}
             info[this.victim.shipType] = 1;
+            info[\"total\"] = 1;
             if(ship != null && ship.marketGroup != null)
                 emit(ship.marketGroup.parentGroup.marketGroupName, info);
         }";

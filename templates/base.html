@@ -19,8 +19,12 @@
 </head>
 <body>
 <div id="container">
-    <div id="header"><a href="http://{{ baseHost }}"><img src="/images/kingboard.png" /></a></div>
-    <div id="nav"><ul><li><a href="http://{{ baseHost }}/index/">Start</a></li></ul></div>
+    <div id="nav"><ul>
+        <li class="logo">Kingboard</li>
+        <li><a href="http://{{ baseHost }}/index/">Start</a></li>
+        <li><a href="http://{{ baseHost }}/account/">My Kingboard</a></li>
+    </ul></div>
+    <div id="header">{% block header %}{% endblock %}</div>
     <div id="main"><div id="content">{% block content %}Default Content{% endblock %}</div></div>
     <div id="footer">&copy; 2011, EVSCO / The Kingboard Team</div>
 </div>

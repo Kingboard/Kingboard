@@ -29,6 +29,57 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         return self::_findOne(__CLASS__, $criteria);
     }
 
+    /**
+     * Fetches Information about the pilot identified by characterID
+     * @static
+     * @param String $id
+     * @return array|null
+     */
+    public static function getPilotInfoFromId($id)
+    {
+        // find latest kill with characterID $id
+        $kill = self::_find(__CLASS__, array('$or' => array(
+                          array('victim.characterID' => (int) $id),
+                          array('attackers.characterID' => (int) $id)
+        )))->sort(array('killTime' => -1));
+
+        $kill->next();
+
+        if(!($kill = $kill->current()))
+            return null;
+
+        if($kill['victim']['characterID'] == $id)
+        {
+            return array(
+                "characterID" => $kill['victim']['characterID'],
+                "characterName" => $kill['victim']['characterName'],
+                "corporationID" => $kill['victim']['corporationID'],
+                "corporationName" => $kill['victim']['corporationName'],
+                "allianceID" => $kill['victim']['allianceID'],
+                "allianceName" => $kill['victim']['allianceName'],
+                "factionID" => $kill['victim']['factionID'],
+                "factionName" => $kill['victim']['factionID']
+            );
+        }
+        foreach($kill['attackers'] as $attacker)
+        {
+            if($attacker['characterID'] == $id)
+            {
+                return array(
+                    "characterID" => $attacker['characterID'],
+                    "characterName" => $attacker['characterName'],
+                    "corporationID" => $attacker['corporationID'],
+                    "corporationName" => $attacker['corporationName'],
+                    "allianceID" => $attacker['allianceID'],
+                    "allianceName" => $attacker['allianceName'],
+                    "factionID" => $attacker['factionID'],
+                    "factionName" => $attacker['factionID']
+                );
+            }
+        }
+        return null;
+    }
+
     public static function getPilotNameFromId($id)
     {
         // find a random kill with characterID $id

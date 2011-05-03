@@ -1,25 +1,19 @@
+/* Main  Layout */
+
 body {
-    background-color: #000000;
+    background-color: #302C29;
     font-family: Arial, Sans-Serif;
-    font-size: 11px;
+    font-size: 14px;
+    margin: 0;
 }
 
-table {
-    width: 720px;
-    background-color: #ffe3ed;
+#container {
+    background-color: #302C29;
+    border: 1px solid #cccccc;
 }
 
-tr {
-    background-color: #EFEFEF;
-}
-th{
-    text-align: left;
-    background-color: #000000;
-    color: #FFFFFF;
-}
-
-td {
-    background-color: #FFFFFF;
+#main {
+    background-color: #D1D1BC;
 }
 
 #content {
@@ -27,42 +21,29 @@ td {
     margin-right: auto;
     margin-top: 0px;
     margin-bottom: 0px;
-    width: 760px;
 }
 
-#container {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
-    background-color: #cccccc;
-    width: 800px;
-    border: 1px solid #cccccc;
 
+#header {
+    background-color: #302C29;
+    color: #D1D1BC;
 }
 
-#header, #footer {
-    background-color: #000000;
+
+#footer {
+    background-color: #302C29;
     text-align: center;
     color: #FFFFFF;
     min-height: 20px;
 }
 
-#main {
-    width: 800px;
-    background-color: #ffe3ed;
-    min-height: 300px;
-}
 
-
-#clear {
-    clear:both;
-}
-
+/* navigation */
 #nav {
-    background: #660000;
-    width:800px;
+    background: #6C8C84;
+ /*   width:800px; */
     margin:0;
-    height:22px;
+    height:26px;
 }
 
 #nav ul {
@@ -72,12 +53,14 @@ td {
     padding: 0;
 }
 
+
 #nav li {
     text-align: center;
     border-right: 1px solid #cccccc;
-    height:22px;
+    height:21px;
     margin: 0;
     padding: 0;
+    padding-top: 5px;
     padding-left: 5px;
     list-style: none;
     width: 100px;
@@ -85,8 +68,20 @@ td {
     float: left;
 }
 
+#nav li.logo {
+    font-weight: bold;
+    font-size: 16px;
+    width: 300px;
+    text-align: left;
+    padding-top: 4px;
+}
+
 #nav li:hover {
-    background: #ff3333;
+    background: #A7C4BB;
+}
+
+#nav li.logo:hover {
+    background: #6C8C84;
 }
 
 #nav a, #nav a:active, #nav a:link {
@@ -97,6 +92,24 @@ td {
 #nav a:hover {
     text-decoration: underline;
 }
+
+
+
+td.statstype {
+    width: 180px;
+}
+
+td.statsvalue {
+    width: 20px;
+    text-align: right;
+}
+
+
+#clear {
+    clear:both;
+}
+
+
 
 table.kill_list {
     border-width: 1px;
@@ -141,16 +154,8 @@ table.kill_list td.ship {
     text-align: left;
 }
 
-.killed-ships-list {
-    float: left;
-    width: 150px;
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-}
-
 .tooltip {
 	display:none;
-    background-color: #000000;
+    background-color: #302C29;
 	color:#fff;
 }

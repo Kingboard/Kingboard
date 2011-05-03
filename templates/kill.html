@@ -2,12 +2,14 @@
 {% extends "base.html" %}
 
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
-{% block content %}
-{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}
+
+{% block header %}
+<fieldset>
+<legend>{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}</legend>
 <table>
     <tr>
         <th>Victim:</th>
-        <td><a href="http://{{ killdata.victim.characterID }}.pilot.{{ baseHost }}">{{ killdata.victim.characterName }}</a></td>
+        <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
         <td rowspan="3">
              <img src="{{ images.characters }}{{killdata.victim.characterID}}_64.jpg" />
              <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_64.png" />
@@ -40,7 +42,10 @@
         <td>{{ killdata.victim.damageTaken }}</td>
     </tr>
 </table>
+</fieldset>
+{% endblock %}
 
+{% block content %}
 <div id="tabs">
 	<ul>
 		<li><a href="#involved-stats">Involved Stats</a></li>
@@ -74,7 +79,7 @@
                      <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="64" height="64"/>
                 </th>
                 <th>Attacker:</th>
-                <td><a href="http://{{ attacker.characterID }}.pilot.{{ baseHost }}">{{ attacker.characterName }}</a></td>
+                <td><a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a></td>
             </tr>
             <tr>
                 <th>Corporation:</th>
