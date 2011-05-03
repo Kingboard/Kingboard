@@ -14,9 +14,9 @@ assume a MIT Style license
 - PHP 5.2 (might run on earlier versions, untested)
 - APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!)
 - LINUX / MAC OS X (might run on windows, untested)
-- MongoDB
-- King23
-- Pheal
+- MongoDB: 1.8.1 or higher
+- King23:  current github clone
+- Pheal: current github clone
 
 ## INSTALLATION
 1. Clone it from github `git clone git://github.com/ppetermann/Kingboard.git`
