@@ -171,6 +171,7 @@ class Kingboard_KillmailParser_Parser
                             $this->attackers[$currentAttacker] = array(
                                 'characterName'   => '',
                                 'characterID'     => 0,
+                                'typeID'          => 0,
                                 'corporationName' => '',
                                 'corporationID'   => 0,
                                 'allianceName'    => '',
@@ -190,6 +191,11 @@ class Kingboard_KillmailParser_Parser
                             $this->attackers[$currentAttacker]['entityType']    = Kingboard_Helper_EntityType::getEntityTypeByEntityId(
                                 $this->attackers[$currentAttacker]['characterID']
                             );
+                            if ($this->attackers[$currentAttacker]['entityType'] == Kingboard_Helper_EntityType::ENTITY_NPC)
+                            {
+                                $this->attackers[$currentAttacker]['typeID'] = $this->attackers[$currentAttacker]['characterID'];
+                                $this->attackers[$currentAttacker]['characterID'] = 0;
+                            }
                         }
                         else
                         {
@@ -458,10 +464,10 @@ class Kingboard_KillmailParser_Parser
             
             foreach ($this->attackers as $attacker)
             {
-                $this->idHash->addAttackerId($attacker['characterID']);
+                $this->idHash->addAttacker($attacker['characterName']);
                 if ($attacker['finalBlow'])
                 {
-                    $this->idHash->setFinalBlowAttackerId($attacker['characterID']);
+                    $this->idHash->setFinalBlowAttackerId($attacker['characterName']);
                 }
             }
         }
