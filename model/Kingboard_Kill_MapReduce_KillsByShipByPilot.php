@@ -8,12 +8,12 @@ class Kingboard_Kill_MapReduce_KillsByShipByPilot extends King23_MongoObject imp
 
     public static function mapReduceKills($pilotid)
     {
-        return self::mapReduce($pilotid, array('attackers.characterID' => $pilotid));
+        return self::mapReduce(array('attackers.characterID' => $pilotid));
     }
 
     public static function mapReduceLosses($pilotid)
     {
-        return self::mapReduce($pilotid, array('victim.characterID' => $pilotid));
+        return self::mapReduce(array('victim.characterID' => $pilotid));
     }
 
     /**
@@ -21,7 +21,7 @@ class Kingboard_Kill_MapReduce_KillsByShipByPilot extends King23_MongoObject imp
      * @static
      * @return void
      */
-    public static function mapReduce($pilotid, $filter)
+    public static function mapReduce($filter)
     {
         $map = "function () {
             var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)});
