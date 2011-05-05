@@ -18,7 +18,7 @@ class Kingboard_Auth_View extends Kingboard_Base_View
                     Kingboard_Auth::logout();
                     return $this->render('user/activation_error.html', array('activation_failed' => 'this user has not been activated yet, please check your mailbox for the activation email and follow its instructions.'));
                 }
-                $this->redirect("/"); // login successfull, redirect to /
+                $this->redirect("/account/"); // login successfull, redirect to /
             }
             else
             {
