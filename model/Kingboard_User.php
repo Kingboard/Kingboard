@@ -29,13 +29,4 @@ class Kingboard_User extends King23_MongoObject
         return self::findOne(array('username' => $username, 'password' => $password));
     }
 
-    public function __wakeup()
-    {
-        if(!($mongo = King23_Registry::getInstance()->mongo))
-            throw new King23_MongoException('mongodb is not configured');
-
-        $colname = $this->_className;
-        $this->_collection = $mongo['db']->$colname;
-    }
-
 }
