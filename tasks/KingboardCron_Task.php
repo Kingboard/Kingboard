@@ -54,10 +54,23 @@ class KingboardCron_Task extends King23_CLI_Task
 
             $user = Kingboard_User::getById($token['userid']);
             $keys = $user['keys'];
-            $keys[$token['apiuserid']]['active'] = true;
-            $user['keys'] = $keys;
-            $user->save();
-            $token->delete();
+            $apiuserid = $token['apiuserid'];
+            $phealactivate = new Pheal($keys[$apiuserid]['apiuserid'], $keys[$apiuserid]['apikey']);
+            $characters = $phealactivate->Characters()->characters;
+            foreach($characters as $character)
+            {
+                if($character->characterID == $message->senderID)
+                {
+                    $keys[$apiuserid]['active'] = true;
+                    $user['keys'] = $keys;
+                    $user->save();
+                    $token->delete();
+
+                    $body = King23_Registry::getInstance()->sith->cachedGet('mails/activate_apikey.html')->render(array('username' => $user['username'], 'apiuserid' => $apiuserid ), King23_Registry::getInstance()->sith);
+                    mail($user['username'], "Kingboard API Key Activation", $body);
+                    break;
+                }
+            }
         }
     }
 }
