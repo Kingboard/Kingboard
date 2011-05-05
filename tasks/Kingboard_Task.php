@@ -163,16 +163,16 @@ class Kingboard_Task extends King23_CLI_Task
                             "killTime" => new MongoDate(strtotime($kill->killTime)),
                             "moonID" => $kill->moonID,
                             "victim" => array(
-                                "characterID" => $kill->victim->characterID,
+                                "characterID" => (int) $kill->victim->characterID,
                                 "characterName" => $kill->victim->characterName,
-                                "corporationID" => $kill->victim->corporationID,
+                                "corporationID" => (int) $kill->victim->corporationID,
                                 "corporationName" => $kill->victim->corporationName,
-                                "allianceID" => $kill->victim->allianceID,
+                                "allianceID" => (int) $kill->victim->allianceID,
                                 "allianceName" => $kill->victim->allianceName,
-                                "factionID" => $kill->victim->factionID,
+                                "factionID" => (int) $kill->victim->factionID,
                                 "factionName" => $kill->victim->factionName,
                                 "damageTaken" => $kill->victim->damageTaken,
-                                "shipTypeID"  => $kill->victim->shipTypeID,
+                                "shipTypeID"  => (int)$kill->victim->shipTypeID,
                                 "shipType"  => Kingboard_EveItem::getByItemId($kill->victim->shipTypeID)->typeName
                             )
                         );
