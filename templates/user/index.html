@@ -17,10 +17,12 @@
         {% if pending_keys %}
         <fieldset>
             <legend>Keys pending activation</legend>
+            <p>To activate a key from this list, you have to send an EVEMail to {{ apimailreceiver }} with the subject being
+            the activation key. Please keep in mind that the activation key is case sensitive!</p>
             <table class="keys">
             <tr><th>EVE Userid</th><th>EVE Apikey</th><th>Activation Key</th></tr>
-            {% for key in user.keys %}
-            <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>&nbsp;</td></tr>
+            {% for key in pending_keys %}
+            <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>{{ key.activationkey }}</td></tr>
             {% endfor %}
             </table>
         </fieldset>

@@ -24,6 +24,12 @@ class Kingboard_User_View extends Kingboard_Base_View
                 else
                     $keys = $user['keys'];
 
+                // ensure to remove existing activation keys if this is an update
+                if($activationkey = Kingboard_ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $_POST['apiuserid']))
+                    $activationkey->delete();
+
+                $activationkey = Kingboard_ApiActivationToken::create($user->_id, $_POST['apiuserid']);
+                
                 $keys[$_POST['apiuserid']] = array(
                     'apiuserid' => $_POST['apiuserid'],
                     'apikey' => $_POST['apikey'],
@@ -44,14 +50,24 @@ class Kingboard_User_View extends Kingboard_Base_View
             foreach($user['keys'] as $key)
             {
                 if($key['active'])
-                    $activeKeys = true;
+                {
+                    if(!is_array($activeKeys))
+                        $activeKeys = array();
+                    $activeKeys[] = $key;
+                }
                 else
-                    $pendingKeys = true;
+                {
+                    if(!is_array($pendingKeys))
+                        $pendingKeys = array();
+                    $key['activationkey'] = (String) Kingboard_ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $key['apiuserid']);
+                    $pendingKeys[] = $key;
+                }
             }
 
         $context = array_merge($context, array(
             'active_keys' => $activeKeys,
-            'pending_keys' => $pendingKeys
+            'pending_keys' => $pendingKeys,
+            'apimailreceiver' => King23_Registry::getInstance()->apimailreceiver
         ));
         $this->render('user/index.html', $context);
     }

@@ -45,6 +45,8 @@ $reg->imagePaths = array(
     'alliances' => 'http://image.eveonline.com/Alliance/'
 );
 
+$reg->apimailreceiver = "CHARACTERNAME";
+
 require_once("routes.php");
 
 session_start();
