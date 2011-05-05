@@ -46,6 +46,9 @@ $reg->imagePaths = array(
 );
 
 $reg->apimailreceiver = "CHARACTERNAME";
+$reg->apimailreceiverCharacterID = 123456;
+$reg->apimailreceiverApiUserID = "123456";
+$reg->apimailreceiverApiKey = "APIKEYHERE";
 
 require_once("routes.php");
 

@@ -37,6 +37,8 @@ class Kingboard_User_View extends Kingboard_Base_View
                 );
                 $user['keys'] = $keys;
                 $user->save();
+                // ensure user is refreshed in session
+                Kingboard_Auth::getUser();
 
             } catch (PhealApiException $e) {
                 $context = $_POST;
@@ -63,7 +65,6 @@ class Kingboard_User_View extends Kingboard_Base_View
                     $pendingKeys[] = $key;
                 }
             }
-
         $context = array_merge($context, array(
             'active_keys' => $activeKeys,
             'pending_keys' => $pendingKeys,

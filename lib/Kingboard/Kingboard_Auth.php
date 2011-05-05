@@ -24,7 +24,10 @@ class Kingboard_Auth
     public static function getUser()
     {
         if(isset($_SESSION["Kingboard_Auth"]) && isset($_SESSION["Kingboard_Auth"]["User"]))
+        {
+            $_SESSION["Kingboard_Auth"]["User"]->refresh();
             return $_SESSION["Kingboard_Auth"]["User"];
+        }
         return false;
     }
 }

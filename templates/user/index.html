@@ -10,6 +10,9 @@
         <fieldset>
             <legend>Active Keys</legend>
             {% if active_keys %}
+            {% for key in active_keys %}
+            <p>{{ key.apiuserid }}</p>
+            {% endfor %}
             {% else %}
             <p>you currently do not have any active keys</p>
             {% endif %}
