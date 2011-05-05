@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => sha1('130201260038178615816881525501688152550'),
+    'idHash' => '13a8b2333cf0c7a6a56f30272f9881067e2ae920',
     'errors' => array(),
     'killTime' => new MongoDate(1302012600),
     'solarSystemID' => 30003962,
@@ -22,6 +22,7 @@ return array(
         array(
             'characterID' => 1688152550,
             'characterName' => 'db T',
+            'typeID' => 0,
             'entityType' => 'char',
             'securityStatus' => 0.6,
             'corporationName' => 'SniggWaffe',

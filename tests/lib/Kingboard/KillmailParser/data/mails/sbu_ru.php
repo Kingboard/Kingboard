@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => '755ce544f1aed88fb784ce671393769b884649dc',
+    'idHash' => 'c799efbaa579b6cd095a6cb3b27e2d73da9e1566',
     'errors' => array(),
     'killTime' => new MongoDate(1279105320),
     'solarSystemID' => 30000772,
@@ -20,6 +20,7 @@ return array(
         array(
             'characterID' => 124240115,
             'characterName' => 'LinMei',
+            'typeID' => 0,
             'entityType' => 'char',
             'securityStatus' => 5.0,
             'corporationName' => 'The All-Seeing Eye',
@@ -38,6 +39,7 @@ return array(
         array(
             'characterID' => 244227927,
             'characterName' => 'Varrakk',
+            'typeID' => 0,
             'entityType' => 'char',
             'finalBlow' => false,
             'securityStatus' => -3.1,
@@ -57,6 +59,7 @@ return array(
             'characterID' => 248433235,
             'characterName' => 'Shaleen',
             'entityType' => 'char',
+            'typeID' => 0,
             'finalBlow' => false,
             'securityStatus' => -0.8,
             'corporationName' => 'Beach Boys',
@@ -75,6 +78,7 @@ return array(
             'characterID' => 1547815692,
             'characterName' => 'Dhaaran',
             'entityType' => 'char',
+            'typeID' => 0,
             'finalBlow' => true,
             'securityStatus' => 1.8,
             'corporationName' => 'MicroFunks',
@@ -93,6 +97,7 @@ return array(
             'characterID' => 1328177155,
             'characterName' => 'cuffdawg',
             'entityType' => 'char',
+            'typeID' => 0,
             'finalBlow' => false,
             'securityStatus' => 5.0,
             'corporationName' => 'CyberShield Inc',
@@ -111,6 +116,7 @@ return array(
             'characterID' => 360629959,
             'characterName' => 'ShinjiKonai',
             'entityType' => 'char',
+            'typeID' => 0,
             'finalBlow' => false,
             'securityStatus' => -0.7,
             'corporationName' => 'Princeps Corp',
@@ -129,6 +135,7 @@ return array(
             'characterID' => 1392118079,
             'characterName' => 'NSA Bivas',
             'entityType' => 'char',
+            'typeID' => 0,
             'finalBlow' => false,
             'securityStatus' => 0.7,
             'corporationName' => 'Rionnag Alba',

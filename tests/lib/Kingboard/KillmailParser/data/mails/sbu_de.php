@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => '755ce544f1aed88fb784ce671393769b884649dc',
+    'idHash' => 'c799efbaa579b6cd095a6cb3b27e2d73da9e1566',
     'errors' => array(),
     'killTime' => new MongoDate(1279105320),
     'solarSystemID' => 30000772,
@@ -20,6 +20,7 @@ return array(
         array(
             'characterID' => 124240115,
             'characterName' => 'LinMei',
+            'typeID' => 0,
             'entityType' => 'char',
             'securityStatus' => 5.0,
             'corporationName' => 'The All-Seeing Eye',

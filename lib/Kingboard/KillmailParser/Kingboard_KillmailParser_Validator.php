@@ -148,7 +148,18 @@ class Kingboard_KillmailParser_Validator
      */
     public function validateAttacker(array $attacker)
     {
-        if (!$this->isTypeEntryValid($attacker, 'character', true))
+        if (empty($attacker['entityType']))
+        {
+            throw new Kingboard_KillmailParser_KillmailErrorException('No character for attacker given');
+        }
+        if ($attacker['entityType'] == Kingboard_Helper_EntityType::ENTITY_NPC)
+        {
+            if (empty($attacker['typeID']) || empty($attacker['characterName']))
+            {
+                throw new Kingboard_KillmailParser_KillmailErrorException('No character for attacker given');
+            }
+        }
+        elseif (!$this->isTypeEntryValid($attacker, 'character', true))
         {
             throw new Kingboard_KillmailParser_KillmailErrorException('No character for attacker given');
         }
@@ -165,7 +176,7 @@ class Kingboard_KillmailParser_Validator
             throw new Kingboard_KillmailParser_KillmailErrorException('Invalid entity type for attacker given');
         }
         
-        if (!in_array($attacker['entityType'], array(Kingboard_Helper_EntityType::ENTITY_STRUCTURE, Kingboard_Helper_EntityType::ENTITY_DEPLOYABLE), true)) 
+        if (!in_array($attacker['entityType'], array(Kingboard_Helper_EntityType::ENTITY_STRUCTURE, Kingboard_Helper_EntityType::ENTITY_DEPLOYABLE, Kingboard_Helper_EntityType::ENTITY_NPC), true)) 
         {
             if (!$this->validateCharacterName($attacker['characterName']) || !$this->isIdValid($attacker, 'character'))
             {
@@ -184,7 +195,7 @@ class Kingboard_KillmailParser_Validator
                 $isNpc = true;
                 $isSleeper =
                     stripos($attacker['characterName'], 'sleep') !== false &&
-                    (int) $result->typeID === $attacker['characterID'] &&
+                    (int) $result->typeID === $attacker['typeID'] &&
                     (int) $result->Group['categoryID'] === 11;
             }
         }
