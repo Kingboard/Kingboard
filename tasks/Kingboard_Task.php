@@ -14,7 +14,8 @@ class Kingboard_Task extends King23_CLI_Task
         "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers.",
         "key_purge" => "remove all keys who have more than x markers, where x is a parameter",
         "feed_add" => "add a feed to the feeds to be pulled",
-        "feed_pull" => "pull feeds"
+        "feed_pull" => "pull feeds",
+        "file_import" => "import kills from files named *.txt, 1 parameter == directory"
     );
 
     /**
@@ -313,6 +314,37 @@ class Kingboard_Task extends King23_CLI_Task
 
             }
             $this->cli->positive('done');
+        }
+    }
+
+    public function file_import(array $options)
+    {
+        if(count($options) != 1 || !is_dir($options[0]))
+        {
+            $this->cli->error('file_import requires 1 parameter, which needs to be a directory');
+            return;
+        }
+
+        $files = glob($options[0] . "*.txt");
+        $processed = 0;
+        $killcount = count($files);
+        foreach($files as $file)
+        {
+            $this->cli->message('processing ' . ++$processed . ' out of ' .  $killcount);
+            $mailtext = trim(join('', file($file)));
+
+            $apiId = null;
+
+            try {
+                $mail = Kingboard_KillmailParser_Factory::parseTextMail($mailtext);
+                $mail->killID = $apiId;
+                $mail->save();
+            } catch(Kingboard_KillmailParser_KillmailErrorException $e) {
+                $this->cli->error("Exception caught, mail was not processed");
+                $this->cli->error($e->getMessage());
+                $this->cli->error($e->getFile() . '::' . $e->getLine());
+            }
+
         }
     }
 }
