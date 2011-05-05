@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => sha1('1198350000170694538811041137923271137923271'),
+    'idHash' => '44877f7973cfe35e34deacaadad0fbe90a4706c2',
     'errors' => array(),
     'killTime' => new MongoDate(1198350000),
     'solarSystemID' => 30005212,
@@ -23,6 +23,7 @@ return array(
             'characterID' => 137923271,
             'characterName' => 'Goober70',
             'entityType' => 'char',
+            'typeID' => 0,
             'securityStatus' => 4.0,
             'corporationName' => 'League of Gentlemen',
             'corporationID' => 370979777,
@@ -38,9 +39,10 @@ return array(
             'finalBlow' => true
         ),
         array(
-            'characterID' => 11041,
+            'characterID' => 0,
             'characterName' => 'Blood Diviner',
             'entityType' => 'npc',
+            'typeID' => 11041,
             'corporationName' => 'Blood Raiders',
             'corporationID' => 1000134,
             'damageDone' => 2918,

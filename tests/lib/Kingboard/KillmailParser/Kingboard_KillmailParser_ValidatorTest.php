@@ -766,11 +766,12 @@ Cap Recharger II, Qty: 2
      * @test
      * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
-    public function attackerMustHaveACorporation() {
+    public function attackerMustHaveATypeIdIfNoCharacterIdIsGivenAndTheEntityTypeIsNpc() {
        $attacker = array(
            'characterName' => 'Some char',
-           'entityType' => 'char',
-           'characterID' => 12123,
+           'entityType' => 'npc',
+           'characterID' => 0,
+           'typeID' => 12313,
            'corporationName' => '',
            'corporationID' => 12334
        ); 
@@ -990,8 +991,9 @@ Cap Recharger II, Qty: 2
      */
     public function validAttackerCanBeATypeNpc() {
        $attacker = array(
+           'characterID' => 0,
            'characterName' => 'Blood Diviner',
-           'characterID' => 1000134,
+           'typeID' => 1000134,
            'entityType' => 'npc',
            'corporationName' => 'Blood Raiders',
            'corporationID' => 12334,

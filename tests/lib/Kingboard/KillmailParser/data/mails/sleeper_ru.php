@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => sha1('127164456010953700633019530195'),
+    'idHash' => 'a61f1e5327decccb8169bd032107275e3bdd4db3',
     'errors' => array(),
     'killTime' => new MongoDate(1271644560),
     'solarSystemID' => 31001838,
@@ -20,8 +20,9 @@ return array(
     ),
     'attackers' => array(
         array(
-            'characterID' => 30195,
+            'characterID' => 0,
             'characterName' => 'Sleepless Safeguard',
+            'typeID' => 30195,
             'entityType' => 'npc',
             'damageDone' => 19316,
             'finalBlow' => true

@@ -9,71 +9,79 @@ class Kingboard_KillmailHash_IdHashTest extends PHPUnit_Framework_TestCase {
     /**
      * @var Kingboard_KillmailHash_IdHash
      */
-    protected $object;
+    protected $fixture;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new Kingboard_KillmailHash_IdHash;
+        $this->fixture = new Kingboard_KillmailHash_IdHash;
     }
 
     public function testTime() {
         $time = time();
-        $this->object->setTime(new MongoDate($time));
-        $this->assertEquals($time, $this->object->getTime());
+        $this->fixture->setTime(new MongoDate($time));
+        $this->assertEquals($time, $this->fixture->getTime());
         $time = time() - 20;
-        $this->object->setTime(new MongoDate($time));
-        $this->assertEquals($time, $this->object->getTime());
+        $this->fixture->setTime(new MongoDate($time));
+        $this->assertEquals($time, $this->fixture->getTime());
     }
 
     public function testVictimId() {
-        $this->object->setVictimId(1234);
-        $this->assertEquals(1234, $this->object->getVictimId());
-        $this->object->setVictimId(-4);
-        $this->assertEquals(1234, $this->object->getVictimId());
+        $this->fixture->setVictimId(1234);
+        $this->assertEquals(1234, $this->fixture->getVictimId());
+        $this->fixture->setVictimId(-4);
+        $this->assertEquals(1234, $this->fixture->getVictimId());
     }
 
     public function testAttackerIds() {
-        $this->object->addAttackerId('3');
-        $this->object->addAttackerId(-1);
-        $this->object->addAttackerId(6);
-        $this->assertEquals(array(3,6), $this->object->getAttackerIds());
-        $this->object->setAttackerIds(array(2,4));
-        $this->assertEquals(array(3,6,2,4), $this->object->getAttackerIds());
+        $this->fixture->addAttacker('asd dss');
+        $this->fixture->addAttacker('');
+        $this->fixture->addAttacker('+e dSSd');
+        $this->assertEquals(array('asddss','edssd'), $this->fixture->getAttackers());
+        $this->fixture->setAttackers(array('Ols a', 'sOp ,l'));
+        $this->assertEquals(array('asddss','edssd', 'olsa', 'sopl'), $this->fixture->getAttackers());
     }
 
-    public function testFinalBlowAttackerId() {
-        $this->object->setFinalBlowAttackerId('3');
-        $this->assertEquals(0, $this->object->getFinalBlowAttackerId());
-        $this->object->addAttackerId(3);
-        $this->object->setFinalBlowAttackerId('3');
-        $this->assertEquals(3, $this->object->getFinalBlowAttackerId());
-        $this->object->setFinalBlowAttackerId(-2);
-        $this->assertEquals(3, $this->object->getFinalBlowAttackerId());
+    public function testFinalBlowAttacker() {
+        $this->fixture->setFinalBlowAttacker('aaa');
+        $this->assertEquals('', $this->fixture->getFinalBlowAttacker());
+        $this->fixture->addAttacker('aaa');
+        $this->fixture->setFinalBlowAttacker('aaa');
+        $this->assertEquals('aaa', $this->fixture->getFinalBlowAttacker());
+        $this->fixture->setFinalBlowAttacker('bbb');
+        $this->assertEquals('aaa', $this->fixture->getFinalBlowAttacker());
     }
 
 
     public function testGenerateHash() {
         $time = time() - 4000;
-        $this->object->setAttackerIds(array(1,4))->setTime(new MongoDate($time))->setVictimId(3)->setFinalBlowAttackerId(4);
-        $actual = $this->object->generateHash();
-        $expected = sha1($time . '3144');
+        $this->fixture->setAttackers(array('aaa', 'bbb'))
+                      ->setTime(new MongoDate($time))
+                      ->setVictimId(3)
+                      ->setVictimShip(4)
+                      ->setFinalBlowAttacker('aaa');
+        $actual = $this->fixture->generateHash();
+        $expected = sha1($time . '34aaabbbaaa');
         $this->assertEquals($expected, $actual);
     }
 
     public function testGenerateHashWithoutParamsRaisesException() {
-        $this->setExpectedException('Kingboard_KillmailParser_KillmailErrorException');
-        $this->object->generateHash();
+        $this->setExpectedException('Kingboard_KillmailHash_ErrorException');
+        $this->fixture->generateHash();
     }
 
     public function testToString() {
-        $this->object->setAttackerIds(array(1,4))->setTime(new MongoDate(time() - 4000))->setVictimId(3)->setFinalBlowAttackerId(4);
-        $expected = $this->object->generateHash();
-        $actual = (string) $this->object;
+        $this->fixture->setAttackers(array('aaa', 'bbb'))
+                      ->setTime(new MongoDate(time() - 4000))
+                      ->setVictimId(3)
+                      ->setVictimShip(4)
+                      ->setFinalBlowAttacker('aaa');
+        $expected = $this->fixture->generateHash();
+        $actual = (string) $this->fixture;
         $this->assertEquals($expected, $actual);
-        $actual = $this->object->__toString();
+        $actual = $this->fixture->__toString();
         $this->assertEquals($expected, $actual);
     }
 

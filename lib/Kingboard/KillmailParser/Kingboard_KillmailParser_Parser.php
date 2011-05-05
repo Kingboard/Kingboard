@@ -467,7 +467,7 @@ class Kingboard_KillmailParser_Parser
                 $this->idHash->addAttacker($attacker['characterName']);
                 if ($attacker['finalBlow'])
                 {
-                    $this->idHash->setFinalBlowAttackerId($attacker['characterName']);
+                    $this->idHash->setFinalBlowAttacker($attacker['characterName']);
                 }
             }
         }

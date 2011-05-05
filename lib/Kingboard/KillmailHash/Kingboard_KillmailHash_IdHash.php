@@ -206,7 +206,7 @@ class Kingboard_KillmailHash_IdHash
     /**
      * Getter for the character ID that landed the final blow
      *
-     * @return integer
+     * @return string
      */
     public function getFinalBlowAttacker()
     {
@@ -219,7 +219,7 @@ class Kingboard_KillmailHash_IdHash
      * @param integer $finalBlowAttacker
      * @return Kingboard_KillmailHash_IdHash
      */
-    public function setFinalBlowAttackerId($finalBlowAttacker)
+    public function setFinalBlowAttacker($finalBlowAttacker)
     {
         $finalBlowAttacker = $this->cleanName($finalBlowAttacker);
         if (strlen($finalBlowAttacker) > 0 && in_array($finalBlowAttacker, $this->attackers, true))
@@ -242,7 +242,7 @@ class Kingboard_KillmailHash_IdHash
         }
         natsort($this->attackers);
         natsort($this->items);
-        return sha1($this->time . $this->victimId . implode('', $this->attackers) . $this->finalBlowAttacker . implode('', $this->items));
+        return sha1($this->time . $this->victimId . $this->victimShip . implode('', $this->attackers) . $this->finalBlowAttacker . implode('', $this->items));
     }
     
     /**

@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => '11dac3f76574d163d0423c1c56f0bfe9aaff6920',
+    'idHash' => '942da1622ec5893434eb8f43c38d7499c135132c',
     'errors' => array(),
     'killTime' => new MongoDate(1301692260),
     'solarSystemID' => 30003971,
@@ -20,6 +20,7 @@ return array(
         array(
             'characterID' => 1218378562,
             'characterName' => 'Tekashi Ka',
+            'typeID' => 0,
             'entityType' => 'char',
             'securityStatus' => -1.0,
             'corporationName' => 'Sniggerdly',
@@ -38,6 +39,7 @@ return array(
         array(
             'characterID' => 1081996709,
             'characterName' => 'Mistress Viper',
+            'typeID' => 0,
             'entityType' => 'char',
             'corporationName' => 'GK inc.',
             'corporationID' => 627225053,
@@ -56,6 +58,7 @@ return array(
         array(
             'characterID' => 1302629506,
             'characterName' => 'Soul7aker',
+            'typeID' => 0,
             'entityType' => 'char',
             'corporationName' => 'Black Omega Security',
             'corporationID' => 263585335,
