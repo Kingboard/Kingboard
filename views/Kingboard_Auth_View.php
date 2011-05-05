@@ -86,6 +86,6 @@ class Kingboard_Auth_View extends Kingboard_Base_View
                 $this->_context['registration_failed'] = 'XSRF Token Invalid.';
             }
         }
-        $this->render('user/registration.html', array_merge($_POST, array('XSRF' => Kingboard_Form::getXSRFToken())));
+        $this->render('user/registration.html', $_POST);
     }
 }

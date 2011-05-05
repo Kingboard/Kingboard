@@ -159,3 +159,7 @@ table.kill_list td.ship {
     background-color: #302C29;
 	color:#fff;
 }
+
+.error {
+    color: #ff0000;
+}

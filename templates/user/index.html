@@ -1,5 +1,68 @@
 {% extends "base.html" %}
 
 {% block content %}
-        content be here
+<div id="tabs">
+	<ul>
+		<li><a href="#api-management">API / Character Management</a></li>
+        <li><a href="#battle-editor">Battle Editor</a></li>
+	</ul>
+	<div id="api-management">
+        <fieldset>
+            <legend>Active Keys</legend>
+            {% if active_keys %}
+            {% else %}
+            <p>you currently do not have any active keys</p>
+            {% endif %}
+        </fieldset>
+        {% if pending_keys %}
+        <fieldset>
+            <legend>Keys pending activation</legend>
+            <table class="keys">
+            <tr><th>EVE Userid</th><th>EVE Apikey</th><th>Activation Key</th></tr>
+            {% for key in user.keys %}
+            <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>&nbsp;</td></tr>
+            {% endfor %}
+            </table>
+        </fieldset>
+        {% endif %}
+        <fieldset>
+            <legend>Add API Key</legend>
+            <p>The API Key added here can be used for pulling standings (to create battle reports) and
+            for pulling killmails. For both cases CCP currently requires a full API key to work, so currently
+            only full API keys are accepted. <br />For the purpose of validating the Key you enter, a request
+            to your account/AccountStatus API page will be made, however none of the data pulled from this request
+            will be saved.</p>
+            {% if error %}
+            <div class="error"><p>{{ error }}</p></div>
+            {% endif %}
+            <form action="/account/" method="post">
+                <input type="hidden" value="{{XSRF}}" name="XSRF" />
+
+                <label for="apiuserid">EVE Userid</label>
+                <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid"/>
+
+                <label for="apikey">EVE API Key</label>
+                <input type="text" value="{{ apikey }}" name="apikey" id="apikey"/>
+                <input type="submit" value="Add"/>
+            </form>
+        </fieldset>
+	</div>
+	<div id="battle-editor">
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $( "#tabs" ).tabs();
+
+    $( "#test" ).autocomplete({
+        source: "/autocomplete/region",
+        select: function(event, ui) {
+            alert(ui);
+        }
+    });
+});
+</script>
 {% endblock %}
