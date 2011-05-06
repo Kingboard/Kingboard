@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => '83c603f051cc3b0f8b41b7e411d35872e5e1c74f',
+    'idHash' => 'b8a2abbbe1687481dc8daf66074bb818f613151b',
     'errors' => array(),
     'killTime' => new MongoDate(1303130340),
     'solarSystemID' => 30002446,

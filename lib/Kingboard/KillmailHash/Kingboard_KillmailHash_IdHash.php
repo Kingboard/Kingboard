@@ -181,18 +181,24 @@ class Kingboard_KillmailHash_IdHash
         return $this;
     }
     
+    protected function cleanName($name)
+    {
+        $name = Kingboard_Helper_String::getInstance()->lower($name);
+        return preg_replace('/[^a-z0-9]+/', '', $name);
+    }
+    
     /**
      * Setter for a single attacker character ID
      *
-     * @param integer $id
+     * @param string $name
      * @return Kingboard_KillmailHash_IdHash
      */
-    public function addAttacker($id)
+    public function addAttacker($name)
     {
-        $id = (int) $id;
-        if ($id > 0 && !in_array($id, $this->attackers, true))
+        $name = $this->cleanName($name);
+        if (strlen($name) > 0 && !in_array($name, $this->attackers, true))
         {
-            $this->attackers[] = $id;
+            $this->attackers[] = $name;
         }
         return $this;
     }
@@ -205,7 +211,7 @@ class Kingboard_KillmailHash_IdHash
      */
     public function pushAttackerData(array $attacker)
     {
-        $key = $attacker['characterID'] . $attacker['corporationID'] . $attacker['shipTypeID'] . $attacker['damageDone'];
+        $key = $attacker['characterName'] . $attacker['corporationName'] . $attacker['shipType'] . $attacker['damageDone'];
         $this->addAttacker($key);
         if ($attacker['finalBlow']) 
         {
@@ -232,8 +238,8 @@ class Kingboard_KillmailHash_IdHash
      */
     public function setFinalBlowAttacker($finalBlowAttacker)
     {
-        $finalBlowAttacker = (int)$finalBlowAttacker;
-        if ($finalBlowAttacker > 0 && in_array($finalBlowAttacker, $this->attackers, true))
+        $finalBlowAttacker = $this->cleanName($finalBlowAttacker);
+        if (strlen($finalBlowAttacker) && in_array($finalBlowAttacker, $this->attackers, true))
         {
             $this->finalBlowAttacker = $finalBlowAttacker;
         }
