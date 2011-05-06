@@ -53,13 +53,7 @@ class Kingboard_KillmailHash_CollisionTest extends PHPUnit_Framework_TestCase
             
             foreach ($kill['attackers'] as $attacker)
             {
-                $id = $attacker['characterName'];
-                $hash->addAttacker($id);
-                
-                if (!empty($attacker['finalBlow']))
-                {
-                    $hash->setFinalBlowAttackerId($id);
-                }
+                $hash->pushAttackerData($attacker);
             }
             
             foreach ($kill['items'] as $item)

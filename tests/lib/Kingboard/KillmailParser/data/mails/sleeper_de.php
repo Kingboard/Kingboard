@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => 'a61f1e5327decccb8169bd032107275e3bdd4db3',
+    'idHash' => 'd9d99338e3de4953b0fa241dd20cf1f0353fbe10',
     'errors' => array(),
     'killTime' => new MongoDate(1271644560),
     'solarSystemID' => 31001838,
@@ -21,8 +21,9 @@ return array(
     'attackers' => array(
         array(
             'characterID' => 0,
-            'characterName' => 'Sleepless Safeguard',
-            'typeID' => 30195,
+            'characterName' => '',
+            'shipType' => 'Sleepless Safeguard',
+            'shipTypeID' => 30195,
             'entityType' => 'npc',
             'damageDone' => 19316,
             'finalBlow' => true

@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => '51e96d97dd11939c17a25ea86bfba7e3fbe02816',
+    'idHash' => '802c32dbe69700fccb0d0e66d2dd0d50916a8e83',
     'errors' => array(),
     'killTime' => new MongoDate(1302250500),
     'solarSystemID' => 30004740,
@@ -22,7 +22,6 @@ return array(
         array(
             'characterID' => 1001099324,
             'characterName' => 'Ktorn Sinus',
-            'typeID' => 0,
             'entityType' => 'char',
             'securityStatus' => -9.3,
             'corporationName' => 'SniggWaffe',
@@ -41,7 +40,6 @@ return array(
         array(
             'characterID' => 1912582732,
             'characterName' => 'Nuel Suspect',
-            'typeID' => 0,
             'entityType' => 'char',
             'securityStatus' => 5.0,
             'corporationName' => 'Abstract Speed',

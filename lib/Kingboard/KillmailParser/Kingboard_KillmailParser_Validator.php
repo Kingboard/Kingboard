@@ -154,7 +154,7 @@ class Kingboard_KillmailParser_Validator
         }
         if ($attacker['entityType'] == Kingboard_Helper_EntityType::ENTITY_NPC)
         {
-            if (empty($attacker['typeID']) || empty($attacker['characterName']))
+            if (!$this->isTypeEntryValid($attacker, 'shipType'))
             {
                 throw new Kingboard_KillmailParser_KillmailErrorException('No character for attacker given');
             }
@@ -185,17 +185,16 @@ class Kingboard_KillmailParser_Validator
         }
 
         $isSleeper = false;
-        $isNpc = false;
-        $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['characterName']));
+        $isNpc = $attacker['entityType'] != Kingboard_Helper_EntityType::ENTITY_CHARACTER;
+        $result = Kingboard_EveItem::getInstanceByCriteria(array('typeName' => $attacker['shipType']));
 
         if ($result)
         {
             if ($result->typeID && isset($result->Group['categoryID']))
             {
-                $isNpc = true;
                 $isSleeper =
-                    stripos($attacker['characterName'], 'sleep') !== false &&
-                    (int) $result->typeID === $attacker['typeID'] &&
+                    stripos($attacker['shipType'], 'sleep') !== false &&
+                    (int) $result->typeID === $attacker['shipTypeID'] &&
                     (int) $result->Group['categoryID'] === 11;
             }
         }

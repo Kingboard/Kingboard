@@ -36,34 +36,34 @@ class Kingboard_KillmailHash_IdHashTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testAttackerIds() {
-        $this->fixture->addAttacker('asd dss');
+        $this->fixture->addAttacker(5);
         $this->fixture->addAttacker('');
-        $this->fixture->addAttacker('+e dSSd');
-        $this->assertEquals(array('asddss','edssd'), $this->fixture->getAttackers());
-        $this->fixture->setAttackers(array('Ols a', 'sOp ,l'));
-        $this->assertEquals(array('asddss','edssd', 'olsa', 'sopl'), $this->fixture->getAttackers());
+        $this->fixture->addAttacker(6);
+        $this->assertEquals(array(5, 6), $this->fixture->getAttackers());
+        $this->fixture->setAttackers(array(7, 8, 9));
+        $this->assertEquals(array(5, 6, 7, 8, 9), $this->fixture->getAttackers());
     }
 
     public function testFinalBlowAttacker() {
-        $this->fixture->setFinalBlowAttacker('aaa');
-        $this->assertEquals('', $this->fixture->getFinalBlowAttacker());
-        $this->fixture->addAttacker('aaa');
-        $this->fixture->setFinalBlowAttacker('aaa');
-        $this->assertEquals('aaa', $this->fixture->getFinalBlowAttacker());
-        $this->fixture->setFinalBlowAttacker('bbb');
-        $this->assertEquals('aaa', $this->fixture->getFinalBlowAttacker());
+        $this->fixture->setFinalBlowAttacker(1);
+        $this->assertEquals(0, $this->fixture->getFinalBlowAttacker());
+        $this->fixture->addAttacker(1);
+        $this->fixture->setFinalBlowAttacker(1);
+        $this->assertEquals(1, $this->fixture->getFinalBlowAttacker());
+        $this->fixture->setFinalBlowAttacker(2);
+        $this->assertEquals(1, $this->fixture->getFinalBlowAttacker());
     }
 
 
     public function testGenerateHash() {
         $time = time() - 4000;
-        $this->fixture->setAttackers(array('aaa', 'bbb'))
+        $this->fixture->setAttackers(array(1, 2))
                       ->setTime(new MongoDate($time))
                       ->setVictimId(3)
                       ->setVictimShip(4)
-                      ->setFinalBlowAttacker('aaa');
+                      ->setFinalBlowAttacker(1);
         $actual = $this->fixture->generateHash();
-        $expected = sha1($time . '34aaabbbaaa');
+        $expected = sha1($time . '34121');
         $this->assertEquals($expected, $actual);
     }
 
@@ -73,11 +73,11 @@ class Kingboard_KillmailHash_IdHashTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToString() {
-        $this->fixture->setAttackers(array('aaa', 'bbb'))
+        $this->fixture->setAttackers(array(1, 2))
                       ->setTime(new MongoDate(time() - 4000))
                       ->setVictimId(3)
                       ->setVictimShip(4)
-                      ->setFinalBlowAttacker('aaa');
+                      ->setFinalBlowAttacker(1);
         $expected = $this->fixture->generateHash();
         $actual = (string) $this->fixture;
         $this->assertEquals($expected, $actual);

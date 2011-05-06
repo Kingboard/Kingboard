@@ -193,8 +193,10 @@ class Kingboard_KillmailParser_Parser
                             );
                             if ($this->attackers[$currentAttacker]['entityType'] == Kingboard_Helper_EntityType::ENTITY_NPC)
                             {
-                                $this->attackers[$currentAttacker]['typeID'] = $this->attackers[$currentAttacker]['characterID'];
+                                $this->attackers[$currentAttacker]['shipTypeID'] = $this->attackers[$currentAttacker]['characterID'];
+                                $this->attackers[$currentAttacker]['shipType'] = $this->attackers[$currentAttacker]['characterName'];
                                 $this->attackers[$currentAttacker]['characterID'] = 0;
+                                $this->attackers[$currentAttacker]['characterName'] = '';
                             }
                         }
                         else
@@ -451,25 +453,12 @@ class Kingboard_KillmailParser_Parser
     {
         if (!$this->idHash)
         {
-            $victimId = !empty($this->victim['characterID']) ? $this->victim['characterID'] : $this->victim['corporationID'];
-            $this->idHash = new Kingboard_KillmailHash_IdHash();
-            $this->idHash->setVictimId($victimId)
-                         ->setVictimShip($this->victim['shipTypeID'])
-                         ->setTime($this->getTime());
-
-            foreach ($this->items as $item)
-            {
-                $this->idHash->addItem($item);
-            }
-            
-            foreach ($this->attackers as $attacker)
-            {
-                $this->idHash->addAttacker($attacker['characterName']);
-                if ($attacker['finalBlow'])
-                {
-                    $this->idHash->setFinalBlowAttacker($attacker['characterName']);
-                }
-            }
+            $this->idHash = Kingboard_KillmailHash_IdHash::getByData(array(
+                'killTime'  => $this->getTime(),
+                'victim'    => $this->getVictim(),
+                'attackers' => $this->getAttackers(),
+                'items'     => $this->getItems()
+            ));
         }
         return $this->idHash->generateHash();
     }

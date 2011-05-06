@@ -766,12 +766,13 @@ Cap Recharger II, Qty: 2
      * @test
      * @expectedException Kingboard_KillmailParser_KillmailErrorException
      */
-    public function attackerMustHaveATypeIdIfNoCharacterIdIsGivenAndTheEntityTypeIsNpc() {
+    public function attackerMustHaveAShipIdIfNoCharacterIdIsGivenAndTheEntityTypeIsNpc() {
        $attacker = array(
            'characterName' => 'Some char',
            'entityType' => 'npc',
            'characterID' => 0,
-           'typeID' => 12313,
+           'shipTypeID' => 12313,
+           'shipType' => 'Some ship',
            'corporationName' => '',
            'corporationID' => 12334
        ); 
@@ -791,7 +792,9 @@ Cap Recharger II, Qty: 2
            'corporationName' => 'Some corp',
            'corporationID' => 12334,
            'allianceName' => 'as',
-           'allianceID' => 23
+           'allianceID' => 23,
+           'shipType' => '',
+           'shipTypeID' => 0
        );
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
@@ -811,7 +814,9 @@ Cap Recharger II, Qty: 2
            'allianceName' => 'Some alli',
            'allianceID' => 234934,
            'factionName' => '',
-           'factionID' => 3
+           'factionID' => 3,
+           'shipType' => '',
+           'shipTypeID' => 0
        );
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
@@ -833,6 +838,8 @@ Cap Recharger II, Qty: 2
            'factionName' => '',
            'factionID' => 3,
            'damageDone' => null,
+           'shipType' => '',
+           'shipTypeID' => 0
        );
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
@@ -854,6 +861,8 @@ Cap Recharger II, Qty: 2
            'factionName' => '',
            'factionID' => 3,
            'damageDone' => -2,
+           'shipType' => '',
+           'shipTypeID' => 0
        );
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
@@ -902,6 +911,7 @@ Cap Recharger II, Qty: 2
            'shipType' => 'Rifter',
            'weaponType' => '',
            'weaponTypeID' => 34445,
+           'finalBlow' => false,
        );
        $v = new Kingboard_KillmailParser_Validator();
        $v->validateAttacker($attacker);
@@ -989,11 +999,10 @@ Cap Recharger II, Qty: 2
     /**
      * @test
      */
-    public function validAttackerCanBeATypeNpc() {
+    public function validAttackerCanBeANpc() {
        $attacker = array(
            'characterID' => 0,
-           'characterName' => 'Blood Diviner',
-           'typeID' => 1000134,
+           'characterName' => '',
            'entityType' => 'npc',
            'corporationName' => 'Blood Raiders',
            'corporationID' => 12334,
@@ -1002,8 +1011,8 @@ Cap Recharger II, Qty: 2
            'factionName' => '',
            'factionID' => 3,
            'damageDone' => 2345,
-           'shipTypeID' => 12345,
-           'shipType' => 'Rifter',
+           'shipTypeID' => 1000134,
+           'shipType' => 'Blood Diviner',
            'weaponType' => 'Light Ion Blaster I',
            'weaponTypeID' => 34445,
            'securityStatus' => -3.45,

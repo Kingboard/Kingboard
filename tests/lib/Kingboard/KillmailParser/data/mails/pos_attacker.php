@@ -1,6 +1,6 @@
 <?php
 return array(
-    'idHash' => '0b073e71a1c293ce9d2203ff376215ae86ca8b50',
+    'idHash' => '38521433cfab07c313b60a02576270c3b8f90b3f',
     'errors' => array(),
     'killTime' => new MongoDate(1303121580),
     'solarSystemID' => 30000277,
@@ -22,7 +22,6 @@ return array(
         array(
             'characterID' => 12235,
             'characterName' => 'Amarr Control Tower',
-            'typeID' => 0,
             'entityType' => 'structure',
             'securityStatus' => 0.0,
             'corporationName' => 'x13',
