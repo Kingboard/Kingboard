@@ -1,18 +1,10 @@
 $(document).ready(function() {
-   
-   $("a[rel=external]").each(function() {
-       var link = $(this);
-       link.click(function(e) {
-          e.preventDefault();
-          window.open(link.attr("href"));
-       });
-   });
-   
+    
    $(document).click(function(e) {
        var target = e.target;
        if (target.rel && target.rel == "external") {
            e.preventDefault();
-           window.open($(target).attr(href));
+           window.open($(target).attr("href"));
        }
    });
    
