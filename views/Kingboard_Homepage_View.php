@@ -2,15 +2,48 @@
 class Kingboard_Homepage_View extends Kingboard_Base_View
 {
 
+    protected $killsPerPage = 20;
+    
     public function index($request)
     {
-        $data = Kingboard_Kill::find()->sort(array('killTime' => -1))->limit(20);
+        $page = 1;
+        if (!empty($_GET['page']))
+        {
+            $page = (int) preg_replace('/[^0-9]+/', '', $_GET['page']);
+            if ($page < 1)
+            {
+                $this->sendErrorAndQuit('There are no negative pages morron');
+            }
+        }
+        
+        $killsPerPage = 20;
+        $skip = ($page - 1) * $killsPerPage;
+        $data = Kingboard_Kill::find()
+                    ->sort(array('killTime' => -1))
+                    ->skip($skip)
+                    ->limit($killsPerPage);
+        
         $count = Kingboard_Kill::count();
+        $context = array(
+            'data' => $data,
+            'next' => ($skip + $killsPerPage < $count) ? $page + 1 : false,
+            'prev' => $page > 1 ? $page - 1 : false
+        );
+        
+        if (!empty($_GET['ajax']))
+        {
+            return $this->render('home_killspage.html', $context);
+        }
         $stats = Kingboard_Kill_MapReduce_KillsByShip::find();
         $info = array();
         $template = "index.html";
         $stats = $stats->sort(array("value.value" => -1));
-        return $this->render($template, array('data' => $data, 'count' => $count, 'stats' => $stats, 'info' => $info));
+        
+        $context['count'] = $count;
+        $context['stats'] = $stats;
+        $context['info'] = $info;
+        
+        return $this->render($template, $context);
     }
 
     public function pilot($request)

@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8">
   <title>{% block title %}Kingboard{% endblock %}</title>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <link href="/css/main.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/smoothness/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link href="/css/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/smoothness/jquery-ui.css" media="screen" rel="stylesheet" type="text/css">
   {% block style %}
 
   {% endblock %}
@@ -14,6 +14,7 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/js/jquery.easyListSplitter.js"></script>
   <script src="/js/tooltip.js"></script>
+  <script type="text/javascript" src="/js/common.js"></script>
   {% block script %}
   {% endblock %}
 </head>
@@ -21,7 +22,7 @@
 <div id="container">
     <div id="nav"><ul>
         <li class="logo">Kingboard</li>
-        <li><a href="http://{{ baseHost }}/index/">Start</a></li>
+        <li><a href="http://{{ baseHost }}/">Start</a></li>
         <li><a href="http://{{ baseHost }}/account/">My Kingboard</a></li>
     </ul></div>
     <div id="header">{% block header %}{% endblock %}</div>
