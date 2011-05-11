@@ -1,35 +1,33 @@
 $(document).ready(function() {
-   
-   $("a[rel=external]").each(function() {
-       var link = $(this);
-       link.click(function(e) {
-          e.preventDefault();
-          window.open(link.attr("href"));
-       });
-   });
-   
+    
    $(document).click(function(e) {
        var target = e.target;
        if (target.rel && target.rel == "external") {
            e.preventDefault();
-           window.open($(target).attr(href));
+           window.open($(target).attr("href"));
        }
    });
    
-   var container = $("#home_killspage");
+   var container = $("#home_killspage"),
+       runtimePagerCache = {};
    if (container.length) {
       container.click(function(e) {
-          e.preventDefault();
            if (e.target.className == "pager") {
                e.preventDefault();
-               var url = $(e.target).attr("href");
-               $.ajax({
-                  url: url + '&ajax=1',
-                  method: "GET",
-                  success: function(response) {
-                      container.html(response);
-                  }
-               });
+               var url = $(e.target).attr("href") + 'xhr/';
+               if (runtimePagerCache[url]) {
+                   container.html(runtimePagerCache[url]);
+               }
+               else {
+                   $.ajax({
+                      url: url,
+                      method: "GET",
+                      success: function(response) {
+                          runtimePagerCache[url] = response;
+                          container.html(response);
+                      }
+                   });
+               }
            }
        });
    }

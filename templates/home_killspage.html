@@ -1,7 +1,7 @@
 <table class="kill_list">
     <thead>
         <tr>
-             <th colspan="5">{% if prev %}<a href="/?page={{ prev }}" class="pager">Previous Page</a>{% endif %} {% if next %}<a href="/?page={{ next }}" class="pager">Next Page</a>{% endif %}</th>
+             <th colspan="5">{% if prev %}<a href="/home/page/{{ prev }}/" class="pager">Previous Page</a>{% endif %} {% if next %}<a href="/home/page/{{ next }}/" class="pager">Next Page</a>{% endif %}</th>
         </tr>
     </thead>
     <tbody>{% for kill in data %}
