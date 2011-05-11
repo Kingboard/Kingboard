@@ -53,6 +53,18 @@
         </fieldset>
 	</div>
 	<div id="battle-editor">
+        <fieldset>
+            <legend>Add New Battle</legend>
+            <form action="/battle/new">
+                <label for="startdate">Start Date/Time</label>
+                <input type="text" name="startdate" id="startdate" />
+                <label for="enddate">End Date/Time</label>
+                <input type="text" name="enddate" id="enddate" />
+                <label for="system">System</label>
+                <input type="text" name="system" id="system" />
+                <input type="submit" name="submit" value="Add" />
+            </form>
+        </fieldset>
 	</div>
 </div>
 {% endblock %}
@@ -62,12 +74,14 @@
 $(document).ready(function() {
     $( "#tabs" ).tabs();
 
-    $( "#test" ).autocomplete({
-        source: "/autocomplete/region",
-        select: function(event, ui) {
-            alert(ui);
-        }
+    $( "#system" ).autocomplete({
+        source: "/autocomplete/solarsystem"//,
+        //select: function(event, ui) {
+        //    alert(ui);
+        //}
     });
+    $("#startdate").datetimepicker({ dateFormat: 'yy-mm-dd' });
+    $("#enddate").datetimepicker({ dateFormat: 'yy-mm-dd' });
 });
 </script>
 {% endblock %}
