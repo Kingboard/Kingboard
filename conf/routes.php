@@ -31,6 +31,7 @@ $router->setBaseHost(King23_Registry::getInstance()->baseHost);
 
 // home
 $router->addRoute("/", "Kingboard_Homepage_View", "index", array());
+$router->addRoute("/home/page/", "Kingboard_Homepage_View", "index", array('page', 'ajax'));
 
 // pilot details
 $router->addRoute("/pilot/", "Kingboard_Homepage_View", "pilot", array('hid'));

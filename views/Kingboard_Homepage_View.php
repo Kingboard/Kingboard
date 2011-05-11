@@ -7,9 +7,9 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
     public function index($request)
     {
         $page = 1;
-        if (!empty($_GET['page']))
+        if (!empty($request['page']))
         {
-            $page = (int) preg_replace('/[^0-9]+/', '', $_GET['page']);
+            $page = (int) preg_replace('/[^0-9]+/', '', $request['page']);
             if ($page < 1)
             {
                 $this->sendErrorAndQuit('There are no negative pages morron');
@@ -17,20 +17,26 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         }
         
         $killsPerPage = 20;
-        $skip = ($page - 1) * $killsPerPage;
+        $skip = ($page - 1) * $killsPerPage;        
+        $count = Kingboard_Kill::count();
+        
+        if ($page > ceil($count / $killsPerPage))
+        {
+            $this->sendErrorAndQuit('No more kills on this end');
+        }
+        
         $data = Kingboard_Kill::find()
                     ->sort(array('killTime' => -1))
                     ->skip($skip)
                     ->limit($killsPerPage);
         
-        $count = Kingboard_Kill::count();
         $context = array(
             'data' => $data,
             'next' => ($skip + $killsPerPage < $count) ? $page + 1 : false,
             'prev' => $page > 1 ? $page - 1 : false
         );
         
-        if (!empty($_GET['ajax']))
+        if (!empty($request['ajax']))
         {
             return $this->render('home_killspage.html', $context);
         }
