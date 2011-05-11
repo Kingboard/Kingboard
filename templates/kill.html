@@ -11,9 +11,9 @@
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
         <td rowspan="3">
-             <img src="{{ images.characters }}{{killdata.victim.characterID}}_64.jpg" />
-             <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_64.png" />
-             <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_64.png" />
+             <img src="{{ images.characters }}{{killdata.victim.characterID}}_64.jpg" width="64" height="64">
+             <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_64.png" width="64" height="64">
+             <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_64.png" width="64" height="64">
          </td>
     </tr>
     <tr>
@@ -34,7 +34,7 @@
         <th>Ship:</th>
         <td>{{ killdata.victim.shipType }}</td>
         <td rowspan="3">
-             <img src="{{ images.items }}{{killdata.victim.shipTypeID}}_64.png" width="64" height="64"/>
+             <img src="{{ images.items }}{{killdata.victim.shipTypeID}}_64.png" width="64" height="64">
          </td>
     </tr>
     <tr>
@@ -73,10 +73,10 @@
             {% for attacker in killdata.attackers %}
             <tr>
                 <th rowspan="6" width="132">
-                     <img src="{{ images.alliances }}{{attacker.allianceID}}_64.png" />
-                     <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" /><br/>
-                     <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" />
-                     <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="64" height="64"/>
+                     <img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="64" height="64">
+                     <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="64" height="64"><br/>
+                     <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="64" height="64">
+                     <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="64" height="64">
                 </th>
                 <th>Attacker:</th>
                 <td><a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a></td>
@@ -109,14 +109,14 @@
 
         {% for item in killdata.items %}
         <tr>
-            <td><img src="{{ images.items }}{{ item.typeID }}_32.png"/></td>
+            <td><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></td>
             <th>{{ item.typeName }}</th>
             <td>{{ item.qtyDropped }}</td>
             <td>{{ item.qtyDestroyed }}</td>
             {% if item.items %}
                 {% for containeritem in item.items %}
                     <tr>
-                        <td><img src="{{ images.items }}{{ item.typeID }}_32.png"/><img src="{{ images.items }}{{ containeritem.typeID }}_32.png"/></td>
+                        <td><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></td>
                         <th>{{ containeritem.typeName }}</th>
                         <td>{{ containeritem.qtyDropped }}</td>
                         <td>{{ containeritem.qtyDestroyed }}</td>
