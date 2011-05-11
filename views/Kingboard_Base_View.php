@@ -1,6 +1,14 @@
 <?php
 class Kingboard_Base_View extends King23_TemplateView
 {
+    protected function sendErrorAndQuit($message)
+    {
+        header('HTTP/1.1 200 Bad Request');
+        header('Content-Type:text/plain');
+        echo $message;
+        exit;
+    }
+    
     public function __construct($loginrequired = false)
     {
         if($loginrequired && !Kingboard_Auth::isLoggedIn())

@@ -31,40 +31,16 @@
  * @author Georg Grossberger
  * @package Kingboard
  */
-class Kingboard_Helper_String implements King23_Singleton
+class Kingboard_Helper_String extends Kingboard_Helper_Singleton
 {
-    /**
-     * The only instance of the universe
-     *
-     * @var Kingboard_Helper_String
-     */
-    protected static $instance = null;
-
-    /**
-     * Get the instance
-     *
-     * @return Kingboard_Helper_String
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === null)
-        {
-            self::$instance = new Kingboard_Helper_String();
-        }
-        return self::$instance;
-    }
 
     /**
      * Enforcing the singleton
      */
 
-    final protected function __construct()
+    private function __construct()
     {
         mb_internal_encoding('UTF-8');
-    }
-
-    final private function __clone()
-    {
     }
 
     /**
