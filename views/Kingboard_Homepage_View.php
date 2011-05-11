@@ -6,21 +6,22 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
     
     public function index($request)
     {
-        $page = 1;
+        $currentPage = 1;
         if (!empty($request['page']))
         {
-            $page = (int) preg_replace('/[^0-9]+/', '', $request['page']);
-            if ($page < 1)
+            $currentPage = (int) preg_replace('/[^0-9]+/', '', $request['page']);
+            if ($currentPage < 1)
             {
                 $this->sendErrorAndQuit('There are no negative pages morron');
             }
         }
         
         $killsPerPage = 20;
-        $skip = ($page - 1) * $killsPerPage;        
+        $skip = ($currentPage - 1) * $killsPerPage;        
         $count = Kingboard_Kill::count();
+        $lastPage = ceil($count / $killsPerPage);
         
-        if ($page > ceil($count / $killsPerPage))
+        if ($currentPage > $lastPage)
         {
             $this->sendErrorAndQuit('No more kills on this end');
         }
@@ -30,26 +31,28 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                     ->skip($skip)
                     ->limit($killsPerPage);
         
-        $context = array(
+        $templateVars = array(
             'data' => $data,
-            'next' => ($skip + $killsPerPage < $count) ? $page + 1 : false,
-            'prev' => $page > 1 ? $page - 1 : false
+            'next' => ($skip + $killsPerPage < $count) ? $currentPage + 1 : false,
+            'prev' => $currentPage > 1 ? $currentPage - 1 : false,
+            'currentPage' => $currentPage,
+            'lastPage' => $lastPage
         );
         
         if (!empty($request['ajax']))
         {
-            return $this->render('home_killspage.html', $context);
+            return $this->render('home_killspage.html', $templateVars);
         }
         $stats = Kingboard_Kill_MapReduce_KillsByShip::find();
         $info = array();
         $template = "index.html";
         $stats = $stats->sort(array("value.value" => -1));
         
-        $context['count'] = $count;
-        $context['stats'] = $stats;
-        $context['info'] = $info;
+        $templateVars['count'] = $count;
+        $templateVars['stats'] = $stats;
+        $templateVars['info'] = $info;
         
-        return $this->render($template, $context);
+        return $this->render($template, $templateVars);
     }
 
     public function pilot($request)
