@@ -41,14 +41,14 @@
             <div class="error"><p>{{ error }}</p></div>
             {% endif %}
             <form action="/account/" method="post">
-                <input type="hidden" value="{{XSRF}}" name="XSRF" />
+                <input type="hidden" value="{{XSRF}}" name="XSRF">
 
                 <label for="apiuserid">EVE Userid</label>
-                <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid"/>
+                <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid">
 
                 <label for="apikey">EVE API Key</label>
-                <input type="text" value="{{ apikey }}" name="apikey" id="apikey"/>
-                <input type="submit" value="Add"/>
+                <input type="text" value="{{ apikey }}" name="apikey" id="apikey">
+                <input type="submit" value="Add">
             </form>
         </fieldset>
 	</div>
