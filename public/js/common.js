@@ -11,7 +11,6 @@ $(document).ready(function() {
    var container = $("#home_killspage");
    if (container.length) {
       container.click(function(e) {
-          e.preventDefault();
            if (e.target.className == "pager") {
                e.preventDefault();
                var url = $(e.target).attr("href");
