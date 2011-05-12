@@ -8,7 +8,7 @@ its not meant for anything productive, simply putting it up for
 educational purposes for a few friends
 
 ## LICENSE
-assume a MIT Style license
+see LICENSE.md File
 
 ## REQUIREMENTS
 - PHP 5.2 (might run on earlier versions, untested)

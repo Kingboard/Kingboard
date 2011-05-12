@@ -65,10 +65,19 @@ class Kingboard_User_View extends Kingboard_Base_View
                     $pendingKeys[] = $key;
                 }
             }
+        $charkeylist = array();
+        foreach($activeKeys as $key)
+        {
+            $pheal = new Pheal($key['apiuserid'], $key['apikey']);
+            $chars = $pheal->accountScope->Characters()->characters->toArray();
+            foreach($chars as $char)
+                $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'];
+        }
         $context = array_merge($context, array(
             'active_keys' => $activeKeys,
             'pending_keys' => $pendingKeys,
-            'apimailreceiver' => King23_Registry::getInstance()->apimailreceiver
+            'apimailreceiver' => King23_Registry::getInstance()->apimailreceiver,
+            'active_characters' => $charkeylist
         ));
         $this->render('user/index.html', $context);
     }
