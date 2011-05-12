@@ -38,7 +38,7 @@ class Kingboard_Helper_String extends Kingboard_Helper_Singleton
      * Enforcing the singleton
      */
 
-    private function __construct()
+    protected function __construct()
     {
         mb_internal_encoding('UTF-8');
     }

@@ -35,7 +35,7 @@
  */
 abstract class Kingboard_Helper_Singleton implements King23_Singleton {
 
-    private static $instance;
+    protected static $instance;
     
     /**
      * Implement the singleton
@@ -55,6 +55,6 @@ abstract class Kingboard_Helper_Singleton implements King23_Singleton {
      * Enforce the singleton
      */
     
-    private function __construct() {}
-    private function __clone() {}
+    protected function __construct() {}
+    protected function __clone() {}
 }
