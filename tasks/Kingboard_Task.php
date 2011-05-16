@@ -15,7 +15,8 @@ class Kingboard_Task extends King23_CLI_Task
         "key_purge" => "remove all keys who have more than x markers, where x is a parameter",
         "feed_add" => "add a feed to the feeds to be pulled",
         "feed_pull" => "pull feeds",
-        "file_import" => "import kills from files named *.txt, 1 parameter == directory"
+        "file_import" => "import kills from files named *.txt, 1 parameter == directory",
+        "ek_import" => "import range from <param1> to <param2> from eve-kill"
     );
 
     /**
@@ -347,4 +348,35 @@ class Kingboard_Task extends King23_CLI_Task
 
         }
     }
+
+    public function ek_import(array $options)
+    {
+        if(count($options) != 2 || !is_numeric($options[0]) || !is_numeric($options[1]))
+        {
+            $this->cli->error('need two numbers as parameters');
+            return;
+        }
+
+        $processed = 0;
+        $killcount = $options[1] - $options[0] +1;
+        for($i = $options[0]; $i <= $options[1]; $i++)
+        {
+            $this->cli->message('processing ' . ++$processed . ' out of ' .  $killcount);
+            $mailtext = trim(join('', file("http://eve-kill.net/kingboard.php?kllid=" . $i)));
+
+            $apiId = null;
+
+            try {
+                $mail = Kingboard_KillmailParser_Factory::parseTextMail($mailtext);
+                $mail->killID = $apiId;
+                $mail->save();
+            } catch(Kingboard_KillmailParser_KillmailErrorException $e) {
+                $this->cli->error("Exception caught, mail was not processed");
+                $this->cli->error($e->getMessage());
+                $this->cli->error($e->getFile() . '::' . $e->getLine());
+            }
+
+        }
+    }
+
 }
