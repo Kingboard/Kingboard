@@ -27,3 +27,6 @@ $router->addRoute("/account/", "Kingboard_User_View", "myKingboard");
 // autcompleters
 $router->addRoute("/autocomplete/solarsystem", "Kingboard_AutoCompleter_View", 'solarSystem');
 $router->addRoute("/autocomplete/region", "Kingboard_AutoCompleter_View", 'region');
+
+// battles
+$router->addRoute("/battle/new", "Kingboard_BattleEditor_View", "create");

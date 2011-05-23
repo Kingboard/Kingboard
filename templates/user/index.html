@@ -55,7 +55,7 @@
 	<div id="battle-editor">
         <fieldset>
             <legend>Add New Battle</legend>
-            <form action="/battle/new">
+            <form action="/battle/new" method="post">
                 <label for="startdate">Start Date/Time</label>
                 <input type="text" name="startdate" id="startdate" />
                 <label for="enddate">End Date/Time</label>
@@ -70,6 +70,7 @@
                     {% endfor %}
                 </select>
                 <input type="submit" name="submit" value="Add" />
+                <input type="hidden" name="XSRF" value="{{ XSRF }}" />
             </form>
         </fieldset>
 	</div>
