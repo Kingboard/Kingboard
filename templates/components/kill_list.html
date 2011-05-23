@@ -1,0 +1,70 @@
+{% load SithKingboard %}
+<table class="kill_list">
+    <thead>
+        <!-- we have an empty header row to enable possibility for css to use fixed with sizing all fields -->
+        <tr class="phantom">
+            <td class="header-control"></td>
+            <td class="header-date"></td>
+            <td class="header-icon"></td>
+            <td class="header-ship"></td>
+            <td class="header-icon"></td>
+            <td class="header-icon"></td>
+            <td class="header-icon"></td>
+            <td class="header-victim"></td>
+            <td class="header-location"></td>
+            <td class="header-details"></td>
+            <td class="header-control"></td>
+        </tr>
+        <!-- end sizing header -->
+
+        <tr class="pager">
+            <!-- page -->
+            <th class="pager">{% if prev %}<a href="{{ action }}/page/{{ prev }}/" class="pager"><img src="/images/back.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
+            <!-- /page -->
+
+            <th colspan="9" class="pager-info">Page {{ currentPage }} of {{ lastPage }}</th>
+
+            <!-- page -->
+            <th class="pager">{% if next %}<a href="{{ action }}/page/{{ next }}/" class="pager"><img src="/images/forward.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
+            <!-- /page -->
+        </tr>
+
+        <tr class="titles">
+            <th colspan="2">Date</th>
+            <th colspan="2" class="ship">Ship type</th>
+            <th colspan="4" class="victim">Victim</th>
+            <th>Location</th>
+            <th colspan="2">&nbsp;</th>
+
+        </tr>
+    </thead>
+    <tbody>{% for kill in data %}
+
+        <tr class="{% if ownerID eq kill.victim.allianceID or ownerID eq kill.victim.corporationID or ownerID eq kill.victim.characterID %}loss{% else %}kill{% endif %}">
+            <!-- page -->
+            <td colspan="2">{{ kill.killTime|mongodate }}</td>
+            <!-- /page -->
+            <!-- shiptype -->
+            <td class="icon"><img src="{{images.items}}{{kill.victim.shipTypeID}}_32.png" alt="{{kill.victim.shipType}}"></td>
+            <td class="ship">{{kill.victim.shipType }}</td>
+            <!-- /shiptype -->
+            
+            <!-- victim -->
+            <td class="icon"><img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}"></td>
+            <td class="icon"><img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}"></td>
+            <td class="icon"><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}"></td>
+            <td class="victim">
+                {% if kill.victim.allianceName %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> / {% endif %}
+                <a href="/corporation/{{ kill.victim.corporationID }}">{{ kill.victim.corporationName }}</a>
+                {% if kill.victim.characterName %} / <a href="/pilot/{{ kill.victim.characterID}}">{{ kill.victim.characterName }}</a>{%endif %}
+            </td>
+            <!-- /victim -->
+            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|space2under }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|space2under }}" rel="external">{{ kill.location.solarSystem }}</a> ({{ kill.location.security|round:1 }})</td>
+            <td><a href="/kill/{{ kill.idHash }}/">Details ..</a></td>
+            <!-- page -->
+            <td>&nbsp;</td>
+            <!-- /page -->
+        </tr>
+{% endfor %}
+    </tbody>
+</table>

@@ -85,7 +85,7 @@ body {
 }
 
 #nav a, #nav a:active, #nav a:link {
-    color: #000000;
+    color: #302C29;
     text-decoration: none;
 }
 
@@ -110,48 +110,99 @@ td.statsvalue {
 }
 
 
-
 table.kill_list {
     border-width: 1px;
-    border-color: #666666;
-    border-collapse: collapse;
-    padding: 5px;
-    margin: 1px;
-    margin-left: 0px;
-    margin-right: 0px;
+    border-color: #302C29;
+    border-collapse:collapse;
+    border-spacing:1px;
+    border-style:solid;
+    margin: 0;
+    padding: 0;
     width: 100%;
+    table-layout: fixed;
 }
 
-table.kill_list th {
-    border-bottom: black solid 1px;
-
-}
-
-table.kill_list tr.top {
-    border: none;
-}
-table.kill_list tr.bottom {
-    border: none;
-    border-bottom: black solid 1px;
-}
-
-table.kill_list tr.loss td
+table.kill_list tr.pager
 {
-    background-color: #AA3333;
+    background-color:#302C29;
+    color:  #D1D1BC;
+}
+table.kill_list tr.titles {
+    background-color:#302C29;
+    color:  #D1D1BC;
+    border-color: #D1D1BC;
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-left-color: #302C29;
+    border-right-color: #302C29;
 }
 
-table.kill_list tr.kill td
+table.kill_list tr.titles th {
+    border-color: #D1D1BC;
+    border-style: solid;
+    border-width: 1px;
+}
+
+table.kill_list tr.titles th.ship {
+    width: 200px;
+}
+table.kill_list tr.titles th.victim {
+    width: 400px;
+}
+
+table.kill_list td.icon
+{
+    width: 32px;
+}
+
+
+table.kill_list td.icon img
+{
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-color: #000000;
+}
+
+a.pager,
+a.pager:hover,
+a.pager:active,
+a.pager:visited
+{
+    font-family: Arial, Sans-Serif;
+    font-size: 14px;
+    text-decoration:none;
+    color: #6C8C84;
+}
+
+th.pager {
+    width:20px;
+}
+
+
+
+table.kill_list tr.loss
+{
+    background-color: #FF7050;
+    border-bottom-style: solid;
+    border-bottom-color: #302C29;
+    border-bottom-width: 1px;
+}
+
+table.kill_list tr.kill
 {
     background-color: #33AA33;
+    border-bottom-style: solid;
+    border-bottom-color: #302C29;
+    border-bottom-width: 1px;
 }
 
-table.kill_list td.count {
-    border-right: black solid 1px;
-    text-align: right;
-}
-table.kill_list td.ship {
-    border-left: black solid 1px;
-    text-align: left;
+
+table.kill_list td.victim,
+table.kill_list td.ship
+{
+    padding-left: 8px;
 }
 
 .tooltip {
@@ -162,4 +213,36 @@ table.kill_list td.ship {
 
 .error {
     color: #ff0000;
+}
+
+table.kill_list .header-control {
+    width: 20px;
+}
+
+table.kill_list .header-date {
+    width: 80px;
+}
+
+table.kill_list .header-ship {
+    width: 200px;
+}
+
+table.kill_list .header-location{
+    width: 250px;
+}
+
+table.kill_list .header-icon {
+    width: 32px;
+}
+table.kill_list .header-details {
+    width: 80px;
+}
+
+table.kill_list .phantom {
+    border-width: 0px;
+    border-style:none;
+    background-color:#D1D1BC;
+    border-color: #D1D1BC;
+    margin: 0;
+    padding: 0;
 }

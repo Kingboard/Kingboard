@@ -14,7 +14,8 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
             'round'  => array('handler' => 'handleRound', 'minArgs' => 1),
             'truncate' => array('handler' => 'handleTruncate', 'minArgs' => 0),
             'jsonify' => array('handler' => 'handleJsonify', 'minArgs' => 0),
-            'mongodate' => array('handler' => 'handleMongoDate', 'minArgs' => 0)
+            'mongodate' => array('handler' => 'handleMongoDate', 'minArgs' => 0),
+            'space2under' => array('handler' => 'handleSpace2Under', 'minArgs' => 0)
         );
     }
     public function providedHooks()
@@ -67,5 +68,10 @@ class TemplateSithKingboardPlugin implements ITemplatePlugin
     public function handleJsonify(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args) 
     {
         return 'json_encode(%s)';
+    }
+
+    public function handleSpace2Under(TemplateCompilerEx $compiler, TemplateNodeEx $node, &$filter, array &$args)
+    {
+        return 'str_replace(" ", "_", %s)';
     }
 }

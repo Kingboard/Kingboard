@@ -27,9 +27,9 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         }
         
         $data = Kingboard_Kill::find()
-                    ->sort(array('killTime' => -1))
-                    ->skip($skip)
-                    ->limit($killsPerPage);
+            ->sort(array('killTime' => -1))
+            ->skip($skip)
+            ->limit($killsPerPage);
         
         $templateVars = array(
             'data' => $data,

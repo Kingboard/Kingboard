@@ -22,23 +22,25 @@
 
 
 {% block content %}
-
-<h1>Last few Kills/Losses</h1>
-<div id="home_killspage">
-
-{% include "components/kill_list.html" %}
-</div>
+<div id="tabs">
+	<ul>
+		<li><a href="#kills">Kills/Losses</a></li>
+		<li><a href="#battlereports">Battlereports</a></li>
+	</ul>
+	<div id="kills">
+        <div id="home_killspage">
+        {% include "components/kill_list.html" %}
+        </div>
+	</div>
+        <div id="battlereports">
+        <div>comming soon</div>
+    </div>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-$(document).ready(function() {
-    //$('.killed-ships-list').easyListSplitter({ colNumber: 5, direction: 'horizontal' });
-{% for group in stats %}
-    $("#item{{ forloop.counter }}").tooltip();
-{% endfor %}
-});
-
-
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
 </script>
 {% endblock %}
