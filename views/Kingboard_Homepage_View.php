@@ -12,7 +12,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             $currentPage = (int) preg_replace('/[^0-9]+/', '', $request['page']);
             if ($currentPage < 1)
             {
-                $this->sendErrorAndQuit('There are no negative pages morron');
+                $this->sendErrorAndQuit('Page must be a positive value larger than one');
             }
         }
         
@@ -23,7 +23,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         
         if ($currentPage > $lastPage)
         {
-            $this->sendErrorAndQuit('No more kills on this end');
+            $this->sendErrorAndQuit('Page does not exist');
         }
         
         $data = Kingboard_Kill::find()
@@ -36,7 +36,8 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             'next' => ($skip + $killsPerPage < $count) ? $currentPage + 1 : false,
             'prev' => $currentPage > 1 ? $currentPage - 1 : false,
             'currentPage' => $currentPage,
-            'lastPage' => $lastPage
+            'lastPage' => $lastPage,
+            'action' => '/home'
         );
         
         if (!empty($request['ajax']))
