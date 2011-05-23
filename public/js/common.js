@@ -10,7 +10,9 @@ $(document).ready(function() {
 
     $('a.pager').live('click', function(e){
         e.preventDefault();
-        var url = $(e.target).attr("href") + 'xhr/';
+
+        var url = $(e.target).parent().attr("href") + 'xhr/';
+
         if(runtimePagerCache[url])
         {
             container.html(runtimePagerCache[url]);
