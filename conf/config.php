@@ -50,6 +50,10 @@ $reg->apimailreceiverCharacterID = 123456;
 $reg->apimailreceiverApiUserID = "123456";
 $reg->apimailreceiverApiKey = "APIKEYHERE";
 
+// this can be fetched from a specific ownerID provider
+// which maps host to id for example on hosted boards
+$reg->ownerID = 99000289;
+
 require_once("routes.php");
 
 session_start();
