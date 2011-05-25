@@ -9,11 +9,7 @@ class Kingboard_Task extends King23_CLI_Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "import" => "import",
-        "setup_indexes" => "Setup the indexes for MongoDB",
         "key_add" => "add an apikey, requires userid, apikey",
-        "key_check" => "run through all keys, add marker to those not responding",
-        "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers.",
-        "key_purge" => "remove all keys who have more than x markers, where x is a parameter",
         "feed_add" => "add a feed to the feeds to be pulled",
         "feed_pull" => "pull feeds",
         "file_import" => "import kills from files named *.txt, 1 parameter == directory",
@@ -25,6 +21,12 @@ class Kingboard_Task extends King23_CLI_Task
      */
     protected $name = "Kingboard";
 
+    /**
+     * add an apikey to be used in imports
+     * @deprecated keys should be added through users interface
+     * @param array $options
+     * @return void
+     */
     public function key_add(array $options)
     {
         if(isset($options[0]) && !empty($options[0]) && isset($options[1]) && !empty($options[1]))
@@ -51,75 +53,7 @@ class Kingboard_Task extends King23_CLI_Task
         }
     }
 
-    public function key_check(array $options)
-    {
-        $keys = Kingboard_EveApiKey::find();
-        foreach($keys as $key)
-        {
-            $this->cli->message("testing {$key['userid']}");
-            $pheal = new Pheal($key['userid'], $key['apikey']);
-            try {
-                $pheal->Characters();
-                $this->cli->positive('ok');
-            } catch(PhealApiException $e) {
-                $this->cli->error('failed');
-                if(!isset($key['failed']))
-                    $key->failed = 0;
-                $key->failed++;
-                $key->save();
-            }
-        }
-    }
 
-    public function key_purgelist(array $options)
-    {
-        if(!isset($options[0]) || empty($options[0]))
-        {
-            $this->cli->message('no parameter given, assuming to show all who have a fail marker');
-            $options[0] = 0;
-        }
-        $criteria = array('failed' => array('$gt' => (int) $options[0]));
-        $keys = Kingboard_EveApiKey::find($criteria);
-        foreach($keys as $key)
-        {
-            $this->cli->message("{$key['userid']} has {$key['failed']} markers");
-        }
-    }
-
-    public function key_purge(array $options)
-    {
-        if(!isset($options[0]) || empty($options[0]))
-        {
-            $this->cli->error('fail value required');
-            return;
-        }
-        $criteria = array('failed' => array('$gt' => (int) $options[0]));
-        $keys = Kingboard_EveApiKey::find($criteria);
-        foreach($keys as $key)
-        {
-            $this->cli->message("purging {$key['userid']}");
-            $key->delete();
-        }
-    }
-
-
-    public function standings(array $options)
-    {
-        foreach(Kingboard_EveApiKey::find() as $key)
-        {
-            $userid = $key['userid'];
-            $apikey = $key['apikey'];
-            $pheal = new Pheal($userid, $apikey, 'account');
-
-            foreach($pheal->Characters()->characters as $char)
-            {
-                $pheal->scope = "corp";
-                print_r($pheal->ContactList(array('characterID' => $char->characterID))->toArray());
-            }
-        }
-
-    }
-    
     public function import(array $options)
     {
         $this->cli->message("import running");
@@ -378,55 +312,6 @@ class Kingboard_Task extends King23_CLI_Task
             }
 
         }
-    }
-
-    public function setup_indexes(array $options)
-    {
-        if(count($options) != 0)
-        {
-            $this->cli->error('this task takes no arguments');
-            return;
-        }
-
-        $reg = King23_Registry::getInstance();
-
-        $this->cli->message("Setting Killmail_Kill indexes");
-        // Kingboard_Kill indexes
-        $col = $reg->mongo['db']->Kingboard_Kill;
-
-        // idHash, index unique
-        $col->ensureIndex(array('idHash' => 1), array("unique" => true));
-
-        // victim Names
-        $col->ensureIndex(array('victim.characterName' => 1));
-
-        // attacker Names
-        $col->ensureIndex(array('attackers.characterName'));
-
-        // killtime Index
-        $col->ensureIndex(array('killTime' => 1));
-
-        $this->cli->message("Setting Killmail_EveItem indexes");
-        // Kingboard_EveItem
-        $col = $reg->mongo['db']->Kingboard_EveItem;
-
-        // typeID
-        $col->ensureIndex(array('typeID' => 1), array('unique' => true));
-
-        // typeName
-        $col->ensureIndex(array('typeName' => 1));
-
-        $this->cli->message("Setting Killmail_EveSolarSystem indexes");
-
-        // Kingboard_EveSolarSystem
-        $col = $reg->mongo['db']->Kingboard_EveSolarSystem;
-
-        // itemID
-        $col->ensureIndex(array('itemID' => 1), array('unique' => true));
-
-        // itemName
-        $col->ensureIndex(array('itemName' => 1));
-
     }
 
 }
