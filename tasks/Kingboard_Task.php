@@ -9,6 +9,7 @@ class Kingboard_Task extends King23_CLI_Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "import" => "import",
+        "setup_indexes" => "Setup the indexes for MongoDB",
         "key_add" => "add an apikey, requires userid, apikey",
         "key_check" => "run through all keys, add marker to those not responding",
         "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers.",
@@ -377,6 +378,55 @@ class Kingboard_Task extends King23_CLI_Task
             }
 
         }
+    }
+
+    public function setup_indexes(array $options)
+    {
+        if(count($options) != 0)
+        {
+            $this->cli->error('this task takes no arguments');
+            return;
+        }
+
+        $reg = King23_Registry::getInstance();
+
+        $this->cli->message("Setting Killmail_Kill indexes");
+        // Kingboard_Kill indexes
+        $col = $reg->mongo['db']->Kingboard_Kill;
+
+        // idHash, index unique
+        $col->ensureIndex(array('idHash' => 1), array("unique" => true));
+
+        // victim Names
+        $col->ensureIndex(array('victim.characterName' => 1));
+
+        // attacker Names
+        $col->ensureIndex(array('attackers.characterName'));
+
+        // killtime Index
+        $col->ensureIndex(array('killTime' => 1));
+
+        $this->cli->message("Setting Killmail_EveItem indexes");
+        // Kingboard_EveItem
+        $col = $reg->mongo['db']->Kingboard_EveItem;
+
+        // typeID
+        $col->ensureIndex(array('typeID' => 1), array('unique' => true));
+
+        // typeName
+        $col->ensureIndex(array('typeName' => 1));
+
+        $this->cli->message("Setting Killmail_EveSolarSystem indexes");
+
+        // Kingboard_EveSolarSystem
+        $col = $reg->mongo['db']->Kingboard_EveSolarSystem;
+
+        // itemID
+        $col->ensureIndex(array('itemID' => 1), array('unique' => true));
+
+        // itemName
+        $col->ensureIndex(array('itemName' => 1));
+
     }
 
 }
