@@ -49,56 +49,18 @@
 
 	</div>
     <div id="kills">
-            <table class="kill_list">
-                <thead>
-                </thead>
-                <tbody>
-            {% for kill in killdata %}
-                    <tr class="top{% if kill.victim.characterID eq info.pilotID %} loss{% else %} kill{% endif %}">
-                        <td><img src="{{images.items}}{{kill.victim.shipTypeID}}_32.png" width="32" height="32"></td>
-                        <td>{{kill.victim.shipType }}</td>
-                        <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}><img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" width="20" height="20"></td>
-                        <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}>{{kill.victim.corporationName }}</td>
-                        <td>{{kill.killTime|mongodate}}</td>
-                    </tr>
-                    <tr class="bottom{% if kill.victim.characterID eq info.pilotID %} loss{% else %} kill{% endif %}">
-                        <td><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" width="32" height="32"></td>
-                        <td><a href="http://{{ baseHost }}/pilot/{{ kill.victim.characterID }}">{{kill.victim.characterName }}</a></td>
-                        {% if kill.victim.allianceID %}
-                            <td>{% if kill.victim.allianceID %}<img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" width="32" height="32">{% endif %}</td>
-                            <td>{{kill.victim.allianceName}}</td>
-                        {% endif %}
-                        <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem }}" rel="external">{{ kill.location.solarSystem }}</a> / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.idHash }}/">Details..</a></td>
-                    </tr>
-            {% endfor %}
-                </tbody>
-            </table>
+        <div id="home_killspage">
+        {% with killdata as data %}
+        {% include "components/kill_list.html" %}
+        {% endwith %}
+        </div>
     </div>
     <div id="losses">
-            <table class="kill_list">
-                <thead>
-                </thead>
-                <tbody>
-            {% for kill in lossdata %}
-                    <tr class="top{% if kill.victim.characterID eq info.characterID %} loss{% else %} kill{% endif %}">
-                        <td><img src="{{images.items}}{{kill.victim.shipTypeID}}_32.png" width="32" height="32"></td>
-                        <td>{{kill.victim.shipType }}</td>
-                        <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}><img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" width="32" height="32"></td>
-                        <td {% if not kill.victim.allianceID %}rowspan="2"{% endif %}>{{kill.victim.corporationName }}</td>
-                        <td>{{kill.killTime|mongodate}}</td>
-                    </tr>
-                    <tr class="bottom{% if kill.victim.characterID eq info.characterID %} loss{% else %} kill{% endif %}">
-                        <td><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" width="32" height="32"></td>
-                        <td><a href="http://{{ baseHost }}/pilot/{{ kill.victim.characterID }}">{{kill.victim.characterName }}</a></td>
-                        {% if kill.victim.allianceID %}
-                            <td>{% if kill.victim.allianceID %}<img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" width="32" height="32">{% endif %}</td>
-                            <td>{{kill.victim.allianceName}}</td>
-                        {% endif %}
-                        <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem }}" rel="external">{{ kill.location.solarSystem }}</a> / {{ kill.location.security|round:1 }} / <a href="/kill/{{ kill.idHash }}/">Details..</a></td>
-                    </tr>
-            {% endfor %}
-                </tbody>
-            </table>
+        <div id="home_lossspage">
+        {% with lossdata as data %}
+        {% include "components/kill_list.html" %}
+        {% endwith %}
+        </div>
     </div>
 </div>
 {% endblock %}
