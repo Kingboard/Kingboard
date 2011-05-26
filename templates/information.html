@@ -1,0 +1,35 @@
+{% load SithKingboard %}
+{% extends "base.html" %}
+
+{% block header %}
+    <fieldset>
+        <legend>Information</legend>
+    <p>All thats there to know about Kingboard</p>
+    </fieldset>
+{% endblock %}
+
+{% block content %}
+<div id="tabs">
+	<ul>
+		<li><a href="#readme">Readme</a></li>
+		<li><a href="#license">License</a></li>
+        <li><a href="#contributions">Contributions</a></li>
+	</ul>
+	<div id="readme">
+        {{ readme }}
+	</div>
+    <div id="license">
+        {{ license }}
+    </div>
+    <div id="contributions">
+        {{ contributions }}
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>
+{% endblock %}

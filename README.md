@@ -1,21 +1,21 @@
 # Kingboard
-Copyright (C) 2010,2011 by Peter Petermann
+Copyright 2010, 2011, Peter Petermann, the Kingboard team and EVSCO All rights reserved.
 All rights reserved.
 
 ## WARNING
-this is a total prototype, undocumented, mostly born one night,
-its not meant for anything productive, simply putting it up for 
-educational purposes for a few friends
+this is a work in progress, it lacks alot of documentation and is currently
+not meant for productive use, consider it extremly unstable, and probably
+compatibility breaking
 
 ## LICENSE
 see LICENSE.md File
 
 ## REQUIREMENTS
-- PHP 5.2 (might run on earlier versions, untested)
+- PHP 5.3
 - APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!)
 - LINUX / MAC OS X (might run on windows, untested)
 - MongoDB: 1.8.1 or higher
-- King23:  current github clone
+- King23: current github clone
 - Pheal: current github clone
 
 ## INSTALLATION
@@ -27,12 +27,20 @@ see LICENSE.md File
 6. Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
 7. Extract the zip file and run mongorestore <ExtractPath>
 8. Make your apache point to public/ path
+9. (optional, recommended) run king23 KingboardMaintenance:setup_indexes
 
 ## USAGE
-run king23 Kingboard for a list of avaiable commands,
-like adding api keys and running an killmail import
+basically you should have a running killboard site with no content yet,
+at the moment content is only added through tasks,
+checkout:
+king23 Kingboard
+king23 KingboardMaintenance
+king23 KingboardCron
+for information on available tasks
 
-
-## PS
-i hope i did not forget anything.
-have fun, hope it helps
+## Links
+- [Kingboard](https://github.com/ppetermann/Kingboard)
+- [Kingboard Developer Wiki](https://github.com/ppetermann/Kingboard/wiki)
+- [King23](http://king23.net)
+- [Pheal](https://github.com/ppetermann/pheal)
+- [EVSCO](http://evsco.net)
