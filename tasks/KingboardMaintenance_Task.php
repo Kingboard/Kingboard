@@ -112,10 +112,22 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         $col->ensureIndex(array('victim.characterName' => 1));
 
         // attacker Names
-        $col->ensureIndex(array('attackers.characterName'));
+        $col->ensureIndex(array('attackers.characterName' =>1));
+
+        // victim ID
+        $col->ensureIndex(array('victim.characterID' => 1));
+
+        // attacker ID
+        $col->ensureIndex(array('attackers.characterID' =>1 ));
+
 
         // killtime Index
         $col->ensureIndex(array('killTime' => 1));
+
+        // location.solarSystem
+        $col->ensureIndex(array('location.solarSystem' => 1));
+
+
 
         $this->cli->message("Setting Killmail_EveItem indexes");
         // Kingboard_EveItem

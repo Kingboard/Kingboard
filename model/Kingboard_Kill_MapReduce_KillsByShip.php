@@ -15,7 +15,7 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
     public static function mapReduce()
     {
         $map = "function () {
-            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)});
+            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)},{'marketGroup.parentGroup.marketGroupName'});
             var info = {}
             info[this.victim.shipType] = 1;
             info[\"total\"] = 1;
