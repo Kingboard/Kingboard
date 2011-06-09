@@ -1,0 +1,51 @@
+{% load SithKingboard %}
+{% extends "base.html" %}
+
+{% block header %}
+    <fieldset>
+        <legend>Battle for {{ battleSetting.system }}</legend>
+    <p><b>Start</b>: {{ battleSetting.startdate|mongodate }}<br/>
+    <b>End</b>: {{ battleSetting.enddate|mongodate }}
+    </p>
+    </fieldset>
+{% endblock %}
+
+{% block content %}
+<div id="tabs">
+	<ul>
+		<li><a href="#kills">Kills</a></li>
+		<li><a href="#losses">Losses</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#fleetcompositions">Fleetcompositions</a></li>
+	</ul>
+	<div id="kills">
+        <div id="home_killspage">
+        {% with kills as data %}
+        {% include "components/kill_list.html" %}
+        {% endwith %}
+        </div>
+	</div>
+    <div id="losses">
+        <div id="home_losspage">
+        {% with losses as data %}
+        {% include "components/kill_list.html" %}
+        {% endwith %}
+        </div>
+    </div>
+    <div id="timeline">
+        {% include "components/kill_timeline.html" %}
+    </div>
+    <div id="fleetcompositions">
+        Fleetcompositions
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script type="text/javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>
+{% endblock %}

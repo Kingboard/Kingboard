@@ -122,12 +122,27 @@ table.kill_list {
     table-layout: fixed;
 }
 
+table.timeline {
+    border-width: 1px;
+    border-color: #302C29;
+    border-collapse:collapse;
+    border-spacing:1px;
+    border-style:solid;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+}
+
+
 table.kill_list tr.pager
 {
     background-color:#302C29;
     color:  #D1D1BC;
 }
-table.kill_list tr.titles {
+table.kill_list tr.titles,
+table.timeline tr.titles
+{
     background-color:#302C29;
     color:  #D1D1BC;
     border-color: #D1D1BC;
@@ -138,12 +153,29 @@ table.kill_list tr.titles {
     border-right-color: #302C29;
 }
 
-table.kill_list tr.titles th {
+table.timeline tr.timeline_entry {
+    border-color: #302C29;
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 1px;
+}
+
+table.kill_list tr.titles th,
+table.timeline tr.titles th {
     border-color: #D1D1BC;
     border-style: solid;
     border-width: 1px;
 }
 
+table.timeline td {
+    border-left-color: #302C29;
+    border-right-color: #302C29;
+    vertical-align: top;
+}
+
+table.timeline td img {
+    background-color: #000000;
+}
 table.kill_list tr.titles th.ship {
     width: 200px;
 }
@@ -182,7 +214,8 @@ th.pager {
 
 
 
-table.kill_list tr.loss
+table.kill_list tr.loss,
+table.timeline div.timeline_losses
 {
     background-color: #FF7050;
     border-bottom-style: solid;
@@ -190,7 +223,8 @@ table.kill_list tr.loss
     border-bottom-width: 1px;
 }
 
-table.kill_list tr.kill
+table.kill_list tr.kill,
+table.timeline div.timeline_kills
 {
     background-color: #33AA33;
     border-bottom-style: solid;

@@ -52,7 +52,10 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         $templateVars['count'] = $count;
         $templateVars['stats'] = $stats;
         $templateVars['info'] = $info;
-        
+
+        $templateVars['reports'] = Kingboard_BattleSettings::find()->limit(20)->sort(array('enddate' => -1));
+
+
         return $this->render($template, $templateVars);
     }
 

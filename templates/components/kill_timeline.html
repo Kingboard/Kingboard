@@ -1,0 +1,38 @@
+{% load SithKingboard %}
+<table class="timeline">
+    <thead>
+        <tr class="titles">
+            <th class="time">Time</th>
+            <th class="kill">Kills</th>
+            <th class="kill">Losses</th>
+        </tr>
+    </thead>
+    <tbody>{% for killtime, data in timeline %}
+        <tr class="timeline_entry">
+            <td>{{ killtime }}</td>
+            <td>
+                <div class="timeline_kills">
+                {% for kill in data.kills %}
+                    <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}" style="float: left;">
+                    <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}" style="float: left;">
+                    <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}" style="float: left;">
+                    {% if kill.victim.allianceName %} {{ kill.victim.allianceName }} / {% endif %}{{ kill.victim.corporationName }}<br />{{kill.victim.characterName }}
+                    <div style="clear: both"></div>
+                {% endfor %}
+                </div>
+            </td>
+            <td>
+                <div class="timeline_losses">
+                {% for kill in data.losses %}
+                    <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}" style="float: left;">
+                    <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}" style="float: left;">
+                    <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}" style="float: left;">
+                    {% if kill.victim.allianceName %} {{ kill.victim.allianceName }} / {% endif %}{{ kill.victim.corporationName }}<br />{{kill.victim.characterName }}
+                    <div style="clear: both"></div>
+                {% endfor %}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

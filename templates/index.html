@@ -32,8 +32,25 @@
         {% include "components/kill_list.html" %}
         </div>
 	</div>
-        <div id="battlereports">
-        <div>comming soon</div>
+    <div id="battlereports">
+        <table>
+            <thead>
+            <tr>
+                <th>System</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.system }}</td>
+                <td>{{ report.startdate|mongodate }}</td>
+                <td>{{ report.enddate|mongodate }}</td>
+                <td><a href="/battle/{{ report._id }}">details</a></td>
+            </tr>
+        {% endfor %}
+        </table>
     </div>
 {% endblock %}
 

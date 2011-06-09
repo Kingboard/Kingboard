@@ -1,5 +1,5 @@
 <?php
-class Kingboard_BattleSettings extends King23_MongoObject
+class Kingboard_Battle extends King23_MongoObject
 {
     protected $_className = __CLASS__;
 

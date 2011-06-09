@@ -25,20 +25,34 @@ class Kingboard_BattleEditor_View extends Kingboard_Base_View
         {
             // accumulate postive standings
             if($contact->standing > 0)
-                $positives[$contact->contactID]= (int) $contact->contactID;
+                $positives[$contact->contactID]= $contact->contactName;
         }
         // alliance standings override corp standings
         foreach($contacts->allianceContactList as $contact)
         {
             if($contact->standing > 0)
             {
-                $positives[$contact->contactID]= (int) $contact->contactID;
+                $positives[$contact->contactID]= $contact->contactName;
             } else {
                 // negative standings, we only need those if corp has positive, but alliance negative
                 if(isset($positives[$contact->contactID]))
                     unset($positives[$contact->contactID]);
             }
         }
-        print_r($positives);
+
+        $battleSetting = new Kingboard_BattleSettings();
+        $battleSetting->startdate = new MongoDate(strtotime($_POST['startdate']));
+        $battleSetting->user = $user->_id;
+        $battleSetting->enddate = new MongoDate(strtotime($_POST['enddate']));
+        $battleSetting->system = $_POST['system'];
+        $battleSetting->key = $key;
+        $battleSetting->character = $character;
+        $battleSetting->positives = $positives;
+        $battleSetting->runs = 0;
+        $battleSetting->nextRun = new MongoDate(time());
+        $battleSetting->save();
+
+        // we are done here, lets redirect to the battle!
+        $this->redirect("/battle/" . $battleSetting->_id);
     }
 }

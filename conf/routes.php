@@ -33,3 +33,4 @@ $router->addRoute("/autocomplete/region", "Kingboard_AutoCompleter_View", 'regio
 
 // battles
 $router->addRoute("/battle/new", "Kingboard_BattleEditor_View", "create");
+$router->addRoute("/battle/", "Kingboard_Battle_View", "show", array("id"));

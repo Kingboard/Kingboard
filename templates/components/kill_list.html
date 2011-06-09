@@ -17,6 +17,7 @@
         </tr>
         <!-- end sizing header -->
 
+        {% if currentPage %}
         <tr class="pager">
             <!-- page -->
             <th class="pager">{% if prev %}<a href="{{ action }}/page/{{ prev }}/" class="pager"><img src="/images/back.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
@@ -28,6 +29,7 @@
             <th class="pager">{% if next %}<a href="{{ action }}/page/{{ next }}/" class="pager"><img src="/images/forward.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
             <!-- /page -->
         </tr>
+        {% endif %}
 
         <tr class="titles">
             <th colspan="2">Date</th>
@@ -65,6 +67,6 @@
             <td>&nbsp;</td>
             <!-- /page -->
         </tr>
-{% endfor %}
+        {% endfor %}
     </tbody>
 </table>
