@@ -10,6 +10,7 @@ class Kingboard_Task extends King23_CLI_Task
         "info" => "General Informative Task",
         "key_add" => "add an apikey, requires userid, apikey",
         "feed_add" => "add a edk feed to the feeds to be pulled",
+        "idfeed_add" => "add a idfeed to the idfeeds to be pulled",
         "file_import" => "import kills from files named *.txt, 1 parameter == directory",
         "ek_import" => "import range from <param1> to <param2> from eve-kill"
     );
@@ -68,6 +69,28 @@ class Kingboard_Task extends King23_CLI_Task
 
         $feed = new Kingboard_EdkFeed();
         $feed->url = $options[0];
+        $feed->save();
+        $this->cli->positive('done');
+    }
+
+    public function idfeed_add($options)
+    {
+        $this->cli->header('adding new idfeed');
+        if(count($options) != 2)
+        {
+            $this->cli->error('exactly two parameters (url, handle) should be given');
+            return;
+        }
+
+        if(!is_null(Kingboard_IdFeed::findByUrl($options[0])))
+        {
+            $this->cli->error('a feed by this url allready exists!');
+            return;
+        }
+
+        $feed = new Kingboard_IdFeed();
+        $feed->url = $options[0];
+        $feed->handle = $options[1];
         $feed->save();
         $this->cli->positive('done');
     }

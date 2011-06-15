@@ -10,6 +10,7 @@ class Kingboard_IdFeed_Fetcher
 
     public function fetch($lastid)
     {
-        return new PhealResult(simplexml_load_file($this->url . '&lastID=' . $lastid));
+        $url = $this->url . '&lastID=' . $lastid;
+        return new PhealResult(simplexml_load_file($url));
     }
 }

@@ -8,13 +8,17 @@ class Kingboard_ApiKillParser
         $lastID = 0;
         foreach($kills as $kill)
         {
+            // this needs to be run before exit of loop, otherwise having all kills of this run
+            // will cause the lastID not being updated
+            if(!is_null($kill->killID) && $kill->killID > 0)
+                $lastID=$kill->killID;
+
             if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
             {
                 $oldkills++;
                 continue;
             }
-            if(isset($kill->killInternalID))
-                $lastID=$kill->killInternalID;
+
             $killdata = array(
                 "killID" => $kill->killID,
                 "solarSystemID" => $kill->solarSystemID,

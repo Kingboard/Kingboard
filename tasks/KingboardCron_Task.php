@@ -78,19 +78,33 @@ class KingboardCron_Task extends King23_CLI_Task
 
     public function idfeed_import(array $options)
     {
-        if(count($options) < 2)
+        if(count($options) < 1)
         {
-            $this->cli->error('2 parameters required: url, lastid');
+            $this->cli->error('1 parameter required: handle');
+            return;
+        }
+        $this->cli->message('starting import of handle: ' . $options[0]);
+
+        $idfeed = Kingboard_IdFeed::findByHandle($options[0]);
+        if(is_null($idfeed))
+        {
+            $this->cli->error('no such handle');
             return;
         }
 
-        $kidf = new Kingboard_IdFeed_Fetcher($options[0]);
-        $kills = $kidf->fetch($options[1])->kills;
+        $lastid =  $idfeed->lastId;
+        if(is_null($lastid))
+            $lastid = 0;
+
+        $kidf = new Kingboard_IdFeed_Fetcher($idfeed->url);
+        $kills = $kidf->fetch($lastid)->kills;
         $kakp = new Kingboard_ApiKillParser();
         $info = $kakp->parseKills($kills);
         $total = $info['oldkills'] + $info['newkills'];
         $this->cli->message("fetched $total kills, " . $info['oldkills'] . " allready known, " . $info['newkills'] . " new");
         $this->cli->message("Last id was: " . $info['lastID']);
+        $idfeed->lastId = $info['lastID'];
+        $idfeed->save();
     }
 
     public function api_import(array $options)
