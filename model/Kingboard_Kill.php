@@ -41,7 +41,7 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         $kill = self::_find(__CLASS__, array('$or' => array(
                           array('victim.characterID' => (int) $id),
                           array('attackers.characterID' => (int) $id)
-        )))->sort(array('killTime' => -1));
+        )))->sort(array('killTime' => -1))->limit(1);
 
         $kill->next();
 
