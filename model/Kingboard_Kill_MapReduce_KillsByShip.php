@@ -15,7 +15,7 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
     public static function mapReduce()
     {
         $map = "function () {
-            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)},{'marketGroup.parentGroup.marketGroupName'});
+            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)},{'marketGroup.parentGroup.marketGroupName':1});
             var info = {}
             info[this.victim.shipType] = 1;
             info[\"total\"] = 1;
@@ -38,6 +38,10 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
             sums[\"total\"] = total;
             return sums;
         }";
+
+        // we want the map/reduce to run for as long as it takes
+        MongoCursor::$timeout = -1;
+
         King23_Mongo::mapReduce("Kingboard_Kill", __CLASS__, $map, $reduce);
     }
 
