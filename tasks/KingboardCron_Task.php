@@ -112,6 +112,7 @@ class KingboardCron_Task extends King23_CLI_Task
         $this->cli->message("import running");
         $newkills = 0;
         $oldkills = 0;
+        $errors = 0;
         $keys = Kingboard_EveApiKey::find();
         foreach($keys as $key)
         {
@@ -133,10 +134,12 @@ class KingboardCron_Task extends King23_CLI_Task
                             continue;
                         }
                     }
+                    $this->cli->message("fetch done, parsing now");
                     $kakp = new Kingboard_ApiKillParser();
                     $info = $kakp->parseKills($kills);
                     $oldkills += $info['oldkills'];
                     $newkills += $info['newkills'];
+                    $errors += $info['errors'];
                 }
             } catch (PhealApiException $e) {
                 if(!isset($key['failed']))
@@ -149,7 +152,7 @@ class KingboardCron_Task extends King23_CLI_Task
 	        }
         }
         $totalkills = $oldkills + $newkills;
-        $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added");
+        $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added ( errors: $errors)");
     }
 
 

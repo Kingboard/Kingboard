@@ -15,12 +15,12 @@ class Kingboard_ApiKillParser
                 if(!is_null($kill->killID) && $kill->killID > 0)
                     $lastID=$kill->killID;
 
+
                 if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
                 {
                     $oldkills++;
                     continue;
                 }
-
                 $killdata = array(
                     "killID" => $kill->killID,
                     "solarSystemID" => $kill->solarSystemID,
@@ -49,7 +49,7 @@ class Kingboard_ApiKillParser
                 foreach($kill->attackers as $attacker)
                 {
                     $killdata['attackers'][] = array(
-                        "characterID" => $this->ensureCharacterID($attacker->characterID, $attacker->characterName),
+                        "characterID" => $attacker->characterID,
                         "characterName" => $attacker->characterName,
                         "entityType" => Kingboard_Helper_EntityType::getEntityTypeByEntityId((int) $attacker->characterID),
                         "corporationID" => $this->ensureCorporationID($attacker->corporationID, $attacker->corporationName),
@@ -73,7 +73,6 @@ class Kingboard_ApiKillParser
                 {
                     $killdata['items'][] = $this->ParseItem($item);
                 }
-
                 $hash = Kingboard_KillmailHash_IdHash::getByData($killdata);
                 $killdata['idHash'] = (String) $hash;
 
