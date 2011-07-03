@@ -19,9 +19,9 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         $this->_data = array_merge($data, $this->_data);
     }
 
-    public static function find($search = array())
+    public static function find($criteria = array(), $fields = array())
     {
-        return self::_find(__class__, $search);
+        return self::_find(__class__, $criteria, $fields);
     }
 
     public static function findOne($criteria)
@@ -96,6 +96,32 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
             {
                 if($attacker['characterID'] == $id)
                     return $attacker['characterName'];
+            }
+        }
+        return false;
+    }
+
+    public static function getPilotIdFromName($name)
+    {
+        // find a random kill with characterID $id
+        $kill = self::_findOne(__CLASS__, array('$or' => array(
+            array('victim.characterName' =>  $name),
+            array('attackers.characterName' => $name)
+        )), array(
+            'victim.characterName' => 1,
+            'attackers.characterName' => 1,
+            'victim.characterID' => 1,
+            'attackers.characterID' => 1
+        ));
+
+        if($kill['victim']['characterName'] == $name)
+            return $kill['victim']['characterID'];
+        else
+        {
+            foreach($kill['attackers'] as $attacker)
+            {
+                if($attacker['characterName'] == $name)
+                    return $attacker['characterID'];
             }
         }
         return false;

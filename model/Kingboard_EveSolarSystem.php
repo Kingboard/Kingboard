@@ -8,9 +8,9 @@ class Kingboard_EveSolarSystem extends King23_MongoObject
         return self::_getInstanceById(__CLASS__, $id);
     }
 
-    public static function find($criteria = array())
+    public static function find($criteria = array(), $fields = array())
     {
-        return self::_find(__CLASS__, $criteria);
+        return self::_find(__CLASS__, $criteria, $fields);
     }
 
     public static function getInstanceByCriteria($criteria)

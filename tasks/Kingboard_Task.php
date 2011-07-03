@@ -157,4 +157,8 @@ class Kingboard_Task extends King23_CLI_Task
         }
     }
 
+    public function test(array $options)
+    {
+    }
+
 }
