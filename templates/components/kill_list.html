@@ -42,7 +42,7 @@
     </thead>
     <tbody>{% for kill in data %}
 
-        <tr class="{% if ownerID eq kill.victim.allianceID or ownerID eq kill.victim.corporationID or ownerID eq kill.victim.characterID %}loss{% else %}kill{% endif %}">
+        <tr class="{% if ownerID and ((ownerID eq kill.victim.allianceID) or (ownerID eq kill.victim.corporationID) or (ownerID eq kill.victim.characterID)) %}loss{% else %}kill{% endif %}">
             <!-- page -->
             <td colspan="2">{{ kill.killTime|mongodate }}</td>
             <!-- /page -->
