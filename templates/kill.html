@@ -6,36 +6,35 @@
 {% block header %}
 <fieldset>
 <legend>{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}</legend>
-<table>
+<table class="headertable">
     <tr>
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
-        <td rowspan="3">
-             <img src="{{ images.characters }}{{killdata.victim.characterID}}_64.jpg" width="64" height="64">
-             <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_64.png" width="64" height="64">
-             <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_64.png" width="64" height="64">
+        <td rowspan="5">
+             <img src="{{ images.items }}{{killdata.victim.shipTypeID}}_64.png" width="128" height="128">
+             <img src="{{ images.characters }}{{killdata.victim.characterID}}_128.jpg" width="128" height="128">
+             <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="128" height="128">
+             {% if killdata.victim.allianceID neq 0 %}<img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="128" height="128">{% endif %}
          </td>
     </tr>
     <tr>
         <th>Corporation:</th>
         <td>{{ killdata.victim.corporationName }}</td>
     </tr>
-    <tr>
-        <th>Alliance:</th>
-        <td>{{ killdata.victim.allianceName }}</td>
-    </tr>
     {% if killdata.victim.faction %}
     <tr>
         <th>Faction:</th>
         <td>{{ killdata.victim.faction }}</td>
     </tr>
+    {% else %}
+    <tr>
+        <th>Alliance:</th>
+        <td>{% firstof killdata.victim.allianceName "none" %}</td>
+    </tr>
     {% endif %}
     <tr>
         <th>Ship:</th>
         <td>{{ killdata.victim.shipType }}</td>
-        <td rowspan="3">
-             <img src="{{ images.items }}{{killdata.victim.shipTypeID}}_64.png" width="64" height="64">
-         </td>
     </tr>
     <tr>
         <th>Damage Taken:</th>
@@ -53,73 +52,66 @@
 		<li><a href="#victim-assets">Victim Assets</a></li>
 	</ul>
 	<div id="involved-stats">
-        <table>
+        <table class="involved_stats">
 		{% for alliance, corporations in stats %}
-            <tr>
-                <th colspan="2">{{ alliance }}</th>
+            <tr class="titles">
+                <th colspan="2">{% firstof alliance "&nbsp;" %}</th>
             </tr>
-            <tr>
+            <tr class="titles">
                 <th>Corporation</th>
                 <th>Pilots</th>
             </tr>
             {% for corporation, value in corporations %}
-                <tr><td>{{ corporation }}</td><td>{{ value }}</td></tr>
+                <tr><td class="corporation">{{ corporation }}</td><td class="count">{{ value }}</td></tr>
             {% endfor %}
         {% endfor %}
         </table>
 	</div>
 	<div id="involved-pilots">
-        <table>
+        <table class="involved_attackers">
+            <tr class="titles">
+                <th>&nbsp;</th><th>Attacker</th><th>Equipment</th><th>Damage</th>
+            </tr>
             {% for attacker in killdata.attackers %}
-            <tr>
-                <th rowspan="6" width="132">
-                     <img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="64" height="64">
-                     <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="64" height="64"><br/>
-                     <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="64" height="64">
-                     <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="64" height="64">
-                </th>
-                <th>Attacker:</th>
-                <td><a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a></td>
-            </tr>
-            <tr>
-                <th>Corporation:</th>
-                <td>{{ attacker.corporationName }}</td>
-            </tr>
-            <tr>
-                <th>Alliance:</th>
-                <td>{{ attacker.allianceName }}</td>
-            </tr>
-            <tr>
-                <th>Ship:</th>
-                <td>{{ attacker.shipType }}</td>
-            </tr>
-            <tr>
-                <th>Weapon:</th>
-                <td>{{ attacker.weaponType }}</td>
-            </tr>
-            <tr>
-                <th>Damage Done:</th>
-                <td>{{ attacker.damageDone }}</td>
+            <tr class="attacker">
+                <td class="icons">
+                     <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="32" height="32">
+                     <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="32" height="32">
+                     <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="32" height="32">
+                     {% if attacker.allianceID neq 0 %}<img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="32" height="32">{% endif %}
+                </td>
+                <td class="pilot">
+                    <a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
+                    <a href="http://{{ baseHost }}/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
+                    {% if attacker.allianceName %} / <a href="http://{{baseHost}}/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
+                </td>
+                <td class="equipment">{{ attacker.shipType }} / {{ attacker.weaponType }}</td>
+                <td class="damage">{{ attacker.damageDone }}</td>
             </tr>
             {% endfor %}
         </table>
 	</div>
 	<div id="victim-assets">
-        <table>
-
+        <table class="involved_assets">
+        <tr class="titles">
+            <th>&nbsp;</th>
+            <th>Item Type</th>
+            <th>Dropped</th>
+            <th>Destroyed</th>
+        </tr>
         {% for item in killdata.items %}
         <tr>
-            <td><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></td>
-            <th>{{ item.typeName }}</th>
-            <td>{{ item.qtyDropped }}</td>
-            <td>{{ item.qtyDestroyed }}</td>
+            <td class="icons"><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></td>
+            <td>{{ item.typeName }}</td>
+            <td class="dropped">{{ item.qtyDropped }}</td>
+            <td class="destroyed">{{ item.qtyDestroyed }}</td>
             {% if item.items %}
                 {% for containeritem in item.items %}
                     <tr>
-                        <td><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></td>
-                        <th>{{ containeritem.typeName }}</th>
-                        <td>{{ containeritem.qtyDropped }}</td>
-                        <td>{{ containeritem.qtyDestroyed }}</td>
+                        <td class="icons"><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></td>
+                        <td>{{ containeritem.typeName }}</td>
+                        <td class="dropped">{{ containeritem.qtyDropped }}</td>
+                        <td class="destroyed">{{ containeritem.qtyDestroyed }}</td>
                     </tr>
                 {% endfor %}
             {% endif %}

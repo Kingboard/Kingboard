@@ -280,3 +280,56 @@ table.kill_list .phantom {
     margin: 0;
     padding: 0;
 }
+
+.headertable th
+{
+    text-align: right;
+}
+
+.headertable td
+{
+    height: 22px;
+}
+table.involved_stats,
+table.involved_assets,
+table.involved_attackers {
+    width: 100%;
+}
+
+table.involved_stats tr.titles,
+table.involved_assets tr.titles,
+table.involved_attackers tr.titles
+{
+    background-color:#302C29;
+    color:  #D1D1BC;
+    border-color: #D1D1BC;
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-left-color: #302C29;
+    border-right-color: #302C29;
+}
+
+table.involved_stats td,
+table.involved_assets td,
+table.involved_attackers td{
+    background-color: #EFEFEF;
+}
+
+table.involved_attackers .icons
+{
+    width: 150px;
+}
+
+table.involved_attackers .damage
+{
+    text-align: right;
+}
+
+
+table.involved_stats .count,
+table.involved_assets .dropped,
+table.involved_assets .destroyed
+{
+    text-align: right;
+}
