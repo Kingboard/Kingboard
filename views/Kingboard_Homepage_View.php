@@ -109,7 +109,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             //$stats = $stats->sort(array("value.value" => -1));
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
         } else {
-            die('no pilot id specified');
+            die('no corporation id specified');
         }
 
     }
