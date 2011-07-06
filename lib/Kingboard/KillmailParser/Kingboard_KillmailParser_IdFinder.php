@@ -179,6 +179,7 @@ class Kingboard_KillmailParser_IdFinder
         }
 
         // Try to find in kills
+       /*
         $result  = Kingboard_Kill::findOne(array(
             'items.typeName' => $name
         ));
@@ -192,7 +193,7 @@ class Kingboard_KillmailParser_IdFinder
                     return (int) $item['typeID'];
                 }
             }
-        }
+        }*/
 
         // Not found, try the api
         try
