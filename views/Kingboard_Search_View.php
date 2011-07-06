@@ -11,4 +11,15 @@ class Kingboard_Search_View extends Kingboard_Base_View
         }
         die('unknown character');
     }
+
+    public function nameCorporation(array $params)
+    {
+        if(!empty($params['corpname']))
+        {
+            $id = Kingboard_Kill::getCorporationIdFromName($params['corpname']);
+            $this->redirect("/corporation/$id/");
+            return;
+        }
+        die('unknown character');
+    }
 }

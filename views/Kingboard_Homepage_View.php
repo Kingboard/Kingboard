@@ -84,7 +84,35 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         } else {
             die('no pilot id specified');
         }
-        
     }
+
+    public function corporation($request)
+    {
+        if(!empty($request['hid']))
+        {
+            $count = Kingboard_Kill::find(
+                array('attackers.characterID' => (int) $request['hid'])
+            )->count();
+
+            $killdata = Kingboard_Kill::find(
+                  array('attackers.corporationID' => (int)  $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $lossdata = Kingboard_Kill::find(
+                array('victim.corporationID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceKills((int) $request['hid']);
+            $lossstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceLosses((int) $request['hid']);
+            $template = "corporation_home.html";
+            $info = Kingboard_Kill::getCorporationInfoFromId($request['hid']);
+            //$stats = $stats->sort(array("value.value" => -1));
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+        } else {
+            die('no pilot id specified');
+        }
+
+    }
+
 
 }

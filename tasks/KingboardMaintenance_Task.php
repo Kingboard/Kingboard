@@ -120,6 +120,30 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         // attacker ID
         $col->ensureIndex(array('attackers.characterID' =>1 ));
 
+        // corporation victim id
+        $col->ensureIndex(array('victim.corporationID' =>1));
+
+        // corporation attacker id
+        $col->ensureIndex(array('attackers.corporationID' =>1));
+
+        // corporation victim name
+        $col->ensureIndex(array('victim.corporationName' =>1));
+
+        // corporation attacker name
+        $col->ensureIndex(array('attackers.corporationNAme' =>1));
+
+        // alliance victim id
+        $col->ensureIndex(arraY('victim.allianceID' =>1));
+
+        // alliance attacker id
+        $col->ensureIndex(array('attackers.allianceID' =>1));
+
+        // alliance victim name
+        $col->ensureIndex(array('victim.allianceName' =>1));
+
+        // alliance attacker name
+        $col->ensureIndex(array('attackers.allianceName' =>1));
+
 
         // killtime Index
         $col->ensureIndex(array('killTime' => 1));

@@ -80,6 +80,53 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         return null;
     }
 
+    /**
+     * Fetches Information about the corporation identified by characterID
+     * @static
+     * @param String $id
+     * @return array|null
+     */
+    public static function getCorporationInfoFromId($id)
+    {
+        // find latest kill with characterID $id
+        $kill = self::_find(__CLASS__, array('$or' => array(
+                          array('victim.corporationID' => (int) $id),
+                          array('attackers.corporationID' => (int) $id)
+        )))->sort(array('killTime' => -1))->limit(1);
+
+        $kill->next();
+
+        if(!($kill = $kill->current()))
+            return null;
+
+        if($kill['victim']['corporationID'] == $id)
+        {
+            return array(
+                "corporationID" => $kill['victim']['corporationID'],
+                "corporationName" => $kill['victim']['corporationName'],
+                "allianceID" => $kill['victim']['allianceID'],
+                "allianceName" => $kill['victim']['allianceName'],
+                "factionID" => $kill['victim']['factionID'],
+                "factionName" => $kill['victim']['factionID']
+            );
+        }
+        foreach($kill['attackers'] as $attacker)
+        {
+            if($attacker['corporationID'] == $id)
+            {
+                return array(
+                    "corporationID" => $attacker['corporationID'],
+                    "corporationName" => $attacker['corporationName'],
+                    "allianceID" => $attacker['allianceID'],
+                    "allianceName" => $attacker['allianceName'],
+                    "factionID" => $attacker['factionID'],
+                    "factionName" => $attacker['factionID']
+                );
+            }
+        }
+        return null;
+    }
+
     public static function getPilotNameFromId($id)
     {
         // find a random kill with characterID $id
@@ -122,6 +169,32 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
             {
                 if($attacker['characterName'] == $name)
                     return $attacker['characterID'];
+            }
+        }
+        return false;
+    }
+
+    public static function getCorporationIdFromName($name)
+    {
+        // find a random kill with characterID $id
+        $kill = self::_findOne(__CLASS__, array('$or' => array(
+            array('victim.corporationName' =>  $name),
+            array('attackers.corporationName' => $name)
+        )), array(
+            'victim.corporationName' => 1,
+            'attackers.corporationName' => 1,
+            'victim.corporationID' => 1,
+            'attackers.corporationID' => 1
+        ));
+
+        if($kill['victim']['corporationName'] == $name)
+            return $kill['victim']['corporationID'];
+        else
+        {
+            foreach($kill['attackers'] as $attacker)
+            {
+                if($attacker['corporationName'] == $name)
+                    return $attacker['corporationID'];
             }
         }
         return false;

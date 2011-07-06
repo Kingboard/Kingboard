@@ -12,6 +12,10 @@ $router->addRoute("/information", "Kingboard_Information_View", "index");
 // pilot details
 $router->addRoute("/pilot/", "Kingboard_Homepage_View", "pilot", array('hid'));
 $router->addRoute("/pilot/name/", "Kingboard_Search_View", "namePilot", array('pilotname'));
+
+// corporation details
+$router->addRoute("/corporation/", "Kingboard_Homepage_View", "corporation", array("hid"));
+$router->addRoute('/corporation/name/', "Kingboard_Search_View", "nameCorporation", array("corpname"));
 // kill details
 $router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));
 
