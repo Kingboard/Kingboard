@@ -151,7 +151,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         // location.solarSystem
         $col->ensureIndex(array('location.solarSystem' => 1));
 
-
+        $col->ensureIndex(array('killID' =>1));
 
         $this->cli->message("Setting Killmail_EveItem indexes");
         // Kingboard_EveItem
