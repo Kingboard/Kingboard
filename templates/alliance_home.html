@@ -1,0 +1,75 @@
+{% load SithKingboard %}
+{% extends "base.html" %}
+
+{% block header %}
+    <fieldset>
+        <legend>{{ info.allianceName }}</legend>
+        <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
+    </fieldset>
+{% endblock %}
+
+{% block content %}
+<div id="tabs">
+	<ul>
+		<li><a href="#stats">Statistics</a></li>
+		<li><a href="#kills">Kills</a></li>
+		<li><a href="#losses">Losses</a></li>
+        <li><a href="#memberactivity">Member Activities</a></li>
+	</ul>
+	<div id="stats">
+        <fieldset>
+            <legend>Kills</legend>
+            <table>
+                <tr>
+                    {% for group in killstats.results %}
+                    <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
+                    {% if forloop.counter|divisibleby:6 and not forloop.last %}
+                        </tr><tr>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ killstats.counts.emit }}</td></tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Losses</legend>
+            <table>
+                <tr>
+                    {% for group in lossstats.results %}
+                    <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
+                    {% if forloop.counter|divisibleby:6 and not forloop.last %}
+                        </tr><tr>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ lossstats.counts.emit }}</td></tr>
+            </table>
+        </fieldset>
+
+	</div>
+    <div id="kills">
+        <div id="home_killspage">
+        {% with killdata as data %}
+        {% include "components/kill_list.html" %}
+        {% endwith %}
+        </div>
+    </div>
+    <div id="losses">
+        <div id="home_losspage">
+        {% with lossdata as data %}
+        {% include "components/kill_list.html" %}
+        {% endwith %}
+        </div>
+    </div>
+    <div id="memberactivity">
+        not here yet
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+</script>
+{% endblock %}

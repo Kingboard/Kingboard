@@ -91,7 +91,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         if(!empty($request['hid']))
         {
             $count = Kingboard_Kill::find(
-                array('attackers.characterID' => (int) $request['hid'])
+                array('attackers.corporationID' => (int) $request['hid'])
             )->count();
 
             $killdata = Kingboard_Kill::find(
@@ -111,8 +111,33 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         } else {
             die('no corporation id specified');
         }
-
     }
 
+
+    public function alliance($request)
+    {
+        if(!empty($request['hid']))
+        {
+            $count = Kingboard_Kill::find(
+                array('attackers.allianceID' => (int) $request['hid'])
+            )->count();
+
+            $killdata = Kingboard_Kill::find(
+                  array('attackers.allianceID' => (int)  $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $lossdata = Kingboard_Kill::find(
+                array('victim.allianceID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceKills((int) $request['hid']);
+            $lossstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceLosses((int) $request['hid']);
+            $template = "alliance_home.html";
+            $info = Kingboard_Kill::getAllianceInfoFromId($request['hid']);
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+        } else {
+            die('no alliance id specified');
+        }
+    }
 
 }

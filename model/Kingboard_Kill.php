@@ -127,6 +127,47 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         return null;
     }
 
+    /**
+     * Fetches Information about the alliance identified by id
+     * @static
+     * @param String $id
+     * @return array|null
+     */
+    public static function getAllianceInfoFromId($id)
+    {
+        // find latest kill with characterID $id
+        $kill = self::_find(__CLASS__, array('$or' => array(
+                          array('victim.allianceID' => (int) $id),
+                          array('attackers.allianceID' => (int) $id)
+        )))->sort(array('killTime' => -1))->limit(1);
+
+        $kill->next();
+
+        if(!($kill = $kill->current()))
+            return null;
+
+        if($kill['victim']['allianceID'] == $id)
+        {
+            return array(
+                "allianceID" => $kill['victim']['allianceID'],
+                "allianceName" => $kill['victim']['allianceName'],
+            );
+        }
+        foreach($kill['attackers'] as $attacker)
+        {
+            if($attacker['allianceID'] == $id)
+            {
+                return array(
+                    "allianceID" => $attacker['allianceID'],
+                    "allianceName" => $attacker['allianceName'],
+                );
+            }
+        }
+        return null;
+    }
+
+
+
     public static function getPilotNameFromId($id)
     {
         // find a random kill with characterID $id

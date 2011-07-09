@@ -16,6 +16,13 @@ $router->addRoute("/pilot/name/", "Kingboard_Search_View", "namePilot", array('p
 // corporation details
 $router->addRoute("/corporation/", "Kingboard_Homepage_View", "corporation", array("hid"));
 $router->addRoute('/corporation/name/', "Kingboard_Search_View", "nameCorporation", array("corpname"));
+
+// alliance details
+$router->addRoute("/alliance/", "Kingboard_Homepage_View", "alliance", array("hid"));
+$router->addRoute('/alliance/name/', "Kingboard_Search_View", "nameAlliance", array("alliancename"));
+
+
+
 // kill details
 $router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));
 

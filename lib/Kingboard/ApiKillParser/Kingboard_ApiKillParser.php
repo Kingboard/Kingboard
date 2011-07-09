@@ -99,7 +99,7 @@ class Kingboard_ApiKillParser
         // Build the standard item
         $item = array(
             "typeID" => $row->typeID,
-            "typeName" => Kingboard_EveItem::getByItemId($row->typeID)->typeName,
+            "typeName" => @Kingboard_EveItem::getByItemId($row->typeID)->typeName,
             "flag" => $row->flag,
             "qtyDropped" => $row->qtyDropped,
             "qtyDestroyed" => $row->qtyDestroyed
