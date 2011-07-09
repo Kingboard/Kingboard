@@ -40,7 +40,7 @@ $reg->sith = new TemplateEnviron(array(
 ));
 
 $reg->imagePaths = array(
-    'items' => 'http://cdn.evsco.net/Types/',
+    'items' => 'http://image.eveonline.com/Render/',
     'characters' => 'http://image.eveonline.com/Character/',
     'corporations' => 'http://image.eveonline.com/Corporation/',
     'alliances' => 'http://image.eveonline.com/Alliance/'
