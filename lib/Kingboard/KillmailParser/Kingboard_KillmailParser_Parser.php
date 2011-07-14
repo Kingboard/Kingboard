@@ -91,7 +91,7 @@ class Kingboard_KillmailParser_Parser
         $this->plainMail = $mail;
         
         $victimActive    = true;
-        $involed         = false;
+        $involved        = false;
         $destroyed       = false;
         $dropped         = false;
         $tokens          = Kingboard_KillmailParser_Factory::findTokensForMail($mail);
