@@ -139,7 +139,7 @@ class Kingboard_KillmailParser_Parser
                         break;
 
                     case Kingboard_KillmailParser_Line::TYPE_NAME:
-                        if ($involed)
+                        if ($involved)
                         {
                             $currentAttacker++;
                             $this->attackers[$currentAttacker] = array(
@@ -185,7 +185,7 @@ class Kingboard_KillmailParser_Parser
                         {
                             $record =& $this->victim;
                         }
-                        elseif ($involed)
+                        elseif ($involved)
                         {
                             $record =& $this->attackers[$currentAttacker];
                         }
@@ -204,7 +204,7 @@ class Kingboard_KillmailParser_Parser
                         {
                             $record =& $this->victim;
                         }
-                        elseif ($involed)
+                        elseif ($involved)
                         {
                             $record =& $this->attackers[$currentAttacker];
                         }
@@ -223,7 +223,7 @@ class Kingboard_KillmailParser_Parser
                         {
                             $this->victim['damageTaken'] = $line->getValue();
                         }
-                        elseif ($involed)
+                        elseif ($involved)
                         {
                             $this->attackers[$currentAttacker]['damageDone'] = $line->getValue();
                         }
@@ -235,7 +235,7 @@ class Kingboard_KillmailParser_Parser
                         {
                             $record =& $this->victim;
                         }
-                        elseif ($involed)
+                        elseif ($involved)
                         {
                             $record =& $this->attackers[$currentAttacker];
                         }
@@ -298,7 +298,7 @@ class Kingboard_KillmailParser_Parser
                          {
                              $this->location['security'] = $value;
                          }
-                         elseif ($involed)
+                         elseif ($involved)
                          {
                              $this->attackers[$currentAttacker]['securityStatus'] = $value;
                          }
@@ -311,7 +311,7 @@ class Kingboard_KillmailParser_Parser
                         {
                             $record =& $this->victim;
                         }
-                        elseif ($involed)
+                        elseif ($involved)
                         {
                             $record =& $this->attackers[$currentAttacker];
                         }
@@ -327,7 +327,7 @@ class Kingboard_KillmailParser_Parser
 
                      case Kingboard_KillmailParser_Line::TYPE_SWITCH_ATTACKERS:
                          $victimActive = false;
-                         $involed = true;
+                         $involved = true;
                          break;
 
                      case Kingboard_KillmailParser_Line::TYPE_SWITCH_DROPPED:
