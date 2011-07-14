@@ -11,7 +11,7 @@
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
         <td rowspan="5">
-             <img src="{{ images.items }}{{killdata.victim.shipTypeID}}_64.png" width="128" height="128">
+             <img src="{{ images.ships }}{{killdata.victim.shipTypeID}}_64.png" width="128" height="128">
              <img src="{{ images.characters }}{{killdata.victim.characterID}}_128.jpg" width="128" height="128">
              <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="128" height="128">
              {% if killdata.victim.allianceID neq 0 %}<img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="128" height="128">{% endif %}
@@ -75,7 +75,7 @@
             {% for attacker in killdata.attackers %}
             <tr class="attacker">
                 <td class="icons">
-                     <img src="{{ images.items }}{{attacker.shipTypeID}}_64.png" width="32" height="32">
+                     <img src="{{ images.ships }}{{attacker.shipTypeID}}_64.png" width="32" height="32">
                      <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="32" height="32">
                      <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="32" height="32">
                      {% if attacker.allianceID neq 0 %}<img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="32" height="32">{% endif %}
