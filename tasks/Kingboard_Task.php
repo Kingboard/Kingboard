@@ -76,9 +76,9 @@ class Kingboard_Task extends King23_CLI_Task
     public function idfeed_add($options)
     {
         $this->cli->header('adding new idfeed');
-        if(count($options) != 2)
+        if(count($options) < 2)
         {
-            $this->cli->error('exactly two parameters (url, handle) should be given');
+            $this->cli->error('atleast two parameters (url, handle) should be given');
             return;
         }
 
@@ -88,9 +88,14 @@ class Kingboard_Task extends King23_CLI_Task
             return;
         }
 
+
         $feed = new Kingboard_IdFeed();
         $feed->url = $options[0];
         $feed->handle = $options[1];
+
+        if(count($options) == 3)
+            $feed->type = $options[2];
+
         $feed->save();
         $this->cli->positive('done');
     }
@@ -159,6 +164,7 @@ class Kingboard_Task extends King23_CLI_Task
 
     public function test(array $options)
     {
+        var_dump(Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceKills(99000652));
     }
 
 }

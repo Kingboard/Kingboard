@@ -7,6 +7,7 @@ class Kingboard_ApiKillParser
         $newkills = 0;
         $errors = 0;
         $lastID = 0;
+        $lastIntID = 0;
         foreach($kills as $kill)
         {
             try {
@@ -15,12 +16,14 @@ class Kingboard_ApiKillParser
                 if(!is_null($kill->killID) && $kill->killID > 0)
                     $lastID=$kill->killID;
 
+                if(!is_null($kill->killInternalID) && $kill->killInternalID > 0)
+                    $lastIntID = $kill->killInternalID;
 
-                if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
+                /*if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
                 {
                     $oldkills++;
                     continue;
-                }
+                }*/
                 $killdata = array(
                     "killID" => $kill->killID,
                     "solarSystemID" => $kill->solarSystemID,
@@ -90,7 +93,7 @@ class Kingboard_ApiKillParser
                 $errors++;
             }
         }
-        return array('oldkills' => $oldkills, 'newkills' => $newkills, 'lastID' => $lastID, 'errors' => $errors);
+        return array('oldkills' => $oldkills, 'newkills' => $newkills, 'lastID' => $lastID, 'lastIntID' => $lastIntID, 'errors' => $errors);
     }
 
 
