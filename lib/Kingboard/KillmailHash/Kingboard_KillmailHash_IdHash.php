@@ -262,6 +262,7 @@ class Kingboard_KillmailHash_IdHash
         }
         catch (Exception $e)
         {
+            print_r($this);
             return null;
         }
     }
