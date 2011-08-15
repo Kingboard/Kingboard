@@ -253,6 +253,7 @@ class Kingboard_KillmailHash_IdHash
      * Magic stringify method
      *
      * @return string
+     * @todo replace by nonmagic function to allow throwing exceptions here.
      */
     public function __toString()
     {
