@@ -101,19 +101,24 @@ class KingboardCron_Task extends King23_CLI_Task
         else
             $kidf = new Kingboard_IdFeed_Fetcher($idfeed->url);
 
-        $kills = $kidf->fetch($lastid)->kills;
-        $kakp = new Kingboard_ApiKillParser();
-        $info = $kakp->parseKills($kills);
-        $total = $info['oldkills'] + $info['newkills'];
-        $this->cli->message("fetched $total kills, " . $info['oldkills'] . " allready known, " . $info['newkills'] . " new");
-        $this->cli->message("Last id was: " . $info['lastID'] . " internal: " . $info['lastIntID']);
+        try {
+            $kills = $kidf->fetch($lastid)->kills;
+            $kakp = new Kingboard_ApiKillParser();
+            $info = $kakp->parseKills($kills);
+            $total = $info['oldkills'] + $info['newkills'];
+            $this->cli->message("fetched $total kills, " . $info['oldkills'] . " allready known, " . $info['newkills'] . " new");
+            $this->cli->message("Last id was: " . $info['lastID'] . " internal: " . $info['lastIntID']);
 
-        if(!is_null($idfeed->type) &&  $idfeed->type == "intid")
-            $idfeed->lastId = $info['lastIntID'];
-        else
-            $idfeed->lastId = $info['lastID'];
+            if(!is_null($idfeed->type) &&  $idfeed->type == "intid")
+                $idfeed->lastId = $info['lastIntID'];
+            else
+                $idfeed->lastId = $info['lastID'];
 
-        $idfeed->save();
+            $idfeed->save();
+        } catch (Exception $e )
+        {
+            $this->cli->error("idfetch exception occured: " . $e->getMessage());
+        }
     }
 
     public function api_import(array $options)

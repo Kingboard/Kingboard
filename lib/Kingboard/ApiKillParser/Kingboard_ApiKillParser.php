@@ -16,7 +16,7 @@ class Kingboard_ApiKillParser
                 if(!is_null($kill->killID) && $kill->killID > 0)
                     $lastID=$kill->killID;
 
-                if(!is_null($kill->killInternalID) && $kill->killInternalID > 0)
+                if(!is_null(@$kill->killInternalID) && @$kill->killInternalID > 0)
                     $lastIntID = $kill->killInternalID;
 
                 /*if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
@@ -72,9 +72,12 @@ class Kingboard_ApiKillParser
                 }
                 $killdata['items'] = array();
 
-                foreach($kill->items as $item)
+                if(isset($kill->items) && !is_null($kill->items))
                 {
-                    $killdata['items'][] = $this->ParseItem($item);
+                    foreach($kill->items as $item)
+                    {
+                        $killdata['items'][] = $this->ParseItem($item);
+                    }
                 }
                 $hash = Kingboard_KillmailHash_IdHash::getByData($killdata);
                 $killdata['idHash'] = (String) $hash;

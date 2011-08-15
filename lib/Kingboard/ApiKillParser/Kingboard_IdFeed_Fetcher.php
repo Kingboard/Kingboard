@@ -21,12 +21,16 @@ class Kingboard_IdFeed_Fetcher
     public function fetchEVEID($lastid)
     {
         $url = $this->url . '&lastID=' . $lastid;
-        return new PhealResult(simplexml_load_file($url));
+        if($sxe = @simplexml_load_file($url))
+            return new PhealResult($sxe);
+        throw new Exception("could not load $url");
     }
 
     public function fetchOld($lastid)
     {
         $url = $this->url . '&allkills=1&lastintID=' . $lastid;
-        return new PhealResult(simplexml_load_file($url));
+        if($sxe = @simplexml_load_file($url))
+            return new PhealResult($sxe);
+        throw new Exception("could not load $url");
     }
 }
