@@ -22,7 +22,6 @@ class Kingboard_Battle_View extends Kingboard_Base_View
 
         if(is_null($battleSetting))
             $this->sendErrorAndQuit("Battle with Id " . $parameters['id'] . " does not exist");
-
         $kills = Kingboard_Kill::find(array(
             "killTime" => array(
                 '$gt' => $battleSetting->startdate,

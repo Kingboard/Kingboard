@@ -145,6 +145,25 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         $col->ensureIndex(array('attackers.allianceName' =>1));
 
 
+        // indexes for the battle queries
+        // battle kills
+        $col->ensureIndex(array(
+            'killTime' => 1,
+            'location.solarSystem' => 1,
+            'attackers.corporationID' => 1,
+            'attackers.allianceID' => 1,
+            'victim.corporationID' => 1,
+            'victim.allianceID' => 1
+        ));
+        
+        // battle losses
+        $col->ensureIndex(array(
+            'killTime' => 1,
+            'location.solarSystem' => 1,
+            'victim.corporationID' => 1,
+            'victim.allianceID' => 1
+        ));
+        
         // killtime Index
         $col->ensureIndex(array('killTime' => 1));
 
@@ -173,6 +192,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
 
         // itemName
         $col->ensureIndex(array('itemName' => 1));
+
 
     }
 }
