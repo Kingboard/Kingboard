@@ -4,12 +4,12 @@
  */
 class Kingboard_Kill_MapReduce_KillsByEntity extends King23_MongoObject implements ArrayAccess
 {
-    protected $_className = "Kingboard_Kill_MapReduce_KillsByShipByCorporation";
+    protected $_className = __class__;
 
     /**
      * run the map/reduce
      * @static
-     * @return void
+     * @return array
      */
     public static function mapReduce($filter)
     {
@@ -37,7 +37,6 @@ class Kingboard_Kill_MapReduce_KillsByEntity extends King23_MongoObject implemen
             sums[\"total\"] = total;
             return sums;
         }";
-        return King23_Mongo::mapReduce("Kingboard_Kill", array('inline' => 1), $map, $reduce, $filter);
+        return King23_Mongo::cachedMapReduce(__class__, 120, "Kingboard_Kill", $map, $reduce, $filter);
     }
-
 }
