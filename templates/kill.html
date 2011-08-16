@@ -29,7 +29,7 @@
     {% else %}
     <tr>
         <th>Alliance:</th>
-        <td>{% firstof killdata.victim.allianceName "none" %}</td>
+        <td>{% firstof killdata.victim.allianceName "Unknown" %}</td>
     </tr>
     {% endif %}
     <tr>
@@ -83,7 +83,7 @@
                 <td class="pilot">
                     <a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
                     <a href="http://{{ baseHost }}/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
-                    {% if attacker.allianceName %} / <a href="http://{{baseHost}}/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
+                    {% if attacker.allianceName and attacker.allianceName neq "Unknown" and attacker.allianceName neq "None" %} / <a href="http://{{baseHost}}/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
                 </td>
                 <td class="equipment">{{ attacker.shipType }} / {{ attacker.weaponType }}</td>
                 <td class="damage">{{ attacker.damageDone }}</td>

@@ -56,7 +56,7 @@
             <td class="icon"><img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}"></td>
             <td class="icon"><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}"></td>
             <td class="victim">
-                {% if kill.victim.allianceName %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> / {% endif %}
+                {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> / {% endif %}
                 <a href="/corporation/{{ kill.victim.corporationID }}">{{ kill.victim.corporationName }}</a>
                 {% if kill.victim.characterName %} / <a href="/pilot/{{ kill.victim.characterID}}">{{ kill.victim.characterName }}</a>{%endif %}
             </td>
