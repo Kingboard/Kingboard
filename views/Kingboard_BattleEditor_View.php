@@ -9,7 +9,6 @@ class Kingboard_BattleEditor_View extends Kingboard_Base_View
 
     public function create(array $params)
     {
-        print_r($_POST);
         if(!Kingboard_BattleCreate_Form::validate($_POST))
         {
             // @todo handle invalid
