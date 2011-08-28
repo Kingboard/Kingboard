@@ -3,7 +3,7 @@ Copyright 2010, 2011, Peter Petermann, the Kingboard team and EVSCO All rights r
 All rights reserved.
 
 ## WARNING
-this is a work in progress, it lacks alot of documentation and is currently
+this is a work in progress, it lacks a lot of documentation and is currently
 not meant for productive use, consider it extremly unstable, and probably
 compatibility breaking
 
@@ -23,7 +23,7 @@ see LICENSE.md File
 2. Move into KingBoard `cd Kingboard`
 3. Initiate Submodules `git submodule init`
 4. Update Submodules `git submodule update`
-5. Create folders cache and templates_c, make sure they are writeable by your webserver
+5. Create folders cache and templates_c, make sure they are writable  by your webserver
 6. Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
 7. Extract the zip file and run mongorestore <ExtractPath>
 8. Make your apache point to public/ path
