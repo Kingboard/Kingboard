@@ -1,4 +1,0 @@
-{# nonexistant does not exist, nullvar is NULL #}
-
-{{ @nonexistant|default:"none" }}    {# => none; silenced, otherwise a warning would be issued #}
-{{ nullvar|default_if_none:"none" }} {# => none #}

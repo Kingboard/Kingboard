@@ -15,7 +15,7 @@ $reg->baseHost = "kings-of-eve.com";
 
 $connection = new Mongo('localhost');
 $reg->mongo = array(
-    'connection' => $connection,
+    'connection' => $connection, 
     'db' => $connection->Kingboard
 );
 
@@ -23,10 +23,10 @@ King23_Classloader::init(APP_PATH . "/lib/Pheal");
 
 $pc = PhealConfig::getInstance();
 $pc->cache = new PhealFileCache(APP_PATH . "/cache/");
-
+$pc->http_timeout = 40;
 
 // Sith Template configuration
-require_once(APP_PATH ."/lib/SithTemplate/lib/SithTemplate.php");
+require_once(APP_PATH ."/lib/King23/external/SithTemplate/lib/SithTemplate.php");
 $reg->sith = new TemplateEnviron(array(
     'inputPrefix'            => APP_PATH . "/templates/",
     'outputPrefix'           => APP_PATH . "/templates_c/",
@@ -48,14 +48,14 @@ $reg->imagePaths = array(
 );
 
 $reg->apimailreceiver = "CHARACTERNAME";
-$reg->apimailreceiverCharacterID = 123456;
-$reg->apimailreceiverApiUserID = "123456";
-$reg->apimailreceiverApiKey = "APIKEYHERE";
+$reg->apimailreceiverCharacterID = 12345;
+$reg->apimailreceiverApiUserID = "12345";
+$reg->apimailreceiverApiKey = "abcd"; 
 
 // this can be fetched from a specific ownerID provider
 // which maps host to id for example on hosted boards
 $reg->ownerID = 99000289;
-
+//$reg->ownerID = false;
 require_once("routes.php");
-
+MongoCursor::$timeout = -1;
 session_start();

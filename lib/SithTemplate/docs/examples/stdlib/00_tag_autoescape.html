@@ -1,8 +1,0 @@
-{# assumptions: variable = "<b>foo</b>", global autoescape is off #}
-
-{{ variable }} {# => <b>foo</b> #}
-
-{% autoescape on %}
- {{ variable }}      {# => &lt;b&gt;foo&lt;/b&gt; #}
- {{ variable|safe }} {# => <b>foo</b> #}
-{% endautoescape %}

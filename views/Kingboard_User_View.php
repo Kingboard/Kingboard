@@ -17,7 +17,7 @@ class Kingboard_User_View extends Kingboard_Base_View
         {
             try {
                 $pheal = new Pheal($_POST['apiuserid'], $_POST['apikey']);
-                $pheal->accountScope->AccountStatus();
+                //$pheal->accountScope->AccountStatus();
 
                 if(!isset($user['keys']))
                     $keys = array();

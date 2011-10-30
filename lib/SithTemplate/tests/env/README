@@ -1,7 +1,0 @@
-To use run.cmd script, you need to put PHP binaries in this directory:
- * env/php51 should be newest 5.1.x
- * env/php52 should be newest 5.2.x
- * env/php53 should be newest 5.3.x
- * env/php60 should be newest snapshot of 6.0
-
-And PHPUnit 3.2 in environment/PHPUnit.

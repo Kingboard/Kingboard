@@ -1,9 +1,0 @@
-; First five lines of this file are ignored.
-; Rename this file to run-config and define which PHP versions you want to run.
-; 51 is 5.1, 52 is 5.2, etc.
-; coverage will use PHP 5.2 (you will need to enable Xdebug) to run code coverage test (saved into ./out/coverage)
-; coverage test will run only when run.cmd is called with "-c" argument (without quotes).
-51
-52
-53
-coverage
