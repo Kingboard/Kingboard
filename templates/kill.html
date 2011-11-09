@@ -55,10 +55,7 @@
 		{% for alliance, corporations in stats %}
             <thead>
             <tr class="titles">
-                <th colspan="2">{% firstof alliance "&nbsp;" %}</th>
-            </tr>
-            <tr class="titles">
-                <th>Corporation</th>
+                <th>{% firstof alliance "Corporation" %}</th>
                 <th>Pilots</th>
             </tr>
             </thead>

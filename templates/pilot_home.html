@@ -16,31 +16,7 @@
 </ul>
  <div class="tab-content">
 	<div id="stats" class="tab-pane active">
-    <h1>Statistics</h1>
-    <h2>Kills</h2>
-    <table class="condensed-table">
-        <tr>
-            {% for group in killstats.results %}
-            <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
-            {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                </tr><tr>
-            {% endif %}
-            {% endfor %}
-        </tr>
-        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ killstats.counts.emit }}</td></tr>
-    </table>
-    <h2>Losses</h2>
-    <table class="condensed-table">
-        <tr>
-            {% for group in lossstats.results %}
-            <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
-            {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                </tr><tr>
-            {% endif %}
-            {% endfor %}
-        </tr>
-        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ lossstats.counts.emit }}</td></tr>
-    </table>
+    {% include "components/entity_home_stats.html" %}
 	</div>
     <div id="kills" class="tab-pane">
         <div id="home_killspage">

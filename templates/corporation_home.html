@@ -2,53 +2,24 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <fieldset>
-        <legend>{{ info.corporationName }}</legend>
-        <img src="{{ images.corporations}}{{info.corporationID}}_64.png" width="64" height="64">
-        <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
-    </fieldset>
+<h1>{{ info.corporationName }}</h1>
+<img src="{{ images.corporations}}{{info.corporationID}}_64.png" width="64" height="64">
+<img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
 {% endblock %}
 
 {% block content %}
-<div id="tabs">
-	<ul>
-		<li><a href="#stats">Statistics</a></li>
+	<ul class="tabs">
+		<li class="active"><a href="#stats">Statistics</a></li>
 		<li><a href="#kills">Kills</a></li>
 		<li><a href="#losses">Losses</a></li>
         <li><a href="#memberactivity">Member Activities</a></li>
 	</ul>
-	<div id="stats">
-        <fieldset>
-            <legend>Kills</legend>
-            <table>
-                <tr>
-                    {% for group in killstats.results %}
-                    <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
-                    {% if forloop.counter|divisibleby:6 and not forloop.last %}
-                        </tr><tr>
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ killstats.counts.emit }}</td></tr>
-            </table>
-        </fieldset>
-        <fieldset>
-            <legend>Losses</legend>
-            <table>
-                <tr>
-                    {% for group in lossstats.results %}
-                    <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
-                    {% if forloop.counter|divisibleby:6 and not forloop.last %}
-                        </tr><tr>
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ lossstats.counts.emit }}</td></tr>
-            </table>
-        </fieldset>
-
+<div class="tab-content">
+	<div id="stats" class="tab-pane active">
+        {% include "components/entity_home_stats.html" %}
 	</div>
     <div id="kills">
+        <h2>Kills</h2>
         <div id="home_killspage">
         {% with killdata as data %}
         {% include "components/kill_list.html" %}
@@ -56,6 +27,7 @@
         </div>
     </div>
     <div id="losses">
+        <h2>Losses</h2>
         <div id="home_losspage">
         {% with lossdata as data %}
         {% include "components/kill_list.html" %}
@@ -68,9 +40,4 @@
 </div>
 {% endblock %}
 {% block script %}
-<script type="text/javascript">
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
 {% endblock %}
