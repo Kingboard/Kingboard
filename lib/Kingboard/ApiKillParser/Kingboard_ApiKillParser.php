@@ -72,16 +72,16 @@ class Kingboard_ApiKillParser
                 }
                 $killdata['items'] = array();
 
-                if(isset($kill->items) && !is_null($kill->items))
+                if(@!is_null($kill->items))
                 {
                     foreach($kill->items as $item)
                     {
                         $killdata['items'][] = $this->ParseItem($item);
                     }
                 }
+
                 $hash = Kingboard_KillmailHash_IdHash::getByData($killdata);
                 $killdata['idHash'] = (String) $hash;
-
                 if(is_null(Kingboard_Kill::getInstanceByIdHash($killdata['idHash'])))
                 {
                     $killObject = new Kingboard_Kill();
