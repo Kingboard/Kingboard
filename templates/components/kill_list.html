@@ -18,7 +18,8 @@
         <tr class="titles">
             <th colspan="2">Date</th>
             <th colspan="1" class="ship">Ship</th>
-            <th colspan="4" class="victim">Victim</th>
+            <th colspan="1" class="victim">Victim</th>
+            <th colspan="3" class="entity">Alliance/Corp</th>
             <th>Location</th>
             <th colspan="2">&nbsp;</th>
 
@@ -40,13 +41,28 @@
             <!-- /shiptype -->
             
             <!-- victim -->
-            <td class="icon"><img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}"></td>
-            <td class="icon"><img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}"></td>
-            <td class="icon"><img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}"></td>
+            <td class="icon">
+                <a href="/pilot/{{kill.victim.characterID}}" rel='twipsy' title='{{kill.victim.characterName}}'>
+                <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}">
+                </a>
+                </td>
+            <td class="icon">
+                {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}
+                <a href="#" rel='twipsy' title='{{kill.victim.allianceName}}'>
+                <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}">
+                </a>
+                {% else %}
+                 
+                {% endif %}
+            </td>
+            <td class="icon">
+                <a href="#" rel='twipsy' title='{{kill.victim.corporationName}}'>
+                <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}">
+                </a>
+            </td>
             <td class="victim">
-                {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> / {% endif %}
+                {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
                 <a href="/corporation/{{ kill.victim.corporationID }}">{{ kill.victim.corporationName }}</a>
-                {% if kill.victim.characterName %} / <a href="/pilot/{{ kill.victim.characterID}}">{{ kill.victim.characterName }}</a>{%endif %}
             </td>
             <!-- /victim -->
             <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|space2under }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|space2under }}" rel="external">{{ kill.location.solarSystem }}</a> ({{ kill.location.security|round:1 }})</td>

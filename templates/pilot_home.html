@@ -2,60 +2,54 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <fieldset>
-        <legend>{{ info.characterName }}</legend>
-        <img src="{{ images.characters }}{{ info.characterID }}_64.jpg" width="64" height="64">
-        <img src="{{ images.corporations}}{{info.corporationID}}_64.png" width="64" height="64">
-        <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
-    </fieldset>
+<h1>{{ info.characterName }}</h1>
+<img src="{{ images.characters }}{{ info.characterID }}_64.jpg" width="64" height="64">
+<img src="{{ images.corporations}}{{info.corporationID}}_64.png" width="64" height="64">
+<img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
 {% endblock %}
 
 {% block content %}
-<div id="tabs">
-	<ul>
-		<li><a href="#stats">Statistics</a></li>
-		<li><a href="#kills">Kills</a></li>
-		<li><a href="#losses">Losses</a></li>
-	</ul>
-	<div id="stats">
-        <fieldset>
-            <legend>Kills</legend>
-            <table>
-                <tr>
-                    {% for group in killstats.results %}
-                    <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
-                    {% if forloop.counter|divisibleby:6 and not forloop.last %}
-                        </tr><tr>
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ killstats.counts.emit }}</td></tr>
-            </table>
-        </fieldset>
-        <fieldset>
-            <legend>Losses</legend>
-            <table>
-                <tr>
-                    {% for group in lossstats.results %}
-                    <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
-                    {% if forloop.counter|divisibleby:6 and not forloop.last %}
-                        </tr><tr>
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ lossstats.counts.emit }}</td></tr>
-            </table>
-        </fieldset>
-
+<ul class="tabs">
+    <li class="active"><a href="#stats">Statistics</a></li>
+    <li><a href="#kills">Kills</a></li>
+    <li><a href="#losses">Losses</a></li>
+</ul>
+ <div class="tab-content">
+	<div id="stats" class="tab-pane active">
+    <h1>Statistics</h1>
+    <h2>Kills</h2>
+    <table class="condensed-table">
+        <tr>
+            {% for group in killstats.results %}
+            <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
+            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                </tr><tr>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ killstats.counts.emit }}</td></tr>
+    </table>
+    <h2>Losses</h2>
+    <table class="condensed-table">
+        <tr>
+            {% for group in lossstats.results %}
+            <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
+            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                </tr><tr>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ lossstats.counts.emit }}</td></tr>
+    </table>
 	</div>
-    <div id="kills">
+    <div id="kills" class="tab-pane">
         <div id="home_killspage">
         {% with killdata as data %}
         {% include "components/kill_list.html" %}
         {% endwith %}
         </div>
     </div>
-    <div id="losses">
+    <div id="losses" class="tab-pane">
         <div id="home_losspage">
         {% with lossdata as data %}
         {% include "components/kill_list.html" %}
