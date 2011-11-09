@@ -35,9 +35,9 @@ class Kingboard_ApiKillParser
                     "killTime" => new MongoDate(strtotime($kill->killTime)),
                     "moonID" => $kill->moonID,
                     "victim" => array(
-                        "characterID" => $this->ensureCharacterID($kill->victim->characterID, $kill->victim->characterName),
+                        "characterID" => (int) $this->ensureCharacterID($kill->victim->characterID, $kill->victim->characterName),
                         "characterName" => $kill->victim->characterName,
-                        "corporationID" => $this->ensureCorporationID($kill->victim->corporationID, $kill->victim->corporationName),
+                        "corporationID" => (int) $this->ensureCorporationID($kill->victim->corporationID, $kill->victim->corporationName),
                         "corporationName" => $kill->victim->corporationName,
                         "allianceID" => (int) $kill->victim->allianceID,
                         "allianceName" => $kill->victim->allianceName,
@@ -52,10 +52,10 @@ class Kingboard_ApiKillParser
                 foreach($kill->attackers as $attacker)
                 {
                     $killdata['attackers'][] = array(
-                        "characterID" => $attacker->characterID,
+                        "characterID" => (int)$attacker->characterID,
                         "characterName" => $attacker->characterName,
                         "entityType" => Kingboard_Helper_EntityType::getEntityTypeByEntityId((int) $attacker->characterID),
-                        "corporationID" => $this->ensureCorporationID($attacker->corporationID, $attacker->corporationName),
+                        "corporationID" => (int) $this->ensureCorporationID($attacker->corporationID, $attacker->corporationName),
                         "corporationName" => $attacker->corporationName,
                         "allianceID" => (int) $attacker->allianceID,
                         "allianceName" => $attacker->allianceName,
