@@ -4,9 +4,8 @@
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 
 {% block header %}
-<fieldset>
-<legend>{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}</legend>
-<table class="headertable">
+<h1>{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}</h1>
+<table class="condensed-table">
     <tr>
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
@@ -41,19 +40,20 @@
         <td>{{ killdata.victim.damageTaken }}</td>
     </tr>
 </table>
-</fieldset>
 {% endblock %}
 
 {% block content %}
-<div id="tabs">
-	<ul>
-		<li><a href="#involved-stats">Involved Stats</a></li>
-		<li><a href="#involved-pilots">Involved Pilots</a></li>
-		<li><a href="#victim-assets">Victim Assets</a></li>
-	</ul>
-	<div id="involved-stats">
-        <table class="involved_stats">
+<ul class="tabs">
+    <li class="active"><a href="#involved-stats">Involved Stats</a></li>
+	<li><a href="#involved-pilots">Involved Pilots</a></li>
+	<li><a href="#victim-assets">Victim Assets</a></li>
+</ul>
+<div class="tab-content">
+	<div id="involved-stats" class="tab-pane active">
+
+        <table class="condensed-table zebra-striped">
 		{% for alliance, corporations in stats %}
+            <thead>
             <tr class="titles">
                 <th colspan="2">{% firstof alliance "&nbsp;" %}</th>
             </tr>
@@ -61,17 +61,20 @@
                 <th>Corporation</th>
                 <th>Pilots</th>
             </tr>
+            </thead>
             {% for corporation, value in corporations %}
                 <tr><td class="corporation">{{ corporation }}</td><td class="count">{{ value }}</td></tr>
             {% endfor %}
         {% endfor %}
         </table>
 	</div>
-	<div id="involved-pilots">
-        <table class="involved_attackers">
+	<div id="involved-pilots" class="tab-pane">
+        <table class="condensed-table zebra-striped">
+            <thead>
             <tr class="titles">
                 <th>&nbsp;</th><th>Attacker</th><th>Equipment</th><th>Damage</th>
             </tr>
+            </thead>
             {% for attacker in killdata.attackers %}
             <tr class="attacker">
                 <td class="icons">
@@ -91,14 +94,14 @@
             {% endfor %}
         </table>
 	</div>
-	<div id="victim-assets">
-        <table class="involved_assets">
-        <tr class="titles">
+	<div id="victim-assets" class="tab-pane">
+        <table class="condensed-table zebra-striped">
+        <thead><tr class="titles">
             <th>&nbsp;</th>
             <th>Item Type</th>
             <th>Dropped</th>
             <th>Destroyed</th>
-        </tr>
+        </tr></thead>
         {% for item in killdata.items %}
         <tr>
             <td class="icons"><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></td>
@@ -120,12 +123,4 @@
         </table>
 	</div>
 </div>
-{% endblock %}
-
-{% block script %}
-<script>
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
 {% endblock %}

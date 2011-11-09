@@ -1,5 +1,13 @@
 $(document).ready(function() {
+    // enable tabs
+    $('.tabs').tabs();
 
+    // enable twipsys
+    $("a[rel=twipsy]").twipsy({
+        live: true,
+        placement: 'below'
+    });
+    /*
     $('a[rel="external"]').live('click', function(e) {
         e.preventDefault();
         window.open($(e.target).attr("href"));
@@ -26,5 +34,5 @@ $(document).ready(function() {
                }
             });
         }
-    });
+    });*/
 });

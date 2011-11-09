@@ -2,34 +2,25 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <fieldset>
-        <legend>Information</legend>
-    <p>All thats there to know about Kingboard</p>
-    </fieldset>
+<h1>Information</h1>
+<p>All thats there to know about Kingboard</p>
 {% endblock %}
 
 {% block content %}
-<div id="tabs">
-	<ul>
-		<li><a href="#readme">Readme</a></li>
-		<li><a href="#license">License</a></li>
-        <li><a href="#contributions">Contributions</a></li>
-	</ul>
-	<div id="readme">
+<ul class="tabs">
+	<li class="active"><a href="#readme">Readme</a></li>
+	<li><a href="#license">License</a></li>
+    <li><a href="#contributions">Contributions</a></li>
+</ul>
+<div class="tab-content">
+	<div id="readme" class="active tab-pane">
         {{ readme }}
 	</div>
-    <div id="license">
+    <div id="license" class="tab-pane">
         {{ license }}
     </div>
-    <div id="contributions">
+    <div id="contributions" class="tab-pane">
         {{ contributions }}
     </div>
 </div>
-{% endblock %}
-{% block script %}
-<script type="text/javascript">
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
 {% endblock %}

@@ -1,29 +1,13 @@
 {% load SithKingboard %}
-<table class="kill_list">
+<table class="condensed-table zebra-striped">
     <thead>
-        <!-- we have an empty header row to enable possibility for css to use fixed with sizing all fields -->
-        <tr class="phantom">
-            <td class="header-control"></td>
-            <td class="header-date"></td>
-            <td class="header-icon"></td>
-            <td class="header-ship"></td>
-            <td class="header-icon"></td>
-            <td class="header-icon"></td>
-            <td class="header-icon"></td>
-            <td class="header-victim"></td>
-            <td class="header-location"></td>
-            <td class="header-details"></td>
-            <td class="header-control"></td>
-        </tr>
-        <!-- end sizing header -->
-
         {% if currentPage %}
         <tr class="pager">
             <!-- page -->
             <th class="pager">{% if prev %}<a href="{{ action }}/page/{{ prev }}/" class="pager"><img src="/images/back.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
             <!-- /page -->
 
-            <th colspan="9" class="pager-info">Page {{ currentPage }} of {{ lastPage }}</th>
+            <th colspan="8" class="pager-info">Page {{ currentPage }} of {{ lastPage }}</th>
 
             <!-- page -->
             <th class="pager">{% if next %}<a href="{{ action }}/page/{{ next }}/" class="pager"><img src="/images/forward.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
@@ -33,7 +17,7 @@
 
         <tr class="titles">
             <th colspan="2">Date</th>
-            <th colspan="2" class="ship">Ship type</th>
+            <th colspan="1" class="ship">Ship</th>
             <th colspan="4" class="victim">Victim</th>
             <th>Location</th>
             <th colspan="2">&nbsp;</th>
@@ -47,8 +31,12 @@
             <td colspan="2">{{ kill.killTime|mongodate }}</td>
             <!-- /page -->
             <!-- shiptype -->
-            <td class="icon"><img src="{{images.ships}}{{kill.victim.shipTypeID}}_32.png" alt="{{kill.victim.shipType}}"></td>
-            <td class="ship">{{kill.victim.shipType }}</td>
+            <td class="icon">
+                <a href="#" rel='twipsy' title='{{kill.victim.shipType}}'>
+                <img src="{{images.ships}}{{kill.victim.shipTypeID}}_32.png" alt="{{kill.victim.shipType}}">
+                </a>
+                </td>
+            <!--td class="ship">{{kill.victim.shipType }}</td-->
             <!-- /shiptype -->
             
             <!-- victim -->

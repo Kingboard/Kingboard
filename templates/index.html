@@ -4,60 +4,55 @@
 {% block title %}Kingboard / Home{% endblock %}
 
 {% block header %}
-    <fieldset>
-        <legend>Global Statistics</legend>
-        <table>
-            <tr>
-                {% for group in stats %}
-                <td class="statstype">{{ group._id }}</td><td class="statsvalue">{{ group.value.total }}</td>
-                {% if forloop.counter|divisibleby:6 and not forloop.last %}
-                    </tr><tr>
-                {% endif %}
-                {% endfor %}
-            </tr>
-            <tr><td colspan="10">&nbsp;</td><td class="statstype">Total</td><td class="statsvalue"> {{ count }}</td></tr>
-        </table>
-    </fieldset>
 {% endblock %}
 
 
 {% block content %}
-<div id="tabs">
-	<ul>
-		<li><a href="#kills">Kills/Losses</a></li>
-		<li><a href="#battlereports">Battlereports</a></li>
-	</ul>
-	<div id="kills">
-        <div id="home_killspage">
-        {% include "components/kill_list.html" %}
-        </div>
-	</div>
-    <div id="battlereports">
-        <table>
-            <thead>
-            <tr>
-                <th>System</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>&nbsp;</th>
-            </tr>
-            </thead>
-        {% for report in reports %}
-            <tr>
-                <td>{{ report.system }}</td>
-                <td>{{ report.startdate|mongodate }}</td>
-                <td>{{ report.enddate|mongodate }}</td>
-                <td><a href="/battle/{{ report._id }}">details</a></td>
-            </tr>
+<h1>Global Statistics</h1>
+<table class="condensed-table">
+    <tr>
+        {% for group in stats %}
+        <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
+        {% if forloop.counter|divisibleby:4 and not forloop.last %}
+            </tr><tr>
+        {% endif %}
         {% endfor %}
-        </table>
-    </div>
-{% endblock %}
+    </tr>
+    <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ count }}</td></tr>
+</table>
 
-{% block script %}
-<script type="text/javascript">
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
+<h1>Latest information</h1>
+<ul class="tabs">
+    <li class="active"><a href="#kills">Kills/Losses</a></li>
+    <li><a href="#battlereports">Battlereports</a></li>
+</ul>
+<div class="tab-content">
+<div id="kills" class="active tab-pane">
+    <h2>Kills/Losses</h2>
+    <div id="home_killspage">
+        {% include "components/kill_list.html" %}
+    </div>
+</div>
+<div id="battlereports" class="tab-pane">
+    <h2>Battlereports</h2>
+    <table class="condensed-table zebra-striped">
+        <thead>
+        <tr>
+            <th>System</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+    {% for report in reports %}
+        <tr>
+            <td>{{ report.system }}</td>
+            <td>{{ report.startdate|mongodate }}</td>
+            <td>{{ report.enddate|mongodate }}</td>
+            <td><a href="/battle/{{ report._id }}">details</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
 {% endblock %}
