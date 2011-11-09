@@ -101,10 +101,11 @@
         </tr></thead>
         {% for item in killdata.items %}
         <tr>
-            <td class="icons"><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></td>
+            <td class="icons"><img src="{{ images.items }}{{ item.typeID }}_32.png" width="18" height="18"></td>
             <td>{{ item.typeName }}</td>
             <td class="dropped">{{ item.qtyDropped }}</td>
             <td class="destroyed">{{ item.qtyDestroyed }}</td>
+        </tr>
             {% if item.items %}
                 {% for containeritem in item.items %}
                     <tr>
@@ -115,7 +116,6 @@
                     </tr>
                 {% endfor %}
             {% endif %}
-        </tr>
         {% endfor %}
         </table>
 	</div>
