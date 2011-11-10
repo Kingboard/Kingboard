@@ -18,8 +18,12 @@ class Kingboard_Base_View extends King23_TemplateView
         $this->_context['images'] = $reg->imagePaths;
         $this->_context['baseHost'] = $reg->baseHost;
 
-        // ownerID, if this is an owned board, this should be filled, for public boards this doesn't matter
+        // ownerID, if this is an owned board, this should be filled, for public boards this needs to be false
         $this->_context['ownerID'] = $reg->ownerID;
+
+        // ownerType, if this is an owned board, this should be filled, for public boards this doesn't matter
+        $this->_context['ownerType'] = $reg->ownerType;
+
         // when user is logged in we provide user object to all pages, false otherwise
         $this->_context['user'] = Kingboard_Auth::getUser();
 

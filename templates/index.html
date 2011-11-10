@@ -8,6 +8,7 @@
 
 
 {% block content %}
+{% block stats %}
 <h1>Global Statistics</h1>
 <table class="condensed-table">
     <tr>
@@ -20,6 +21,7 @@
     </tr>
     <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ count }}</td></tr>
 </table>
+{% endblock %}
 
 <h1>Latest information</h1>
 <ul class="tabs">

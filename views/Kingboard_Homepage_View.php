@@ -44,15 +44,39 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         {
             return $this->render('home_killspage.html', $templateVars);
         }
-        $stats = Kingboard_Kill_MapReduce_KillsByShip::find();
         $info = array();
-        $template = "index.html";
-        $stats = $stats->sort(array("value.value" => -1));
-        
-        $templateVars['count'] = $count;
-        $templateVars['stats'] = $stats;
-        $templateVars['info'] = $info;
+        // differences for owned boards
+        if($this->_context['ownerID'])
+        {
+            switch($this->_context['ownerType'])
+            {
+                case "alliance":
+                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceKills((int) $this->_context['ownerID']);
+                    $lossstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceLosses((int) $this->_context['ownerID']);
+                    break;
+                case "corporation":
+                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceKills((int) $this->_context['ownerID']);
+                    $lossstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceLosses((int) $this->_context['ownerID']);
+                    break;
+                case "pilot":
+                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduceKills((int) $this->_context['ownerID']);
+                    $lossstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduceLosses((int) $this->_context['ownerID']);
+                    break;
+                default:
+                    die("missconfiguration, ownerID set, but no ownerType");
+            }
+            $templateVars['killstats'] = $killstats;
+            $templateVars['lossstats'] = $lossstats;
+            $template = "index_owned_board.html";
+        } else {
+            $stats = Kingboard_Kill_MapReduce_KillsByShip::find();
+            $stats = $stats->sort(array("value.value" => -1));
+            $templateVars['stats'] = $stats;
+            $template = "index.html";
+        }
 
+        $templateVars['count'] = $count;
+        $templateVars['info'] = $info;
         $templateVars['reports'] = Kingboard_BattleSettings::find()->limit(20)->sort(array('enddate' => -1));
 
 

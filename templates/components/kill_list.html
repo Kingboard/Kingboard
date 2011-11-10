@@ -27,9 +27,11 @@
     </thead>
     <tbody>{% for kill in data %}
 
-        <tr class="{% if ownerID and ((ownerID eq kill.victim.allianceID) or (ownerID eq kill.victim.corporationID) or (ownerID eq kill.victim.characterID)) %}loss{% else %}kill{% endif %}">
+        <tr>
             <!-- page -->
-            <td colspan="2">{{ kill.killTime|mongodate }}</td>
+            <td colspan="2">{{ kill.killTime|mongodate }}<br />
+            {% if ownerID and ((ownerID eq kill.victim.allianceID) or (ownerID eq kill.victim.corporationID) or (ownerID eq kill.victim.characterID)) %}<span class="label important">loss</span>{% elseif ownerID %}<span class="label success">kill</span>{% endif %}
+            </td>
             <!-- /page -->
             <!-- shiptype -->
             <td class="icon">
