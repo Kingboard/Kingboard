@@ -130,12 +130,12 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         $col->ensureIndex(array('victim.corporationName' =>1));
 
         // corporation attacker name
-        $col->ensureIndex(array('attackers.corporationNAme' =>1));
+        $col->ensureIndex(array('attackers.corporationName' =>1));
 
         // alliance victim id
         $col->ensureIndex(arraY('victim.allianceID' =>1));
 
-        // alliance attacker id
+        // alliance attacker i    d
         $col->ensureIndex(array('attackers.allianceID' =>1));
 
         // alliance victim name
