@@ -51,16 +51,16 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             switch($this->_context['ownerType'])
             {
                 case "alliance":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceKills((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceLosses((int) $this->_context['ownerID']);
+                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId((int) $this->_context['ownerID']);
+                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId((int) $this->_context['ownerID']);
                     break;
                 case "corporation":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceKills((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceLosses((int) $this->_context['ownerID']);
+                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId((int) $this->_context['ownerID']);
+                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId((int) $this->_context['ownerID']);
                     break;
                 case "pilot":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduceKills((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduceLosses((int) $this->_context['ownerID']);
+                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId((int) $this->_context['ownerID']);
+                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId((int) $this->_context['ownerID']);
                     break;
                 default:
                     die("missconfiguration, ownerID set, but no ownerType");
