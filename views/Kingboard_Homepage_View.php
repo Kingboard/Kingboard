@@ -99,40 +99,9 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 array('victim.characterID' => (int) $request['hid'])
             )->sort(array('killTime' => -1))->limit(20);
 
-            $killstatsdata = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
-            // @todo remove next few lines as soon as all stats are using the incremental map/reduce
-            // @todo and template is edited
-            $killstats = array(
-                'results' => array(),
-                'counts' => array('emit' => $killstatsdata->value['total'])
-             );
-            foreach($killstatsdata->value['group'] as $key => $val)
-            {
-                $group = array(
-                    "_id" => $key,
-                    "value" => array(
-                        'total'=> $val
-                ));
-                $killstats['results'][] = $group;
-            }
+            $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
+            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
 
-
-            $lossstatsdata = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
-            // @todo remove next few lines as soon as all stats are using the incremental map/reduce
-            // @todo and template is edited
-            $lossstats = array(
-                'results' => array(),
-                'counts' => array('emit' => $lossstatsdata->value['total'])
-             );
-            foreach($lossstatsdata->value['group'] as $key => $val)
-            {
-                $group = array(
-                    "_id" => $key,
-                    "value" => array(
-                        'total'=> $val
-                ));
-                $lossstats['results'][] = $group;
-            }
             $template = "pilot_home.html";
             $info = Kingboard_Kill::getPilotInfoFromId($request['hid']);
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
@@ -157,8 +126,9 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 array('victim.corporationID' => (int) $request['hid'])
             )->sort(array('killTime' => -1))->limit(20);
 
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceKills((int) $request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduceLosses((int) $request['hid']);
+            $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId($request['hid']);
+            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId($request['hid']);
+
             $template = "corporation_home.html";
             $info = Kingboard_Kill::getCorporationInfoFromId($request['hid']);
             //$stats = $stats->sort(array("value.value" => -1));
@@ -185,8 +155,9 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 array('victim.allianceID' => (int) $request['hid'])
             )->sort(array('killTime' => -1))->limit(20);
 
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceKills((int) $request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduceLosses((int) $request['hid']);
+            $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId($request['hid']);
+            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId($request['hid']);
+
             $template = "alliance_home.html";
             $info = Kingboard_Kill::getAllianceInfoFromId($request['hid']);
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));

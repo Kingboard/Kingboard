@@ -2,7 +2,7 @@
 /**
  * creates / allows access to stats about which shiptype has been killed how often
  */
-class Kingboard_Kill_MapReduce_KillsByShipByPilot extends Kingboard_Kill_MapReduce_KillsByEntity implements ArrayAccess
+class Kingboard_Kill_MapReduce_KillsByShipByPilot extends King23_MongoObject implements ArrayAccess
 {
     protected $_className = "Kingboard_Kill_MapReduce_KillsByShipByPilot";
 

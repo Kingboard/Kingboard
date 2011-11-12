@@ -2,13 +2,13 @@
 /**
  * creates / allows access to stats about which shiptype has been killed how often
  */
-class Kingboard_Kill_MapReduce_KillsByShipByCorporation extends King23_MongoObject implements ArrayAccess
+class Kingboard_Kill_MapReduce_LossesByShipByAlliance extends King23_MongoObject implements ArrayAccess
 {
-    protected $_className = "Kingboard_Kill_MapReduce_KillsByShipByCorporation";
+    protected $_className = "Kingboard_Kill_MapReduce_LossesByShipByAlliance";
 
-    public static function getInstanceByCorporationId($corpid)
+    public static function getInstanceByAllianceId($allianceid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int) $corpid));
+        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int) $allianceid));
     }
 
     public static function mapReduce()
@@ -22,12 +22,7 @@ class Kingboard_Kill_MapReduce_KillsByShipByCorporation extends King23_MongoObje
                 info['group'][ship.marketGroup.parentGroup.marketGroupName] = 1;
                 info['ship'][this.victim.shipType] = 1;
                 info['total'] = 1;
-                var done = {};
-                this.attackers.forEach(function(attacker) {
-                    if(done[attacker.corporationID] === undefined)
-                        emit(attacker.corporationID, info);
-                    done[attacker.corporationID] = true;
-                });
+                emit(this.victim.allianceID, info);
             }
         }";
         $reduce = "function (k, vals) {

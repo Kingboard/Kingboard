@@ -39,6 +39,23 @@ class KingboardCron_Task extends King23_CLI_Task
         Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduce();
         $this->cli->positive('update of pilot kill stats completed');
 
+        $this->cli->message('updating corporation loss stats');
+        Kingboard_Kill_MapReduce_LossesByShipByCorporation::mapReduce();
+        $this->cli->positive('update of corporation loss stats completed');
+
+        $this->cli->message('updating corporation kill stats');
+        Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduce();
+        $this->cli->positive('update of corporation kill stats completed');
+
+
+        $this->cli->message('updating alliance loss stats');
+        Kingboard_Kill_MapReduce_LossesByShipByAlliance::mapReduce();
+        $this->cli->positive('update of alliance loss stats completed');
+
+        $this->cli->message('updating alliance kill stats');
+        Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduce();
+        $this->cli->positive('update of alliance kill stats completed');
+
 
         $this->cli->positive('update of stats done.');
     }
