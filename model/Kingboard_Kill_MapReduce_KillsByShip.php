@@ -47,10 +47,20 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
             return sums;
         }";
 
-        // we want the map/reduce to run for as long as it takes
-        MongoCursor::$timeout = -1;
+        $tr = Kingboard_Task_Run::findByTaskType(__CLASS__);
+        if(is_null($tr))
+        {
+            $tr = new Kingboard_Task_Run();
+            $tr->type = __CLASS__;
+            $tr->lastrun = new MongoDate(0);
+        }
+        $last = $tr->lastrun;
+        $tr->save();
+        $new = $tr->lastrun;
 
-        return King23_Mongo::mapReduce("Kingboard_Kill", __CLASS__, $map, $reduce);
+        $filter = array("saved" => array('$gt' => $last, '$lte' => $new));
+        $out = array("reduce" => __CLASS__);
+        return King23_Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }
 
 
