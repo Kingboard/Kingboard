@@ -8,7 +8,7 @@
 - Trenker (Code)
 
 ## using the following OpenSource Libraries
-- [King23](http://king23.net)
+- [King23](http://king23.devedge.eu)
 - [Pheal](https://github.com/ppetermann/pheal)
 - [jQuery](http://jquery.com/)
 - [PHP Markdown](http://michelf.com/projects/php-markdown/)
