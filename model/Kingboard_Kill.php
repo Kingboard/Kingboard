@@ -29,6 +29,12 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         return self::_findOne(__CLASS__, $criteria);
     }
 
+    public function save()
+    {
+        $this->_data['saved'] = new MongoDate();
+        parent::save();
+    }
+
     /**
      * Fetches Information about the pilot identified by characterID
      * @static

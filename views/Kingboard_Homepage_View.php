@@ -99,11 +99,42 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 array('victim.characterID' => (int) $request['hid'])
             )->sort(array('killTime' => -1))->limit(20);
 
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduceKills((int) $request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduceLosses((int) $request['hid']);
+            $killstatsdata = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
+            // @todo remove next few lines as soon as all stats are using the incremental map/reduce
+            // @todo and template is edited
+            $killstats = array(
+                'results' => array(),
+                'counts' => array('emit' => $killstatsdata->value['total'])
+             );
+            foreach($killstatsdata->value['group'] as $key => $val)
+            {
+                $group = array(
+                    "_id" => $key,
+                    "value" => array(
+                        'total'=> $val
+                ));
+                $killstats['results'][] = $group;
+            }
+
+
+            $lossstatsdata = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
+            // @todo remove next few lines as soon as all stats are using the incremental map/reduce
+            // @todo and template is edited
+            $lossstats = array(
+                'results' => array(),
+                'counts' => array('emit' => $lossstatsdata->value['total'])
+             );
+            foreach($lossstatsdata->value['group'] as $key => $val)
+            {
+                $group = array(
+                    "_id" => $key,
+                    "value" => array(
+                        'total'=> $val
+                ));
+                $lossstats['results'][] = $group;
+            }
             $template = "pilot_home.html";
             $info = Kingboard_Kill::getPilotInfoFromId($request['hid']);
-            //$stats = $stats->sort(array("value.value" => -1));
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
         } else {
             die('no pilot id specified');

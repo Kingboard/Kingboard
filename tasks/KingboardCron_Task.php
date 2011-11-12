@@ -27,9 +27,18 @@ class KingboardCron_Task extends King23_CLI_Task
     {
         $this->cli->header('updating stats');
 
-        $this->cli->message('updating Kills by Shiptype');
+        //$this->cli->message('updating Kills by Shiptype');
         // stats table of how often all ships have been killed
-        Kingboard_Kill_MapReduce_KillsByShip::mapReduce();
+        //Kingboard_Kill_MapReduce_KillsByShip::mapReduce();
+
+        $this->cli->message('updating pilot loss stats');
+        Kingboard_Kill_MapReduce_LossesByShipByPilot::mapReduce();
+        $this->cli->positive('update of pilot loss stats completed');
+
+        $this->cli->message('updating pilot kill stats');
+        Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduce();
+        $this->cli->positive('update of pilot kill stats completed');
+
 
         $this->cli->positive('update of stats done.');
     }
