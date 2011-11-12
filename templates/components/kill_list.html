@@ -50,7 +50,7 @@
                 </td>
             <td class="icon">
                 {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}
-                <a href="#" rel='twipsy' title='{{kill.victim.allianceName}}'>
+                <a href="/alliance/{{kill.victim.allianceID}}" rel='twipsy' title='{{kill.victim.allianceName}}'>
                 <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}">
                 </a>
                 {% else %}
@@ -58,7 +58,7 @@
                 {% endif %}
             </td>
             <td class="icon">
-                <a href="#" rel='twipsy' title='{{kill.victim.corporationName}}'>
+                <a href="/corporation/{{kill.victim.corporationID}}" rel='twipsy' title='{{kill.victim.corporationName}}'>
                 <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}">
                 </a>
             </td>

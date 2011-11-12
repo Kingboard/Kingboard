@@ -4,8 +4,12 @@
 {% block header %}
 <h1>{{ info.characterName }}</h1>
 <img src="{{ images.characters }}{{ info.characterID }}_64.jpg" width="64" height="64">
+<a href="/corporation/{{info.corporationID}}" rel='twipsy' title='{{info.corporationName}}'>
 <img src="{{ images.corporations}}{{info.corporationID}}_64.png" width="64" height="64">
+</a>
+<a href="/alliance/{{info.allianceID}}" rel='twipsy' title='{{info.allianceName}}'>
 <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
+</a>
 {% endblock %}
 
 {% block content %}

@@ -10,10 +10,19 @@
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
         <td rowspan="5">
-             <img src="{{ images.ships }}{{killdata.victim.shipTypeID}}_64.png" width="128" height="128">
-             <img src="{{ images.characters }}{{killdata.victim.characterID}}_128.jpg" width="128" height="128">
-             <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="128" height="128">
-             {% if killdata.victim.allianceID neq 0 %}<img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="128" height="128">{% endif %}
+            <img src="{{ images.ships }}{{killdata.victim.shipTypeID}}_64.png" width="128" height="128">
+
+            <a href="/pilot/{{killdata.victim.characterID}}" rel='twipsy' title='{{killdata.victim.characterName}}'>
+                <img src="{{ images.characters }}{{killdata.victim.characterID}}_128.jpg" width="128" height="128">
+            </a>
+            <a href="/corporation/{{killdata.victim.corporationID}}" rel='twipsy' title='{{killdata.victim.corporationName}}'>
+                <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="128" height="128">
+            </a>
+             {% if killdata.victim.allianceID neq 0 %}
+            <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{killdata.victim.allianceName}}'>
+                <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="128" height="128">
+            </a>
+            {% endif %}
          </td>
     </tr>
     <tr>
