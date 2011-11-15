@@ -1,20 +1,17 @@
 {% load SithKingboard %}
+{% if currentPage %}
+<div class="pagination">
+  <ul>
+    {% if currentPage neq 1 %}<li><a href="{{ action }}/page/1">1</a></li>{% endif %}
+    <li class="prev {% if prev %}{% else %}disabled{% endif %}"><a href="{% if prev %}{{ action }}/page/{{ prev }}{% else %}#{% endif %}">&larr; Previous</a></li>
+    <li class="active"><a href="#">{{ currentPage }}</a></li>
+    <li class="next {% if next %}{% else %}disabled{% endif %}"><a href="{% if next %}{{ action }}/page/{{ next }}{% else %}#{% endif %}">Next &rarr;</a></li>
+    {% if currentPage neq lastPage %}<li><a href="{{ action }}/page/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
+  </ul>
+</div>
+{% endif %}
 <table class="condensed-table zebra-striped">
     <thead>
-        {% if currentPage %}
-        <tr class="pager">
-            <!-- page -->
-            <th class="pager">{% if prev %}<a href="{{ action }}/page/{{ prev }}/" class="pager"><img src="/images/back.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
-            <!-- /page -->
-
-            <th colspan="8" class="pager-info">Page {{ currentPage }} of {{ lastPage }}</th>
-
-            <!-- page -->
-            <th class="pager">{% if next %}<a href="{{ action }}/page/{{ next }}/" class="pager"><img src="/images/forward.png" border="0"/></a>{% else %}&nbsp;{% endif %}</th>
-            <!-- /page -->
-        </tr>
-        {% endif %}
-
         <tr class="titles">
             <th colspan="2">Date</th>
             <th colspan="1" class="ship">Ship</th>
@@ -76,3 +73,14 @@
         {% endfor %}
     </tbody>
 </table>
+{% if currentPage %}
+<div class="pagination">
+  <ul>
+    {% if currentPage neq 1 %}<li><a href="{{ action }}/page/1">1</a></li>{% endif %}
+    <li class="prev {% if prev %}{% else %}disabled{% endif %}"><a href="{% if prev %}{{ action }}/page/{{ prev }}{% else %}#{% endif %}">&larr; Previous</a></li>
+    <li class="active"><a href="#">{{ currentPage }}</a></li>
+    <li class="next {% if next %}{% else %}disabled{% endif %}"><a href="{% if next %}{{ action }}/page/{{ next }}{% else %}#{% endif %}">Next &rarr;</a></li>
+    {% if currentPage neq lastPage %}<li><a href="{{ action }}/page/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
+  </ul>
+</div>
+{% endif %}
