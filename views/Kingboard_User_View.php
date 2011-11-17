@@ -10,14 +10,14 @@ class Kingboard_User_View extends Kingboard_Base_View
     public function myKingboard(array $parameters)
     {
         $user = Kingboard_Auth::getUser();
-        $activeKeys = false;
+        $activeKeys = array();
         $pendingKeys = false;
         $context = array();
         if(isset($_POST['XSRF']) && Kingboard_Form::getXSRFToken() == $_POST['XSRF'])
         {
             try {
                 $pheal = new Pheal($_POST['apiuserid'], $_POST['apikey']);
-                //$pheal->accountScope->AccountStatus();
+                $pheal->accountScope->ApiKeyInfo();
 
                 if(!isset($user['keys']))
                     $keys = array();
@@ -42,6 +42,7 @@ class Kingboard_User_View extends Kingboard_Base_View
 
             } catch (PhealApiException $e) {
                 $context = $_POST;
+                //$context['error'] = $e->getMessage();
                 $context['error'] = "the key could not be validated as a full apikey";
             }
         }
@@ -52,11 +53,7 @@ class Kingboard_User_View extends Kingboard_Base_View
             foreach($user['keys'] as $key)
             {
                 if($key['active'])
-                {
-                    if(!is_array($activeKeys))
-                        $activeKeys = array();
                     $activeKeys[] = $key;
-                }
                 else
                 {
                     if(!is_array($pendingKeys))
@@ -68,10 +65,15 @@ class Kingboard_User_View extends Kingboard_Base_View
         $charkeylist = array();
         foreach($activeKeys as $key)
         {
-            $pheal = new Pheal($key['apiuserid'], $key['apikey']);
-            $chars = $pheal->accountScope->Characters()->characters->toArray();
-            foreach($chars as $char)
-                $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'];
+            try {
+                $pheal = new Pheal($key['apiuserid'], $key['apikey']);
+                $chars = $pheal->accountScope->Characters()->characters->toArray();
+                foreach($chars as $char)
+                    $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'];
+            } catch (PhealAPIException $e) {
+                var_dump($key);     
+                print_r($e);
+            }
         }
         $context = array_merge($context, array(
             'active_keys' => $activeKeys,
