@@ -65,8 +65,26 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 default:
                     die("missconfiguration, ownerID set, but no ownerType");
             }
+            $totalstats = array();
+            foreach($killstats['value']['group'] as $type => $value)
+            {
+                if(!isset($totalstats[$type]))
+                    $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
+                $totalstats[$type]['kills'] = $value;
+            }
+            ksort($totalstats);
+
+            foreach($lossstats['value']['group'] as $type => $value)
+            {
+                if(!isset($totalstats[$type]))
+                    $totalstats[$type] = array('kills' => 0, 'losses' => 0);
+                $totalstats[$type]['losses'] = $value;
+            }
+
+
             $templateVars['killstats'] = $killstats;
             $templateVars['lossstats'] = $lossstats;
+            $templateVars['totalstats'] = $totalstats;
             $template = "index_owned_board.html";
         } else {
             $stats = Kingboard_Kill_MapReduce_KillsByShip::find();
@@ -143,6 +161,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
     {
         if(!empty($request['hid']))
         {
+            
             $count = Kingboard_Kill::find(
                 array('attackers.allianceID' => (int) $request['hid'])
             )->count();

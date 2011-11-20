@@ -1,29 +1,41 @@
     <h1>Statistics</h1>
-    {% if killstats.value %}
-    <h2>Kills</h2>
-    <table class="condensed-table">
-        <tr>
-            {% for group, value in killstats.value.group %}
-            <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
-            {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                </tr><tr>
-            {% endif %}
-            {% endfor %}
-        </tr>
-        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ killstats.value.total }}</td></tr>
-    </table>
-    {% endif %}
-    {% if lossstats.value %}
-    <h2>Losses</h2>
-    <table class="condensed-table">
-        <tr>
-            {% for group, value in lossstats.value.group %}
-            <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
-            {% if forloop.counter|divisibleby:4 and not forloop.last %}
-                </tr><tr>
-            {% endif %}
-            {% endfor %}
-        </tr>
-        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ lossstats.value.total }}</td></tr>
-    </table>
-    {% endif %}
+    <ul class="tabs">
+        <li class="active"><a href="#numbers">Numbers</a></li>
+        <li><a href="#chart">Chart</a></li>
+    </ul>
+    <div class="tab-content">
+    <div id="numbers" class="active tab-pane">
+        {% if killstats.value %}
+        <h2>Kills</h2>
+        <table class="condensed-table">
+            <tr>
+                {% for group, value in killstats.value.group %}
+                <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
+                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                    </tr><tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ killstats.value.total }}</td></tr>
+        </table>
+        {% endif %}
+        {% if lossstats.value %}
+        <h2>Losses</h2>
+        <table class="condensed-table">
+            <tr>
+                {% for group, value in lossstats.value.group %}
+                <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
+                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                    </tr><tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ lossstats.value.total }}</td></tr>
+        </table>
+        {% endif %}
+    </div>
+        <div class="tab-pane" id="chart">
+        <h2>kills/losses by type</h2>
+            <div id="chart_div"></div>
+        </div>
+</div>
