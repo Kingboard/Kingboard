@@ -84,10 +84,18 @@
             {% for attacker in killdata.attackers %}
             <tr class="attacker">
                 <td class="icons">
-                     <img src="{{ images.ships }}{{attacker.shipTypeID}}_64.png" width="32" height="32">
-                     <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="32" height="32">
-                     <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="32" height="32">
-                     {% if attacker.allianceID neq 0 %}<img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="32" height="32">{% endif %}
+                    <img src="{{ images.ships }}{{attacker.shipTypeID}}_64.png" width="32" height="32">
+                    <a href="/pilot/{{attacker.characterID}}" rel='twipsy' title='{{attacker.characterName}}'>
+                        <img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="32" height="32">
+                    </a>
+                    <a href="/corporation/{{attacker.corporationID}}" rel='twipsy' title='{{attacker.corporationName}}'>
+                        <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="32" height="32">
+                    </a>
+                    {% if attacker.allianceName and attacker.allianceName neq "Unknown" and attacker.allianceName neq "None" %}
+                        <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'>
+                           <img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="32" height="32">
+                        </a>
+                    {% endif %}
                 </td>
                 <td class="pilot">
                     <a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
