@@ -1,13 +1,10 @@
 {% load SithKingboard %}
 {% extends "base.html" %}
 
-{% block header %}
+{% block content %}
 <h1>Battle for {{ battleSetting.system }}</h1>
 <p><b>Start</b>: {{ battleSetting.startdate|mongodate }}<br/>
 <b>End</b>: {{ battleSetting.enddate|mongodate }}</p>
-{% endblock %}
-
-{% block content %}
 <ul class="tabs">
 	<li class="active"><a href="#kills">Kills</a></li>
 	<li><a href="#losses">Losses</a></li>

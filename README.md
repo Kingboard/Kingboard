@@ -1,5 +1,5 @@
 # Kingboard
-Copyright 2010, 2011, Peter Petermann, the Kingboard team and EVSCO All rights reserved.
+Copyright 2010, 2011, Peter Petermann, the Kingboard team and EVSCO.
 All rights reserved.
 
 ## WARNING

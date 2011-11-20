@@ -6,6 +6,7 @@
   <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" media="screen" rel="stylesheet" type="text/css">
   <link href="/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/css/main.css" media="screen" rel="stylesheet" type="text/css" />
   {% block style %}
 
   {% endblock %}
@@ -37,7 +38,22 @@
     </div>
     </div>
 </div>
-<div class="container" id="header">{% block header %}{% endblock %}</div>
+<div class="container" id="topbanner">
+{% block topbanner %}
+    <div class="span16 top-banner">
+    &nbsp;
+    </div>
+{% endblock %}
+</div>
+<div class="container" id="header">
+{% block header %}
+{% endblock %}
+</div>
 <div class="container" id="main">{% block content %}Default Content{% endblock %}</div>
+<div class="container" id="footer">
+    <div class="footer">
+        This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard</a>.
+    </div>
+</div>
 </body>
 </html>
