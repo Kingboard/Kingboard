@@ -1,24 +1,78 @@
 {% load SithKingboard %}
 {% extends "base.html" %}
 
+{% block script %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+      // Create the data table.
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Shiptype');
+      data.addColumn('number', 'amount killed');
+      data.addRows([
+        {% for group in stats %}
+              ['{{ group._id }}', {{ group.value.total }}],
+        {% endfor %}
+      ]);
+
+      // Set chart options
+      var options = {
+                     'width':940,
+                     'height':350,
+                     'is3D': true,
+                     'sliceVisibilityThreshold': 1/45
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+    </script>
+{% endblock %}
+
 {% block title %}Kingboard / Home{% endblock %}
 
 
 {% block header %}
 {% block stats %}
 <h1>Global Statistics</h1>
-<table class="condensed-table">
-    <tr>
-        {% for group in stats %}
-        <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
-        {% if forloop.counter|divisibleby:4 and not forloop.last %}
-            </tr><tr>
-        {% endif %}
-        {% endfor %}
-    </tr>
-    <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ count }}</td></tr>
-</table>
-{% endblock %}
+<ul class="tabs">
+    <li class="active"><a href="#numbers">Numbers</a></li>
+    <li><a href="#chart">Chart</a></li>
+</ul>
+<div class="tab-content">
+<div id="numbers" class="active tab-pane">
+    <h2>killed ships by type</h2>
+    <table class="condensed-table">
+        <tr>
+            {% for group in stats %}
+            <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
+            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                </tr><tr>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ count }}</td></tr>
+    </table>
+</div>
+    <div class="tab-pane" id="chart">
+    <h2>killed ships by type</h2>
+        <div id="chart_div"></div>
+    </div>
+</div>
+
+    {% endblock %}
 {% endblock %}
 {% block content %}
 
