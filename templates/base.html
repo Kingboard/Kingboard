@@ -38,18 +38,14 @@
     </div>
     </div>
 </div>
-<div class="container" id="topbanner">
-{% block topbanner %}
-    <div class="span16 top-banner">
+<div class="container" id="main">
+<div class="span16 top-banner">
     &nbsp;
-    </div>
-{% endblock %}
 </div>
-<div class="container" id="header">
 {% block header %}
 {% endblock %}
+{% block content %}Default Content{% endblock %}
 </div>
-<div class="container" id="main">{% block content %}Default Content{% endblock %}</div>
 <div class="container" id="footer">
     <div class="footer">
         This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard</a>.
