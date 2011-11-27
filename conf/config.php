@@ -25,19 +25,14 @@ $pc = PhealConfig::getInstance();
 $pc->cache = new PhealFileCache(APP_PATH . "/cache/");
 $pc->http_timeout = 40;
 
-// Sith Template configuration
-require_once(APP_PATH ."/lib/King23/external/SithTemplate/lib/SithTemplate.php");
-$reg->sith = new TemplateEnviron(array(
-    'inputPrefix'            => APP_PATH . "/templates/",
-    'outputPrefix'           => APP_PATH . "/templates_c/",
-    'loadPlugins'            => true,
-    'useDefaultPluginsPath'  => true,
-    'pluginsPaths'           => array(APP_PATH . "/lib/Kingboard/SithPlugin/"),
-//    'recompilationMode'      => 1,
-    'recompilationMode'      => 1,
-    'defaultIODriver'        => "file",
-    'autoEscape'             => false,
+// Twig Template configuration
+require_once(APP_PATH . "/lib/King23/external/Twig/lib/Twig/Autoloader.php");
+Twig_Autoloader::register();
+$reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templates"), array(
+    "cache" => APP_PATH . "/templates_c",
+    "auto_reload" => true
 ));
+
 
 $reg->imagePaths = array(
     'ships' => 'http://image.eveonline.com/Render/',
