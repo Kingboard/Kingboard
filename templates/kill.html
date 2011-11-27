@@ -1,10 +1,9 @@
-{% load SithKingboard %}
 {% extends "base.html" %}
 
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 
 {% block header %}
-<h1>{{ killdata.killTime|mongodate }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security|round:1 }}</h1>
+<h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security }}</h1>
 <table class="condensed-table">
     <tr>
         <th>Victim:</th>
@@ -18,7 +17,7 @@
             <a href="/corporation/{{killdata.victim.corporationID}}" rel='twipsy' title='{{killdata.victim.corporationName}}'>
                 <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="128" height="128">
             </a>
-             {% if killdata.victim.allianceID neq 0 %}
+             {% if killdata.victim.allianceID != 0 %}
             <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{killdata.victim.allianceName}}'>
                 <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="128" height="128">
             </a>
@@ -37,7 +36,7 @@
     {% else %}
     <tr>
         <th>Alliance:</th>
-        <td>{% firstof killdata.victim.allianceName "Unknown" %}</td>
+        <td>{% if killdata.victim.allianceName %}{{ killdata.victim.allianceName }}{% else %}"Unknown"{% endif %}</td>
     </tr>
     {% endif %}
     <tr>
@@ -64,7 +63,7 @@
 		{% for alliance, corporations in stats %}
             <thead>
             <tr class="titles">
-                <th>{% firstof alliance "Corporation" %}</th>
+                <th>{% if alliance %}{{ alliance }}{% else %}"Corporation"{% endif %}</th>
                 <th>Pilots</th>
             </tr>
             </thead>
@@ -91,7 +90,7 @@
                     <a href="/corporation/{{attacker.corporationID}}" rel='twipsy' title='{{attacker.corporationName}}'>
                         <img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="32" height="32">
                     </a>
-                    {% if attacker.allianceName and attacker.allianceName neq "Unknown" and attacker.allianceName neq "None" %}
+                    {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %}
                         <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'>
                            <img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="32" height="32">
                         </a>
@@ -100,7 +99,7 @@
                 <td class="pilot">
                     <a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
                     <a href="http://{{ baseHost }}/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
-                    {% if attacker.allianceName and attacker.allianceName neq "Unknown" and attacker.allianceName neq "None" %} / <a href="http://{{baseHost}}/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
+                    {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %} / <a href="http://{{baseHost}}/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
                 </td>
                 <td class="equipment">{{ attacker.shipType }} / {{ attacker.weaponType }}</td>
                 <td class="damage">{{ attacker.damageDone }}</td>

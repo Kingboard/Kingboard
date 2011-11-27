@@ -1,12 +1,11 @@
-{% load SithKingboard %}
 {% if currentPage %}
 <div class="pagination">
   <ul>
-    {% if currentPage neq 1 %}<li><a href="{{ action }}/page/1">1</a></li>{% endif %}
+    {% if currentPage != 1 %}<li><a href="{{ action }}/page/1">1</a></li>{% endif %}
     <li class="prev {% if prev %}{% else %}disabled{% endif %}"><a href="{% if prev %}{{ action }}/page/{{ prev }}{% else %}#{% endif %}">&larr; Previous</a></li>
     <li class="active"><a href="#">{{ currentPage }}</a></li>
     <li class="next {% if next %}{% else %}disabled{% endif %}"><a href="{% if next %}{{ action }}/page/{{ next }}{% else %}#{% endif %}">Next &rarr;</a></li>
-    {% if currentPage neq lastPage %}<li><a href="{{ action }}/page/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
+    {% if currentPage != lastPage %}<li><a href="{{ action }}/page/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
   </ul>
 </div>
 {% endif %}
@@ -26,8 +25,8 @@
 
         <tr>
             <!-- page -->
-            <td colspan="2">{{ kill.killTime|mongodate }}<br />
-            {% if ownerID and ((ownerID eq kill.victim.allianceID) or (ownerID eq kill.victim.corporationID) or (ownerID eq kill.victim.characterID)) %}<span class="label important">loss</span>{% elseif ownerID %}<span class="label success">kill</span>{% endif %}
+            <td colspan="2">{{ kill.killTime.sec|date("Y-m-d H:i:s") }}<br />
+            {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="label important">loss</span>{% elseif ownerID %}<span class="label success">kill</span>{% endif %}
             </td>
             <!-- /page -->
             <!-- shiptype -->
@@ -46,7 +45,7 @@
                 </a>
                 </td>
             <td class="icon">
-                {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}
+                {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}
                 <a href="/alliance/{{kill.victim.allianceID}}" rel='twipsy' title='{{kill.victim.allianceName}}'>
                 <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}">
                 </a>
@@ -60,11 +59,11 @@
                 </a>
             </td>
             <td class="victim">
-                {% if kill.victim.allianceName and kill.victim.allianceName neq "Unknown" and kill.victim.allianceName neq "None" %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
+                {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}<a href="/alliance/{{ kill.victim.allianceID }}">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
                 <a href="/corporation/{{ kill.victim.corporationID }}">{{ kill.victim.corporationName }}</a>
             </td>
             <!-- /victim -->
-            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|space2under }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|space2under }}" rel="external">{{ kill.location.solarSystem }}</a> ({{ kill.location.security|round:1 }})</td>
+            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|replace(" ", "_") }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|replace(" ", "-") }}" rel="external">{{ kill.location.solarSystem }}</a> ({{ kill.location.security }})</td>
             <td><a href="/kill/{{ kill.idHash }}/">Details ..</a></td>
             <!-- page -->
             <td>&nbsp;</td>
@@ -76,11 +75,11 @@
 {% if currentPage %}
 <div class="pagination">
   <ul>
-    {% if currentPage neq 1 %}<li><a href="{{ action }}/page/1">1</a></li>{% endif %}
+    {% if currentPage != 1 %}<li><a href="{{ action }}/page/1">1</a></li>{% endif %}
     <li class="prev {% if prev %}{% else %}disabled{% endif %}"><a href="{% if prev %}{{ action }}/page/{{ prev }}{% else %}#{% endif %}">&larr; Previous</a></li>
     <li class="active"><a href="#">{{ currentPage }}</a></li>
     <li class="next {% if next %}{% else %}disabled{% endif %}"><a href="{% if next %}{{ action }}/page/{{ next }}{% else %}#{% endif %}">Next &rarr;</a></li>
-    {% if currentPage neq lastPage %}<li><a href="{{ action }}/page/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
+    {% if currentPage != lastPage %}<li><a href="{{ action }}/page/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
   </ul>
 </div>
 {% endif %}

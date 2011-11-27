@@ -1,10 +1,9 @@
-{% load SithKingboard %}
 {% extends "base.html" %}
 
 {% block content %}
 <h1>Battle for {{ battleSetting.system }}</h1>
-<p><b>Start</b>: {{ battleSetting.startdate|mongodate }}<br/>
-<b>End</b>: {{ battleSetting.enddate|mongodate }}</p>
+<p><b>Start</b>: {{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }}<br/>
+<b>End</b>: {{ battleSetting.enddate.sec|date("Y-m-d H:i:s") }}</p>
 <ul class="tabs">
 	<li class="active"><a href="#kills">Kills</a></li>
 	<li><a href="#losses">Losses</a></li>
@@ -15,17 +14,15 @@
 	<div id="kills" class="tab-pane active">
     <h1>Kills</h1>
         <div id="home_killspage">
-        {% with kills as data %}
+        {% set data = kills %}
         {% include "components/kill_list.html" %}
-        {% endwith %}
         </div>
 	</div>
     <div id="losses" class="tab-pane">
     <h1>Losses</h1>
         <div id="home_losspage">
-        {% with losses as data %}
+        {% set data = losses %}
         {% include "components/kill_list.html" %}
-        {% endwith %}
         </div>
     </div>
     <div id="timeline" class="tab-pane">

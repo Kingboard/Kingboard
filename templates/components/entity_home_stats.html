@@ -11,7 +11,7 @@
             <tr>
                 {% for group, value in killstats.value.group %}
                 <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
-                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                {% if forloop.index is divisibleby(4) and not forloop.last %}
                     </tr><tr>
                 {% endif %}
                 {% endfor %}
@@ -25,7 +25,7 @@
             <tr>
                 {% for group, value in lossstats.value.group %}
                 <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
-                {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                {% if forloop.index is divisibleby(4) and not forloop.last %}
                     </tr><tr>
                 {% endif %}
                 {% endfor %}

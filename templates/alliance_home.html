@@ -1,4 +1,3 @@
-{% load SithKingboard %}
 {% extends "base.html" %}
 
 {% block header %}
@@ -20,17 +19,15 @@
     <div id="kills" class="tab-pane">
         <h2>Kills</h2>
         <div id="home_killspage">
-        {% with killdata as data %}
+        {% set data = killdata %}
         {% include "components/kill_list.html" %}
-        {% endwith %}
         </div>
     </div>
     <div id="losses" class="tab-pane">
         <h2>Losses</h2>
         <div id="home_losspage">
-        {% with lossdata as data %}
+        {% set data = lossdata %}
         {% include "components/kill_list.html" %}
-        {% endwith %}
         </div>
     </div>
     <div id="memberactivity" class="tab-pane">

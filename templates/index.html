@@ -1,4 +1,3 @@
-{% load SithKingboard %}
 {% extends "base.html" %}
 
 {% block script %}
@@ -58,7 +57,7 @@
         <tr>
             {% for group in stats %}
             <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
-            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+            {% if loop.index is divisibleby(4) and not forloop.last %}
                 </tr><tr>
             {% endif %}
             {% endfor %}
@@ -102,8 +101,8 @@
     {% for report in reports %}
         <tr>
             <td>{{ report.system }}</td>
-            <td>{{ report.startdate|mongodate }}</td>
-            <td>{{ report.enddate|mongodate }}</td>
+            <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
+            <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
             <td><a href="/battle/{{ report._id }}">details</a></td>
         </tr>
     {% endfor %}
