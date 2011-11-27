@@ -3,7 +3,7 @@
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 
 {% block header %}
-<h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ killdata.location.security }}</h1>
+<h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ "%1.1f"|format(killdata.location.security) }}</h1>
 <table class="condensed-table">
     <tr>
         <th>Victim:</th>
