@@ -17,7 +17,7 @@ class Kingboard_BattleEditor_View extends Kingboard_Base_View
         $user = Kingboard_Auth::getUser();
         list($key, $character) = explode('|', $_POST['character']);
         $key = $user["keys"][$key];
-        $pheal = new Pheal($key['apiuserid'], $key['apikey'], 'corp');
+        $pheal = new Pheal($key['apiuserid'], $key['apikey'], 'char');
         $contacts = $pheal->ContactList(array('characterID' => $character));
         $positives = array();
         foreach($contacts->corporateContactList as $contact)
