@@ -27,3 +27,8 @@ background-color: #FFFFFD;
 #footer {
     text-align: center;
 }
+
+.item-attributes {
+/*    background-color: #eee;*/
+    margin-bottom: 4px;
+}

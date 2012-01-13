@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Kingboard / Home{% endblock %}
+
+
+{% block header %}
+<div class="page-header">
+<h1>EVE Item Information <small>{{item.typeName}}</small></h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="span2">
+        <img src="{{images.items}}{{item.typeID}}_64.png" alt="{{item.typeName}}">
+    </div>
+    <div class="span14">
+    <h2>Description</h2>
+        {{ item.description }}
+    <h2>Attributes</h2>
+    <div class="row">
+    {% for category, attributes in item.Attributes %}
+
+    <div class="span4 item-attributes">
+        <h3>{{ category }}</h3>
+        {% for attribute in attributes %}
+        <div>
+        <b>{{ attribute.attributeName }}</b><br/>
+        {{ attribute.valueInt }}{{ attribute.valueFloat }} ({{attribute.unitDisplayName}})</div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+</div>
+{% endblock %}

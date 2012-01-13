@@ -9,6 +9,9 @@ $router->addRoute("/home/page/", "Kingboard_Homepage_View", "index", array('page
 // information
 $router->addRoute("/information", "Kingboard_Information_View", "index");
 
+// eve information
+$router->addRoute("/eveinfo/", "Kingboard_EveInfo_View", "eveItem", array('itemid'));
+
 // pilot details
 $router->addRoute("/pilot/", "Kingboard_Homepage_View", "pilot", array('hid'));
 $router->addRoute("/pilot/name/", "Kingboard_Search_View", "namePilot", array('pilotname'));
@@ -44,5 +47,6 @@ $router->addRoute("/autocomplete/region", "Kingboard_AutoCompleter_View", 'regio
 // battles
 $router->addRoute("/battle/new", "Kingboard_BattleEditor_View", "create");
 $router->addRoute("/battle/", "Kingboard_Battle_View", "show", array("id"));
+
 
 $router->addRoute("/ppr/", "PPR_Secret_View", "index", array("alliance", "region"));
