@@ -39,11 +39,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             'lastPage' => $lastPage,
             'action' => '/home'
         );
-        
-        if (!empty($request['ajax']))
-        {
-            return $this->render('home_killspage.html', $templateVars);
-        }
+
         $info = array();
         // differences for owned boards
         if($this->_context['ownerID'])
@@ -120,7 +116,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
 
-            $template = "pilot_home.html";
+            $template = "pilot/index.html";
             $info = Kingboard_Kill::getPilotInfoFromId($request['hid']);
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
         } else {
@@ -147,7 +143,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId($request['hid']);
 
-            $template = "corporation_home.html";
+            $template = "corporation/index.html";
             $info = Kingboard_Kill::getCorporationInfoFromId($request['hid']);
             //$stats = $stats->sort(array("value.value" => -1));
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
@@ -177,7 +173,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId($request['hid']);
 
-            $template = "alliance_home.html";
+            $template = "alliance/index.html";
             $info = Kingboard_Kill::getAllianceInfoFromId($request['hid']);
             return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
         } else {

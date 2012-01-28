@@ -27,6 +27,6 @@ class Kingboard_Battle_View extends Kingboard_Base_View
 
         //print_r($battle->data);
         $this->_context['battleSetting'] = $battleSetting;
-        $this->render("battle.html", $battle->data);
+        $this->render("battle/details.html", $battle->data);
     }
 }

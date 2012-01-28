@@ -1,6 +1,12 @@
 <?php
 class Kingboard_Search_View extends Kingboard_Base_View
 {
+    public function index(array $params)
+    {
+        $context = $params;
+        $this->render("search/index.html", $context);
+    }
+
     public function namePilot(array $params)
     {
         if(!empty($params['pilotname']))
