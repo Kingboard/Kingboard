@@ -14,6 +14,7 @@ $router->addRoute("/eveinfo/", "Kingboard_EveInfo_View", "eveItem", array('itemi
 
 // pilot details
 $router->addRoute("/pilot/", "Kingboard_Homepage_View", "pilot", array('hid'));
+$router->addRoute("/character/", "Kingboard_Homepage_View", "pilot", array('hid'));
 $router->addRoute("/pilot/name/", "Kingboard_Search_View", "namePilot", array('pilotname'));
 
 // corporation details
@@ -49,4 +50,5 @@ $router->addRoute("/battle/new", "Kingboard_BattleEditor_View", "create");
 $router->addRoute("/battle/", "Kingboard_Battle_View", "show", array("id"));
 
 
-$router->addRoute("/ppr/", "PPR_Secret_View", "index", array("alliance", "region"));
+// search
+$router->addRoute("/search/", "Kingboard_Search_View", "index");

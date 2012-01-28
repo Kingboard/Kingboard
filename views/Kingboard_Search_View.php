@@ -3,7 +3,28 @@ class Kingboard_Search_View extends Kingboard_Base_View
 {
     public function index(array $params)
     {
-        $context = $params;
+        if(count($_POST) > 0)
+            $context = $_POST;
+        else
+            $context = array();
+        $results = null;
+
+        if(isset($_POST['searchbox']))
+        {
+            if(strlen($_POST['searchbox']) <=3)
+                $context['searchbox_length_to_short'] = true;
+            else {
+                $results = Kingboard_Kill_MapReduce_NameSearch::mapReduce($_POST['searchbox'], 'character');
+                $context['results'] = $results['results'];
+            }
+
+        }
+
+        // if this was posted we actually searched for something,
+        // so lets give a no results info if we did not find anything.
+        if(count($_POST) > 0 && (is_null($results) || count($results) < 1))
+            $context['no_results'] = true;
+
         $this->render("search/index.html", $context);
     }
 

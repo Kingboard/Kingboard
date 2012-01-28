@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form name="search" method="post" action="/search/">
+    <fieldset>
+        <legend>Searchbox</legend>
+        <div class="clearfix">
+            <label for="searchbox">Pilot/Corp/Alliance</label>
+            <div class="input">
+                <input id="searchbox" name="searchbox" type="text" value="{{ searchbox }}" placeholder="Corp/Pilot/Alliance..">
+            </div>
+        </div>
+        <div class="actions">
+            <input type="submit" value="Search" class="btn default primary">
+        </div>
+    </fieldset>
+</form>
+{% if not searchbox_length_to_short and no_results %}
+    <div class="alert-message info">No Character/Corp/Alliance by that name could be found!</div>
+{% endif %}
+{% if searchbox_length_to_short %}
+<div class="alert-message error">Please enter at least 4 characters!</div>
+{% endif %}
+        
+{% if results %}
+<ul>
+    {% for result in results %}
+<li><a href="/{{ result.value.type }}/{{ result.value.id }}/">{{ result._id }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
