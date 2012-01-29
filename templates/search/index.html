@@ -23,10 +23,30 @@
 {% endif %}
         
 {% if results %}
-<ul>
+<h2>Result</h2>
+<table class="condensed-table zebra-striped">
+    <thead>
+        <tr class="titles">
+            <th>&nbsp;</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for result in results %}
-<li><a href="/{{ result.type }}/{{ result.id }}/">{{ result.name }}</a></li>
+<tr>
+    <td class="icon">
+         <a href="/{{result.type}}/{{result.id}}" rel='twipsy' title='{{result.name}}'>
+         <img src="{% if result.type == "character" %}{{images.characters}}{%endif%}{% if result.type == "corporation" %}{{images.corporations}}{%endif%}{% if result.type == "alliance" %}{{images.alliances}}{%endif%}{{result.id}}_32.{% if result.type == "character" %}jpg{% else %}png{% endif %}" alt="{{result.name}}">
+         </a>
+    </td>
+    <td>
+        <a href="/{{result.type}}/{{result.id}}" title='{{result.name}}'>
+        {{ result.name }} ({{ result.type }})
+        </a>
+    </td>
+</tr>
     {% endfor %}
-</ul>
+</tbody>
+</table>
 {% endif %}
 {% endblock %}
