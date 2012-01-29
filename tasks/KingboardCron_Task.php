@@ -48,7 +48,6 @@ class KingboardCron_Task extends King23_CLI_Task
         Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduce();
         $this->cli->positive('update of corporation kill stats completed');
 
-
         $this->cli->message('updating alliance loss stats');
         Kingboard_Kill_MapReduce_LossesByShipByAlliance::mapReduce();
         $this->cli->positive('update of alliance loss stats completed');
@@ -56,6 +55,10 @@ class KingboardCron_Task extends King23_CLI_Task
         $this->cli->message('updating alliance kill stats');
         Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduce();
         $this->cli->positive('update of alliance kill stats completed');
+
+        $this->cli->message('updating name lists for search');
+        Kingboard_Kill_MapReduce_NameSearch::mapReduce();
+        $this->cli->positive("name list updated");
     }
 
     public function key_activation(array $options)

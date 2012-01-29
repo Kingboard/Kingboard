@@ -14,10 +14,18 @@ class Kingboard_Search_View extends Kingboard_Base_View
             if(strlen($_POST['searchbox']) <=3)
                 $context['searchbox_length_to_short'] = true;
             else {
-                $results = Kingboard_Kill_MapReduce_NameSearch::mapReduce($_POST['searchbox'], 'character');
-                $context['results'] = $results['results'];
-            }
+                foreach(Kingboard_Kill_MapReduce_NameSearch::search($_POST['searchbox']) as $result)
+                {
+                    if(is_null($results)) $results = array();
 
+                    $results[] = array(
+                        "name" => $result->_id,
+                        "id" => $result->value['id'],
+                        "type" => $result->value['type']
+                    );
+                }
+                $context["results"] = $results;
+            }
         }
 
         // if this was posted we actually searched for something,
