@@ -10,7 +10,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         if (!empty($request['page']))
         {
             $currentPage = (int) preg_replace('/[^0-9]+/', '', $request['page']);
-            if ($currentPage < 1)
+            if ($currentPage < 1 )
             {
                 $this->sendErrorAndQuit('Page must be a positive value larger than one');
             }
@@ -21,7 +21,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         $count = Kingboard_Kill::count();
         $lastPage = ceil($count / $killsPerPage);
         
-        if ($currentPage > $lastPage)
+        if ($currentPage > $lastPage && $lastPage != 1)
         {
             $this->sendErrorAndQuit('Page does not exist');
         }
@@ -62,21 +62,24 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                     die("missconfiguration, ownerID set, but no ownerType");
             }
             $totalstats = array();
-            foreach($killstats['value']['group'] as $type => $value)
-            {
-                if(!isset($totalstats[$type]))
-                    $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
-                $totalstats[$type]['kills'] = $value;
-            }
+
+            if(isset($killstats['value']['group']))
+                foreach($killstats['value']['group'] as $type => $value)
+                {
+                    if(!isset($totalstats[$type]))
+                        $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
+                    $totalstats[$type]['kills'] = $value;
+                }
+
+            if(isset($losstats['value']['group']))
+                foreach($lossstats['value']['group'] as $type => $value)
+                {
+                    if(!isset($totalstats[$type]))
+                        $totalstats[$type] = array('kills' => 0, 'losses' => 0);
+                    $totalstats[$type]['losses'] = $value;
+                }
+
             ksort($totalstats);
-
-            foreach($lossstats['value']['group'] as $type => $value)
-            {
-                if(!isset($totalstats[$type]))
-                    $totalstats[$type] = array('kills' => 0, 'losses' => 0);
-                $totalstats[$type]['losses'] = $value;
-            }
-
 
             $templateVars['killstats'] = $killstats;
             $templateVars['lossstats'] = $lossstats;
