@@ -9,7 +9,7 @@
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
         <td rowspan="5">
-            <a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipTypeID}}'>
+            <a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipType}}'>
                 <img src="{{ images.ships }}{{killdata.victim.shipTypeID}}_128.png" width="128" height="128">
             </a>
 
@@ -28,26 +28,26 @@
     </tr>
     <tr>
         <th>Corporation:</th>
-        <td>{{ killdata.victim.corporationName }}</td>
+        <td><a href="/corporation/{{killdata.victim.corporationID}}">{{ killdata.victim.corporationName }}</a></td>
     </tr>
     {% if killdata.victim.faction %}
     <tr>
         <th>Faction:</th>
-        <td>{{ killdata.victim.faction }}</td>
+        <td><a href="/faction/{{killdata.victim.factionID}}">{{ killdata.victim.faction }}</a></td>
     </tr>
     {% else %}
     <tr>
         <th>Alliance:</th>
-        <td>{% if killdata.victim.allianceName %}{{ killdata.victim.allianceName }}{% else %}"Unknown"{% endif %}</td>
+        <td>{% if killdata.victim.allianceName %}<a href="/alliance/{{killdata.victim.allianceID}}">{{ killdata.victim.allianceName }}</a>{% else %}"Unknown"{% endif %}</td>
     </tr>
     {% endif %}
     <tr>
         <th>Ship:</th>
-        <td>{{ killdata.victim.shipType }}</td>
+        <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{ killdata.victim.shipType }}</a></td>
     </tr>
     <tr>
         <th>Damage Taken:</th>
-        <td>{{ killdata.victim.damageTaken }}</td>
+        <td><a href="#">{{ killdata.victim.damageTaken }}</a></td>
     </tr>
 </table>
 {% endblock %}
@@ -86,7 +86,7 @@
             {% for attacker in killdata.attackers %}
             <tr class="attacker">
                 <td class="icons">
-                    <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipTypeID}}'>
+                    <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'>
                         <img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32">
                     </a>
                     <a href="/pilot/{{attacker.characterID}}" rel='twipsy' title='{{attacker.characterName}}'>
@@ -123,7 +123,7 @@
         {% for item in killdata.items %}
         <tr>
             <td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="18" height="18"></a></td>
-            <td>{{ item.typeName }}</td>
+            <td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
             <td class="dropped">{{ item.qtyDropped }}</td>
             <td class="destroyed">{{ item.qtyDestroyed }}</td>
         </tr>
@@ -131,7 +131,7 @@
                 {% for containeritem in item.items %}
                     <tr>
                         <td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></td>
-                        <td>{{ containeritem.typeName }}</td>
+                        <td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
                         <td class="dropped">{{ containeritem.qtyDropped }}</td>
                         <td class="destroyed">{{ containeritem.qtyDestroyed }}</td>
                     </tr>
