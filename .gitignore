@@ -7,3 +7,4 @@ data
 .idea
 cache
 tests/phpunit.xml
+conf/config.php
