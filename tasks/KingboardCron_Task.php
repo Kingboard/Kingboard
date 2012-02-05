@@ -27,35 +27,43 @@ class KingboardCron_Task extends King23_CLI_Task
     {
         $this->cli->header('updating stats');
 
-        $this->cli->message('updating Kills by Shiptype');
-        // stats table of how often all ships have been killed
-        Kingboard_Kill_MapReduce_KillsByShip::mapReduce();
-        $this->cli->positive('update of KillsByShip stats completed');
+        // $this->cli->message('updating Kills by Shiptype');
+        // // stats table of how often all ships have been killed
+        // Kingboard_Kill_MapReduce_KillsByShip::mapReduce();
+        // $this->cli->positive('update of KillsByShip stats completed');
 
-        $this->cli->message('updating pilot loss stats');
-        Kingboard_Kill_MapReduce_LossesByShipByPilot::mapReduce();
-        $this->cli->positive('update of pilot loss stats completed');
+        // $this->cli->message('updating pilot loss stats');
+        // Kingboard_Kill_MapReduce_LossesByShipByPilot::mapReduce();
+        // $this->cli->positive('update of pilot loss stats completed');
 
-        $this->cli->message('updating pilot kill stats');
-        Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduce();
-        $this->cli->positive('update of pilot kill stats completed');
+        // $this->cli->message('updating pilot kill stats');
+        // Kingboard_Kill_MapReduce_KillsByShipByPilot::mapReduce();
+        // $this->cli->positive('update of pilot kill stats completed');
 
-        $this->cli->message('updating corporation loss stats');
-        Kingboard_Kill_MapReduce_LossesByShipByCorporation::mapReduce();
-        $this->cli->positive('update of corporation loss stats completed');
+        // $this->cli->message('updating corporation loss stats');
+        // Kingboard_Kill_MapReduce_LossesByShipByCorporation::mapReduce();
+        // $this->cli->positive('update of corporation loss stats completed');
 
-        $this->cli->message('updating corporation kill stats');
-        Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduce();
-        $this->cli->positive('update of corporation kill stats completed');
+        // $this->cli->message('updating corporation kill stats');
+        // Kingboard_Kill_MapReduce_KillsByShipByCorporation::mapReduce();
+        // $this->cli->positive('update of corporation kill stats completed');
 
-        $this->cli->message('updating alliance loss stats');
-        Kingboard_Kill_MapReduce_LossesByShipByAlliance::mapReduce();
-        $this->cli->positive('update of alliance loss stats completed');
+        // $this->cli->message('updating alliance loss stats');
+        // Kingboard_Kill_MapReduce_LossesByShipByAlliance::mapReduce();
+        // $this->cli->positive('update of alliance loss stats completed');
 
-        $this->cli->message('updating alliance kill stats');
-        Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduce();
-        $this->cli->positive('update of alliance kill stats completed');
+        // $this->cli->message('updating alliance kill stats');
+        // Kingboard_Kill_MapReduce_KillsByShipByAlliance::mapReduce();
+        // $this->cli->positive('update of alliance kill stats completed');
 
+        $this->cli->message('updating faction loss stats');
+        Kingboard_Kill_MapReduce_LossesByShipByFaction::mapReduce();
+        $this->cli->positive('update of faction loss stats completed');
+
+        $this->cli->message('updating faction kill stats');
+        Kingboard_Kill_MapReduce_KillsByShipByFaction::mapReduce();
+        $this->cli->positive('update of faction kill stats completed');
+		
         $this->cli->message('updating name lists for search');
         Kingboard_Kill_MapReduce_NameSearch::mapReduce();
         $this->cli->positive("name list updated");

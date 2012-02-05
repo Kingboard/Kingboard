@@ -19,26 +19,32 @@
             <a href="/corporation/{{killdata.victim.corporationID}}" rel='twipsy' title='{{killdata.victim.corporationName}}'>
                 <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="128" height="128">
             </a>
-             {% if killdata.victim.allianceID != 0 %}
+{% if killdata.victim.allianceID != 0 %}
             <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{killdata.victim.allianceName}}'>
                 <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="128" height="128">
             </a>
-            {% endif %}
+{% endif %}
+{% if killdata.victim.factionID != 0 %}
+            <a href="/faction/{{killdata.victim.factionID}}" rel='twipsy' title='{{killdata.victim.factionName}}'>
+                <img src="{{ images.alliances }}{{killdata.victim.factionID}}_128.png" width="128" height="128">
+            </a>
+{% endif %}
          </td>
     </tr>
     <tr>
         <th>Corporation:</th>
         <td><a href="/corporation/{{killdata.victim.corporationID}}">{{ killdata.victim.corporationName }}</a></td>
     </tr>
-    {% if killdata.victim.faction %}
+    {% if killdata.victim.factionName %}
     <tr>
         <th>Faction:</th>
-        <td><a href="/faction/{{killdata.victim.factionID}}">{{ killdata.victim.faction }}</a></td>
+        <td><a href="/faction/{{killdata.victim.factionID}}">{{ killdata.victim.factionName }}</a></td>
     </tr>
-    {% else %}
+	{% endif %}
+    {% if killdata.victim.allianceName %}
     <tr>
         <th>Alliance:</th>
-        <td>{% if killdata.victim.allianceName %}<a href="/alliance/{{killdata.victim.allianceID}}">{{ killdata.victim.allianceName }}</a>{% else %}"Unknown"{% endif %}</td>
+        <td><a href="/alliance/{{killdata.victim.allianceID}}">{{ killdata.victim.allianceName }}</a></td>
     </tr>
     {% endif %}
     <tr>
@@ -63,10 +69,10 @@
 	<div id="involved-stats" class="tab-pane active">
 
         <table class="condensed-table zebra-striped">
-		{% for alliance, corporations in stats %}
+		{% for alliance, corporations, faction in stats %}
             <thead>
             <tr class="titles">
-                <th>{% if alliance %}{{ alliance }}{% else %}"Corporation"{% endif %}</th>
+                <th>{% if alliance %}{{ alliance }}{% elseif faction %}{{ faction }}{% else %}"Corporation"{% endif %}</th>
                 <th>Pilots</th>
             </tr>
             </thead>
@@ -95,16 +101,23 @@
                     <a href="/corporation/{{attacker.corporationID}}" rel='twipsy' title='{{attacker.corporationName}}'>
                         <img src="{{ images.corporations }}{{attacker.corporationID}}_32.png" width="32" height="32">
                     </a>
-                    {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %}
-                        <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'>
-                           <img src="{{ images.alliances }}{{attacker.allianceID}}_32.png"  width="32" height="32">
-                        </a>
-                    {% endif %}
+					{% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %}
+                    <a href="/faction/{{killdata.victim.factionID}}" rel='twipsy' title='{{attacker.factionName}}'>
+                        <img src="{{ images.alliances }}{{attacker.factionID}}_32.png"  width="32" height="32">
+                    </a>
+					{% endif %}
+					{% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %}
+                    <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'>
+                        <img src="{{ images.alliances }}{{attacker.allianceID}}_32.png"  width="32" height="32">
+                    </a>
+					{% endif %}
+                
                 </td>
                 <td class="pilot">
-                    <a href="http://{{ baseHost }}/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
-                    <a href="http://{{ baseHost }}/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
-                    {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %} / <a href="http://{{baseHost}}/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
+                    <a href="/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
+                    <a href="/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
+                    {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %} / <a href="/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
+                    {% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %} / <a href="/faction/{{attacker.factionID}}/">{{ attacker.factionName }}</a>{% endif %}
                 </td>
                 <td class="equipment">{{ attacker.shipType }} / {{ attacker.weaponType }}</td>
                 <td class="damage">{{ attacker.damageDone }}</td>
