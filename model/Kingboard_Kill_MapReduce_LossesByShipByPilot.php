@@ -19,7 +19,7 @@ class Kingboard_Kill_MapReduce_LossesByShipByPilot extends King23_MongoObject im
                 var info = {};
                 info['group'] = {};
                 info['ship'] = {}
-                info['group'][ship.marketGroup.parentGroup.marketGroupName] = 1;
+                info['group'][ship.marketGroup[0].parentGroup[0].marketGroupName] = 1;
                 info['ship'][this.victim.shipType] = 1;
                 info['total'] = 1;
                 emit(this.victim.characterID, info);
