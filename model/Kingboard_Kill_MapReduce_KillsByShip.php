@@ -28,7 +28,7 @@ class Kingboard_Kill_MapReduce_KillsByShip extends King23_MongoObject implements
             info[this.victim.shipType] = 1;
             info[\"total\"] = 1;
             if(ship != null && ship.marketGroup != null)
-                emit(ship.marketGroup.parentGroup.marketGroupName, info);
+                emit(ship.marketGroup[0].parentGroup[0].marketGroupName, info);
         }";
         $reduce = "function (k, vals) {
             var sums = {}

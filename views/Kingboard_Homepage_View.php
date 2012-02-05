@@ -21,7 +21,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         $count = Kingboard_Kill::count();
         $lastPage = ceil($count / $killsPerPage);
         
-        if ($currentPage > $lastPage && $lastPage != 1)
+        if ($currentPage > $lastPage && $lastPage != 0)
         {
             $this->sendErrorAndQuit('Page does not exist');
         }
