@@ -1,4 +1,4 @@
-<?php
+ <?php
 class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
 {
     protected $_className = __class__;
@@ -134,6 +134,45 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
     }
 
     /**
+     * Fetches Information about the faction identified by id
+     * @static
+     * @param String $id
+     * @return array|null
+     */
+    public static function getFactionInfoFromId($id)
+    {
+        // find latest kill with characterID $id
+        $kill = self::_find(__CLASS__, array('$or' => array(
+                          array('victim.factionID' => (int) $id),
+                          array('attackers.factionID' => (int) $id)
+        )))->sort(array('killTime' => -1))->limit(1);
+
+        $kill->next();
+
+        if(!($kill = $kill->current()))
+            return null;
+
+        if($kill['victim']['factionID'] == $id)
+        {
+            return array(
+                "factionID" => $kill['victim']['factionID'],
+                "factionName" => $kill['victim']['factionName'],
+            );
+        }
+        foreach($kill['attackers'] as $attacker)
+        {
+            if($attacker['factionID'] == $id)
+            {
+                return array(
+                    "factionID" => $attacker['factionID'],
+                    "factionName" => $attacker['factionName'],
+                );
+            }
+        }
+        return null;
+    }
+	
+    /**
      * Fetches Information about the alliance identified by id
      * @static
      * @param String $id
@@ -247,6 +286,31 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         return false;
     }
 
+    public static function getFactionIdFromName($name)
+    {
+        // find a random kill with characterID $id
+        $kill = self::_findOne(__CLASS__, array('$or' => array(
+            array('victim.factionName' =>  $name),
+            array('attackers.factionName' => $name)
+        )), array(
+            'victim.factionName' => 1,
+            'attackers.factionName' => 1,
+            'victim.factionID' => 1,
+            'attackers.factionID' => 1
+        ));
+
+        if($kill['victim']['factionName'] == $name)
+            return $kill['victim']['factionID'];
+        else
+        {
+            foreach($kill['attackers'] as $attacker)
+            {
+                if($attacker['factionName'] == $name)
+                    return $attacker['factionID'];
+            }
+        }
+        return false;
+    }
     public static function count()
     {
         return self::_find(__class__, array())->count();

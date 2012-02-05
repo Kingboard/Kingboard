@@ -25,7 +25,9 @@ $router->addRoute('/corporation/name/', "Kingboard_Search_View", "nameCorporatio
 $router->addRoute("/alliance/", "Kingboard_Homepage_View", "alliance", array("hid"));
 $router->addRoute('/alliance/name/', "Kingboard_Search_View", "nameAlliance", array("alliancename"));
 
-
+// faction details
+$router->addRoute("/faction/", "Kingboard_Homepage_View", "faction", array("hid"));
+$router->addRoute('/faction/name/', "Kingboard_Search_View", "nameFaction", array("factionname"));
 
 // kill details
 $router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));

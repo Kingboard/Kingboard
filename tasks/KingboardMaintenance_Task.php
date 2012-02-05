@@ -135,7 +135,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         // alliance victim id
         $col->ensureIndex(arraY('victim.allianceID' =>1));
 
-        // alliance attacker i    d
+        // alliance attacker id
         $col->ensureIndex(array('attackers.allianceID' =>1));
 
         // alliance victim name
@@ -144,6 +144,17 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         // alliance attacker name
         $col->ensureIndex(array('attackers.allianceName' =>1));
 
+		// faction victim id
+        $col->ensureIndex(arraY('victim.factionID' =>1));
+
+        // faction attacker id
+        $col->ensureIndex(array('attackers.factionID' =>1));
+
+        // faction victim name
+        $col->ensureIndex(array('victim.factionName' =>1));
+
+        // faction attacker name
+        $col->ensureIndex(array('attackers.factionName' =>1));
 
         // indexes for the battle queries
         // battle kills

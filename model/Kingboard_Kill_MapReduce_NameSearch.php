@@ -11,10 +11,10 @@ class Kingboard_Kill_MapReduce_NameSearch extends King23_MongoObject implements 
      * @param string $searchword
      * @return King23_MongoResult
      */
-    public static function search($searchword) {
+    public static function search($searchword, $limit) {
         return  parent::_find(__CLASS__, array(
             "_id" => new MongoRegex('/^' .$searchword . '.*/i')
-        ))->limit(50);
+        ))->limit($limit);
     }
 
     /**
@@ -24,10 +24,12 @@ class Kingboard_Kill_MapReduce_NameSearch extends King23_MongoObject implements 
     {
         $map = "function () {
             emit(this.victim.characterName, {id: this.victim.characterID, type: \"character\"});
+			emit(this.victim.factionName, {id: this.victim.factionID, type: \"faction\"});
             emit(this.victim.corporationName, {id: this.victim.corporationID, type: \"corporation\"});
             emit(this.victim.allianceName, {id: this.victim.allianceID, type: \"alliance\"});
             this.attackers.forEach(function(attacker) {
                 emit(attacker.characterName, {id: attacker.characterID, type: \"character\"});
+				emit(attacker.factionName, {id: attacker.factionID, type: \"faction\"});
                 emit(attacker.corporationName, {id: attacker.corporationID, type: \"corporation\"});
                 emit(attacker.allianceName, {id: attacker.allianceID, type: \"alliance\"});
             });

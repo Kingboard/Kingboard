@@ -155,6 +155,33 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         }
     }
 
+    public function faction($request)
+    {
+        if(!empty($request['hid']))
+        {
+            
+            $count = Kingboard_Kill::find(
+                array('attackers.factionID' => (int) $request['hid'])
+            )->count();
+
+            $killdata = Kingboard_Kill::find(
+                  array('attackers.factionID' => (int)  $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $lossdata = Kingboard_Kill::find(
+                array('victim.factionID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $killstats = Kingboard_Kill_MapReduce_KillsByShipByFaction::getInstanceByFactionId($request['hid']);
+            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByFaction::getInstanceByFactionId($request['hid']);
+
+            $template = "faction/index.html";
+            $info = Kingboard_Kill::getFactionInfoFromId($request['hid']);
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+        } else {
+            die('no alliance id specified');
+        }
+    }
 
     public function alliance($request)
     {

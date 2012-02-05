@@ -14,7 +14,7 @@ class Kingboard_Search_View extends Kingboard_Base_View
             if(strlen($_POST['searchbox']) <=3)
                 $context['searchbox_length_to_short'] = true;
             else {
-                foreach(Kingboard_Kill_MapReduce_NameSearch::search($_POST['searchbox']) as $result)
+                foreach(Kingboard_Kill_MapReduce_NameSearch::search($_POST['searchbox'], 50) as $result)
                 {
                     if(is_null($results)) $results = array();
 
@@ -40,7 +40,10 @@ class Kingboard_Search_View extends Kingboard_Base_View
     {
         if(!empty($params['pilotname']))
         {
-            $id = Kingboard_Kill::getPilotIdFromName($params['pilotname']);
+            foreach(Kingboard_Kill_MapReduce_NameSearch::search($params['pilotname'], 1) as $result)
+			{
+				$id = $result->value['id'];
+			}
             $this->redirect("/pilot/$id/");
             return;
         }
@@ -51,8 +54,37 @@ class Kingboard_Search_View extends Kingboard_Base_View
     {
         if(!empty($params['corpname']))
         {
-            $id = Kingboard_Kill::getCorporationIdFromName($params['corpname']);
+            foreach(Kingboard_Kill_MapReduce_NameSearch::search($params['corpname'], 1) as $result)
+			{
+				$id = $result->value['id'];
+			}
             $this->redirect("/corporation/$id/");
+            return;
+        }
+        die('unknown character');
+    }
+    public function nameFaction(array $params)
+    {
+        if(!empty($params['factionname']))
+        {
+            foreach(Kingboard_Kill_MapReduce_NameSearch::search($params['factionname'], 1) as $result)
+			{
+				$id = $result->value['id'];
+			}
+            $this->redirect("/faction/$id/");
+            return;
+        }
+        die('unknown character');
+    }
+    public function nameAlliance(array $params)
+    {
+        if(!empty($params['corpname']))
+        {
+            foreach(Kingboard_Kill_MapReduce_NameSearch::search($params['alliancename'], 1) as $result)
+			{
+				$id = $result->value['id'];
+			}
+            $this->redirect("/alliance/$id/");
             return;
         }
         die('unknown character');
