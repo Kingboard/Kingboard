@@ -11,7 +11,7 @@ King23_Classloader::init(APP_PATH . "/model");
 $reg = King23_Registry::getInstance();
 
 // set this to your host
-$reg->baseHost = "kings-of-eve.com";
+$reg->baseHost = "kingboard.karbowiak.dk";
 
 $connection = new Mongo('localhost');
 $reg->mongo = array(
@@ -29,7 +29,8 @@ $pc->http_timeout = 40;
 require_once(APP_PATH . "/lib/King23/external/Twig/lib/Twig/Autoloader.php");
 Twig_Autoloader::register();
 $reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templates"), array(
-    "cache" => APP_PATH . "/templates_c",
+    //"cache" => APP_PATH . "/templates_c",
+	"cache" => false,
     "auto_reload" => true
 ));
 
@@ -49,8 +50,8 @@ $reg->apimailreceiverApiKey = "abcd";
 
 // this can be fetched from a specific ownerID provider
 // which maps host to id for example on hosted boards
-$reg->ownerID = 99000289;
-//$reg->ownerID = false;
+//$reg->ownerID = 99000289;
+$reg->ownerID = false;
 require_once("routes.php");
 MongoCursor::$timeout = -1;
 session_start();
