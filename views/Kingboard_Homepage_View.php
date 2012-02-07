@@ -24,7 +24,6 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 			{
 				$reqarray[] = array('victim.shipTypeID' => $result->typeID);
 			}
-			var_dump($reqarray); die();
 		}
         $killsPerPage = 20;
         $skip = ($currentPage - 1) * $killsPerPage;        
@@ -36,7 +35,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             $this->sendErrorAndQuit('Page does not exist');
         }
         
-		if(isset($reqarray))
+		if(!empty($reqarray))
 		{
 			$data = Kingboard_Kill::find(array('$or' => $reqarray))
 				->sort(array('killTime' => -1))
