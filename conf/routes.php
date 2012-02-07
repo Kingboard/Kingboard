@@ -5,6 +5,7 @@ $router->setBaseHost(King23_Registry::getInstance()->baseHost);
 // home
 $router->addRoute("/", "Kingboard_Homepage_View", "index", array());
 $router->addRoute("/home/page/", "Kingboard_Homepage_View", "index", array('page', 'ajax'));
+$router->addRoute("/home/view/", "Kingboard_Homepage_View", "index", array('view'));
 
 // information
 $router->addRoute("/information", "Kingboard_Information_View", "index");
@@ -13,20 +14,20 @@ $router->addRoute("/information", "Kingboard_Information_View", "index");
 $router->addRoute("/eveinfo/", "Kingboard_EveInfo_View", "eveItem", array('itemid'));
 
 // pilot details
-$router->addRoute("/pilot/", "Kingboard_Homepage_View", "pilot", array('hid'));
-$router->addRoute("/character/", "Kingboard_Homepage_View", "pilot", array('hid'));
+$router->addRoute("/pilot/", "Kingboard_Homepage_View", "pilot", array('hid', "view"));
+$router->addRoute("/character/", "Kingboard_Homepage_View", "pilot", array('hid', "view"));
 $router->addRoute("/pilot/name/", "Kingboard_Search_View", "namePilot", array('pilotname'));
 
 // corporation details
-$router->addRoute("/corporation/", "Kingboard_Homepage_View", "corporation", array("hid"));
+$router->addRoute("/corporation/", "Kingboard_Homepage_View", "corporation", array("hid", "view"));
 $router->addRoute('/corporation/name/', "Kingboard_Search_View", "nameCorporation", array("corpname"));
 
 // alliance details
-$router->addRoute("/alliance/", "Kingboard_Homepage_View", "alliance", array("hid"));
+$router->addRoute("/alliance/", "Kingboard_Homepage_View", "alliance", array("hid", "view"));
 $router->addRoute('/alliance/name/', "Kingboard_Search_View", "nameAlliance", array("alliancename"));
 
 // faction details
-$router->addRoute("/faction/", "Kingboard_Homepage_View", "faction", array("hid"));
+$router->addRoute("/faction/", "Kingboard_Homepage_View", "faction", array("hid", "view"));
 $router->addRoute('/faction/name/', "Kingboard_Search_View", "nameFaction", array("factionname"));
 
 // kill details

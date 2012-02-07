@@ -22,4 +22,14 @@ class Kingboard_EveItem extends King23_MongoObject
     {
         return self::_getInstanceByCriteria(__CLASS__, array('typeID' => (int)$invItemID));
     }
+    public static function getShipIDs($typeName)
+    {
+		return self::_find(__CLASS__, array('$and' => array(
+		array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
+		array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships')
+		)), array(
+			'typeName' => 1,
+			'typeID' => 1
+		));
+    }
 }
