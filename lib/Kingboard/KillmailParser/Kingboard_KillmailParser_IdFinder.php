@@ -49,9 +49,35 @@ class Kingboard_KillmailParser_IdFinder
         throw new Kingboard_KillmailParser_KillmailErrorException('No result for typeName ' . $name . ' in the kills collection');
     }
 
+    /**
+     * Find an itemID in the API
+     *
+     * @throws Kingboard_KillmailParser_KillmailErrorException
+     * @param string $name
+     * @return integer
+     */
+    protected function queryItemToIdApi($name)
+    {
+        try
+        {
+            $request = new Pheal();
+            $result = $request->eveScope->typeName(array('names' => $name))->toArray();
+            
+            if ((int) $result[0]['characterID'] > 0)
+            {
+                return (int) $result[0]['characterID'];
+            }
+			echo $result[0]['characterID'];
+			die();
+        }
+        catch (PhealAPIException $e)
+        {
+        }
+        throw new Kingboard_KillmailParser_KillmailErrorException('No API result for typeName ' . $name);
+    }
 
     /**
-     * Find an ID in the API
+     * Find a character / corp / alliance ID in the API
      *
      * @throws Kingboard_KillmailParser_KillmailErrorException
      * @param string $name
@@ -178,27 +204,10 @@ class Kingboard_KillmailParser_IdFinder
             return (int) $result->typeID;
         }
 
-        // Try to find in kills
-       /*
-        $result  = Kingboard_Kill::findOne(array(
-            'items.typeName' => $name
-        ));
-
-        if(!empty($kill['items']))
-        {
-            foreach ($kill['items'] as $item)
-            {
-                if ($item['typeName'] == $name)
-                {
-                    return (int) $item['typeID'];
-                }
-            }
-        }*/
-
         // Not found, try the api
         try
         {
-            return (int) $this->queryNameToIdApi($name);
+            return (int) $this->queryItemToIdApi($name);
         }
         catch(Kingboard_KillmailParser_KillmailErrorException $e)
         {

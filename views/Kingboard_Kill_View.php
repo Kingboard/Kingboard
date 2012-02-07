@@ -5,7 +5,6 @@ class Kingboard_Kill_View extends Kingboard_Base_View
     {
         $context = array();
         $context['killdata'] = Kingboard_Kill::getInstanceByIdHash($request['killID']);
-
         foreach($context['killdata']['attackers'] as $attacker)
         {
             if(!isset($stats[$attacker['allianceName']]))

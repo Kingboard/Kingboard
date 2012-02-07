@@ -24,10 +24,19 @@ class Kingboard_EveItem extends King23_MongoObject
     }
     public static function getShipIDs($typeName)
     {
-		return self::_find(__CLASS__, array('$and' => array(
-		array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
-		array('$or' => array(array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'), array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'), array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'), array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')))
-		)), array(
+		return self::_find(__CLASS__, array('$and' =>
+			array(
+				array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
+				array('$or' =>
+					array(
+						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+						array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
+						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
+					)
+				)
+			)
+		), array(
 			'typeName' => 1,
 			'typeID' => 1
 		));

@@ -52,6 +52,8 @@ $router->addRoute("/autocomplete/region", "Kingboard_AutoCompleter_View", 'regio
 $router->addRoute("/battle/new", "Kingboard_BattleEditor_View", "create");
 $router->addRoute("/battle/", "Kingboard_Battle_View", "show", array("id"));
 
+// Post
+$router->addRoute("/post/", "Kingboard_Post_View", "post");
 
 // search
 $router->addRoute("/search/", "Kingboard_Search_View", "index");
