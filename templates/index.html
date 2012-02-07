@@ -56,7 +56,7 @@
     <table class="condensed-table">
         <tr>
             {% for group in stats %}
-            <th>{{ group._id }}</th><td style="text-align: right;">{{ group.value.total }}</td>
+            <th><a href="/home/view/{{group._id}}">{{ group._id }}</a></th><td style="text-align: right;">{{ group.value.total }}</td>
             {% if loop.index is divisibleby(4) and not loop.last %}
                 </tr><tr>
             {% endif %}

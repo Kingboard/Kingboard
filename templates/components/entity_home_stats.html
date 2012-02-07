@@ -10,7 +10,7 @@
         <table class="condensed-table">
             <tr>
                 {% for group, value in killstats.value.group %}
-                <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
+                <th><a href="{{ group }}">{{ group }}</a></th><td style="text-align: right;">{{ value }}</td>
                 {% if loop.index is divisibleby(4) and not loop.last %}
                     </tr><tr>
                 {% endif %}
@@ -24,7 +24,7 @@
         <table class="condensed-table">
             <tr>
                 {% for group, value in lossstats.value.group %}
-                <th>{{ group }}</th><td style="text-align: right;">{{ value }}</td>
+                <th><a href="{{ group }}">{{ group }}</a></th><td style="text-align: right;">{{ value }}</td>
                 {% if loop.index is divisibleby(4) and not loop.last %}
                     </tr><tr>
                 {% endif %}
