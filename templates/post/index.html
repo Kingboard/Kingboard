@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1>Post killmail</h1>
+{% endblock %}
+
+{% block content %}
+Some simple posting rules, not adhering to these rules could get you banned:
+<ul>
+<li>Don't modify killmails.  If a killmail doesn't post <a href="">enter your API</a> or go to <a href="">support.</a></li>
+<li>If you're getting an error when you post the killmail, <a href="">enter your API</a>.  The API will always work.</li>
+<li>Do not post killmails from Singularity</li>
+<li>Do not post fake killmails, even as a joke.  Unless you like getting banned.</li>
+</ul>
+Paste the killmail from your EVEMail inbox into the box below. Make sure you post the ENTIRE mail.
+<br><br>
+Remember to post your losses as well.
+
+<form name="post" method="post" action="/post/">
+    <fieldset>
+        <div class="clearfix">
+            <div class="textarea">
+                <textarea id="killmail" name="killmail" type="text" cols="50" rows="24" placeholder="Killmail"></textarea>
+            </div>
+        </div>
+        <div class="actions">
+            <input type="submit" value="Post" class="btn default primary">
+        </div>
+    </fieldset>
+</form>
+
+{% endblock %}
