@@ -29,5 +29,8 @@ class Kingboard_Base_View extends King23_TwigView
 
         // make sure all views have the XSRF Token available
         $this->_context['XSRF'] = Kingboard_Form::getXSRFToken();
+
+        // Global Kingboard information
+        $this->_context['Kingboard']['Version'] = Kingboard::Version;
     }
 }
