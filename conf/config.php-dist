@@ -54,6 +54,16 @@ $reg->ownerID = false;
 // if ownerID is set, this needs to be set to alliance/corporation/pilot
 $reg->ownerType = "alliance";
 
+// set this to something meaningfull to replace the word "Kingboard" in the top menu
+// $reg->ownerName = "Kingboard";
+
+// uncomment and edit to use jabber as authentication engine opposed to own registration process
+//$reg->auth = "Kingboard_AuthJabber_View";
+//$reg->authJabberHost = "my.jabberserver.net";
+//$reg->authJabberPort = 5222;
+//$reg->authJabberDomain = "jabberserver.net";
+
+
 require_once("routes.php");
 MongoCursor::$timeout = -1;
 

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Kingboard</h1>
+{% if login_failed %}
+<div class="alert-message error">Login/Password combination wrong!</div>
+{% else %}
+<div class="alert-message info">Please login to use this functionality!</div>
+{% endif %}
+
+<form name="login" method="post" action="/login">
+    <fieldset>
+        <legend>Login</legend>
+        <div class="clearfix">
+            <label for="login">jabber login</label>
+            <div class="input">
+                <input id="login" name="login" type="text" placeholder="email/login">
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="passwd">password</label>
+            <div class="input">
+                <input id="passwd" name="passwd" type="password" placeholder="password">
+            </div>
+        </div>
+        <div class="actions">
+            <input type="submit" value="Login" class="btn default primary">
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

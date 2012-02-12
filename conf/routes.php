@@ -33,13 +33,21 @@ $router->addRoute('/faction/name/', "Kingboard_Search_View", "nameFaction", arra
 // kill details
 $router->addRoute("/kill/", "Kingboard_Kill_View", 'index', array('killID'));
 
+
+
+// authentication related routes
+if(!is_null($reg->auth) && $reg->auth)
+    $auth = $reg->auth;
+else
+    $auth = "Kingboard_Auth_View";
+
 // registration
-$router->addRoute("/user/registration", "Kingboard_Auth_View", 'registerForm');
-$router->addRoute("/user/activate/", "Kingboard_Auth_View", 'activateUser',array('activationkey'));
+$router->addRoute("/user/registration", $auth, 'registerForm');
+$router->addRoute("/user/activate/", $auth, 'activateUser',array('activationkey'));
 
 // authentication
-$router->addRoute("/login", "Kingboard_Auth_View", "login");
-$router->addRoute("/logout", "Kingboard_Auth_View", "logout");
+$router->addRoute("/login", $auth, "login");
+$router->addRoute("/logout", $auth, "logout");
 
 // user specific routes
 $router->addRoute("/account/", "Kingboard_User_View", "myKingboard");
