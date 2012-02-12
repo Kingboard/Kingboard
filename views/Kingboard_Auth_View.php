@@ -77,7 +77,6 @@ class Kingboard_Auth_View extends Kingboard_Base_View
                     $user->status = Kingboard_User::STATUS_NEW;
                     $user->validationCode = $validationCode;
                     $user->save();
-
                     $body = King23_Registry::getInstance()->sith->cachedGet('mails/verify_email.html')->render(array('username' => $_POST['login'], 'hostname' => $_SERVER['SERVER_NAME'], 'activationkey' => $validationCode), King23_Registry::getInstance()->sith);
                     mail($_POST['login'], "Kingboard Activation", $body);
                     $this->redirect('/');

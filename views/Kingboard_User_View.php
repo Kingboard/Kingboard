@@ -27,7 +27,8 @@ class Kingboard_User_View extends Kingboard_Base_View
                 if(!($accessmask & 272))
                     throw new PhealAPIException(0, "fake exception, key invalid", "");
 
-/*                // fetch character list
+		/*
+                // fetch character list
                 $characters = $pheal->accountScope->Characters()->characters;
 
                 // check if we can fetch contact list
@@ -35,7 +36,8 @@ class Kingboard_User_View extends Kingboard_Base_View
 
                 // check if we can fetch Kills
                 $pheal->charScope->KillLog();
-*/
+		*/
+
                 if(!isset($user['keys']))
                     $keys = array();
                 else
@@ -46,7 +48,7 @@ class Kingboard_User_View extends Kingboard_Base_View
                     $activationkey->delete();
 
                 $activationkey = Kingboard_ApiActivationToken::create($user->_id, $_POST['apiuserid']);
-                
+
                 $keys[$_POST['apiuserid']] = array(
                     'apiuserid' => $_POST['apiuserid'],
                     'apikey' => $_POST['apikey'],
@@ -60,8 +62,8 @@ class Kingboard_User_View extends Kingboard_Base_View
 
             } catch (PhealApiException $e) {
                 $context = $_POST;
-                //$context['error'] = $e->getMessage();
-                $context['error'] = "the key could not be validated as a valid apikey";
+                $context['error'] = $e->getMessage();
+                //$context['error'] = "the key could not be validated as a valid apikey";
             }
         }
         elseif(isset($_POST['XSRF']))
@@ -89,7 +91,6 @@ class Kingboard_User_View extends Kingboard_Base_View
                 foreach($chars as $char)
                     $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'];
             } catch (PhealAPIException $e) {
-                var_dump($key);     
                 print_r($e);
             }
         }
