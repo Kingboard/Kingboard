@@ -2,7 +2,7 @@
 class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
 {
     protected $_className = __class__;
-    
+
     public static function getByKillId($killid)
     {
         return self::_getInstanceByCriteria(__class__, array("killID" => $killid));    
@@ -171,7 +171,7 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
         }
         return null;
     }
-	
+
     /**
      * Fetches Information about the alliance identified by id
      * @static
@@ -236,113 +236,113 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
 
     public static function getPilotIdFromName($name)
     {
-		foreach(Kingboard_Kill_MapReduce_NameSearch::search($name, 1) as $result)
-		{
-			$id = $result->value['id'];
-		}
-		if($id > 0)
-		{
-			return $id;
-		}
-		else
-		{
-			// find a random kill with characterID $id
-			$kill = self::_findOne(__CLASS__, array('$or' => array(
-				array('victim.characterName' =>  $name),
-				array('attackers.characterName' => $name)
-			)), array(
-				'victim.characterName' => 1,
-				'attackers.characterName' => 1,
-				'victim.characterID' => 1,
-				'attackers.characterID' => 1
-			));
+        foreach(Kingboard_Kill_MapReduce_NameSearch::search($name, 1) as $result)
+        {
+            $id = $result->value['id'];
+        }
+        if($id > 0)
+        {
+            return $id;
+        }
+        else
+        {
+            // find a random kill with characterID $id
+            $kill = self::_findOne(__CLASS__, array('$or' => array(
+                array('victim.characterName' =>  $name),
+                array('attackers.characterName' => $name)
+            )), array(
+                'victim.characterName' => 1,
+                'attackers.characterName' => 1,
+                'victim.characterID' => 1,
+                'attackers.characterID' => 1
+            ));
 
-			if($kill['victim']['characterName'] == $name)
-				return $kill['victim']['characterID'];
-			else
-			{
-				foreach($kill['attackers'] as $attacker)
-				{
-					if($attacker['characterName'] == $name)
-						return $attacker['characterID'];
-				}
-			}
-			return false;
-		}
+            if($kill['victim']['characterName'] == $name)
+                return $kill['victim']['characterID'];
+            else
+            {
+                foreach($kill['attackers'] as $attacker)
+                {
+                    if($attacker['characterName'] == $name)
+                        return $attacker['characterID'];
+                }
+            }
+            return false;
+        }
     }
 
     public static function getCorporationIdFromName($name)
     {
-		foreach(Kingboard_Kill_MapReduce_NameSearch::search($name, 1) as $result)
-		{
-			$id = $result->value['id'];
-		}
-		if($id > 0)
-		{
-			return $id;
-		}
-		else
-		{
-			// find a random kill with characterID $id
-			$kill = self::_findOne(__CLASS__, array('$or' => array(
-				array('victim.corporationName' =>  $name),
-				array('attackers.corporationName' => $name)
-			)), array(
-				'victim.corporationName' => 1,
-				'attackers.corporationName' => 1,
-				'victim.corporationID' => 1,
-				'attackers.corporationID' => 1
-			));
+        foreach(Kingboard_Kill_MapReduce_NameSearch::search($name, 1) as $result)
+        {
+            $id = $result->value['id'];
+        }
+        if($id > 0)
+        {
+            return $id;
+        }
+        else
+        {
+            // find a random kill with characterID $id
+            $kill = self::_findOne(__CLASS__, array('$or' => array(
+                array('victim.corporationName' =>  $name),
+                array('attackers.corporationName' => $name)
+            )), array(
+                'victim.corporationName' => 1,
+                'attackers.corporationName' => 1,
+                'victim.corporationID' => 1,
+                'attackers.corporationID' => 1
+            ));
 
-			if($kill['victim']['corporationName'] == $name)
-				return $kill['victim']['corporationID'];
-			else
-			{
-				foreach($kill['attackers'] as $attacker)
-				{
-					if($attacker['corporationName'] == $name)
-						return $attacker['corporationID'];
-				}
-			}
-			return false;
-		}
+            if($kill['victim']['corporationName'] == $name)
+                return $kill['victim']['corporationID'];
+            else
+            {
+                foreach($kill['attackers'] as $attacker)
+                {
+                    if($attacker['corporationName'] == $name)
+                        return $attacker['corporationID'];
+                }
+            }
+            return false;
+        }
     }
 
     public static function getFactionIdFromName($name)
     {
-		foreach(Kingboard_Kill_MapReduce_NameSearch::search($name, 1) as $result)
-		{
-			$id = $result->value['id'];
-		}
-		if($id > 0)
-		{
-			return $id;
-		}
-		else
-		{
-			// find a random kill with characterID $id
-			$kill = self::_findOne(__CLASS__, array('$or' => array(
-				array('victim.factionName' =>  $name),
-				array('attackers.factionName' => $name)
-			)), array(
-				'victim.factionName' => 1,
-				'attackers.factionName' => 1,
-				'victim.factionID' => 1,
-				'attackers.factionID' => 1
-			));
+        foreach(Kingboard_Kill_MapReduce_NameSearch::search($name, 1) as $result)
+        {
+            $id = $result->value['id'];
+        }
+        if($id > 0)
+        {
+            return $id;
+        }
+        else
+        {
+            // find a random kill with characterID $id
+            $kill = self::_findOne(__CLASS__, array('$or' => array(
+                array('victim.factionName' =>  $name),
+                array('attackers.factionName' => $name)
+            )), array(
+                'victim.factionName' => 1,
+                'attackers.factionName' => 1,
+                'victim.factionID' => 1,
+                'attackers.factionID' => 1
+            ));
 
-			if($kill['victim']['factionName'] == $name)
-				return $kill['victim']['factionID'];
-			else
-			{
-				foreach($kill['attackers'] as $attacker)
-				{
-					if($attacker['factionName'] == $name)
-						return $attacker['factionID'];
-				}
-			}
-			return false;
-		}
+            if($kill['victim']['factionName'] == $name)
+                return $kill['victim']['factionID'];
+            else
+            {
+                foreach($kill['attackers'] as $attacker)
+                {
+                    if($attacker['factionName'] == $name)
+                        return $attacker['factionID'];
+                }
+            }
+            return false;
+        }
     }
     public static function count()
     {
