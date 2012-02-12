@@ -14,6 +14,7 @@ class Kingboard_Base_View extends King23_TwigView
         if($loginrequired && !Kingboard_Auth::isLoggedIn())
             $this->redirect("/login");
         parent::__construct();
+
         $reg = King23_Registry::getInstance();
         $this->_context['images'] = $reg->imagePaths;
         $this->_context['baseHost'] = $reg->baseHost;
@@ -31,6 +32,17 @@ class Kingboard_Base_View extends King23_TwigView
         $this->_context['XSRF'] = Kingboard_Form::getXSRFToken();
 
         // Global Kingboard information
+
+        // pass version information
         $this->_context['Kingboard']['Version'] = Kingboard::Version;
+
+        // ownerName, use Kingboard if not set
+        if(isset($reg->ownerName) && !is_null($reg->ownerName) && $reg->ownerName)
+            $this->_context['Kingboard']['Name'] = $reg->ownerName;
+        else
+            $this->_context['Kingboard']['Name'] = Kingboard::Name;
+
+        // release name
+        $this->_context['Kingboard']['ReleaseName'] = Kingboard::ReleaseName;
     }
 }

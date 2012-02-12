@@ -14,6 +14,7 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap-tabs.js"></script>
   <script type="text/javascript" src="/js/bootstrap-twipsy.js"></script>
+  <script type="text/javascript" src="/js/bootstrap-dropdown.js"></script>
   <script type="text/javascript" src="/js/common.js"></script>
   {% block script %}
   {% endblock %}
@@ -22,13 +23,26 @@
 <div class="topbar">
     <div class="topbar-inner">
     <div class="container">
-        <a class="brand" href="/">Kingboard</a>
+        <a class="brand" href="/">{{ Kingboard.Name }}</a>
         <ul class="nav">
             <li><a href="/">Start</a></li>
-            <li><a href="/account/">My Kingboard</a></li>
-            <li><a href="/search/">Search</a></li>
-            <li><a href="/post/">Post Mail</a></li>
+            <li class="dropdown" id="mykingboard">
+                <a href="#mykingboard" class="dropdown-toggle" data-toggle="dropdown">My Kingboard<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/account/">My Account</a></li>
+                    <li><a href="/post/">Post Mail</a></li>
+                    <li><a href="/account/#battle-editor">Battle Editor</a></li>
+                    {% if user %}
+                    <li class="divider"></li>
+                    <li><a href="/logout">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </li>
         </ul>
+        <form class="navbar-search pull-left" action="/search/" method="POST">
+          <input type="text" class="search-query" placeholder="Search" name="searchbox">
+        </form>
+
         <ul class="nav secondary-nav">
             <li><a href="/information/">About</a></li>
             {% if user %}
@@ -50,7 +64,7 @@
 </div>
 <div class="container" id="footer">
     <div class="footer">
-        This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard {{ Kingboard.Version }}</a>.
+        This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard</a> {{ Kingboard.Version }} ({{ Kingboard.ReleaseName }}).
     </div>
 </div>
 </body>
