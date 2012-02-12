@@ -59,101 +59,103 @@
 {% endblock %}
 
 {% block content %}
-<ul class="tabs">
-    <li class="active"><a href="#involved-stats">Involved Stats</a></li>
-	<li><a href="#involved-pilots">Involved Pilots</a></li>
-	<li><a href="#victim-assets">Victim Assets</a></li>
-	<li><a href="#comments">Comments</a></li>
-</ul>
-<div class="tab-content">
-	<div id="involved-stats" class="tab-pane active">
+<div class="tabbable">
+    <ul class="tabs">
+        <li class="active"><a data-toggle="tab" href="#involved-stats">Involved Stats</a></li>
+        <li><a data-toggle="tab" href="#involved-pilots">Involved Pilots</a></li>
+        <li><a data-toggle="tab" href="#victim-assets">Victim Assets</a></li>
+        <li><a data-toggle="tab" href="#comments">Comments</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="involved-stats" class="tab-pane active">
 
-        <table class="condensed-table zebra-striped">
-		{% for alliance, corporations, faction in stats %}
-            <thead>
-            <tr class="titles">
-                <th>{% if alliance %}{{ alliance }}{% elseif faction %}{{ faction }}{% else %}"Corporation"{% endif %}</th>
-                <th>Pilots</th>
-            </tr>
-            </thead>
-            {% for corporation, value in corporations %}
-                <tr><td class="corporation">{{ corporation }}</td><td class="count">{{ value }}</td></tr>
-            {% endfor %}
-        {% endfor %}
-        </table>
-	</div>
-	<div id="involved-pilots" class="tab-pane">
-        <table class="condensed-table zebra-striped">
-            <thead>
-            <tr class="titles">
-                <th>&nbsp;</th><th>Attacker</th><th>Equipment</th><th>Damage</th>
-            </tr>
-            </thead>
-            {% for attacker in killdata.attackers %}
-            <tr class="attacker">
-                <td class="icons">
-                    <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'>
-                        <img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32">
-                    </a>
-                    <a href="/pilot/{{attacker.characterID}}" rel='twipsy' title='{{attacker.characterName}}'>
-                        <img src="{{ images.characters }}{{attacker.characterID}}_32.jpg" width="32" height="32">
-                    </a>
-                    <a href="/corporation/{{attacker.corporationID}}" rel='twipsy' title='{{attacker.corporationName}}'>
-                        <img src="{{ images.corporations }}{{attacker.corporationID}}_32.png" width="32" height="32">
-                    </a>
-					{% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %}
-                    <a href="/faction/{{killdata.victim.factionID}}" rel='twipsy' title='{{attacker.factionName}}'>
-                        <img src="{{ images.alliances }}{{attacker.factionID}}_32.png"  width="32" height="32">
-                    </a>
-					{% endif %}
-					{% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %}
-                    <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'>
-                        <img src="{{ images.alliances }}{{attacker.allianceID}}_32.png"  width="32" height="32">
-                    </a>
-					{% endif %}
-                
-                </td>
-                <td class="pilot">
-                    <a href="/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
-                    <a href="/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
-                    {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %} / <a href="/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
-                    {% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %} / <a href="/faction/{{attacker.factionID}}/">{{ attacker.factionName }}</a>{% endif %}
-                </td>
-                <td class="equipment">{{ attacker.shipType }} / {{ attacker.weaponType }}</td>
-                <td class="damage">{{ attacker.damageDone }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-	</div>
-	<div id="victim-assets" class="tab-pane">
-        <table class="condensed-table zebra-striped">
-        <thead><tr class="titles">
-            <th>&nbsp;</th>
-            <th>Item Type</th>
-            <th>Dropped</th>
-            <th>Destroyed</th>
-        </tr></thead>
-        {% for item in killdata.items %}
-        <tr>
-            <td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="18" height="18"></a></td>
-            <td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
-            <td class="dropped">{{ item.qtyDropped }}</td>
-            <td class="destroyed">{{ item.qtyDestroyed }}</td>
-        </tr>
-            {% if item.items %}
-                {% for containeritem in item.items %}
-                    <tr>
-                        <td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></td>
-                        <td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
-                        <td class="dropped">{{ containeritem.qtyDropped }}</td>
-                        <td class="destroyed">{{ containeritem.qtyDestroyed }}</td>
-                    </tr>
+            <table class="condensed-table zebra-striped">
+            {% for alliance, corporations, faction in stats %}
+                <thead>
+                <tr class="titles">
+                    <th>{% if alliance %}{{ alliance }}{% elseif faction %}{{ faction }}{% else %}"Corporation"{% endif %}</th>
+                    <th>Pilots</th>
+                </tr>
+                </thead>
+                {% for corporation, value in corporations %}
+                    <tr><td class="corporation">{{ corporation }}</td><td class="count">{{ value }}</td></tr>
                 {% endfor %}
-            {% endif %}
-        {% endfor %}
-        </table>
-	</div>
-	<div id="comments" class="tab-pane">
-	</div>
+            {% endfor %}
+            </table>
+        </div>
+        <div id="involved-pilots" class="tab-pane">
+            <table class="condensed-table zebra-striped">
+                <thead>
+                <tr class="titles">
+                    <th>&nbsp;</th><th>Attacker</th><th>Equipment</th><th>Damage</th>
+                </tr>
+                </thead>
+                {% for attacker in killdata.attackers %}
+                <tr class="attacker">
+                    <td class="icons">
+                        <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'>
+                            <img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32">
+                        </a>
+                        <a href="/pilot/{{attacker.characterID}}" rel='twipsy' title='{{attacker.characterName}}'>
+                            <img src="{{ images.characters }}{{attacker.characterID}}_32.jpg" width="32" height="32">
+                        </a>
+                        <a href="/corporation/{{attacker.corporationID}}" rel='twipsy' title='{{attacker.corporationName}}'>
+                            <img src="{{ images.corporations }}{{attacker.corporationID}}_32.png" width="32" height="32">
+                        </a>
+                        {% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %}
+                        <a href="/faction/{{killdata.victim.factionID}}" rel='twipsy' title='{{attacker.factionName}}'>
+                            <img src="{{ images.alliances }}{{attacker.factionID}}_32.png"  width="32" height="32">
+                        </a>
+                        {% endif %}
+                        {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %}
+                        <a href="/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'>
+                            <img src="{{ images.alliances }}{{attacker.allianceID}}_32.png"  width="32" height="32">
+                        </a>
+                        {% endif %}
+
+                    </td>
+                    <td class="pilot">
+                        <a href="/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
+                        <a href="/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
+                        {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %} / <a href="/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
+                        {% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %} / <a href="/faction/{{attacker.factionID}}/">{{ attacker.factionName }}</a>{% endif %}
+                    </td>
+                    <td class="equipment">{{ attacker.shipType }} / {{ attacker.weaponType }}</td>
+                    <td class="damage">{{ attacker.damageDone }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="victim-assets" class="tab-pane">
+            <table class="condensed-table zebra-striped">
+            <thead><tr class="titles">
+                <th>&nbsp;</th>
+                <th>Item Type</th>
+                <th>Dropped</th>
+                <th>Destroyed</th>
+            </tr></thead>
+            {% for item in killdata.items %}
+            <tr>
+                <td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="18" height="18"></a></td>
+                <td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
+                <td class="dropped">{{ item.qtyDropped }}</td>
+                <td class="destroyed">{{ item.qtyDestroyed }}</td>
+            </tr>
+                {% if item.items %}
+                    {% for containeritem in item.items %}
+                        <tr>
+                            <td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></td>
+                            <td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
+                            <td class="dropped">{{ containeritem.qtyDropped }}</td>
+                            <td class="destroyed">{{ containeritem.qtyDestroyed }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            </table>
+        </div>
+        <div id="comments" class="tab-pane">
+        </div>
+    </div>
 </div>
 {% endblock %}

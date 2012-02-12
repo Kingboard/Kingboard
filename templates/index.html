@@ -46,67 +46,70 @@
 {% block header %}
 {% block stats %}
 <h1>Global Statistics</h1>
-<ul class="tabs">
-    <li class="active"><a href="#numbers">Numbers</a></li>
-    <li><a href="#chart">Chart</a></li>
-</ul>
-<div class="tab-content">
-<div id="numbers" class="active tab-pane">
-    <h2>killed ships by type</h2>
-    <table class="condensed-table">
-        <tr>
-            {% for group in stats %}
-            <th><a href="/home/view/{{group._id}}">{{ group._id }}</a></th><td style="text-align: right;">{{ group.value.total }}</td>
-            {% if loop.index is divisibleby(4) and not loop.last %}
-                </tr><tr>
-            {% endif %}
-            {% endfor %}
-        </tr>
-        <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ count }}</td></tr>
-    </table>
-</div>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#numbers">Numbers</a></li>
+        <li><a data-toggle="tab" href="#chart">Chart</a></li>
+    </ul>
+    <div class="tab-content">
+    <div id="numbers" class="tab-pane active">
+        <h2>killed ships by type</h2>
+        <table class="condensed-table">
+            <tr>
+                {% for group in stats %}
+                <th><a href="/home/view/{{group._id}}">{{ group._id }}</a></th><td style="text-align: right;">{{ group.value.total }}</td>
+                {% if loop.index is divisibleby(4) and not loop.last %}
+                    </tr><tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ count }}</td></tr>
+        </table>
+    </div>
     <div class="tab-pane" id="chart">
-    <h2>killed ships by type</h2>
-        <div id="chart_div"></div>
+        <h2>killed ships by type</h2>
+            <div id="chart_div"></div>
+        </div>
     </div>
 </div>
-
     {% endblock %}
 {% endblock %}
 {% block content %}
 
 <h1>Latest information</h1>
-<ul class="tabs">
-    <li class="active"><a href="#kills">Kills/Losses</a></li>
-    <li><a href="#battlereports">Battlereports</a></li>
-</ul>
-<div class="tab-content">
-<div id="kills" class="active tab-pane">
-    <h2>Kills/Losses</h2>
-    <div id="home_killspage">
-        {% include "components/kill_list.html" %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#kills">Kills/Losses</a></li>
+        <li><a data-toggle="tab" href="#battlereports">Battlereports</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="kills" class="active tab-pane">
+            <h2>Kills/Losses</h2>
+            <div id="home_killspage">
+                {% include "components/kill_list.html" %}
+            </div>
+        </div>
+        <div id="battlereports" class="tab-pane">
+            <h2>Battlereports</h2>
+            <table class="condensed-table zebra-striped">
+                <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+            {% for report in reports %}
+                <tr>
+                    <td>{{ report.system }}</td>
+                    <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
+                    <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
+                    <td><a href="/battle/{{ report._id }}">details</a></td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
     </div>
-</div>
-<div id="battlereports" class="tab-pane">
-    <h2>Battlereports</h2>
-    <table class="condensed-table zebra-striped">
-        <thead>
-        <tr>
-            <th>System</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>&nbsp;</th>
-        </tr>
-        </thead>
-    {% for report in reports %}
-        <tr>
-            <td>{{ report.system }}</td>
-            <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
-            <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
-            <td><a href="/battle/{{ report._id }}">details</a></td>
-        </tr>
-    {% endfor %}
-    </table>
-</div>
 </div>
 {% endblock %}

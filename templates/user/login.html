@@ -3,9 +3,9 @@
 {% block content %}
 <h1>My Kingboard</h1>
 {% if login_failed %}
-<div class="alert-message error">Login/Password combination wrong!</div>
+<div class="alert alert-error">Login/Password combination wrong!</div>
 {% else %}
-<div class="alert-message info">Please login to use this functionality!</div>
+<div class="alert alert-info">Please login to use this functionality!</div>
 {% endif %}
 
 <form name="login" method="post" action="/login">

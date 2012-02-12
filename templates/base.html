@@ -12,16 +12,14 @@
   {% endblock %}
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap-tabs.js"></script>
-  <script type="text/javascript" src="/js/bootstrap-twipsy.js"></script>
-  <script type="text/javascript" src="/js/bootstrap-dropdown.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/common.js"></script>
   {% block script %}
   {% endblock %}
 </head>
-<body style="padding-top: 40px;">
-<div class="topbar">
-    <div class="topbar-inner">
+<body>
+<div class="navbar">
+    <div class="navbar-inner">
     <div class="container">
         <a class="brand" href="/">{{ Kingboard.Name }}</a>
         <ul class="nav">
@@ -55,7 +53,7 @@
     </div>
 </div>
 <div class="container" id="main">
-<div class="span16 top-banner">
+<div class="span12 top-banner">
     &nbsp;
 </div>
 {% block header %}

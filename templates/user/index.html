@@ -2,103 +2,105 @@
 
 {% block content %}
 <h1>My Kingboard</h1>
-<ul class="tabs">
-    <li class="active   "><a href="#api-management">API / Character Management</a></li>
-    <li><a href="#battle-editor">Battle Editor</a></li>
-</ul>
-<div class="tab-content">
-	<div id="api-management" class="tab-pane active">
-    <h2>Active API Keys</h2>
-    {% if active_keys %}
-        {% for key in active_keys %}
-            <p>{{ key.apiuserid }}</p>
-        {% endfor %}
-    {% else %}
-        <p>you currently do not have any active keys</p>
-    {% endif %}
-
-    {% if pending_keys %}
-        <h2>Keys pending activation</h2>
-        <p>To activate a key from this list, you have to send an EVEMail to {{ apimailreceiver }} with the subject being
-           the activation key. Please keep in mind that the activation key is case sensitive!</p>
-        <table class="condensed-table zebra-striped">
-            <thead>
-            <tr><th>EVE Userid</th><th>EVE Apikey</th><th>Activation Key</th></tr>
-            </thead>
-            {% for key in pending_keys %}
-                <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>{{ key.activationkey }}</td></tr>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#api-management">API / Character Management</a></li>
+        <li><a data-toggle="tab" href="#battle-editor">Battle Editor</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="api-management" class="tab-pane active">
+        <h2>Active API Keys</h2>
+        {% if active_keys %}
+            {% for key in active_keys %}
+                <p>{{ key.apiuserid }}</p>
             {% endfor %}
-        </table>
-    {% endif %}
-    <h2>Add API Key</h2>
-    <p>The API Key added here can be used for pulling standings (to create battle reports) and
-    for pulling killmails. For both cases CCP currently requires a full API key to work, so currently
-    only full API keys are accepted. <br />For the purpose of validating the Key you enter, a request
-    to your account/AccountStatus API page will be made, however none of the data pulled from this request
-    will be saved.</p>
-    {% if error %}
-        <div class="alert-message error"><p>{{ error }}</p></div>
-    {% endif %}
-        <form action="/account/" method="post">
-            <fieldset>
-                <legend>Key Data</legend>
-                <input type="hidden" value="{{XSRF}}" name="XSRF">
-            <div class="clearfix">
-                <label for="apiuserid">EVE Userid</label>
-                <div class="input">
-                    <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid">
-                </div>
-            </div>
-            <div class="clearfix">
-                <label for="apikey">EVE API Key</label>
-                <div class="input">
-                    <input type="text" value="{{ apikey }}" name="apikey" id="apikey">
-                </div>
-            </div>
-            <div class="actions">
-                <input class="btn primary" type="submit" value="Add">
-            </div>
-            </fieldset>
-        </form>
-	</div>
-	<div id="battle-editor">
-        <fieldset>
-            <legend>Add New Battle</legend>
-            <form action="/battle/new" method="post">
-                <input type="hidden" name="XSRF" value="{{ XSRF }}" />
-                <div class="clearfix">
-                    <label for="startdate">Start Date/Time</label>
-                    <div class="input">
-                        <input type="text" name="startdate" id="startdate" />
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <label for="enddate">End Date/Time</label>
-                    <div class="input">
-                        <input type="text" name="enddate" id="enddate" />
+        {% else %}
+            <p>you currently do not have any active keys</p>
+        {% endif %}
 
+        {% if pending_keys %}
+            <h2>Keys pending activation</h2>
+            <p>To activate a key from this list, you have to send an EVEMail to {{ apimailreceiver }} with the subject being
+               the activation key. Please keep in mind that the activation key is case sensitive!</p>
+            <table class="condensed-table zebra-striped">
+                <thead>
+                <tr><th>EVE Userid</th><th>EVE Apikey</th><th>Activation Key</th></tr>
+                </thead>
+                {% for key in pending_keys %}
+                    <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>{{ key.activationkey }}</td></tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        <h2>Add API Key</h2>
+        <p>The API Key added here can be used for pulling standings (to create battle reports) and
+        for pulling killmails. For both cases CCP currently requires a full API key to work, so currently
+        only full API keys are accepted. <br />For the purpose of validating the Key you enter, a request
+        to your account/AccountStatus API page will be made, however none of the data pulled from this request
+        will be saved.</p>
+        {% if error %}
+            <div class="alert alert-error"><p>{{ error }}</p></div>
+        {% endif %}
+            <form action="/account/" method="post">
+                <fieldset>
+                    <legend>Key Data</legend>
+                    <input type="hidden" value="{{XSRF}}" name="XSRF">
+                <div class="clearfix">
+                    <label for="apiuserid">EVE Userid</label>
+                    <div class="input">
+                        <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid">
                     </div>
                 </div>
                 <div class="clearfix">
-                    <label for="system">System</label>
+                    <label for="apikey">EVE API Key</label>
                     <div class="input">
-                        <input type="text" name="system" id="system" />
+                        <input type="text" value="{{ apikey }}" name="apikey" id="apikey">
                     </div>
                 </div>
-                <div class="clearfix">
-                    <label for="character">Pull standings from</label>
-                    <div class="input">
-                        <select name="character" id="character">
-                            {% for id, name in active_characters %}
-                                <option label="{{name}}" value="{{id}}"/>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="actions">
+                    <input class="btn primary" type="submit" value="Add">
                 </div>
-                <div class="actions"><input type="submit" name="submit" value="Add" class="btn primary"/></div>
+                </fieldset>
             </form>
-        </fieldset>
-	</div>
+        </div>
+        <div id="battle-editor">
+            <fieldset>
+                <legend>Add New Battle</legend>
+                <form action="/battle/new" method="post">
+                    <input type="hidden" name="XSRF" value="{{ XSRF }}" />
+                    <div class="clearfix">
+                        <label for="startdate">Start Date/Time</label>
+                        <div class="input">
+                            <input type="text" name="startdate" id="startdate" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="enddate">End Date/Time</label>
+                        <div class="input">
+                            <input type="text" name="enddate" id="enddate" />
+
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="system">System</label>
+                        <div class="input">
+                            <input type="text" name="system" id="system" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <label for="character">Pull standings from</label>
+                        <div class="input">
+                            <select name="character" id="character">
+                                {% for id, name in active_characters %}
+                                    <option label="{{name}}" value="{{id}}"/>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="actions"><input type="submit" name="submit" value="Add" class="btn primary"/></div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

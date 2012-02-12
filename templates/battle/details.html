@@ -4,43 +4,36 @@
 <h1>Battle for {{ battleSetting.system }}</h1>
 <p><b>Start</b>: {{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }}<br/>
 <b>End</b>: {{ battleSetting.enddate.sec|date("Y-m-d H:i:s") }}</p>
-<ul class="tabs">
-	<li class="active"><a href="#kills">Kills</a></li>
-	<li><a href="#losses">Losses</a></li>
-    <li><a href="#timeline">Timeline</a></li>
-    <li><a href="#fleetcompositions">Fleetcompositions</a></li>
-</ul>
-<div class="tab-content">
-	<div id="kills" class="tab-pane active">
-    <h1>Kills</h1>
-        <div id="home_killspage">
-        {% set data = kills %}
-        {% include "components/kill_list.html" %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#kills">Kills</a></li>
+        <li><a data-toggle="tab" href="#losses">Losses</a></li>
+        <li><a data-toggle="tab" href="#timeline">Timeline</a></li>
+        <li><a data-toggle="tab" href="#fleetcompositions">Fleetcompositions</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="kills" class="tab-pane active">
+        <h1>Kills</h1>
+            <div id="home_killspage">
+            {% set data = kills %}
+            {% include "components/kill_list.html" %}
+            </div>
         </div>
-	</div>
-    <div id="losses" class="tab-pane">
-    <h1>Losses</h1>
-        <div id="home_losspage">
-        {% set data = losses %}
-        {% include "components/kill_list.html" %}
+        <div id="losses" class="tab-pane">
+        <h1>Losses</h1>
+            <div id="home_losspage">
+            {% set data = losses %}
+            {% include "components/kill_list.html" %}
+            </div>
         </div>
-    </div>
-    <div id="timeline" class="tab-pane">
-    <h1>Battle Timeline</h1>
-        {% include "components/kill_timeline.html" %}
-    </div>
-    <div id="fleetcompositions" class="tab-pane">
-        <h1>Fleetcompositions</h1>
-        not yet.clclcc
+        <div id="timeline" class="tab-pane">
+        <h1>Battle Timeline</h1>
+            {% include "components/kill_timeline.html" %}
+        </div>
+        <div id="fleetcompositions" class="tab-pane">
+            <h1>Fleetcompositions</h1>
+            not yet.clclcc
+        </div>
     </div>
 </div>
-{% endblock %}
-
-
-{% block script %}
-<script type="text/javascript">
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
 {% endblock %}

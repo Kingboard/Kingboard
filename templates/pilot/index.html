@@ -14,33 +14,28 @@
 {% endblock %}
 
 {% block content %}
-<ul class="tabs">
-    <li class="active"><a href="#stats">Statistics</a></li>
-    <li><a href="#kills">Kills</a></li>
-    <li><a href="#losses">Losses</a></li>
-</ul>
- <div class="tab-content">
-	<div id="stats" class="tab-pane active">
-    {% include "components/entity_home_stats.html" %}
-	</div>
-    <div id="kills" class="tab-pane">
-        <div id="home_killspage">
-        {% set data = killdata %}
-        {% include "components/kill_list.html" %}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#stats">Statistics</a></li>
+        <li><a data-toggle="tab" href="#kills">Kills</a></li>
+        <li><a data-toggle="tab" href="#losses">Losses</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="stats" class="tab-pane active">
+        {% include "components/entity_home_stats.html" %}
         </div>
-    </div>
-    <div id="losses" class="tab-pane">
-        <div id="home_losspage">
-        {% set data = lossdata%}
-        {% include "components/kill_list.html" %}
+        <div id="kills" class="tab-pane">
+            <div id="home_killspage">
+            {% set data = killdata %}
+            {% include "components/kill_list.html" %}
+            </div>
+        </div>
+        <div id="losses" class="tab-pane">
+            <div id="home_losspage">
+            {% set data = lossdata%}
+            {% include "components/kill_list.html" %}
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}
-{% block script %}
-<script type="text/javascript">
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
 {% endblock %}

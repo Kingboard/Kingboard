@@ -6,20 +6,22 @@
 {% endblock %}
 
 {% block content %}
-<ul class="tabs">
-	<li class="active"><a href="#readme">Readme</a></li>
-	<li><a href="#license">License</a></li>
-    <li><a href="#contributions">Contributions</a></li>
-</ul>
-<div class="tab-content">
-	<div id="readme" class="active tab-pane">
-        {{ readme|raw }}
-	</div>
-    <div id="license" class="tab-pane">
-        {{ license|raw }}
-    </div>
-    <div id="contributions" class="tab-pane">
-        {{ contributions|raw }}
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#readme">Readme</a></li>
+        <li><a data-toggle="tab" href="#license">License</a></li>
+        <li><a data-toggle="tab" href="#contributions">Contributions</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="readme" class="active tab-pane">
+            {{ readme|raw }}
+        </div>
+        <div id="license" class="tab-pane">
+            {{ license|raw }}
+        </div>
+        <div id="contributions" class="tab-pane">
+            {{ contributions|raw }}
+        </div>
     </div>
 </div>
 {% endblock %}

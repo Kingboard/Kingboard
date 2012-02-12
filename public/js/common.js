@@ -1,12 +1,7 @@
 $(document).ready(function() {
     // enable tabs
-    $('.tabs').tabs();
+    //$('.tabs').tab('show');
 
-    // enable twipsys
-    $("a[rel=twipsy]").twipsy({
-        live: true,
-        placement: 'below'
-    });
 
     $('.dropdown-toggle').dropdown();
 });
