@@ -4,7 +4,7 @@
 
 {% block header %}
 <h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} / {% if killdata.location.region %}{{killdata.location.region}} / {% endif %}{{ killdata.location.solarSystem }} / {{ "%1.1f"|format(killdata.location.security) }}</h1>
-<table class="condensed-table">
+<table class="table condensed-table">
     <tr>
         <th>Victim:</th>
         <td><a href="http://{{ baseHost }}/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
@@ -69,7 +69,7 @@
     <div class="tab-content">
         <div id="involved-stats" class="tab-pane active">
 
-            <table class="condensed-table zebra-striped">
+            <table class="table condensed-table zebra-striped">
             {% for alliance, corporations, faction in stats %}
                 <thead>
                 <tr class="titles">
@@ -84,7 +84,7 @@
             </table>
         </div>
         <div id="involved-pilots" class="tab-pane">
-            <table class="condensed-table zebra-striped">
+            <table class="table condensed-table zebra-striped">
                 <thead>
                 <tr class="titles">
                     <th>&nbsp;</th><th>Attacker</th><th>Equipment</th><th>Damage</th>
@@ -127,7 +127,7 @@
             </table>
         </div>
         <div id="victim-assets" class="tab-pane">
-            <table class="condensed-table zebra-striped">
+            <table class="table condensed-table zebra-striped">
             <thead><tr class="titles">
                 <th>&nbsp;</th>
                 <th>Item Type</th>

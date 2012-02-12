@@ -54,7 +54,7 @@
     <div class="tab-content">
     <div id="numbers" class="tab-pane active">
         <h2>killed ships by type</h2>
-        <table class="condensed-table">
+        <table class="table condensed-table">
             <tr>
                 {% for group in stats %}
                 <th><a href="/home/view/{{group._id}}">{{ group._id }}</a></th><td style="text-align: right;">{{ group.value.total }}</td>
@@ -91,7 +91,7 @@
         </div>
         <div id="battlereports" class="tab-pane">
             <h2>Battlereports</h2>
-            <table class="condensed-table zebra-striped">
+            <table class="table condensed-table zebra-striped">
                 <thead>
                 <tr>
                     <th>System</th>

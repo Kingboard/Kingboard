@@ -8,7 +8,7 @@
             <div id="numbers" class="active tab-pane">
                 {% if killstats.value %}
                 <h2>Kills</h2>
-                <table class="condensed-table">
+                <table class="table condensed-table">
                     <tr>
                         {% for group, value in killstats.value.group %}
                         <th><a href="{{ group }}">{{ group }}</a></th><td style="text-align: right;">{{ value }}</td>
@@ -22,7 +22,7 @@
                 {% endif %}
                 {% if lossstats.value %}
                 <h2>Losses</h2>
-                <table class="condensed-table">
+                <table class="table condensed-table">
                     <tr>
                         {% for group, value in lossstats.value.group %}
                         <th><a href="{{ group }}">{{ group }}</a></th><td style="text-align: right;">{{ value }}</td>
