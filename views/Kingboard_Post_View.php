@@ -1,6 +1,12 @@
 <?php
 class Kingboard_Post_View extends Kingboard_Base_View
 {
+    public function __construct()
+    {
+        // require user to be logged in for this view
+        parent::__construct(true);
+    }
+
     public function post($request)
     {
 		if(count($_POST) > 0)
