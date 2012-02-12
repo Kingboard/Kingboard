@@ -8,3 +8,4 @@ data
 cache
 tests/phpunit.xml
 conf/config.php
+.svn
