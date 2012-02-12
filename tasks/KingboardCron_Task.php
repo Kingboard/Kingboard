@@ -63,7 +63,7 @@ class KingboardCron_Task extends King23_CLI_Task
         $this->cli->message('updating faction kill stats');
         Kingboard_Kill_MapReduce_KillsByShipByFaction::mapReduce();
         $this->cli->positive('update of faction kill stats completed');
-		
+
         $this->cli->message('updating name lists for search');
         Kingboard_Kill_MapReduce_NameSearch::mapReduce();
         $this->cli->positive("name list updated");
