@@ -41,6 +41,6 @@ for information on available tasks
 ## Links
 - [Kingboard](https://github.com/ppetermann/Kingboard)
 - [Kingboard Developer Wiki](https://github.com/ppetermann/Kingboard/wiki)
-- [King23](http://king23.devedge.eu)
+- [King23](http://king23.net)
 - [Pheal](https://github.com/ppetermann/pheal)
 - [EVSCO](http://evsco.net)
