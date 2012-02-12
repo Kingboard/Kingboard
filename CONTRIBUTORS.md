@@ -2,7 +2,7 @@
 
 ## Contributors
 - Beansman (Code / Mongodumps)
-- Karbowiak (Administrative)
+- Karbowiak (Administrative / Code)
 - Necrogami (Pushed a bit stuff in git arround)
 - Peter Powers / Peter Petermann (Lead Developer)
 - Trenker (Code)
