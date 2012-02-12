@@ -37,7 +37,7 @@ class Kingboard_Base_View extends King23_TwigView
         $this->_context['Kingboard']['Version'] = Kingboard::Version;
 
         // ownerName, use Kingboard if not set
-        if(isset($reg->ownerName) && !is_null($reg->ownerName) && $reg->ownerName)
+        if(!is_null($reg->ownerName) && $reg->ownerName)
             $this->_context['Kingboard']['Name'] = $reg->ownerName;
         else
             $this->_context['Kingboard']['Name'] = Kingboard::Name;
