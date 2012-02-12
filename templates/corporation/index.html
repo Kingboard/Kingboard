@@ -5,9 +5,11 @@
 <a href="#" rel='twipsy' title='{{info.corporationName}}'>
 <img src="{{ images.corporations}}{{info.corporationID}}_64.png" width="64" height="64">
 </a>
+{% if info.allianceID != "0" %}
 <a href="/alliance/{{info.allianceID}}" rel='twipsy' title='{{info.allianceName}}'>
     <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
 </a>
+{% endif %}
 {% endblock %}
 
 {% block content %}

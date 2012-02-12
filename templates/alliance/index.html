@@ -5,6 +5,11 @@
 <a href="#" rel='twipsy' title='{{info.allianceName}}'>
 <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
 </a>
+{% if info.factionID != 0 %}
+<a href="#" rel='twipsy' title='{{info.factionName}}'>
+<img src="{{ images.alliances }}{{info.factionID}}_64.png" width="64" height="64">
+</a>
+{% endif %}
 {% endblock %}
 
 {% block content %}

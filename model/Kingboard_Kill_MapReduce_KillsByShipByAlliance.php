@@ -68,7 +68,11 @@ class Kingboard_Kill_MapReduce_KillsByShipByAlliance extends King23_MongoObject 
         $tr->save();
         $new = $tr->lastrun;
 
-        $filter = array("saved" => array('$gt' => $last, '$lte' => $new));
+        $filter = array('$and' =>
+		array(
+			array('saved' => array('$gt' => $last, '$lte' => $new)),
+			array('attackers.allianceID' => array('$ne' => 0))
+		));
         $out = array("reduce" => __CLASS__);
         return King23_Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }

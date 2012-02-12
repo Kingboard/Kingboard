@@ -64,7 +64,7 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
                 "allianceID" => $kill['victim']['allianceID'],
                 "allianceName" => $kill['victim']['allianceName'],
                 "factionID" => $kill['victim']['factionID'],
-                "factionName" => $kill['victim']['factionID']
+                "factionName" => $kill['victim']['factionName']
             );
         }
         foreach($kill['attackers'] as $attacker)
@@ -79,7 +79,7 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
                     "allianceID" => $attacker['allianceID'],
                     "allianceName" => $attacker['allianceName'],
                     "factionID" => $attacker['factionID'],
-                    "factionName" => $attacker['factionID']
+                    "factionName" => $attacker['factionName']
                 );
             }
         }
@@ -113,7 +113,7 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
                 "allianceID" => $kill['victim']['allianceID'],
                 "allianceName" => $kill['victim']['allianceName'],
                 "factionID" => $kill['victim']['factionID'],
-                "factionName" => $kill['victim']['factionID']
+                "factionName" => $kill['victim']['factionName']
             );
         }
         foreach($kill['attackers'] as $attacker)
@@ -126,7 +126,7 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
                     "allianceID" => $attacker['allianceID'],
                     "allianceName" => $attacker['allianceName'],
                     "factionID" => $attacker['factionID'],
-                    "factionName" => $attacker['factionID']
+                    "factionName" => $attacker['factionName']
                 );
             }
         }
@@ -196,6 +196,8 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
             return array(
                 "allianceID" => $kill['victim']['allianceID'],
                 "allianceName" => $kill['victim']['allianceName'],
+                "factionID" => $kill['victim']['factionID'],
+                "factionName" => $kill['victim']['factionName']
             );
         }
         foreach($kill['attackers'] as $attacker)
@@ -205,6 +207,8 @@ class Kingboard_Kill extends King23_MongoObject implements ArrayAccess
                 return array(
                     "allianceID" => $attacker['allianceID'],
                     "allianceName" => $attacker['allianceName'],
+					"factionID" => $attacker['factionID'],
+                    "factionName" => $attacker['factionName']
                 );
             }
         }
