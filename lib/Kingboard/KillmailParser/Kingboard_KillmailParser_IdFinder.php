@@ -67,8 +67,6 @@ class Kingboard_KillmailParser_IdFinder
             {
                 return (int) $result[0]['characterID'];
             }
-			echo $result[0]['characterID'];
-			die();
         }
         catch (PhealAPIException $e)
         {
