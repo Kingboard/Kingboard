@@ -1,7 +1,9 @@
 html, body {
 background-color: #FFFFFD;
 }
-
+body {
+    padding-top: 40px;
+}
 .top-banner{
     height: 120px;
     margin-bottom:30px;
@@ -33,3 +35,4 @@ background-color: #FFFFFD;
 /*    background-color: #eee;*/
     margin-bottom: 4px;
 }
+

@@ -18,7 +18,7 @@
   {% endblock %}
 </head>
 <body>
-<div class="navbar">
+<div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
     <div class="container">
         <a class="brand" href="/">{{ Kingboard.Name }}</a>
@@ -41,7 +41,7 @@
           <input type="text" class="search-query" placeholder="Search" name="searchbox">
         </form>
 
-        <ul class="nav secondary-nav">
+        <ul class="nav pull-right">
             <li><a href="/information/">About</a></li>
             {% if user %}
                 <li><a href="/logout">Logout</a></li>
