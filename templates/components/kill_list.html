@@ -26,47 +26,47 @@
         <tr>
             <!-- page -->
             <td colspan="2">{{ kill.killTime.sec|date("Y-m-d H:i:s") }}<br />
-            {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="label important">loss</span>{% elseif ownerID %}<span class="label success">kill</span>{% endif %}
+            {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="label label-important">loss</span>{% elseif ownerID %}<span class="label label-success">kill</span>{% endif %}
             </td>
             <!-- /page -->
             <!-- shiptype -->
             <td class="icon">
                 <a href="/eveinfo/{{kill.victim.shipTypeID}}/" rel='twipsy' title='{{kill.victim.shipType}}'>
-                <img src="{{images.ships}}{{kill.victim.shipTypeID}}_32.png" alt="{{kill.victim.shipType}}">
+                    <img src="{{images.ships}}{{kill.victim.shipTypeID}}_32.png" alt="{{kill.victim.shipType}}">
                 </a>
-                </td>
+            </td>
             <!--td class="ship">{{kill.victim.shipType }}</td-->
             <!-- /shiptype -->
-            
+
             <!-- victim -->
             <td class="icon">
                 <a href="/pilot/{{kill.victim.characterID}}/" rel='twipsy' title='{{kill.victim.characterName}}'>
-                <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}">
+                    <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}">
                 </a>
-                </td>
-			{% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}
-			<td class="icon">
-				<a href="/faction/{{kill.victim.factionID}}/" rel='twipsy' title='{{kill.victim.factionName}}'>
-				<img src="{{images.alliances}}{{kill.victim.factionID}}_32.png" alt="{{kill.victim.factionName}}">
-				</a>
-			</td>
-			{% else %}
-			<td class="icon">
-			</td>
-			{% endif %}
+            </td>
+            {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}
+            <td class="icon">
+                <a href="/faction/{{kill.victim.factionID}}/" rel='twipsy' title='{{kill.victim.factionName}}'>
+                <img src="{{images.alliances}}{{kill.victim.factionID}}_32.png" alt="{{kill.victim.factionName}}">
+                </a>
+            </td>
+            {% else %}
+            <td class="icon">
+            </td>
+            {% endif %}
 
-			{% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}
+            {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}
             <td class="icon">
                 <a href="/alliance/{{kill.victim.allianceID}}/" rel='twipsy' title='{{kill.victim.allianceName}}'>
                 <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}">
                 </a>
             </td>
-			{% else %}
-			<td class="icon">
-			</td>
-			{% endif %}
+            {% else %}
+            <td class="icon">
+            </td>
+            {% endif %}
 
-			<td class="icon">
+            <td class="icon">
                 <a href="/corporation/{{kill.victim.corporationID}}/" rel='twipsy' title='{{kill.victim.corporationName}}'>
                 <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}">
                 </a>
@@ -74,7 +74,7 @@
 
             <td class="victim">
                 {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}<a href="/alliance/{{ kill.victim.allianceID }}/">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
-				{% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}<a href="/faction/{{ kill.victim.factionID }}/">{{ kill.victim.factionName }}</a> <br /> {% endif %}
+                {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}<a href="/faction/{{ kill.victim.factionID }}/">{{ kill.victim.factionName }}</a> <br /> {% endif %}
                 <a href="/corporation/{{ kill.victim.corporationID }}/">{{ kill.victim.corporationName }}</a>
             </td>
             <!-- /victim -->
