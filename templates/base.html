@@ -23,30 +23,30 @@
     <div class="container">
         <a class="brand" href="/">{{ Kingboard.Name }}</a>
         <ul class="nav">
-            <li><a href="/">Start</a></li>
+            <li><a href="/"><i class="icon-home icon-white"></i></a></li>
             <li class="dropdown" id="mykingboard">
                 <a href="#mykingboard" class="dropdown-toggle" data-toggle="dropdown">My Kingboard<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/account/">My Account</a></li>
-                    <li><a href="/post/">Post Mail</a></li>
-                    <li><a href="/account/#battle-editor">Battle Editor</a></li>
+                    <li><a href="/account/"><i class="icon-user"></i> My Account</a></li>
+                    <li><a href="/post/"><i class="icon-envelope"></i> Post Mail</a></li>
+                    <li><a href="/account/#battle-editor"><i class="icon-fire"></i> Battle Editor</a></li>
                     {% if user %}
                     <li class="divider"></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
                     {% endif %}
                 </ul>
             </li>
         </ul>
         <form class="navbar-search pull-left" action="/search/" method="POST">
-          <input type="text" class="search-query" placeholder="Search" name="searchbox">
+            <input type="text" class="search-query" placeholder="Search" name="searchbox">
         </form>
 
         <ul class="nav pull-right">
-            <li><a href="/information/">About</a></li>
+            <li><a href="/information/"><i class="icon-info-sign icon-white"></i></a></li>
             {% if user %}
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/logout"><i class="icon-off icon-white"></i></a></li>
             {% else %}
-                <li><a href="/login">Login</a></li>
+                <li><a href="/login"><i class="icon-user icon-white"></i></a></li>
             {% endif %}
         </ul>
     </div>
