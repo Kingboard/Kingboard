@@ -158,7 +158,7 @@ class KingboardCron_Task extends King23_CLI_Task
 
     public function api_import(array $options)
     {
-        $this->cli->message("import running");
+        $this->cli->message("api import running");
         $newkills = 0;
         $oldkills = 0;
         $errors = 0;
