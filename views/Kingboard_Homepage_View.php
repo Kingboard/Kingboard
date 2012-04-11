@@ -93,7 +93,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                     $totalstats[$type]['kills'] = $value;
                 }
 
-            if(isset($losstats['value']['group']))
+            if(isset($lossstats['value']['group']))
                 foreach($lossstats['value']['group'] as $type => $value)
                 {
                     if(!isset($totalstats[$type]))
