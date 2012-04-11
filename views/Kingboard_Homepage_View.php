@@ -83,26 +83,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 default:
                     die("missconfiguration, ownerID set, but no ownerType");
             }
-            $totalstats = array();
-
-            if(isset($killstats['value']['group']))
-                foreach($killstats['value']['group'] as $type => $value)
-                {
-                    if(!isset($totalstats[$type]))
-                        $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
-                    $totalstats[$type]['kills'] = $value;
-                }
-
-            if(isset($lossstats['value']['group']))
-                foreach($lossstats['value']['group'] as $type => $value)
-                {
-                    if(!isset($totalstats[$type]))
-                        $totalstats[$type] = array('kills' => 0, 'losses' => 0);
-                    $totalstats[$type]['losses'] = $value;
-                }
-
-            ksort($totalstats);
-
+            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
             $templateVars['killstats'] = $killstats;
             $templateVars['lossstats'] = $lossstats;
             $templateVars['totalstats'] = $totalstats;
@@ -167,10 +148,10 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 			}
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
-
+            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
             $template = "pilot/index.html";
             $info = Kingboard_Kill::getPilotInfoFromId($request['hid']);
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'totalstats' => $totalstats, 'info' => $info));
         } else {
             die('no pilot id specified');
         }
@@ -222,11 +203,11 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 			}
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId($request['hid']);
-
+            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
             $template = "corporation/index.html";
             $info = Kingboard_Kill::getCorporationInfoFromId($request['hid']);
             //$stats = $stats->sort(array("value.value" => -1));
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'totalstats' => $totalstats, 'info' => $info));
         } else {
             die('no corporation id specified');
         }
@@ -278,10 +259,10 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 			}
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByFaction::getInstanceByFactionId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByFaction::getInstanceByFactionId($request['hid']);
-
+            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
             $template = "faction/index.html";
             $info = Kingboard_Kill::getFactionInfoFromId($request['hid']);
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'totalstats' => $totalstats, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
         } else {
             die('no alliance id specified');
         }
@@ -334,13 +315,43 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 			
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId($request['hid']);
-
+            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
             $template = "alliance/index.html";
             $info = Kingboard_Kill::getAllianceInfoFromId($request['hid']);
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
+            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'totalstats' => $totalstats, 'info' => $info));
         } else {
             die('no alliance id specified');
         }
+    }
+
+    /**
+     * return the totalsstats array with the combined losses/kills
+     * @param array $killstats
+     * @param array $lossstats
+     * @return array
+     */
+    private function calculateTotalStats($killstats, $lossstats)
+    {
+        $totalstats = array();
+
+        if(isset($killstats['value']['group']))
+            foreach($killstats['value']['group'] as $type => $value)
+            {
+                if(!isset($totalstats[$type]))
+                    $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
+                $totalstats[$type]['kills'] = $value;
+            }
+
+        if(isset($lossstats['value']['group']))
+            foreach($lossstats['value']['group'] as $type => $value)
+            {
+                if(!isset($totalstats[$type]))
+                    $totalstats[$type] = array('kills' => 0, 'losses' => 0);
+                $totalstats[$type]['losses'] = $value;
+            }
+
+        ksort($totalstats);
+        return $totalstats;
     }
 
 }

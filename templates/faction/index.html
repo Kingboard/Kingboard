@@ -7,6 +7,33 @@
 </a>
 {% endblock %}
 
+{% block script %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Shiptype');
+        data.addColumn('number', 'Kills');
+        data.addColumn('number', 'Losses');
+        data.addRows([
+                {% for type, values in totalstats %}
+    ['{{type}}', {{values.kills}}, {{values.losses}}],
+    {% endfor %}
+    ]);
+    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    chart.draw(data, {
+        width: 940,
+        height: 800,
+        titlePosition: 'in',
+        chartArea: { height: '90%' },
+        hAxis: { logScale: true }
+    });
+    }
+</script>
+{% endblock script %}
+
 {% block content %}
 <div class="tabbable">
     <ul class="nav nav-tabs">
