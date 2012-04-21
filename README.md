@@ -12,7 +12,7 @@ see LICENSE.md File
 
 ## REQUIREMENTS
 - PHP 5.3+
-- APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!) OR lighttpd + rewrite rule
+- APACHE + mod_rewrite (might work on other servers with own rewrite rulesets, untested) (Mistral can be used instead, but thats highly experimental!) OR lighttpd + rewrite rule OR with PHP 5.4+ the buildin webserver
 - LINUX / MAC OS X (might run on windows, untested)
 - MongoDB: 1.8.1 or higher, 2.0+ recommended
 - King23: current github clone
