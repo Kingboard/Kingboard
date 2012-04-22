@@ -64,6 +64,8 @@ $reg->ownerType = "alliance";
 //$reg->authJabberPort = 5222;
 //$reg->authJabberDomain = "jabberserver.net";
 
+// choose bootstrap theme (see public/themes/*)
+$reg->theme = "default";
 
 require_once("routes.php");
 MongoCursor::$timeout = -1;

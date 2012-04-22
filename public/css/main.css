@@ -1,5 +1,4 @@
 html, body {
-background-color: #FFFFFD;
 }
 body {
     padding-top: 40px;
@@ -16,7 +15,6 @@ body {
 
 
 #main, #header {
-    background-color: #fff;
     margin-top: 20px;
     margin-bottom: 20px;
     -webkit-border-radius: 6px 6px 6px 6px;
