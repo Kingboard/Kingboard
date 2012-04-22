@@ -7,32 +7,42 @@
         <div class="tab-content">
             <div id="numbers" class="active tab-pane">
                 {% if killstats.value %}
-                <h2>Kills</h2>
-                <table class="table condensed-table">
-                    <tr>
-                        {% for group, value in killstats.value.group %}
-                        <th><a href="{{ group }}">{{ group }}</a></th><td style="text-align: right;">{{ value }}</td>
-                        {% if loop.index is divisibleby(4) and not loop.last %}
-                            </tr><tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ killstats.value.total }}</td></tr>
-                </table>
+                <h2>killed ships by type</h2>
+                <div class="row">
+                    {% for group, value in killstats.value.group %}
+                    <div class="span4">
+                        <div class="row">
+                            <div class="span3">{{ group }}</div>
+                            <div class="span1" style="text-align: right">{{ value }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="span4">
+                        <div class="row">
+                            <div class="span3"><strong>Total</strong></div>
+                            <div class="span1" style="text-align: right">{{ killstats.value.total }}</div>
+                        </div>
+                    </div>
+                </div>
                 {% endif %}
                 {% if lossstats.value %}
-                <h2>Losses</h2>
-                <table class="table condensed-table">
-                    <tr>
-                        {% for group, value in lossstats.value.group %}
-                        <th><a href="{{ group }}">{{ group }}</a></th><td style="text-align: right;">{{ value }}</td>
-                        {% if loop.index is divisibleby(4) and not loop.last %}
-                            </tr><tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td><th>Total</th><td style="text-align: right;"> {{ lossstats.value.total }}</td></tr>
-                </table>
+                <h2>lost ships by type</h2>
+                <div class="row">
+                    {% for group, value in lossstats.value.group %}
+                    <div class="span4">
+                        <div class="row">
+                            <div class="span3">{{ group }}</div>
+                            <div class="span1" style="text-align: right">{{ value }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="span4">
+                        <div class="row">
+                            <div class="span3"><strong>Total</strong></div>
+                            <div class="span1" style="text-align: right">{{ lossstats.value.total }}</div>
+                        </div>
+                    </div>
+                </div>
                 {% endif %}
             </div>
             <div class="tab-pane" id="chart">
