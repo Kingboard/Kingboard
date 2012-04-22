@@ -45,7 +45,6 @@ class Kingboard_Base_View extends King23_TwigView
         // release name
         $this->_context['Kingboard']['ReleaseName'] = Kingboard::ReleaseName;
 
-        print_r($reg->theme);
         $this->_context['theme']= !is_null($reg->theme) ? $reg->theme :"default";
 
     }
