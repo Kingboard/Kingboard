@@ -6,12 +6,14 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         $currentPage = 1;
         if (!empty($request['page']))
         {
-            $currentPage = (int) preg_replace('/[^0-9]+/', '', $request['page']);
-            if ($currentPage < 1 )
+            $currentPage = (int) $request['page'];
+
+            if ($currentPage < 1)
             {
                 $this->sendErrorAndQuit('Page must be a positive value larger than one');
             }
         }
+
         $killsPerPage = 20;
         $skip = ($currentPage - 1) * $killsPerPage;        
         $count = Kingboard_Kill::count();
@@ -76,7 +78,6 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         $templateVars['count'] = $count;
         $templateVars['info'] = $info;
         $templateVars['reports'] = Kingboard_BattleSettings::find()->limit(20)->sort(array('enddate' => -1));
-
 
         return $this->render($template, $templateVars);
     }
