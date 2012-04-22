@@ -6,44 +6,24 @@
         </ul>
         <div class="tab-content">
             <div id="numbers" class="active tab-pane">
-                {% if killstats.value %}
-                <h2>killed ships by type</h2>
+                <h2>Total ships killed/lost</h2>
                 <div class="row">
-                    {% for group, value in killstats.value.group %}
-                    <div class="span4">
+                    {% for group, values in totalstats %}
+                    <div class="span6">
                         <div class="row">
-                            <div class="span3">{{ group }}</div>
-                            <div class="span1" style="text-align: right">{{ value }}</div>
+                            <div class="span4">{{ group }}</div>
+                            <div class="span2" style="text-align: right"><span class="badge badge-success">{{ values.kills }}</span> / <span class="badge badge-error">{{ values.losses }}</span></div>
+
                         </div>
                     </div>
                     {% endfor %}
-                    <div class="span4">
+                    <div class="span6">
                         <div class="row">
-                            <div class="span3"><strong>Total</strong></div>
-                            <div class="span1" style="text-align: right">{{ killstats.value.total }}</div>
+                            <div class="span4"><strong>Total</strong></div>
+                            <div class="span2" style="text-align: right"><span class="badge badge-success">{{ killstats.value.total }}</span> / <span class="badge badge-error">{{ lossstats.value.total }}</span></div>
                         </div>
                     </div>
                 </div>
-                {% endif %}
-                {% if lossstats.value %}
-                <h2>lost ships by type</h2>
-                <div class="row">
-                    {% for group, value in lossstats.value.group %}
-                    <div class="span4">
-                        <div class="row">
-                            <div class="span3">{{ group }}</div>
-                            <div class="span1" style="text-align: right">{{ value }}</div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="span4">
-                        <div class="row">
-                            <div class="span3"><strong>Total</strong></div>
-                            <div class="span1" style="text-align: right">{{ lossstats.value.total }}</div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
             </div>
             <div class="tab-pane" id="chart">
                 <h2>kills/losses by type</h2>
