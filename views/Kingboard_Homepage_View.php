@@ -15,16 +15,6 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 $this->sendErrorAndQuit('Page must be a positive value larger than one');
             }
         }
-        if (!empty($request['view']))
-		{
-			$type = $request['view'];
-			$qry = Kingboard_EveItem::getShipIDs($type);
-			$reqarray = array();
-			foreach($qry as $result)
-			{
-				$reqarray[] = array('victim.shipTypeID' => $result->typeID);
-			}
-		}
         $killsPerPage = 20;
         $skip = ($currentPage - 1) * $killsPerPage;        
         $count = Kingboard_Kill::count();
@@ -35,20 +25,11 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
             $this->sendErrorAndQuit('Page does not exist');
         }
         
-		if(!empty($reqarray))
-		{
-			$data = Kingboard_Kill::find(array('$or' => $reqarray))
-				->sort(array('killTime' => -1))
-				->skip($skip)
-				->limit($killsPerPage);
-		}
-		else
-		{
-			$data = Kingboard_Kill::find()
-				->sort(array('killTime' => -1))
-				->skip($skip)
-				->limit($killsPerPage);
-		}	
+        $data = Kingboard_Kill::find()
+            ->sort(array('killTime' => -1))
+            ->skip($skip)
+            ->limit($killsPerPage);
+
         $templateVars = array(
             'data' => $data,
             'next' => ($skip + $killsPerPage < $count) ? $currentPage + 1 : false,
