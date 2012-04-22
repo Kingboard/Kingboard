@@ -1,9 +1,6 @@
 <?php
 class Kingboard_Homepage_View extends Kingboard_Base_View
 {
-
-    protected $killsPerPage = 20;
-    
     public function index($request)
     {
         $currentPage = 1;
