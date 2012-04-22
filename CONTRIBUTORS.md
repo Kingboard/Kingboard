@@ -1,11 +1,13 @@
 # Kingboard Contributions
 
-## Contributors
+## Project Members / Contributors
 - Beansman (Code / Mongodumps)
 - Karbowiak (Administrative / Code)
-- Necrogami (Pushed a bit stuff in git arround)
 - Peter Powers / Peter Petermann (Lead Developer)
+
+## Past Contributors
 - Trenker (Code)
+- Necrogami (Pushed a bit stuff in git arround)
 
 ## using the following OpenSource Libraries
 - [King23](http://king23.devedge.eu)
