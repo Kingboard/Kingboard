@@ -1,6 +1,12 @@
 <?php
 class Kingboard_Base_View extends King23_TwigView
 {
+
+    /**
+     * displays $message while sending Bad Request header
+     * @deprecated
+     * @param string $message
+     */
     protected function sendErrorAndQuit($message)
     {
         header('HTTP/1.1 400 Bad Request');
@@ -8,7 +14,12 @@ class Kingboard_Base_View extends King23_TwigView
         echo $message;
         exit;
     }
-    
+
+    /**
+     * constructor, should be called by all derived views
+     * will cause redirect if $loginrequired and not logged in
+     * @param bool $loginrequired
+     */
     public function __construct($loginrequired = false)
     {
         if($loginrequired && !Kingboard_Auth::isLoggedIn())
@@ -45,7 +56,7 @@ class Kingboard_Base_View extends King23_TwigView
         // release name
         $this->_context['Kingboard']['ReleaseName'] = Kingboard::ReleaseName;
 
+        // pick bootstrap theme path from public/css/themes folder
         $this->_context['theme']= !is_null($reg->theme) ? $reg->theme :"default";
-
-    }
+   }
 }
