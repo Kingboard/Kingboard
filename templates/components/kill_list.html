@@ -9,23 +9,21 @@
   </ul>
 </div>
 {% endif %}
-<table class="table condensed-table zebra-striped">
+<div class="row">
+<table class="table-bordered table-condensed table-striped span12">
     <thead>
-        <tr class="titles">
-            <th colspan="2">Date</th>
-            <th colspan="1" class="ship">Ship</th>
-            <th colspan="1" class="victim">Victim</th>
-            <th colspan="4" class="entity">Faction/Alliance/Corp</th>
+        <tr>
+            <th>Date</th>
+            <th>Ship</th>
+            <th colspan="2">Victim</th>
             <th>Location</th>
-            <th colspan="2">&nbsp;</th>
-
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>{% for kill in data %}
-
         <tr>
             <!-- page -->
-            <td colspan="2">{{ kill.killTime.sec|date("Y-m-d H:i:s") }}<br />
+            <td>{{ kill.killTime.sec|date("Y-m-d H:i:s") }}<br />
             {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="label label-important">loss</span>{% elseif ownerID %}<span class="label label-success">kill</span>{% endif %}
             </td>
             <!-- /page -->
@@ -43,30 +41,17 @@
                 <a href="/pilot/{{kill.victim.characterID}}/" rel='twipsy' title='{{kill.victim.characterName}}'>
                     <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}">
                 </a>
-            </td>
             {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}
-            <td class="icon">
                 <a href="/faction/{{kill.victim.factionID}}/" rel='twipsy' title='{{kill.victim.factionName}}'>
                 <img src="{{images.alliances}}{{kill.victim.factionID}}_32.png" alt="{{kill.victim.factionName}}">
                 </a>
-            </td>
-            {% else %}
-            <td class="icon">
-            </td>
             {% endif %}
 
             {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}
-            <td class="icon">
                 <a href="/alliance/{{kill.victim.allianceID}}/" rel='twipsy' title='{{kill.victim.allianceName}}'>
                 <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}">
                 </a>
-            </td>
-            {% else %}
-            <td class="icon">
-            </td>
             {% endif %}
-
-            <td class="icon">
                 <a href="/corporation/{{kill.victim.corporationID}}/" rel='twipsy' title='{{kill.victim.corporationName}}'>
                 <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}">
                 </a>
@@ -78,15 +63,13 @@
                 <a href="/corporation/{{ kill.victim.corporationID }}/">{{ kill.victim.corporationName }}</a>
             </td>
             <!-- /victim -->
-            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|replace({" ":"_"}) }}" rel="external">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|replace({" ": "-"}) }}" rel="external">{{ kill.location.solarSystem }}</a> ({{ "%1.1f"|format(kill.location.security) }})</td>
-            <td><a href="/kill/{{ kill.idHash }}/">Details ..</a></td>
-            <!-- page -->
-            <td>&nbsp;</td>
-            <!-- /page -->
+            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|replace({" ":"_"}) }}" rel="external" target="new">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|replace({" ": "-"}) }}" rel="external" target="new">{{ kill.location.solarSystem }}</a> ({{ "%1.1f"|format(kill.location.security) }})</td>
+            <td style="text-align: center"><a href="/kill/{{ kill.idHash }}/">Details ..</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>
 {% if currentPage %}
 <div class="pagination">
   <ul>
