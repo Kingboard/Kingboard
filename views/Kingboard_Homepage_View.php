@@ -26,22 +26,34 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 case "alliance":
                     $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId((int) $this->_context['ownerID']);
                     $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId((int) $this->_context['ownerID']);
-					$criteria = array('attackers.allianceID' => (int)  $this->_context['ownerID'], '$or' => array('victim.allianceID' => (int)  $this->_context['ownerID']));
+                    $criteria = array('$or' => array(
+                        array('attackers.allianceID' => (int)  $this->_context['ownerID']),
+                        array('victim.allianceID' => (int)  $this->_context['ownerID'])
+                    ));
                     break;
 				case "faction":
                     $killstats = Kingboard_Kill_MapReduce_KillsByShipByFaction::getInstanceByFactionId((int) $this->_context['ownerID']);
                     $lossstats = Kingboard_Kill_MapReduce_LossesByShipByFaction::getInstanceByFactionId((int) $this->_context['ownerID']);
-                    $criteria = array('attackers.factionID' => (int)  $this->_context['ownerID'], '$or' => array('victim.factionID' => (int)  $this->_context['ownerID']));
+                    $criteria = array('$or' => array(
+                        array('attackers.factionID' => (int)  $this->_context['ownerID']),
+                        array('victim.factionID' => (int)  $this->_context['ownerID'])
+                    ));
                     break;
 				case "corporation":
                     $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId((int) $this->_context['ownerID']);
                     $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId((int) $this->_context['ownerID']);
-                    $criteria = array('attackers.corporationID' => (int)  $this->_context['ownerID'], '$or' => array('victim.corporationID' => (int)  $this->_context['ownerID']));
+                    $criteria = array('$or' => array(
+                        array('attackers.corporationID' => (int)  $this->_context['ownerID']),
+                        array('victim.corporationID' => (int)  $this->_context['ownerID'])
+                    ));
                     break;
                 case "pilot":
                     $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId((int) $this->_context['ownerID']);
                     $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId((int) $this->_context['ownerID']);
-                    $criteria = array('attackers.characterID' => (int)  $this->_context['ownerID'], '$or' => array('victim.characterID' => (int)  $this->_context['ownerID']));
+                    $criteria = array('$or' => array(
+                        array('attackers.characterID' => (int)  $this->_context['ownerID']),
+                        array('victim.characterID' => (int)  $this->_context['ownerID'])
+                    ));
                     break;
                 default:
                     die("missconfiguration, ownerID set, but no ownerType");
