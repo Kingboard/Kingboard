@@ -165,7 +165,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
             'attackers.allianceID' => 1,
             'victim.corporationID' => 1,
             'victim.allianceID' => 1
-        ));
+        ), array('name' => 'battlequeries'));
         
         // battle losses
         $col->ensureIndex(array(
@@ -173,7 +173,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
             'location.solarSystem' => 1,
             'victim.corporationID' => 1,
             'victim.allianceID' => 1
-        ));
+        ), array('name'=> 'battlelosses'));
         
         // killtime Index
         $col->ensureIndex(array('killTime' => 1));
