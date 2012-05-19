@@ -11,7 +11,6 @@ class KingboardCron_Task extends King23_CLI_Task
         "update_stats" => "task to update stats which will be map/reduced from the database",
         "key_activation" => "task to check for new key activates, and activate if so",
         "api_import" => "import",
-        "feed_pull" => "pull edk feeds",
     );
 
     /**
@@ -203,44 +202,4 @@ class KingboardCron_Task extends King23_CLI_Task
         $totalkills = $oldkills + $newkills;
         $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added ( errors: $errors)");
     }
-
-
-    public function feed_pull($options)
-    {
-        $this->cli->header('pulling all feeds');
-        $feeds = Kingboard_EdkFeed::find();
-        foreach($feeds as $feed)
-        {
-
-            $url = $feed->url;
-            $this->cli->message('pulling ' . $url);
-            $sxo =simplexml_load_file($url);
-            $processed = 0;
-            $killcount = count($sxo->channel->item);
-            $this->cli->message("processing $killcount kills.");
-            foreach($sxo->channel->item as $item)
-            {
-                $this->cli->message('processing ' . ++$processed . ' out of ' .  $killcount);
-                $mailtext = trim((string) $item->description);
-                if(isset($item->apiID))
-                    $apiId = (string) $item->apiID;
-                else
-                    $apiId = null;
-
-                try {
-                    $mail = Kingboard_KillmailParser_Factory::parseTextMail($mailtext);
-                    $mail->killID = $apiId;
-                    $mail->save();
-                } catch(Kingboard_KillmailParser_KillmailErrorException $e) {
-                    $this->cli->error("Exception caught, mail was not processed");
-                    $this->cli->error($e->getMessage());
-                    $this->cli->error($e->getFile() . '::' . $e->getLine());
-                }
-
-            }
-            $this->cli->positive('done');
-        }
-    }
-
-
 }
