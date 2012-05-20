@@ -1,13 +1,5 @@
 <?php
 class Kingboard_AuthJabber extends Kingboard_Auth {
-    public $username = null;
-    public $password = null;
-
-    public function __construct($username, $password)
-    {
-        $this->username = $username;
-        $this->password = $password;
-    }
 
     public static function login($username, $password) {
         try {
