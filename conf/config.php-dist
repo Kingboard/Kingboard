@@ -65,6 +65,7 @@ $reg->ownerType = "alliance";
 //$reg->authJabberDomain = "jabberserver.net";
 
 // uncomment when using OAuth2 login opposed to regular or jabber auth
+/*
 $reg->auth = "Kingboard_Auth_OAuth2_View";
 $reg->oAuth2ProviderList = array(
     // currently only googles api is supported, see the auth_class for information
@@ -84,7 +85,7 @@ $reg->oAuth2ProviderList = array(
             "auth_class" => "Kingboard_Auth_Google"
     )
  );
-
+*/
 
 
 // choose bootstrap theme (see public/themes/*)
