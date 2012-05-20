@@ -45,8 +45,11 @@ class Kingboard_Auth_Google extends Kingboard_Auth
      */
     public static function login($config)
     {
+        if(isset($_GET['error']))
+            throw new Exception("Could not login: " . $_GET['error']);
+
         $tokens = Kingboard_OAuth2_Consumer::getTokens(
-            self::getCodeUrl(),
+            self::getTokenUrl(),
             $config['client_id'],
             $config['client_secret'],
             $_GET['code'],
@@ -54,15 +57,22 @@ class Kingboard_Auth_Google extends Kingboard_Auth
             self::getScope()
         );
 
+        if(is_null($tokens))
+            throw new Exception("Error: could not access tokens");
+
         $userinfo = json_decode(
             file_get_contents("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" . $tokens->access_token)
         );
+
+        if(is_null($userinfo))
+            throw new Exception("Error: could not access userinfo");
 
         $user = Kingboard_User::findOne(array("username" => $userinfo->email));
         if(is_null($user))
         {
             $user = new Kingboard_User();
             $user->username = $userinfo->email;
+            $user->save();
         }
 
         $_SESSION["Kingboard_Auth"] = array("User" => $user);

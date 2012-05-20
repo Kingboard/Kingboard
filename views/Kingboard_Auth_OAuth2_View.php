@@ -38,10 +38,15 @@ class Kingboard_Auth_OAuth2_View extends Kingboard_Base_View
         if($_GET['state'] != Kingboard_Form::getXSRFToken())
             die("XSRF Token mismatch");
 
-        $config = King23_Registry::getInstance()->oAuth2ProviderList[$params["key"]];
-        $class = $config['auth_class'];
-        $class::login($config);
-        $this->redirect("/account/");
+        try {
+            $config = King23_Registry::getInstance()->oAuth2ProviderList[$params["key"]];
+            $class = $config['auth_class'];
+            $class::login($config);
+            $this->redirect("/account/");
+        } catch (Exception $e) {
+            $this->_context['login_failed'] = $e->getMessage();
+            return $this->login($params);
+        }
     }
 
     /**

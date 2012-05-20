@@ -43,7 +43,9 @@ class Kingboard_OAuth2_Consumer
             "redirect_uri" => $redirectUri,
             "grant_type" => "authorization_code"
         );
-        $data = json_decode(self::doPost($hostUrl, $data));
+        $data = self::doPost($hostUrl, $data);
+        var_dump($data);
+        $data = json_decode($data);
         if(isset($data->error))
             throw new Exception("token request caused error: " . $data->error);
         return $data;
