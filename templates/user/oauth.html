@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Kingboard</h1>
+{% if login_failed %}
+<div class="alert alert-error">ERROR: Could not login!</div>
+{% else %}
+<div class="alert alert-info">Please login to use this functionality!</div>
+{% endif %}
+
+Login using one of the following accounts:
+{% for name, url in providerlist %}
+<a href="{{url}}">{{name}}</a><br/>
+{% endfor %}
+{% endblock %}

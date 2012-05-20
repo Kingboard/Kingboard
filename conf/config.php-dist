@@ -64,6 +64,29 @@ $reg->ownerType = "alliance";
 //$reg->authJabberPort = 5222;
 //$reg->authJabberDomain = "jabberserver.net";
 
+// uncomment when using OAuth2 login opposed to regular or jabber auth
+$reg->auth = "Kingboard_Auth_OAuth2_View";
+$reg->oAuth2ProviderList = array(
+    // currently only googles api is supported, see the auth_class for information
+    // on how to implement further OAuth2 Providers
+    "google" => array(
+            // the client id given to you by the OAuth2 Provider
+            "client_id" => "MYCLIENTID.apps.googleusercontent.com",
+
+            // the client secret given to you by the OAuth2 Provider
+            "client_secret" => "MYCLIENTSECRET",
+
+            // this is only to be edited if you dont use the default route
+            "redirect_url" => "http://" . $reg->baseHost . "/oauth2/callback/google/",
+
+            // this class depends on the api used to fetch email from the oauth providers api
+            // in this case google.
+            "auth_class" => "Kingboard_Auth_Google"
+    )
+ );
+
+
+
 // choose bootstrap theme (see public/themes/*)
 $reg->theme = "default";
 

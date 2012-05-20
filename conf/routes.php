@@ -49,6 +49,9 @@ $router->addRoute("/user/activate/", $auth, 'activateUser',array('activationkey'
 $router->addRoute("/login", $auth, "login");
 $router->addRoute("/logout", $auth, "logout");
 
+// oAuthentication
+$router->addRoute("/oauth2/callback/", "Kingboard_Auth_OAuth2_View", "callback", array("key"));
+
 // user specific routes
 $router->addRoute("/account/", "Kingboard_User_View", "myKingboard");
 
