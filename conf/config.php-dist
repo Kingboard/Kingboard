@@ -59,7 +59,7 @@ $reg->ownerType = "alliance";
 
 // uncomment and edit to use jabber as authentication engine opposed to own registration process
 //King23_Classloader::init(APP_PATH . "/lib/XMPPHP");
-//$reg->auth = "Kingboard_AuthJabber_View";
+//$reg->auth = "Kingboard_Auth_Jabber_View";
 //$reg->authJabberHost = "my.jabberserver.net";
 //$reg->authJabberPort = 5222;
 //$reg->authJabberDomain = "jabberserver.net";

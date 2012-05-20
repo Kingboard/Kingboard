@@ -1,5 +1,5 @@
 <?php
-class Kingboard_AuthJabber_View extends Kingboard_Base_View
+class Kingboard_Auth_Jabber_View extends Kingboard_Base_View
 {
     public function __construct()
     {
@@ -11,7 +11,7 @@ class Kingboard_AuthJabber_View extends Kingboard_Base_View
         $context = array();
         if(isset($_POST["login"]) && isset($_POST["passwd"]))
         {
-            if(Kingboard_AuthJabber::login($_POST["login"], $_POST["passwd"])) {
+            if(Kingboard_Auth_Jabber::login($_POST["login"], $_POST["passwd"])) {
                 $this->redirect("/account/");
             }
             $context['login_failed'] = true;
@@ -21,7 +21,7 @@ class Kingboard_AuthJabber_View extends Kingboard_Base_View
 
     public function logout($request)
     {
-        Kingboard_AuthJabber::logout();
+        Kingboard_Auth_Jabber::logout();
         $this->redirect("/");
     }
 }

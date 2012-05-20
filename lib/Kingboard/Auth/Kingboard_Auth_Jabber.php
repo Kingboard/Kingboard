@@ -1,5 +1,5 @@
 <?php
-class Kingboard_AuthJabber extends Kingboard_Auth {
+class Kingboard_Auth_Jabber extends Kingboard_Auth {
 
     public static function login($username, $password) {
         try {
