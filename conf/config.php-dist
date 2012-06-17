@@ -19,6 +19,8 @@ $reg->mongo = array(
     'db' => $connection->Kingboard
 );
 
+$reg->killListConfig = array("perPage" => 25);
+
 King23_Classloader::init(APP_PATH . "/lib/Pheal");
 
 $pc = PhealConfig::getInstance();

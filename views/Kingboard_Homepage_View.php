@@ -12,83 +12,38 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
         $info = array();
         $templateVars =array();
-        $criteria = array();
         // differences for owned boards
         if($this->_context['ownerID'])
         {
-            switch($this->_context['ownerType'])
-            {
-                case "alliance":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId((int) $this->_context['ownerID']);
-                    $criteria = array('$or' => array(
-                        array('attackers.allianceID' => (int)  $this->_context['ownerID']),
-                        array('victim.allianceID' => (int)  $this->_context['ownerID'])
-                    ));
-                    break;
-				case "faction":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByFaction::getInstanceByFactionId((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByFaction::getInstanceByFactionId((int) $this->_context['ownerID']);
-                    $criteria = array('$or' => array(
-                        array('attackers.factionID' => (int)  $this->_context['ownerID']),
-                        array('victim.factionID' => (int)  $this->_context['ownerID'])
-                    ));
-                    break;
-				case "corporation":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId((int) $this->_context['ownerID']);
-                    $criteria = array('$or' => array(
-                        array('attackers.corporationID' => (int)  $this->_context['ownerID']),
-                        array('victim.corporationID' => (int)  $this->_context['ownerID'])
-                    ));
-                    break;
-                case "pilot":
-                    $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId((int) $this->_context['ownerID']);
-                    $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId((int) $this->_context['ownerID']);
-                    $criteria = array('$or' => array(
-                        array('attackers.characterID' => (int)  $this->_context['ownerID']),
-                        array('victim.characterID' => (int)  $this->_context['ownerID'])
-                    ));
-                    break;
-                default:
-                    die("missconfiguration, ownerID set, but no ownerType");
-            }
-            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
-            $templateVars['killstats'] = $killstats;
-            $templateVars['lossstats'] = $lossstats;
-            $templateVars['totalstats'] = $totalstats;
+            $killList = new Kingboard_KillList($this->_context["ownerType"], $this->_context["ownerID"]);
+            $templateVars['killstats'] = $killList->getKillStats();
+            $templateVars['lossstats'] = $killList->getLossStats();
+            $templateVars['totalstats'] = $killList->getTotalStats();
             $template = "index_owned_board.html";
         } else {
+            // this is the only case of a list without owner/type, which is open list.
+            $killList = new Kingboard_KillList(null, null);
             $stats = Kingboard_Kill_MapReduce_KillsByShip::find();
             $stats = $stats->sort(array("value.value" => -1));
             $templateVars['stats'] = $stats;
             $template = "index.html";
         }
 
+        $paginator = new Kingboard_Paginator($currentPage, $killList->getCount());
 
-        $killsPerPage = 20;
-        $skip = ($currentPage - 1) * $killsPerPage;
-        $count = Kingboard_Kill::find($criteria, array("_id"=> true))->count();
-        $lastPage = ceil($count / $killsPerPage);
-
-        if ($currentPage > $lastPage && $lastPage != 0)
-        {
-            $this->sendErrorAndQuit('Page does not exist');
-        }
-
-        $data = Kingboard_Kill::find($criteria)
-                ->sort(array('killTime' => -1))
-                ->skip($skip)
-                ->limit($killsPerPage);
+        $skip = $paginator ->getSkip();
+        $data = $killList->getKills($skip, $paginator->getKillsPerPage());
 
         $templateVars['data'] = $data;
-        $templateVars['next'] = ($skip + $killsPerPage < $count) ? $currentPage + 1 : false;
-        $templateVars['prev'] = $currentPage > 1 ? $currentPage - 1 : false;
-        $templateVars['currentPage'] = $currentPage;
-        $templateVars['lastPage'] = $lastPage;
+
+        // merge in pagination data
+        $templateVars= array_merge($templateVars, $paginator->getNavArray());
+
         $templateVars['action'] = '/home';
-        $templateVars['count'] = $count;
+        $templateVars['count'] = $killList->getCount();
         $templateVars['info'] = $info;
+
+        // battles
         $templateVars['reports'] = Kingboard_BattleSettings::find()->limit(20)->sort(array('enddate' => -1));
 
         return $this->render($template, $templateVars);
@@ -323,26 +278,6 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
      */
     private function calculateTotalStats($killstats, $lossstats)
     {
-        $totalstats = array();
-
-        if(isset($killstats['value']['group']))
-            foreach($killstats['value']['group'] as $type => $value)
-            {
-                if(!isset($totalstats[$type]))
-                    $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
-                $totalstats[$type]['kills'] = $value;
-            }
-
-        if(isset($lossstats['value']['group']))
-            foreach($lossstats['value']['group'] as $type => $value)
-            {
-                if(!isset($totalstats[$type]))
-                    $totalstats[$type] = array('kills' => 0, 'losses' => 0);
-                $totalstats[$type]['losses'] = $value;
-            }
-
-        ksort($totalstats);
-        return $totalstats;
     }
 
 }
