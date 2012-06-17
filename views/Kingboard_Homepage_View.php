@@ -10,7 +10,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
             if ($currentPage < 1)
             {
-                $this->sendErrorAndQuit('Page must be a positive value larger than one');
+                $currentPage = 1;
             }
         }
 
