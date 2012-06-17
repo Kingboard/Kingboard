@@ -1,4 +1,4 @@
-    <?php
+<?php
 /**
  * creates / allows access to stats about which shiptype has been killed how often
  */
