@@ -43,8 +43,7 @@
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#stats" data-toggle="tab">Statistics</a></li>
-        <li><a href="#kills" data-toggle="tab">Kills</a></li>
-        <li><a href="#losses" data-toggle="tab">Losses</a></li>
+        <li><a href="#kills" data-toggle="tab">Kills & Losses</a></li>
         <li><a href="#memberactivity" data-toggle="tab">Member Activities</a></li>
     </ul>
     <div class="tab-content">
@@ -52,16 +51,8 @@
         {% include "components/entity_home_stats.html" %}
         </div>
         <div id="kills" class="tab-pane">
-            <h2>Kills</h2>
+            <h2>Kills & Losses</h2>
             <div id="home_killspage">
-            {% set data = killdata %}
-            {% include "components/kill_list.html" %}
-            </div>
-        </div>
-        <div id="losses" class="tab-pane">
-            <h2>Losses</h2>
-            <div id="home_losspage">
-            {% set data = lossdata %}
             {% include "components/kill_list.html" %}
             </div>
         </div>

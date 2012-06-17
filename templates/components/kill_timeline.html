@@ -12,13 +12,13 @@
             <td>
                 <div class="timeline_kills">
                 {% for kill in data.kills %}
-                    <a href="/alliance/{{kill.victim.allianceID}}" rel='twipsy' title='{{kill.victim.allianceName}}'>
+                    <a href="/details/alliance/{{kill.victim.allianceID}}" rel='twipsy' title='{{kill.victim.allianceName}}'>
                         <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}" style="float: left;">
                     </a>
-                    <a href="/corporation/{{kill.victim.corporationID}}" rel='twipsy' title='{{kill.victim.corporationName}}'>
+                    <a href="/details/corporation/{{kill.victim.corporationID}}" rel='twipsy' title='{{kill.victim.corporationName}}'>
                         <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}" style="float: left;">
                     </a>
-                    <a href="/pilot/{{kill.victim.characterID}}" rel='twipsy' title='{{kill.victim.characterName}}'>
+                    <a href="/details/pilot/{{kill.victim.characterID}}" rel='twipsy' title='{{kill.victim.characterName}}'>
                         <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}" style="float: left;">
                     </a>
                     {% if kill.victim.allianceName %} {{ kill.victim.allianceName }} / {% endif %}{{ kill.victim.corporationName }}<br />{{kill.victim.characterName }}
@@ -29,13 +29,13 @@
             <td>
                 <div class="timeline_losses">
                 {% for kill in data.losses %}
-                    <a href="/alliance/{{kill.victim.allianceID}}" rel='twipsy' title='{{kill.victim.allianceName}}'>
+                    <a href="/details/alliance/{{kill.victim.allianceID}}" rel='twipsy' title='{{kill.victim.allianceName}}'>
                         <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}" style="float: left;">
                     </a>
-                    <a href="/corporation/{{kill.victim.corporationID}}" rel='twipsy' title='{{kill.victim.corporationName}}'>
+                    <a href="/details/corporation/{{kill.victim.corporationID}}" rel='twipsy' title='{{kill.victim.corporationName}}'>
                         <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}" style="float: left;">
                     </a>
-                    <a href="/pilot/{{kill.victim.characterID}}" rel='twipsy' title='{{kill.victim.characterName}}'>
+                    <a href="/details/pilot/{{kill.victim.characterID}}" rel='twipsy' title='{{kill.victim.characterName}}'>
                         <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}" style="float: left;">
                     </a>
                     {% if kill.victim.allianceName %} {{ kill.victim.allianceName }} / {% endif %}{{ kill.victim.corporationName }}<br />{{kill.victim.characterName }}

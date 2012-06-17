@@ -30,11 +30,8 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         }
 
         $paginator = new Kingboard_Paginator($currentPage, $killList->getCount());
-
-        $skip = $paginator ->getSkip();
-        $data = $killList->getKills($skip, $paginator->getKillsPerPage());
-
-        $templateVars['data'] = $data;
+        // fetch kill data
+        $templateVars['data'] = $killList->getKills($paginator ->getSkip(), $paginator->getKillsPerPage());
 
         // merge in pagination data
         $templateVars= array_merge($templateVars, $paginator->getNavArray());
@@ -49,147 +46,64 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         return $this->render($template, $templateVars);
     }
 
-    public function pilot($request)
+    public function killlist($request)
     {
-        if(!empty($request['hid']))
+
+        if(empty($request['ownerType']) || empty($request['ownerID']))
+            die("type / id not given");
+
+        $ownerType = $request['ownerType'];
+        $ownerID = $request['ownerID'];
+
+        $currentPage = 1;
+        if (!empty($request['page']))
         {
-            $count = Kingboard_Kill::find(
-                array('attackers.characterID' => (int) $request['hid'])
-            )->count();
-
-            $killdata = Kingboard_Kill::find(
-                  array('attackers.characterID' => (int)  $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $lossdata = Kingboard_Kill::find(
-                array('victim.characterID' => (int) $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
-            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
-            $template = "pilot/index.html";
-            $info = Kingboard_Kill::getPilotInfoFromId($request['hid']);
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'totalstats' => $totalstats, 'info' => $info));
-        } else {
-            die('no pilot id specified');
+            $currentPage = ((int) $request['page'] <1) ?  1 : (int) $request['page'];
         }
-    }
 
-    public function corporation($request)
-    {
-        if(!empty($request['hid']))
+        $templateVars =array();
+
+        // kill list
+        $killList = new Kingboard_KillList($ownerType, $ownerID);
+        $templateVars['killstats'] = $killList->getKillStats();
+        $templateVars['lossstats'] = $killList->getLossStats();
+        $templateVars['totalstats'] = $killList->getTotalStats();
+
+        $paginator = new Kingboard_Paginator($currentPage, $killList->getCount());
+        // fetch kill data
+        $templateVars['data'] = $killList->getKills($paginator ->getSkip(), $paginator->getKillsPerPage());
+
+        // merge in pagination data
+        $templateVars= array_merge($templateVars, $paginator->getNavArray());
+
+        $templateVars['count'] = $killList->getCount();
+
+        switch($ownerType)
         {
-            $count = Kingboard_Kill::find(
-                array('attackers.corporationID' => (int) $request['hid'])
-            )->count();
-
-            $killdata = Kingboard_Kill::find(
-                  array('attackers.corporationID' => (int)  $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $lossdata = Kingboard_Kill::find(
-                array('victim.corporationID' => (int) $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId($request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId($request['hid']);
-            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
-            $template = "corporation/index.html";
-            $info = Kingboard_Kill::getCorporationInfoFromId($request['hid']);
-            //$stats = $stats->sort(array("value.value" => -1));
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'totalstats' => $totalstats, 'info' => $info));
-        } else {
-            die('no corporation id specified');
+            case "pilot":
+                $template = "pilot/index.html";
+                $info = Kingboard_Kill::getPilotInfoFromId($ownerID);
+                break;
+            case "corporation":
+                $template = "corporation/index.html";
+                $info = Kingboard_Kill::getCorporationInfoFromId($ownerID);
+                break;
+            case "faction":
+                $template = "faction/index.html";
+                $info = Kingboard_Kill::getFactionInfoFromId($ownerID);
+                break;
+            case "alliance":
+                $template = "alliance/index.html";
+                $info = Kingboard_Kill::getAllianceInfoFromId($ownerID);
+                break;
         }
+        $templateVars['info'] = $info;
+
+        // we replace the defaults with the ones of the current look
+        $templateVars['ownerID'] = $ownerID;
+        $templateVars['ownerType'] = $ownerType;
+        $templateVars['action'] = "/details/$ownerType/$ownerID";
+
+        return $this->render($template, $templateVars);
     }
-
-    public function faction($request)
-    {
-
-        if(!empty($request['hid']))
-        {
-            $count = Kingboard_Kill::find(
-                array('attackers.factionID' => (int) $request['hid'])
-            )->count();
-			
-            $killdata = Kingboard_Kill::find(
-                  array('attackers.factionID' => (int)  $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $lossdata = Kingboard_Kill::find(
-                array('victim.factionID' => (int) $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByFaction::getInstanceByFactionId($request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByFaction::getInstanceByFactionId($request['hid']);
-            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
-            $template = "faction/index.html";
-            $info = Kingboard_Kill::getFactionInfoFromId($request['hid']);
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'totalstats' => $totalstats, 'killstats' => $killstats, 'lossstats' => $lossstats, 'info' => $info));
-        } else {
-            die('no alliance id specified');
-        }
-    }
-
-    public function alliance($request)
-    {
-		
-        if(!empty($request['hid']))
-        {
-            $count = Kingboard_Kill::find(
-                array('attackers.allianceID' => (int) $request['hid'])
-            )->count();
-
-            $killdata = Kingboard_Kill::find(
-                array('attackers.allianceID' => (int) $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $lossdata = Kingboard_Kill::find(
-                array('victim.allianceID' => (int) $request['hid'])
-            )->sort(array('killTime' => -1))->limit(20);
-
-            $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId($request['hid']);
-            $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId($request['hid']);
-            $totalstats = $this->calculateTotalStats($killstats, $lossstats);
-            $template = "alliance/index.html";
-            $info = Kingboard_Kill::getAllianceInfoFromId($request['hid']);
-            return $this->render($template, array('killdata' => $killdata, 'lossdata' =>$lossdata, 'count' => $count, 'killstats' => $killstats, 'lossstats' => $lossstats, 'totalstats' => $totalstats, 'info' => $info));
-        } else {
-            die('no alliance id specified');
-        }
-    }
-
-    /**
-     * return the totalsstats array with the combined losses/kills
-     *
-     * @deprecated
-     * @param array $killstats
-     * @param array $lossstats
-     * @return array
-     */
-    private function calculateTotalStats($killstats, $lossstats)
-    {
-        $totalstats = array();
-
-        if(isset($killstats['value']['group']))
-            foreach($killstats['value']['group'] as $type => $value)
-            {
-                if(!isset($totalstats[$type]))
-                    $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
-                $totalstats[$type]['kills'] = $value;
-            }
-
-        if(isset($lossstats['value']['group']))
-            foreach($lossstats['value']['group'] as $type => $value)
-            {
-                if(!isset($totalstats[$type]))
-                    $totalstats[$type] = array('kills' => 0, 'losses' => 0);
-                $totalstats[$type]['losses'] = $value;
-            }
-
-        ksort($totalstats);
-        return $totalstats;
-    }
-
 }

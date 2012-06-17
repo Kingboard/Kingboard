@@ -35,12 +35,12 @@
     {% for result in results %}
 <tr>
     <td class="icon">
-         <a href="/{{result.type}}/{{result.id}}/" rel='twipsy' title='{{result.name}}'>
+         <a href="/details/{{result.type}}/{{result.id}}/" rel='twipsy' title='{{result.name}}'>
          <img src="{% if result.type == "faction" %}{{images.alliances}}{%endif%}{% if result.type == "character" %}{{images.characters}}{%endif%}{% if result.type == "corporation" %}{{images.corporations}}{%endif%}{% if result.type == "alliance" %}{{images.alliances}}{%endif%}{{result.id}}_32.{% if result.type == "character" %}jpg{% else %}png{% endif %}" alt="{{result.name}}">
          </a>
     </td>
     <td>
-        <a href="/{{result.type}}/{{result.id}}/" title='{{result.name}}'>
+        <a href="/details/{{result.type}}/{{result.id}}/" title='{{result.name}}'>
         {{ result.name }} ({{ result.type }})
         </a>
     </td>
