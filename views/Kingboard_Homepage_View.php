@@ -51,47 +51,20 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
     public function pilot($request)
     {
-	    if (!empty($request['view']))
-		{
-			$type = $request['view'];
-			$qry = Kingboard_EveItem::getShipIDs($type);
-			$reqarray = array();
-			foreach($qry as $result)
-			{
-				$reqarray[] = array('victim.shipTypeID' => $result->typeID);
-			}
-		}
-		
         if(!empty($request['hid']))
         {
             $count = Kingboard_Kill::find(
                 array('attackers.characterID' => (int) $request['hid'])
             )->count();
 
-			if(!empty($reqarray))
-			{
-				$killdata = Kingboard_Kill::find(
-					  array('attackers.characterID' => (int)  $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$killdata = Kingboard_Kill::find(
-					  array('attackers.characterID' => (int)  $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			if(!empty($reqarray))
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.characterID' => (int) $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.characterID' => (int) $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
+            $killdata = Kingboard_Kill::find(
+                  array('attackers.characterID' => (int)  $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $lossdata = Kingboard_Kill::find(
+                array('victim.characterID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId($request['hid']);
             $totalstats = $this->calculateTotalStats($killstats, $lossstats);
@@ -105,48 +78,20 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
     public function corporation($request)
     {
-	    if (!empty($request['view']))
-		{
-			$type = $request['view'];
-			$qry = Kingboard_EveItem::getShipIDs($type);
-			$reqarray = array();
-			foreach($qry as $result)
-			{
-				$reqarray[] = array('victim.shipTypeID' => $result->typeID);
-			}
-		}
-		
         if(!empty($request['hid']))
         {
             $count = Kingboard_Kill::find(
                 array('attackers.corporationID' => (int) $request['hid'])
             )->count();
 
-			if(!empty($reqarray))
-			{
-				$killdata = Kingboard_Kill::find(
-					  array('attackers.corporationID' => (int)  $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$killdata = Kingboard_Kill::find(
-					  array('attackers.corporationID' => (int)  $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			
-			if(!empty($reqarray))
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.corporationID' => (int) $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.corporationID' => (int) $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
+            $killdata = Kingboard_Kill::find(
+                  array('attackers.corporationID' => (int)  $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $lossdata = Kingboard_Kill::find(
+                array('victim.corporationID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId($request['hid']);
             $totalstats = $this->calculateTotalStats($killstats, $lossstats);
@@ -161,16 +106,6 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
     public function faction($request)
     {
-	    if (!empty($request['view']))
-		{
-			$type = $request['view'];
-			$qry = Kingboard_EveItem::getShipIDs($type);
-			$reqarray = array();
-			foreach($qry as $result)
-			{
-				$reqarray[] = array('victim.shipTypeID' => $result->typeID);
-			}
-		}
 
         if(!empty($request['hid']))
         {
@@ -178,31 +113,14 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
                 array('attackers.factionID' => (int) $request['hid'])
             )->count();
 			
-			if(!empty($reqarray))
-			{
-				$killdata = Kingboard_Kill::find(
-					  array('attackers.factionID' => (int)  $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$killdata = Kingboard_Kill::find(
-					  array('attackers.factionID' => (int)  $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
+            $killdata = Kingboard_Kill::find(
+                  array('attackers.factionID' => (int)  $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
 
-			if(!empty($reqarray))
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.factionID' => (int) $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.factionID' => (int) $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
+            $lossdata = Kingboard_Kill::find(
+                array('victim.factionID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByFaction::getInstanceByFactionId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByFaction::getInstanceByFactionId($request['hid']);
             $totalstats = $this->calculateTotalStats($killstats, $lossstats);
@@ -217,48 +135,20 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
     public function alliance($request)
     {
 		
-	    if (!empty($request['view']))
-		{
-			$type = $request['view'];
-			$qry = Kingboard_EveItem::getShipIDs($type);
-			$reqarray = array();
-			foreach($qry as $result)
-			{
-				$reqarray[] = array('victim.shipTypeID' => $result->typeID);
-			}
-		}
-		
         if(!empty($request['hid']))
         {
             $count = Kingboard_Kill::find(
                 array('attackers.allianceID' => (int) $request['hid'])
             )->count();
-			if(!empty($reqarray))
-			{
-				$killdata = Kingboard_Kill::find(
-					array('attackers.allianceID' => (int) $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$killdata = Kingboard_Kill::find(
-					array('attackers.allianceID' => (int) $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
 
-			}
-			if(!empty($reqarray))
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.allianceID' => (int) $request['hid'], '$or' => $reqarray)
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			else
-			{
-				$lossdata = Kingboard_Kill::find(
-					array('victim.allianceID' => (int) $request['hid'])
-				)->sort(array('killTime' => -1))->limit(20);
-			}
-			
+            $killdata = Kingboard_Kill::find(
+                array('attackers.allianceID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
+            $lossdata = Kingboard_Kill::find(
+                array('victim.allianceID' => (int) $request['hid'])
+            )->sort(array('killTime' => -1))->limit(20);
+
             $killstats = Kingboard_Kill_MapReduce_KillsByShipByAlliance::getInstanceByAllianceId($request['hid']);
             $lossstats = Kingboard_Kill_MapReduce_LossesByShipByAlliance::getInstanceByAllianceId($request['hid']);
             $totalstats = $this->calculateTotalStats($killstats, $lossstats);
@@ -272,12 +162,34 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
     /**
      * return the totalsstats array with the combined losses/kills
+     *
+     * @deprecated
      * @param array $killstats
      * @param array $lossstats
      * @return array
      */
     private function calculateTotalStats($killstats, $lossstats)
     {
+        $totalstats = array();
+
+        if(isset($killstats['value']['group']))
+            foreach($killstats['value']['group'] as $type => $value)
+            {
+                if(!isset($totalstats[$type]))
+                    $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
+                $totalstats[$type]['kills'] = $value;
+            }
+
+        if(isset($lossstats['value']['group']))
+            foreach($lossstats['value']['group'] as $type => $value)
+            {
+                if(!isset($totalstats[$type]))
+                    $totalstats[$type] = array('kills' => 0, 'losses' => 0);
+                $totalstats[$type]['losses'] = $value;
+            }
+
+        ksort($totalstats);
+        return $totalstats;
     }
 
 }
