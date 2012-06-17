@@ -6,12 +6,7 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
         $currentPage = 1;
         if (!empty($request['page']))
         {
-            $currentPage = (int) $request['page'];
-
-            if ($currentPage < 1)
-            {
-                $currentPage = 1;
-            }
+            $currentPage = ((int) $request['page'] <1) ?  1 : (int) $request['page'];
         }
 
 
