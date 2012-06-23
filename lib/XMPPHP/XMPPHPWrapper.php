@@ -1,4 +1,5 @@
 <?php
+// note: this library is no longer included
 require_once dirname(__FILE__) ."/lib/XMPPHP/XMPP.php";
 
 class XMPPHPWrapper {
