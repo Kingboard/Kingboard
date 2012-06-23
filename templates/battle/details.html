@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% block title %}{{ battleSetting.system }}:{{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }} Battle Details{% endblock %}
 {% block content %}
 <h1>Battle for {{ battleSetting.system }}</h1>
 <p><b>Start</b>: {{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }}<br/>
