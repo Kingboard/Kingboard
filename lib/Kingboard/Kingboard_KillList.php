@@ -34,6 +34,7 @@ class Kingboard_KillList
                     array('victim.factionID' => (int)  $this->ownerID)
                 ));
                 break;
+            case "corp":
             case "corporation":
                 $killstats = Kingboard_Kill_MapReduce_KillsByShipByCorporation::getInstanceByCorporationId((int) $this->ownerID);
                 $lossstats = Kingboard_Kill_MapReduce_LossesByShipByCorporation::getInstanceByCorporationId((int) $this->ownerID);
@@ -42,6 +43,8 @@ class Kingboard_KillList
                     array('victim.corporationID' => (int) $this->ownerID)
                 ));
                 break;
+            case "char":
+            case "character":
             case "pilot":
                 $killstats = Kingboard_Kill_MapReduce_KillsByShipByPilot::getInstanceByPilotId((int) $this->ownerID);
                 $lossstats = Kingboard_Kill_MapReduce_LossesByShipByPilot::getInstanceByPilotId((int) $this->ownerID);

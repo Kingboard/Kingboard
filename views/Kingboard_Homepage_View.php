@@ -80,10 +80,13 @@ class Kingboard_Homepage_View extends Kingboard_Base_View
 
         switch($ownerType)
         {
+            case "character":
+            case "char":
             case "pilot":
                 $template = "pilot/index.html";
                 $info = Kingboard_Kill::getPilotInfoFromId($ownerID);
                 break;
+            case "corp":
             case "corporation":
                 $template = "corporation/index.html";
                 $info = Kingboard_Kill::getCorporationInfoFromId($ownerID);
