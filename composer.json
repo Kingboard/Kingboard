@@ -1,0 +1,15 @@
+{
+    "name": "kingboard/kingboard",
+    "description": "MongoDB / PHP based Killboard for EVE Online",
+    "type": "library",
+    "require": {
+        "pheal/pheal": ">=0.1.1",
+        "king23/king23": ">=0.0.5"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.king23.net"
+        }
+    ]
+}

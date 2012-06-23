@@ -17,18 +17,19 @@ see LICENSE.md File
 - MongoDB: 1.8.1 or higher, 2.0+ recommended
 - King23: current github clone
 - Pheal: current github clone
+- Composer: http://getcomposer.org/
 
 ## INSTALLATION
 1. Clone it from github `git clone git://github.com/ppetermann/Kingboard.git`
 2. Move into KingBoard `cd Kingboard`
-3. Initiate Submodules `git submodule init`
-4. Update Submodules `git submodule update`
+3. run `php composer.phar install` to install dependencies
 5. Create folders cache and templates_c, make sure they are writable  by your webserver
 6. Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
 7. Extract the zip file and run mongorestore <ExtractPath>
 8. Make your webservers docroot point to public/ path
 9. (optional) if using lighthttpd make a rewrite rule: url.rewrite-if-not-file = (".*\?(.*)$" => "/index.php?$1", "" => "/index.php")
 10. (optional, recommended) run king23 KingboardMaintenance:setup_indexes
+11. copy conf/config.php-dist to conf/config.php and edit.
 
 ## USAGE
 basically you should have a running killboard site with no content yet,

@@ -1,5 +1,4 @@
-lib/Pheal
-lib/King23
+vendor
 templates_c
 nbproject
 .DS_Store
