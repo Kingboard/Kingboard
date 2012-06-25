@@ -20,25 +20,28 @@ see LICENSE.md File
 - Composer: http://getcomposer.org/
 
 ## INSTALLATION
-1. Clone it from github `git clone git://github.com/ppetermann/Kingboard.git`
-2. Move into KingBoard `cd Kingboard`
-3. run `php composer.phar install` to install dependencies
-5. Create folders cache/api cache/templates_c, make sure they are writable by your webserver
-6. Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
-7. Extract the zip file and run mongorestore <ExtractPath>
-8. Make your webservers docroot point to public/ path
-9. (optional) if using lighthttpd make a rewrite rule: url.rewrite-if-not-file = (".*\?(.*)$" => "/index.php?$1", "" => "/index.php")
-10. (optional, recommended) run vendor/bin/king23 KingboardMaintenance:setup_indexes
-11. copy conf/config.php-dist to conf/config.php and edit.
+### Assumptions
+A few assumptions are made before you start:
+1. you are on linux, and you have commandline access.
+2. you know how to handle yourself on linux
+3. the prequesites (see README) are installed.
+4. you have a vhost setup for the kingboard installation - this wont work in a subdirectory.
 
-## USAGE
-basically you should have a running killboard site with no content yet,
-at the moment content is only added through tasks,
-checkout:
-vendor/bin/king23 Kingboard
-vendor/bin/king23 KingboardMaintenance
-vendor/bin/king23 KingboardCron
-for information on available tasks
+### Quick Install
+1. Aquire Kingboard by either cloning or downloading the latest release
+ * clone: `git clone git://github.com/ppetermann/Kingboard.git`
+ * release: ... (extract afterwards)
+2. Install the DB dump for MongoDB
+ * Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
+ * Extract the zip file and run mongorestore <ExtractPath>
+3. Create folders cache/api cache/templates_c below your kingboard path, make sure they are writable by your webserver
+4. Make your webservers docroot point to public/ path
+5. Setup rewrite (for apache the .htaccess should do that, for lighttpd add the rule: url.rewrite-if-not-file = (".*\?(.*)$" => "/index.php?$1", "" => "/index.php")
+6. run `php /path/to/composer.phar install` to install dependencies
+7. run vendor/bin/king23 KingboardMaintenance:setup_indexes
+8. copy conf/config.php-dist to conf/config.php and edit.
+
+you should now be able to call your kingboard.
 
 ## Links
 - [Kingboard Github](https://github.com/ppetermann/Kingboard)
