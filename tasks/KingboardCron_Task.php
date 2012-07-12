@@ -71,7 +71,7 @@ class KingboardCron_Task extends King23_CLI_Task
     public function key_activation(array $options)
     {
         $this->cli->header('updating key activates');
-        $reg = King23_Registry::getInstance();
+        $reg = \King23\Core\Registry::getInstance();
 
         $pheal = new Pheal($reg->apimailreceiverApiUserID, $reg->apimailreceiverApiKey, 'char');
         $messages = $pheal->MailMessages(array('characterID' => $reg->apimailreceiverCharacterID))->messages;
@@ -102,7 +102,7 @@ class KingboardCron_Task extends King23_CLI_Task
                     $user->save();
                     $token->delete();
 
-                    $body = King23_Registry::getInstance()->sith->cachedGet('mails/activate_apikey.html')->render(array('username' => $user['username'], 'apiuserid' => $apiuserid ), King23_Registry::getInstance()->sith);
+                    $body = \King23\Core\Registry::getInstance()->sith->cachedGet('mails/activate_apikey.html')->render(array('username' => $user['username'], 'apiuserid' => $apiuserid ), \King23\Core\Registry::getInstance()->sith);
                     mail($user['username'], "Kingboard API Key Activation", $body);
                     break;
                 }

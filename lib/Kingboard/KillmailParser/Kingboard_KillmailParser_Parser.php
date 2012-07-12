@@ -466,7 +466,7 @@ class Kingboard_KillmailParser_Parser
     }
 
     /**
-     * Get the data model, create one if none set
+     * Get the data Model, create one if none set
      * It does not save a new one or any changes!
      *
      * @return Kingboard_Kill

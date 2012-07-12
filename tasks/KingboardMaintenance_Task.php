@@ -99,7 +99,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
             return;
         }
 
-        $reg = King23_Registry::getInstance();
+        $reg = \King23\Core\Registry::getInstance();
 
         $this->cli->message("Setting Killmail_Kill indexes");
         // Kingboard_Kill indexes
