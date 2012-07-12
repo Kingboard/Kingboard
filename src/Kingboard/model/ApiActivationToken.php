@@ -1,5 +1,5 @@
 <?php
-namespace Kingboard\ApiActivationToken;
+namespace Kingboard\Model;
 
 class ApiActivationToken extends \King23\Mongo\MongoObject
 {

@@ -19,12 +19,12 @@ class Battle extends \Kingboard\Views\Base
      */
     public function show(array $parameters)
     {
-        $battleSetting = Kingboard_BattleSettings::getById($parameters['id']);
+        $battleSetting = \Kingboard\Model\BattleSettings::getById($parameters['id']);
 
         if(is_null($battleSetting))
             $this->sendErrorAndQuit("Battle with Id " . $parameters['id'] . " does not exist");
 
-        $battle = Kingboard_Battle::getByBattleSettings($battleSetting);
+        $battle = \Kingboard\Model\Battle::getByBattleSettings($battleSetting);
 
         //print_r($battle->data);
         $this->_context['battleSetting'] = $battleSetting;

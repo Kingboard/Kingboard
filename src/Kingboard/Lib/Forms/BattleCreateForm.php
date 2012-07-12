@@ -1,5 +1,7 @@
 <?php
-class Kingboard_BattleCreate_Form extends Kingboard_Form
+namespace Kingboard\Lib\Forms;
+
+class BattleCreateForm extends \Kingboard\Lib\Form
 {
     protected static function validateCharacter($characterData)
     {

@@ -16,7 +16,7 @@ class AutoCompleter extends \Kingboard\Views\Base
     public function solarsystem(array $parameters)
     {
         $output = array();
-        $result = Kingboard_EveSolarSystem::find(array('itemName' => new MongoRegex('/^' .$_GET['term'] . '.*/i')), array('itemName'=>1))->limit(10);
+        $result = \Kingboard\Model\EveSolarSystem::find(array('itemName' => new \MongoRegex('/^' .$_GET['term'] . '.*/i')), array('itemName'=>1))->limit(10);
         foreach($result as $system)
            $output[] = $system['itemName'];
         echo json_encode($output);
@@ -25,7 +25,7 @@ class AutoCompleter extends \Kingboard\Views\Base
     public function region(array $parameters)
     {
         $output = array();
-        $result = Kingboard_EveRegion::find(array('itemName' => new MongoRegex('/^' .$_GET['term'] . '.*/i')), array("itemName" => 1))->limit(10);
+        $result = \Kingboard\Model\EveRegion::find(array('itemName' => new \MongoRegex('/^' .$_GET['term'] . '.*/i')), array("itemName" => 1))->limit(10);
         foreach($result as $system)
            $output[] = $system['itemName'];
         echo json_encode($output);
@@ -42,8 +42,8 @@ class AutoCompleter extends \Kingboard\Views\Base
             return;
         }
         
-        $result = Kingboard_Kill::find(
-            array('victim.characterName' => new MongoRegex('/^' .$term . '.*/i')),
+        $result = \Kingboard\Model\Kill::find(
+            array('victim.characterName' => new \MongoRegex('/^' .$term . '.*/i')),
             array('victim.characterName' => 1))
             ->limit(50);
         $names = array();

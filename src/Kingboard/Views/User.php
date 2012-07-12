@@ -11,11 +11,11 @@ class User extends \Kingboard\Views\Base
 
     public function myKingboard(array $parameters)
     {
-        $user = Kingboard_Auth::getUser();
+        $user = \Kingboard\Lib\Auth\Auth::getUser();
         $activeKeys = array();
         $pendingKeys = false;
         $context = array();
-        if(isset($_POST['XSRF']) && Kingboard_Form::getXSRFToken() == $_POST['XSRF'])
+        if(isset($_POST['XSRF']) && \Kingboard\Lib\Form::getXSRFToken() == $_POST['XSRF'])
         {
             try {
                 $pheal = new \Pheal($_POST['apiuserid'], $_POST['apikey']);
@@ -29,27 +29,16 @@ class User extends \Kingboard\Views\Base
                 if(!($accessmask & 272))
                     throw new \PhealAPIException(0, "fake exception, key invalid", "");
 
-		/*
-                // fetch character list
-                $characters = $pheal->accountScope->Characters()->characters;
-
-                // check if we can fetch contact list
-                $pheal->charScope->ContactList(array('characterID' => $characters[0]->characterID));
-
-                // check if we can fetch Kills
-                $pheal->charScope->KillLog();
-		*/
-
                 if(!isset($user['keys']))
                     $keys = array();
                 else
                     $keys = $user['keys'];
 
                 // ensure to remove existing activation keys if this is an update
-                if($activationkey = Kingboard_ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $_POST['apiuserid']))
+                if($activationkey = \Kingboard\Model\ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $_POST['apiuserid']))
                     $activationkey->delete();
 
-                $activationkey = Kingboard_ApiActivationToken::create($user->_id, $_POST['apiuserid']);
+                $activationkey = \Kingboard\Model\ApiActivationToken::create($user->_id, $_POST['apiuserid']);
 
                 $keys[$_POST['apiuserid']] = array(
                     'apiuserid' => $_POST['apiuserid'],
@@ -60,9 +49,9 @@ class User extends \Kingboard\Views\Base
                 $user['keys'] = $keys;
                 $user->save();
                 // ensure user is refreshed in session
-                Kingboard_Auth::getUser();
+                \Kingboard\Lib\Auth\Auth::getUser();
 
-            } catch (PhealApiException $e) {
+            } catch (\PhealApiException $e) {
                 $context = $_POST;
                 $context['error'] = $e->getMessage();
                 //$context['error'] = "the key could not be validated as a valid apikey";
@@ -80,7 +69,7 @@ class User extends \Kingboard\Views\Base
                 {
                     if(!is_array($pendingKeys))
                         $pendingKeys = array();
-                    $key['activationkey'] = (String) Kingboard_ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $key['apiuserid']);
+                    $key['activationkey'] = (String) \Kingboard\Model\ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $key['apiuserid']);
                     $pendingKeys[] = $key;
                 }
             }

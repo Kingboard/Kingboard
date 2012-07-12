@@ -5,7 +5,7 @@ class EveInfo extends \Kingboard\Views\Base
     public function eveItem(array $data)
     {
         $context = array();
-        $context['item'] = Kingboard_EveItem::getByItemId($data['itemid']);
+        $context['item'] = \Kingboard\Model\EveItem::getByItemId($data['itemid']);
 
         // sort attributes by categoryName so we can split 'em up in templates
         $attributes = array();

@@ -11,7 +11,7 @@ class Post extends \Kingboard\Views\Base
 
     public function post($request)
     {
-		if(count($_POST) > 0)
+/*		if(count($_POST) > 0)
 			$context = $_POST;
 		else
 			$context = array();
@@ -43,7 +43,8 @@ class Post extends \Kingboard\Views\Base
 				if(empty($kill['stats'])) { echo "ERROR!"; die();}
 				$this->redirect("/kill/$id/");
 			}
-		}
+		}    */
+        $context = array();
         return $this->render('post/index.html', $context);
     }
 }

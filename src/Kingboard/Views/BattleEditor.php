@@ -10,15 +10,15 @@ class BattleEditor extends \Kingboard\Views\Base
 
     public function create(array $params)
     {
-        if(!Kingboard_BattleCreate_Form::validate($_POST))
+        if(!\Kingboard\Lib\Forms\BattleCreateForm::validate($_POST))
         {
             // @todo handle invalid
             die();
         }
-        $user = Kingboard_Auth::getUser();
+        $user = \Kingboard\Lib\Auth\Auth::getUser();
         list($key, $character) = explode('|', $_POST['character']);
         $key = $user["keys"][$key];
-        $pheal = new Pheal($key['apiuserid'], $key['apikey'], 'char');
+        $pheal = new \Pheal($key['apiuserid'], $key['apikey'], 'char');
         $contacts = $pheal->ContactList(array('characterID' => $character));
         $positives = array();
         foreach($contacts->corporateContactList as $contact)
@@ -40,16 +40,16 @@ class BattleEditor extends \Kingboard\Views\Base
             }
         }
 
-        $battleSetting = new Kingboard_BattleSettings();
-        $battleSetting->startdate = new MongoDate(strtotime($_POST['startdate']));
+        $battleSetting = new \Kingboard\Model\BattleSettings();
+        $battleSetting->startdate = new \MongoDate(strtotime($_POST['startdate']));
         $battleSetting->user = $user->_id;
-        $battleSetting->enddate = new MongoDate(strtotime($_POST['enddate']));
+        $battleSetting->enddate = new \MongoDate(strtotime($_POST['enddate']));
         $battleSetting->system = $_POST['system'];
         $battleSetting->key = $key;
         $battleSetting->character = $character;
         $battleSetting->positives = $positives;
         $battleSetting->runs = 0;
-        $battleSetting->nextRun = new MongoDate(time());
+        $battleSetting->nextRun = new \MongoDate(time());
         $battleSetting->save();
 
         // we are done here, lets redirect to the battle!
