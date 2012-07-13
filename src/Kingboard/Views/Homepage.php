@@ -70,7 +70,7 @@ class Homepage extends \Kingboard\Views\Base
         $templateVars['lossstats'] = $killList->getLossStats();
         $templateVars['totalstats'] = $killList->getTotalStats();
 
-        $paginator = new Kingboard_Paginator($currentPage, $killList->getCount());
+        $paginator = new \Kingboard\Lib\Paginator($currentPage, $killList->getCount());
         // fetch kill data
         $templateVars['data'] = $killList->getKills($paginator ->getSkip(), $paginator->getKillsPerPage());
 
@@ -85,20 +85,20 @@ class Homepage extends \Kingboard\Views\Base
             case "char":
             case "pilot":
                 $template = "pilot/index.html";
-                $info = Kingboard_Kill::getPilotInfoFromId($ownerID);
+                $info = \Kingboard\Model\Kill::getPilotInfoFromId($ownerID);
                 break;
             case "corp":
             case "corporation":
                 $template = "corporation/index.html";
-                $info = Kingboard_Kill::getCorporationInfoFromId($ownerID);
+                $info = \Kingboard\Model\Kill::getCorporationInfoFromId($ownerID);
                 break;
             case "faction":
                 $template = "faction/index.html";
-                $info = Kingboard_Kill::getFactionInfoFromId($ownerID);
+                $info = \Kingboard\Model\Kill::getFactionInfoFromId($ownerID);
                 break;
             case "alliance":
                 $template = "alliance/index.html";
-                $info = Kingboard_Kill::getAllianceInfoFromId($ownerID);
+                $info = \Kingboard\Model\Kill::getAllianceInfoFromId($ownerID);
                 break;
         }
         $templateVars['info'] = $info;

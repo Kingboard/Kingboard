@@ -31,7 +31,7 @@ class Battle extends \King23\Mongo\MongoObject
         return $battle;
     }
 
-    public static function generateBattle(Kingboard_BattleSettings $battleSetting)
+    public static function generateBattle(\Kingboard\Model\BattleSettings $battleSetting)
     {
         $okills = array();
         $olosses = array();

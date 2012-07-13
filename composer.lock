@@ -1,29 +1,17 @@
 {
-    "hash": "090b10c4cc5450614f4c607b492dc373",
+    "hash": "aaf1ef7ae69346f3dbb2e10e506e4d94",
     "packages": [
         {
             "package": "king23/king23",
-            "version": "dev-master",
-            "source-reference": "0.0.5",
-            "commit-date": "1340445456"
+            "version": "0.1.0"
         },
         {
             "package": "pheal/pheal",
-            "version": "dev-master",
-            "source-reference": "0.1.1",
-            "commit-date": "1340439508"
+            "version": "0.1.2"
         },
         {
             "package": "twig/twig",
-            "version": "dev-master",
-            "alias-pretty-version": "1.8.x-dev",
-            "alias-version": "1.8.9999999.9999999-dev"
-        },
-        {
-            "package": "twig/twig",
-            "version": "dev-master",
-            "source-reference": "4679ad51c5390648b7ea4c8f0ecd2c0c344145ba",
-            "commit-date": "1339959143"
+            "version": "v1.8.3"
         }
     ],
     "packages-dev": null,
