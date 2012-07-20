@@ -2,15 +2,11 @@
 if(!defined("APP_PATH"))
     define("APP_PATH", realpath(dirname(__FILE__) . "/.."));
 
-require_once APP_PATH ."/vendor/autoload.php";
-require_once APP_PATH . "/vendor/king23/king23/lib/core/King23_Classloader.php";
-
-King23_Classloader::register();
-King23_Classloader::init(APP_PATH . "/vendor/king23/king23/lib");
-King23_Classloader::init(APP_PATH . "/views");
-King23_Classloader::init(APP_PATH . "/lib/Kingboard");
-King23_Classloader::init(APP_PATH . "/lib/PHPMarkdown");
-King23_Classloader::init(APP_PATH . "/model");
+// composer autload
+require_once APP_PATH . "/vendor/autoload.php";
+\King23\Core\Classloader::register();
+\King23\Core\Classloader::init(APP_PATH . "/vendor/king23/king23/lib");
+\King23\Core\Classloader::init(APP_PATH . "/src");
 
 $reg = \King23\Core\Registry::getInstance();
 
@@ -32,7 +28,7 @@ $pc->http_timeout = 40;
 // Twig Template configuration
 Twig_Autoloader::register();
 $reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templates"), array(
-    //"cache" => APP_PATH . "/templates_c",
+    "cache" => APP_PATH . "/cache/templates_c",
     "debug" => true
 ));
 
@@ -59,13 +55,6 @@ $reg->ownerType = "alliance";
 
 // set this to something meaningfull to replace the word "Kingboard" in the top menu
 // $reg->ownerName = "Kingboard";
-
-// uncomment and edit to use jabber as authentication engine opposed to own registration process
-//King23_Classloader::init(APP_PATH . "/lib/XMPPHP");
-//$reg->auth = "Kingboard_Auth_Jabber_View";
-//$reg->authJabberHost = "my.jabberserver.net";
-//$reg->authJabberPort = 5222;
-//$reg->authJabberDomain = "jabberserver.net";
 
 // uncomment when using OAuth2 login opposed to regular or jabber auth
 /*
@@ -96,5 +85,4 @@ $reg->theme = "default";
 
 require_once("routes.php");
 MongoCursor::$timeout = -1;
-
 session_start();
