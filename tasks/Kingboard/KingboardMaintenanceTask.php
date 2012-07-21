@@ -1,6 +1,6 @@
 <?php
-require_once 'conf/config.php';
-class KingboardMaintenance_Task extends King23_CLI_Task
+namespace Kingboard;
+class KingboardMaintenanceTask extends \King23\Tasks\King23Task
 {
     /**
      * documentation for the single tasks
@@ -27,7 +27,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
      */
     public function key_check(array $options)
     {
-        $keys = Kingboard_EveApiKey::find();
+        $keys = \Kingboard\Model\EveApiKey::find();
         foreach($keys as $key)
         {
             $this->cli->message("testing {$key['userid']}");
@@ -35,7 +35,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
             try {
                 $pheal->Characters();
                 $this->cli->positive('ok');
-            } catch(PhealApiException $e) {
+            } catch(\PhealApiException $e) {
                 $this->cli->error('failed');
                 if(!isset($key['failed']))
                     $key->failed = 0;
@@ -58,7 +58,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
             $options[0] = 0;
         }
         $criteria = array('failed' => array('$gt' => (int) $options[0]));
-        $keys = Kingboard_EveApiKey::find($criteria);
+        $keys = \Kingboard\Model\EveApiKey::find($criteria);
         foreach($keys as $key)
         {
             $this->cli->message("{$key['userid']} has {$key['failed']} markers");
@@ -78,7 +78,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
             return;
         }
         $criteria = array('failed' => array('$gt' => (int) $options[0]));
-        $keys = Kingboard_EveApiKey::find($criteria);
+        $keys = \Kingboard\Model\EveApiKey::find($criteria);
         foreach($keys as $key)
         {
             $this->cli->message("purging {$key['userid']}");
@@ -102,6 +102,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         $reg = \King23\Core\Registry::getInstance();
 
         $this->cli->message("Setting Killmail_Kill indexes");
+
         // Kingboard_Kill indexes
         $col = $reg->mongo['db']->Kingboard_Kill;
 
@@ -145,7 +146,7 @@ class KingboardMaintenance_Task extends King23_CLI_Task
         $col->ensureIndex(array('attackers.allianceName' =>1));
 
 		// faction victim id
-        $col->ensureIndex(arraY('victim.factionID' =>1));
+        $col->ensureIndex(array('victim.factionID' =>1));
 
         // faction attacker id
         $col->ensureIndex(array('attackers.factionID' =>1));

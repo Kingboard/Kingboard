@@ -14,9 +14,21 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
      * @return \King23\Mongo\MongoResult
      */
     public static function search($searchword, $limit) {
-        return  parent::_find(__CLASS__, array(
+        return parent::_find(__CLASS__, array(
             "_id" => new \MongoRegex('/^' .$searchword . '.*/i')
         ))->limit($limit);
+    }
+
+    /**
+     * get a characterID by a characters name
+     * @static
+     * @param String $name
+     * @return int
+     */
+    public static function getEveIdByName($name) {
+        if($data = parent::_findOne(__CLASS__, array("_id"=> $name), array("value.id")))
+            return $data['value']['id'];
+        return false;
     }
 
     /**
