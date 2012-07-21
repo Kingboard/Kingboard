@@ -1,5 +1,7 @@
 <?php
-class Kingboard_IdFeed_Fetcher
+namespace Kingboard\Lib\Fetcher;
+
+class IdFeed
 {
     private $url;
     private $type;
@@ -22,15 +24,15 @@ class Kingboard_IdFeed_Fetcher
     {
         $url = $this->url . '&lastID=' . $lastid;
         if($sxe = @simplexml_load_file($url))
-            return new PhealResult($sxe);
-        throw new Exception("could not load $url");
+            return new \PhealResult($sxe);
+        throw new \Exception("could not load $url");
     }
 
     public function fetchOld($lastid)
     {
         $url = $this->url . '&allkills=1&lastintID=' . $lastid;
         if($sxe = @simplexml_load_file($url))
-            return new PhealResult($sxe);
-        throw new Exception("could not load $url");
+            return new \PhealResult($sxe);
+        throw new \Exception("could not load $url");
     }
 }

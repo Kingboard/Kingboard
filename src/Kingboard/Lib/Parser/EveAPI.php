@@ -1,9 +1,10 @@
 <?php
-class Kingboard_ApiKillParser
+namespace Kingboard\Lib\Parser;
+class EveAPI
 {
     public function parseKills($kills)
     {
-        $oldkills =0;
+        $oldkills = 0;
         $newkills = 0;
         $errors = 0;
         $lastID = 0;
@@ -28,16 +29,16 @@ class Kingboard_ApiKillParser
                     "killID" => $kill->killID,
                     "solarSystemID" => $kill->solarSystemID,
                     "location" => array(
-                        "solarSystem" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->itemName,
-                        "security" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
-                        "region" => Kingboard_EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->Region['itemName'],
+                        "solarSystem" => \Kingboard\Model\EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->itemName,
+                        "security" => \Kingboard\Model\EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
+                        "region" => \Kingboard\Model\EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->Region['itemName'],
                     ),
-                    "killTime" => new MongoDate(strtotime($kill->killTime)),
+                    "killTime" => new \MongoDate(strtotime($kill->killTime)),
                     "moonID" => $kill->moonID,
                     "victim" => array(
-                        "characterID" => (int) $this->ensureCharacterID($kill->victim->characterID, $kill->victim->characterName),
+                        "characterID" => (int) $this->ensureEveEntityID($kill->victim->characterID, $kill->victim->characterName),
                         "characterName" => $kill->victim->characterName,
-                        "corporationID" => (int) $this->ensureCorporationID($kill->victim->corporationID, $kill->victim->corporationName),
+                        "corporationID" => (int) $this->ensureEveEntityID($kill->victim->corporationID, $kill->victim->corporationName),
                         "corporationName" => $kill->victim->corporationName,
                         "allianceID" => (int) $kill->victim->allianceID,
                         "allianceName" => $kill->victim->allianceName,
@@ -45,7 +46,7 @@ class Kingboard_ApiKillParser
                         "factionName" => $kill->victim->factionName,
                         "damageTaken" => $kill->victim->damageTaken,
                         "shipTypeID"  => (int)$kill->victim->shipTypeID,
-                        "shipType"  => Kingboard_EveItem::getByItemId($kill->victim->shipTypeID)->typeName
+                        "shipType"  => \Kingboard\Model\EveItem::getByItemId($kill->victim->shipTypeID)->typeName
                     )
                 );
                 $killdata['attackers'] = array();
@@ -54,8 +55,7 @@ class Kingboard_ApiKillParser
                     $killdata['attackers'][] = array(
                         "characterID" => (int)$attacker->characterID,
                         "characterName" => $attacker->characterName,
-                        "entityType" => Kingboard_Helper_EntityType::getEntityTypeByEntityId((int) $attacker->characterID),
-                        "corporationID" => (int) $this->ensureCorporationID($attacker->corporationID, $attacker->corporationName),
+                        "corporationID" => (int) $this->ensureEveEntityID($attacker->corporationID, $attacker->corporationName),
                         "corporationName" => $attacker->corporationName,
                         "allianceID" => (int) $attacker->allianceID,
                         "allianceName" => $attacker->allianceName,
@@ -65,9 +65,9 @@ class Kingboard_ApiKillParser
                         "damageDone" => $attacker->damageDone,
                         "finalBlow"  => $attacker->finalBlow,
                         "weaponTypeID" => (int) $attacker->weaponTypeID,
-                        "weaponType" => Kingboard_EveItem::getByItemId($attacker->weaponTypeID)->typeName,
+                        "weaponType" => \Kingboard\Model\EveItem::getByItemId($attacker->weaponTypeID)->typeName,
                         "shipTypeID" => (int) $attacker->shipTypeID,
-                        "shipType"  => Kingboard_EveItem::getByItemId($attacker->shipTypeID)->typeName
+                        "shipType"  => \Kingboard\Model\EveItem::getByItemId($attacker->shipTypeID)->typeName
                     );
                 }
                 $killdata['items'] = array();
@@ -80,18 +80,18 @@ class Kingboard_ApiKillParser
                     }
                 }
 
-                $hash = Kingboard_KillmailHash_IdHash::getByData($killdata);
-                $killdata['idHash'] = (String) $hash;
-                if(is_null(Kingboard_Kill::getInstanceByIdHash($killdata['idHash'])))
+                $hash = \Kingboard\Lib\IdHash::getByData($killdata);
+                $killdata['idHash'] = $hash->generateHash();
+                if(is_null(\Kingboard\Model\Kill::getInstanceByIdHash($killdata['idHash'])))
                 {
-                    $killObject = new Kingboard_Kill();
+                    $killObject = new \Kingboard\Model\Kill();
                     $killObject->injectDataFromMail($killdata);
                     $killObject->save();
                     $newkills++;
                 } else {
                     $oldkills++;
                 }
-            } catch (Kingboard_KillmailParser_KillmailErrorException $e)
+            } catch (\Exception $e)
             {
                 $errors++;
             }
@@ -105,7 +105,7 @@ class Kingboard_ApiKillParser
         // Build the standard item
         $item = array(
             "typeID" => $row->typeID,
-            "typeName" => @Kingboard_EveItem::getByItemId($row->typeID)->typeName,
+            "typeName" => \Kingboard\Model\EveItem::getByItemId($row->typeID)->typeName,
             "flag" => $row->flag,
             "qtyDropped" => $row->qtyDropped,
             "qtyDestroyed" => $row->qtyDestroyed
@@ -123,24 +123,20 @@ class Kingboard_ApiKillParser
         return $item;
     }
 
-    public function ensureCharacterID($id, $charname)
+    public function ensureEveEntityID($id, $charname)
     {
         $id = (int) $id;
         if($id == 0)
         {
-            $idfinder = new Kingboard_KillmailParser_IdFinder();
-            return $idfinder->getCharacterId($charname);
-        }
-        return $id;
-    }
+            if($id = \Kingboard\Model\MapReduce\NameSearch::getEveIdByName($charname))
+                return $id;
 
-    public function ensureCorporationID($id, $corpname)
-    {
-        $id = (int) $id;
-        if($id == 0)
-        {
-            $idfinder = new Kingboard_KillmailParser_IdFinder();
-            return $idfinder->getCorporationId($corpname);
+            $pheal = new \Pheal();
+            $result = $pheal->eveScope->typeName(array('names' => $charname))->toArray();
+            if ((int) $result[0]['characterID'] > 0)
+                return (int) $result[0]['characterID'];
+
+            throw new \Exception("No such characterID");
         }
         return $id;
     }

@@ -1,11 +1,13 @@
 <?php
+namespace Kingboard\Lib;
+
 /**
  * Calculates the ID hash of a killmail
  *
  * @author Georg Grossberger
  * @package Kingboard
  */
-class Kingboard_KillmailHash_IdHash
+class IdHash
 {
     /**
      * Unix timestamp of the killtime
@@ -62,10 +64,10 @@ class Kingboard_KillmailHash_IdHash
     /**
      * Setter for killtime
      *
-     * @param MongoDate $time
-     * @return Kingboard_KillmailHash_IdHash
+     * @param \MongoDate $time
+     * @return \Kingboard\Lib\IdHash
      */
-    public function setTime(MongoDate $time)
+    public function setTime(\MongoDate $time)
     {
         // Extract the seconds
         $timeString = (string) $time;
@@ -92,7 +94,7 @@ class Kingboard_KillmailHash_IdHash
      * Setter for victim character ID
      *
      * @param integer $victimId
-     * @return Kingboard_KillmailHash_IdHash
+     * @return \Kingboard\Lib\IdHash
      */
     public function setVictimId($victimId)
     {
@@ -107,8 +109,8 @@ class Kingboard_KillmailHash_IdHash
     /**
      * Setter for victim ship ID
      * 
-     * @param type $shipId
-     * @return Kingboard_KillmailHash_IdHash 
+     * @param string $shipId
+     * @return \Kingboard\Lib\IdHash
      */
     public function setVictimShip($shipId)
     {
@@ -144,7 +146,7 @@ class Kingboard_KillmailHash_IdHash
      * Setter for all attacker character IDs
      *
      * @param array $attackers
-     * @return Kingboard_KillmailHash_IdHash
+     * @return \Kingboard\Lib\IdHash
      */
     public function setAttackers(array $attackers)
     {
@@ -157,7 +159,7 @@ class Kingboard_KillmailHash_IdHash
     
     protected function cleanName($name)
     {
-        $name = Kingboard_Helper_String::getInstance()->lower($name);
+        $name = mb_strtolower($name);
         return preg_replace('/[^a-z0-9]+/', '', $name);
     }
     
@@ -165,7 +167,7 @@ class Kingboard_KillmailHash_IdHash
      * Setter for a single attacker character ID
      *
      * @param string $name
-     * @return Kingboard_KillmailHash_IdHash
+     * @return \Kingboard\Lib\IdHash
      */
     public function addAttacker($name)
     {
@@ -181,7 +183,7 @@ class Kingboard_KillmailHash_IdHash
      * Add an attacker by it's data
      * 
      * @param array $attacker
-     * @return Kingboard_KillmailHash_IdHash 
+     * @return \Kingboard\Lib\IdHash
      */
     public function pushAttackerData(array $attacker)
     {
@@ -208,7 +210,7 @@ class Kingboard_KillmailHash_IdHash
      * Setter for the attacker character ID that landed the final blow
      *
      * @param integer $finalBlowAttacker
-     * @return Kingboard_KillmailHash_IdHash
+     * @return \Kingboard\Lib\IdHash
      */
     public function setFinalBlowAttacker($finalBlowAttacker)
     {
@@ -229,7 +231,7 @@ class Kingboard_KillmailHash_IdHash
     {
         if (count($this->attackers) < 1 || !$this->time || !$this->victimId || !$this->finalBlowAttacker || !$this->victimShip)
         {
-            throw new Kingboard_KillmailHash_ErrorException('Needed hash arguments are missing');
+            throw new \Exception('Needed hash arguments are missing');
         }
         natsort($this->attackers);
         natsort($this->items);
@@ -240,7 +242,7 @@ class Kingboard_KillmailHash_IdHash
      * Add an item
      * 
      * @param array $item
-     * @return Kingboard_KillmailHash_IdHash 
+     * @return \Kingboard\Lib\IdHash
      */
     public function addItem(array $item)
     {
@@ -250,35 +252,16 @@ class Kingboard_KillmailHash_IdHash
     }
 
     /**
-     * Magic stringify method
-     *
-     * @return string
-     * @todo replace by nonmagic function to allow throwing exceptions here.
-     */
-    public function __toString()
-    {
-        try
-        {
-            return $this->generateHash();
-        }
-        catch (Exception $e)
-        {
-            print_r($this);
-            return null;
-        }
-    }
-
-    /**
      * Method that takes an associative array with killmail data and creates a hash for that.
      * 
      * @static
      * @param array $data
-     * @return Kingboard_KillmailHash_IdHash
+     * @return \Kingboard\Lib\IdHash
      */
     public static function getByData($data)
     {
         $victimId = !empty($data['victim']['characterID']) ? $data['victim']['characterID'] : $data['victim']['corporationID'];
-        $idHash = new Kingboard_KillmailHash_IdHash();
+        $idHash = new \Kingboard\Lib\IdHash();
         $idHash->setVictimId($victimId)
                ->setVictimShip($data['victim']['shipTypeID'])
                ->setTime($data['killTime']);
