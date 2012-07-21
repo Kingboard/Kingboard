@@ -10,7 +10,7 @@ $(function(){
 			var ajax_request = function()
 			{
 				$.ajax({
-					url: '/searchautocomplete/',
+					url: '/autocomplete/',
 					type: 'GET',
 					data: '/' + query,
 					dataType: 'JSON',
@@ -20,7 +20,7 @@ $(function(){
 			}
  
 			//start the new timer
-			$('#typeahead').data('limiter', setTimeout(ajax_request, 500));
+			$('#typeahead').data('limiter', setTimeout(ajax_request, 250));
 		},
 		onselect: function(obj) {
 			$('form[name="search"]').submit();
