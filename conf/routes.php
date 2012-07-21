@@ -61,3 +61,6 @@ $router->addRoute("/post/", 'Kingboard\Views\Post', "post");
 
 // search
 $router->addRoute("/search/", 'Kingboard\Views\Search', "index");
+
+// search autocomplete
+$router->addRoute("/searchautocomplete/?/", 'Kingboard\Views\SearchAutocomplete', "autocomplete", array("text"));

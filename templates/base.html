@@ -13,7 +13,9 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap-typeahead.js"></script>
   <script type="text/javascript" src="/js/common.js"></script>
+  <script type="text/javascript" src="/js/kingboard.js"></script>
   {% block script %}
   {% endblock %}
 </head>
@@ -37,8 +39,8 @@
                 </ul>
             </li>
         </ul>
-        <form class="navbar-search pull-left" action="/search/" method="POST">
-            <input type="text" class="search-query" placeholder="Search" name="searchbox">
+        <form id="search" name="search" class="navbar-search pull-left" action="/search/" method="POST">
+            <input type="text" class="search-query" placeholder="Search" autocomplete="off" data-provide="typeahead" id="searchbox" name="searchbox">
         </form>
 
         <ul class="nav pull-right">

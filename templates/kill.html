@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
-
 {% block header %}
-<div class="page-header">
 <h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} <small>{% if killdata.location.region %}<a href="http://evemaps.dotlan.net/map/{{ killdata.location.region }}" target="_blank">{{ killdata.location.region }}</a> / {% endif %} <a href="http://evemaps.dotlan.net/system/{{ killdata.location.solarSystem }}" target="_blank">{{ killdata.location.solarSystem }}</a> / {{ "%1.1f"|format(killdata.location.security) }}</small></h1>
-</div>
 <div class="row">
 	<div class="span5">
 		<table class="table condensed-table">
@@ -86,6 +83,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="page-header">
 <div class="tabbable">
 	<ul class="nav nav-pills pull-left">
 		<li class="active"><a href="#overview" data-toggle="tab">Quick Overview</a></li>
@@ -101,29 +99,27 @@
 		<li><a href="#related" data-toggle="tab">Related Kills</a></li>
 		<li><a href="#report" data-toggle="tab">Report Kill</a></li>
 	</ul>
+	<div class="page-header">
+	</div>
 	<div class="tab-content">
 		<div class="tab-pane active" id="overview">
 				<div class="row">
 					<div class="span4">
-						<div class="page-header">
-							<h3>Involved <small>Alliance(s) / Corp(s)</small></h3>
-						</div>
+						<h3>Involved <small>Alliance(s) / Corp(s)</small></h3>
 						<table class="table well condensed-table zebra-striped">
 							{% for alliance, corporations, faction in stats %}
 								<thead>
 									<tr class="titles">
-										<th><strong>{% if alliance %}{{ alliance }}{% elseif faction %}{{ faction }}{% else %}"Corporation"{% endif %}</strong></th>
+										<th><strong>{% if alliance != "None" %}<a href="/alliance/name/{{ alliance|url_encode }}/">{{ alliance }}</a>{% elseif faction %}<a href="/faction/name/{{ faction|url_encode }}/">{{ faction }}</a>{% else %}"Corporation"{% endif %}</strong></th>
 										<th>Pilots</th>
 									</tr>
 								</thead>
 								{% for corporation, value in corporations|sort|reverse %}
-									<tr><td class="corporation"> &nbsp; &nbsp; {{ corporation }}</td><td class="count">{{ value }}</td></tr>
+									<tr><td class="corporation"> &nbsp; &nbsp; <a href="/corporation/name/{{ corporation|url_encode }}/">{{ corporation }}</a></td><td class="count">{{ value }}</td></tr>
 								{% endfor %}
 							{% endfor %}
 						</table>
-						<div class="page-header">
-							<h3>Involved <small>Pilot(s)</small></h3>
-						</div>
+						<h3>Involved <small>Pilot(s)</small></h3>
 						<table class="table well condensed-table zebra-striped">
 							<thead>
 								<tr class="titles">
@@ -242,7 +238,8 @@
 
 			</div>
 			<div id="fittings" class="tab-pane">
-				show eft/dna fitting stuff
+				<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>
+				
 			</div>
 			<div id="related" class="tab-pane">
 				show some related kills, if possible
