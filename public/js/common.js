@@ -19,7 +19,7 @@ $(document).ready(function() {
             var ajax_request = function()
             {
                 $.ajax({
-                    url: '/autocomplete/',
+                    url: '/autocomplete/search/',
                     type: 'GET',
                     data: '/' + query,
                     dataType: 'JSON',

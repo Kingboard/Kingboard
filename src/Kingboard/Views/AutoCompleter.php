@@ -53,20 +53,21 @@ class AutoCompleter extends \Kingboard\Views\Base
         echo json_encode($names);
     }
 	
-	public function autoComplete(array $search)
+    public function search(array $search)
+    {
+        $find = $search["text"];
+
+        if(strlen($find) < 4)
 	{
-		$find = $search["text"];
-		
-		if(strlen($find) < 4)
-		{
-			echo json_encode(array());
-			return;
-		}
-		foreach(\Kingboard\Model\MapReduce\NameSearch::search($find, 6) as $searchresult)
-		{
-			$result[] = $searchresult->_id;
-		}
-		echo json_encode($result);
-		return;
-	}
+            echo json_encode(array());
+            return;
+        }
+        foreach(\Kingboard\Model\MapReduce\NameSearch::search($find, 6) as $searchresult)
+        {
+            $result[] = $searchresult->_id;
+        }
+       
+        echo json_encode($result);
+        return;
+    }
 }
