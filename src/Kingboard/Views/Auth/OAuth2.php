@@ -12,12 +12,12 @@ class OAuth2 extends \Kingboard\Views\Base
     public function login(array $params)
     {
         $reg = \King23\Core\Registry::getInstance();
-        $state = Kingboard_Form::getXSRFToken();
+        $state = \Kingboard\Lib\Form::getXSRFToken();
         $list = array();
         foreach($reg->oAuth2ProviderList as $provider => $config)
         {
             $class = $config['auth_class'];
-            $list[$provider] = Kingboard_OAuth2_Consumer::getCodeRedirect(
+            $list[$provider] = \Kingboard\Lib\Auth\OAuth2\Consumer::getCodeRedirect(
                 $class::getCodeUrl(),
                 $config["client_id"],
                 $config["redirect_url"],
@@ -37,7 +37,7 @@ class OAuth2 extends \Kingboard\Views\Base
      */
     public function callback(array $params)
     {
-        if($_GET['state'] != Kingboard_Form::getXSRFToken())
+        if($_GET['state'] != \Kingboard\Lib\Form::getXSRFToken())
             die("XSRF Token mismatch");
 
         try {
@@ -45,7 +45,7 @@ class OAuth2 extends \Kingboard\Views\Base
             $class = $config['auth_class'];
             $class::login($config);
             $this->redirect("/account/");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->_context['login_failed'] = $e->getMessage();
             return $this->login($params);
         }
@@ -57,7 +57,7 @@ class OAuth2 extends \Kingboard\Views\Base
      */
     public function logout(array $params)
     {
-        Kingboard_Auth::logout();
+        \Kingboard\Lib\Auth\Auth::logout();
         $this->redirect("/");
     }
 }
