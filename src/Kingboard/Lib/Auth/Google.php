@@ -54,12 +54,13 @@ class Google extends Auth
             $config['client_id'],
             $config['client_secret'],
             $_GET['code'],
-            $config['redirect_url'],
-            self::getScope()
+            $config['redirect_url']
         );
 
         if(is_null($tokens))
             throw new \Exception("Error: could not access tokens");
+
+        var_dump($tokens);
 
         $userinfo = json_decode(
             file_get_contents("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" . $tokens->access_token)
