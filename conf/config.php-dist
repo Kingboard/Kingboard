@@ -75,6 +75,20 @@ $reg->oAuth2ProviderList = array(
         // this class depends on the api used to fetch email from the oauth providers api
         // in this case google.
         "auth_class" => '\Kingboard\Lib\Auth\Google'
+    ),
+    "facebook" => array(
+        // the client id given to you by the OAuth2 Provider
+        "client_id" => "YOURCLIENT_ID",
+
+        // the client secret given to you by the OAuth2 Provider
+        "client_secret" => "YOURCLIENT_SECRET",
+
+        // this is only to be edited if you dont use the default route
+        "redirect_url" => "http://" . $reg->baseHost . "/oauth2/callback/facebook/",
+
+        // this class depends on the api used to fetch email from the oauth providers api
+        // in this case google.
+        "auth_class" => '\Kingboard\Lib\Auth\Facebook'
     )
 );
 */
