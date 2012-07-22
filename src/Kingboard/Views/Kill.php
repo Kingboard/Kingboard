@@ -12,11 +12,10 @@ class Kill extends \Kingboard\Views\Base
                 $stats[$attacker['allianceName']] = array();
             if(!isset($stats[$attacker['allianceName']][$attacker['corporationName']]))
                 $stats[$attacker['allianceName']][$attacker['corporationName']] = 0;
-            $stats[$attacker['allianceName']][$attacker['corporationName']]++;  
+            $stats[$attacker['allianceName']][$attacker['corporationName']]++;
         }
         ksort($stats);
         $context['stats'] = $stats;
-
         return $this->render('kill.html', $context);
     }
 }

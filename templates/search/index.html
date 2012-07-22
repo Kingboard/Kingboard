@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Search{% endblock %}
 {% block content %}
-<form name="search" method="post" action="/search/">
+<form id="search" name="search" method="post" action="/search/">
     <fieldset>
         <legend>Searchbox</legend>
         <div class="clearfix">
             <label for="searchbox">Search Term:</label>
             <div class="input">
-                <input id="searchbox" name="searchbox" type="text" value="{{ searchbox }}" placeholder="Corp/Pilot/Alliance/Faction..">
+				<input id="searchbox" name="searchbox" type="text" autocomplete="off" data-provide="typeahead" placeholder="Corp/Pilot/Alliance/Faction..">
             </div>
         </div>
         <div class="actions">
@@ -33,20 +33,20 @@
     </thead>
     <tbody>
     {% for result in results %}
-<tr>
-    <td class="icon">
-         <a href="/details/{{result.type}}/{{result.id}}/" rel='twipsy' title='{{result.name}}'>
-         <img src="{% if result.type == "faction" %}{{images.alliances}}{%endif%}{% if result.type == "character" %}{{images.characters}}{%endif%}{% if result.type == "corporation" %}{{images.corporations}}{%endif%}{% if result.type == "alliance" %}{{images.alliances}}{%endif%}{{result.id}}_32.{% if result.type == "character" %}jpg{% else %}png{% endif %}" alt="{{result.name}}">
-         </a>
-    </td>
-    <td>
-        <a href="/details/{{result.type}}/{{result.id}}/" title='{{result.name}}'>
-        {{ result.name }} ({{ result.type }})
-        </a>
-    </td>
-</tr>
+		<tr>
+			<td class="icon">
+				 <a href="/details/{{result.type}}/{{result.id}}/" rel='twipsy' title='{{result.name}}'>
+					<img src="{% if result.type == "faction" %}{{images.alliances}}{%endif%}{% if result.type == "character" %}{{images.characters}}{%endif%}{% if result.type == "corporation" %}{{images.corporations}}{%endif%}{% if result.type == "alliance" %}{{images.alliances}}{%endif%}{{result.id}}_64.{% if result.type == "character" %}jpg{% else %}png{% endif %}" alt="{{result.name}}">
+				 </a>
+			</td>
+			<td>
+				<a href="/details/{{result.type}}/{{result.id}}/" title="{{result.name}}">
+				{{ result.name }} ({{ result.type }})
+				</a>
+			</td>
+		</tr>
     {% endfor %}
-</tbody>
+	</tbody>
 </table>
 {% endif %}
 {% endblock %}
