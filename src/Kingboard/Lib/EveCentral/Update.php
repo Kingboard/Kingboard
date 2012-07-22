@@ -10,7 +10,7 @@ class Update
     {
         // Insert it to mongo
         $instance = \Kingboard\Model\EveItem::getByItemId($itemID);
-        $instance->iskvalue = $isk;
+        $instance->iskValue = $isk;
         $instance->save();
     }
 }

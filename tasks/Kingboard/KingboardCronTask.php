@@ -12,6 +12,7 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         "key_activation" => "task to check for new key activates, and activate if so",
         "api_import" => "import",
         "item_values" => "updates item values for all items on the market",
+        "idfeed_import" => "stuff",
     );
 
     /**
@@ -206,7 +207,9 @@ class KingboardCronTask extends \King23\Tasks\King23Task
     public function item_values(array $options)
     {
         $this->cli->message("item value updating running");
-        foreach(\Kingboard\Model\EveItem::getMarketIDs() as $typeID)
+        $qry = \Kingboard\Model\EveItem::getMarketIDs();
+        $total = $qry->count();
+        foreach($qry as $typeID)
         {
             $isk = \Kingboard\Lib\EveCentral\Api::getValue($typeID->typeID);
             if($isk > 0)
