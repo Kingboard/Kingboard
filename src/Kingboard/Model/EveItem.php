@@ -25,21 +25,40 @@ class EveItem extends \King23\Mongo\MongoObject
     }
     public static function getShipIDs($typeName)
     {
-		return self::_find(__CLASS__, array('$and' =>
-			array(
-				array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
-				array('$or' =>
-					array(
-						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
-						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
-						array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
-						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
-					)
-				)
-			)
-		), array(
-			'typeName' => 1,
-			'typeID' => 1
-		));
+        return self::_find(__CLASS__, array('$and' =>
+            array(
+                array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
+                array('$or' =>
+                    array(
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
+                    )
+                )
+            )
+        ), array(
+            'typeName' => 1,
+            'typeID' => 1
+        ));
+    }
+    public static function getItemValue($itemID)
+    {
+        $item = self::getByItemId($itemID);
+        if(!is_null($item->isk))
+            return $item->isk;
+        else
+            return self::updateItemValue($itemID);
+    }
+    public static function updateItemValue($itemID)
+    {
+        // Update the item directly from evecentral
+        $isk = \Kingboard\Lib\EveCentral\Api::getValue($itemID);
+        if(!is_null($isk) || $isk > 0)
+        {
+            \Kingboard\Lib\EveCentral\Update::updateValue($itemID, $isk);
+            return $isk;
+        }
+        return null;
     }
 }
