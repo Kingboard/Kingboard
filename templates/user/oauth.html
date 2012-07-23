@@ -8,8 +8,12 @@
 <div class="alert alert-info">Please login to use this functionality!</div>
 {% endif %}
 
-Login using one of the following accounts:
-{% for name, url in providerlist %}
-<a href="{{url}}">{{name}}</a><br/>
-{% endfor %}
+<div class="well">
+    <ul class="nav nav-list">
+     <li class="nav-header">Login using:</li>
+    {% for name, url in providerlist %}
+        <li><a href="{{url}}">{{name}}</a></li>
+    {% endfor %}
+    </ul>
+</div>
 {% endblock %}

@@ -58,7 +58,7 @@ $reg->ownerType = "alliance";
 
 // uncomment when using OAuth2 login opposed to regular or jabber auth
 /*
-$reg->auth = "Kingboard_Auth_OAuth2_View";
+$reg->auth = '\Kingboard\Views\Auth\OAuth2';
 $reg->oAuth2ProviderList = array(
     // currently only googles api is supported, see the auth_class for information
     // on how to implement further OAuth2 Providers
@@ -74,7 +74,21 @@ $reg->oAuth2ProviderList = array(
 
         // this class depends on the api used to fetch email from the oauth providers api
         // in this case google.
-        "auth_class" => "Kingboard_Auth_Google"
+        "auth_class" => '\Kingboard\Lib\Auth\Google'
+    ),
+    "facebook" => array(
+        // the client id given to you by the OAuth2 Provider
+        "client_id" => "YOURCLIENT_ID",
+
+        // the client secret given to you by the OAuth2 Provider
+        "client_secret" => "YOURCLIENT_SECRET",
+
+        // this is only to be edited if you dont use the default route
+        "redirect_url" => "http://" . $reg->baseHost . "/oauth2/callback/facebook/",
+
+        // this class depends on the api used to fetch email from the oauth providers api
+        // in this case google.
+        "auth_class" => '\Kingboard\Lib\Auth\Facebook'
     )
 );
 */

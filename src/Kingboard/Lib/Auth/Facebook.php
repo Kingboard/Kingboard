@@ -1,21 +1,21 @@
 <?php
 namespace Kingboard\Lib\Auth;
-class Google extends Auth
+class Facebook extends Auth
 {
     /**
      * @var string oauth2 token url
      */
-    public static $host_url_token = "https://accounts.google.com/o/oauth2/token";
+    public static $host_url_token = "https://graph.facebook.com/oauth/access_token";
 
     /**
      * @var string oauth2 auth url (redirects here)
      */
-    public static $host_url_code  = "https://accounts.google.com/o/oauth2/auth";
+    public static $host_url_code  = "https://www.facebook.com/dialog/oauth";
 
     /**
      * @var string scope required for the api call, in googles case auth/userinfo.email
      */
-    public static $scope = "https://www.googleapis.com/auth/userinfo.email";
+    public static $scope = "email";
 
     /**
      * get scope
@@ -54,16 +54,15 @@ class Google extends Auth
             $config['client_id'],
             $config['client_secret'],
             $_GET['code'],
-            $config['redirect_url']
+            $config['redirect_url'],
+            true
         );
 
         if(is_null($tokens))
             throw new \Exception("Error: could not access tokens");
 
-        var_dump($tokens);
-
         $userinfo = json_decode(
-            file_get_contents("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" . $tokens->access_token)
+            file_get_contents("https://graph.facebook.com/me?access_token=" . $tokens['access_token'])
         );
 
         if(is_null($userinfo))

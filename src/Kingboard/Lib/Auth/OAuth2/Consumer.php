@@ -34,7 +34,7 @@ class Consumer
      * @return array
      * @throws \Exception
      */
-    public static function getTokens($hostUrl, $clientId, $clientSecret, $code, $redirectUri)
+    public static function getTokens($hostUrl, $clientId, $clientSecret, $code, $redirectUri, $nojson = false)
     {
         $data = array(
             "client_id" => $clientId,
@@ -44,7 +44,13 @@ class Consumer
             "grant_type" => "authorization_code"
         );
         $data = self::doPost($hostUrl, $data);
-        $data = json_decode($data);
+
+        if($nojson) {
+            parse_str($data, $data);
+        } else {
+            $data = json_decode($data);
+        }
+
         if(isset($data->error))
             throw new \Exception("token request caused error: " . $data->error);
         return $data;
