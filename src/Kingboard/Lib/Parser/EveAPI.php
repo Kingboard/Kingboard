@@ -11,6 +11,11 @@ class EveAPI
         $lastIntID = 0;
         foreach($kills as $kill)
         {
+            $totalISKValue = 0;
+            $qtyDropped = 0;
+            $qtyDestroyed = 0;
+            $valueDropped = 0;
+            $valueDestroyed = 0;
             try {
                 // this needs to be run before exit of loop, otherwise having all kills of this run
                 // will cause the lastID not being updated
@@ -46,9 +51,11 @@ class EveAPI
                         "factionName" => $kill->victim->factionName,
                         "damageTaken" => $kill->victim->damageTaken,
                         "shipTypeID"  => (int)$kill->victim->shipTypeID,
-                        "shipType"  => \Kingboard\Model\EveItem::getByItemId($kill->victim->shipTypeID)->typeName
+                        "shipType"  => \Kingboard\Model\EveItem::getByItemId($kill->victim->shipTypeID)->typeName,
+                        "iskValue" => \Kingboard\Model\EveItem::getItemValue($kill->victim->shipTypeID)
                     )
                 );
+                $totalISKValue = \Kingboard\Model\EveItem::getItemValue($kill->victim->shipTypeID);
                 $killdata['attackers'] = array();
                 foreach($kill->attackers as $attacker)
                 {
@@ -76,12 +83,23 @@ class EveAPI
                 {
                     foreach($kill->items as $item)
                     {
-                        $killdata['items'][] = $this->ParseItem($item);
+                        $item = $this->ParseItem($item);
+                        $killdata['items'][] = $item;
+                        $totalISKValue += $item["iskValue"];
+                        $qtyDropped += $item["qtyDropped"];
+                        $valueDropped += $item["iskValue"];
+                        $qtyDestroyed += $item["qtyDestroyed"];
+                        $valueDestroyed += $item["iskValue"];
                     }
                 }
-
+                
                 $hash = \Kingboard\Lib\IdHash::getByData($killdata);
                 $killdata['idHash'] = $hash->generateHash();
+                $killdata['totalISKValue'] = $totalISKValue;
+                $killdata['totalDropped'] = $qtyDropped;
+                $killdata['totalDestroyed'] = $qtyDestroyed;
+                $killdata['totalISKDropped'] = $valueDropped;
+                $killdata['totalISKDestroyed'] = $valueDestroyed;
                 if(is_null(\Kingboard\Model\Kill::getInstanceByIdHash($killdata['idHash'])))
                 {
                     $killObject = new \Kingboard\Model\Kill();
@@ -108,7 +126,8 @@ class EveAPI
             "typeName" => \Kingboard\Model\EveItem::getByItemId($row->typeID)->typeName,
             "flag" => $row->flag,
             "qtyDropped" => $row->qtyDropped,
-            "qtyDestroyed" => $row->qtyDestroyed
+            "qtyDestroyed" => $row->qtyDestroyed,
+            "iskValue" => \Kingboard\Model\EveItem::getItemValue($row->typeID)
         );
 
         // Check for nested items (container)

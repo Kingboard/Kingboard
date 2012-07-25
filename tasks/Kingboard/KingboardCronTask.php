@@ -11,6 +11,8 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         "update_stats" => "task to update stats which will be map/reduced from the database",
         "key_activation" => "task to check for new key activates, and activate if so",
         "api_import" => "import",
+        "item_values" => "updates item values for all items on the market",
+        "idfeed_import" => "stuff",
     );
 
     /**
@@ -201,5 +203,22 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         }
         $totalkills = $oldkills + $newkills;
         $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added ( errors: $errors)");
+    }
+    public function item_values(array $options)
+    {
+        $this->cli->message("item value updating running");
+        $qry = \Kingboard\Model\EveItem::getMarketIDs();
+        $total = $qry->count();
+        foreach($qry as $typeID)
+        {
+            $isk = \Kingboard\Lib\EveCentral\Api::getValue($typeID->typeID);
+            if($isk > 0)
+            {
+                \Kingboard\Lib\EveCentral\Update::updateValue($typeID->typeID, $isk);
+                $this->cli->message("Successfully updated ".$typeID->typeID." to ".$isk);
+            }
+            else
+                $this->cli->message("Did not update ".$typeID->typeID.", it had a value of 0");
+        }
     }
 }

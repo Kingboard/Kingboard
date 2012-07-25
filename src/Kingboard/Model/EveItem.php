@@ -25,21 +25,35 @@ class EveItem extends \King23\Mongo\MongoObject
     }
     public static function getShipIDs($typeName)
     {
-		return self::_find(__CLASS__, array('$and' =>
-			array(
-				array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
-				array('$or' =>
-					array(
-						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
-						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
-						array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
-						array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
-					)
-				)
-			)
-		), array(
-			'typeName' => 1,
-			'typeID' => 1
-		));
+        return self::_find(__CLASS__, array('$and' =>
+            array(
+                array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
+                array('$or' =>
+                    array(
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
+                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
+                    )
+                )
+            )
+        ), array(
+            'typeName' => 1,
+            'typeID' => 1
+        ));
+    }
+    public static function getMarketIDs()
+    {
+        // Only needed when we update, all the market IDs here are stuff that are on the market ingame
+        // 2 blueprints 4 ships 9 ship equipment 10 turrets & bays 11 ammo 24 implants & boosters 27 implants
+        return self::_find(__CLASS__, array("marketGroupID" => array('$gt' => 0)), array("typeID" => 1));
+    }
+    public static function getItemValue($itemID)
+    {
+        $item = self::getByItemId($itemID);
+        if(!is_null($item->iskValue))
+            return $item->iskValue;
+        else
+            return (int) 0;
     }
 }
