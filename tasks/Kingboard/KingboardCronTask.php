@@ -204,21 +204,26 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         $totalkills = $oldkills + $newkills;
         $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added ( errors: $errors)");
     }
+
     public function item_values(array $options)
     {
         $this->cli->message("item value updating running");
-        $qry = \Kingboard\Model\EveItem::getMarketIDs();
-        $total = $qry->count();
-        foreach($qry as $typeID)
+        $result = \Kingboard\Model\EveItem::getMarketIDs();
+        $total = $result->count();
+        foreach($result as $item)
         {
-            $isk = \Kingboard\Lib\EveCentral\Api::getValue($typeID->typeID);
+            $isk = \Kingboard\Lib\EveCentral\Api::getValue($item->typeID);
             if($isk > 0)
             {
-                \Kingboard\Lib\EveCentral\Update::updateValue($typeID->typeID, $isk);
-                $this->cli->message("Successfully updated ".$typeID->typeID." to ".$isk);
+
+                $instance = \Kingboard\Model\EveItem::getByItemId($item->typeID);
+                $instance->iskValue = $isk;
+                $instance->save();
+
+                $this->cli->message("Successfully updated ".$item->typeID." to ".$isk);
             }
             else
-                $this->cli->message("Did not update ".$typeID->typeID.", it had a value of 0");
+                $this->cli->message("Did not update ".$item->typeID.", it had a value of 0");
         }
     }
 }

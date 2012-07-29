@@ -23,6 +23,7 @@ class EveItem extends \King23\Mongo\MongoObject
     {
         return self::_getInstanceByCriteria(__CLASS__, array('typeID' => (int)$invItemID));
     }
+
     public static function getShipIDs($typeName)
     {
         return self::_find(__CLASS__, array('$and' =>
@@ -42,12 +43,20 @@ class EveItem extends \King23\Mongo\MongoObject
             'typeID' => 1
         ));
     }
+
+    /**
+     * returns MongoResult of type EveItem, stripped down to
+     * type ID contents.
+     * @static
+     * @return \King23\Mongo\MongoResult
+     */
     public static function getMarketIDs()
     {
         // Only needed when we update, all the market IDs here are stuff that are on the market ingame
         // 2 blueprints 4 ships 9 ship equipment 10 turrets & bays 11 ammo 24 implants & boosters 27 implants
         return self::_find(__CLASS__, array("marketGroupID" => array('$gt' => 0)), array("typeID" => 1));
     }
+
     public static function getItemValue($itemID)
     {
         $item = self::getByItemId($itemID);
