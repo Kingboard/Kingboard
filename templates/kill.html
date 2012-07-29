@@ -3,8 +3,8 @@
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 {% block header %}
 <h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} <small>{% if killdata.location.region %}<a href="http://evemaps.dotlan.net/map/{{ killdata.location.region }}" target="_blank">{{ killdata.location.region }}</a> / {% endif %} <a href="http://evemaps.dotlan.net/system/{{ killdata.location.solarSystem }}" target="_blank">{{ killdata.location.solarSystem }}</a> / {{ "%1.1f"|format(killdata.location.security) }}</small></h1>
-<div class="row">
-	<div class="span5">
+<div class="row-fluid">
+	<div class="span4">
 		<table class="table condensed-table">
 			<tr>
 				<th>Victim:</th>
@@ -72,9 +72,9 @@
 				</tr>
 				<tr>
 				<th>ISK Lost:</th>
-				<td>0 isk</td>
+				<td>{{ killdata.totalISKValue|number_format(2, '.', ',') }} isk</td>
 				<th>ISK Dropped:</th>
-				<td>0 isk</td>
+				<td>{{ killdata.totalISKDropped|number_format(2, '.', ',') }} isk</td>
 				</tr>
 			</tbody>
 		</table>
@@ -115,7 +115,7 @@
 									</tr>
 								</thead>
 								{% for corporation, value in corporations|sort|reverse %}
-									<tr><td class="corporation"> &nbsp; &nbsp; <a href="/corporation/name/{{ corporation|url_encode }}/">{{ corporation }}</a></td><td class="count">{{ value }}</td></tr>
+									<tr><td class="corporation"> &nbsp; &nbsp; <a href="/corporation/name/{{ corporation|url_encode }}/">{{ corporation }}</a></td><td class="count"><p align="right">{{ value }}</p></td></tr>
 								{% endfor %}
 							{% endfor %}
 						</table>
@@ -138,10 +138,12 @@
 										</a>
 									</td>
 									<td class="icons">
-										<a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'><img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32"></a>
-										<a href="/eveinfo/{{attacker.weaponTypeID}}" rel='twipsy' title='{{attacker.weaponType}}'><img src="{{ images.items }}{{attacker.weaponTypeID}}_32.png" width="32" height="32"></a>
+                                        <p align="center">
+                                            <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'><img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32"></a>
+                                            <a href="/eveinfo/{{attacker.weaponTypeID}}" rel='twipsy' title='{{attacker.weaponType}}'><img src="{{ images.items }}{{attacker.weaponTypeID}}_32.png" width="32" height="32"></a>
+                                        </p>
 									</td>
-									<td class="damage">{{ attacker.damageDone }}</td>
+									<td class="damage"><p align="right">{{ attacker.damageDone }}</p></td>
 								</tr>
 							{% endfor %}
 						</table>
@@ -164,27 +166,34 @@
 							<tr>
 								<td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a></td>
 								<td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
-								<td class="dropped">{{ item.qtyDropped }}</td>
-								<td class="destroyed">{{ item.qtyDestroyed }}</td>
-								<td class="price">0 isk</td>
+								<td class="dropped"><p align="center">{{ item.qtyDropped }}</p/</td>
+								<td class="destroyed"><p align="center">{{ item.qtyDestroyed }}</p></td>
+								<td class="price"><p align="right">{{ item.iskValue|number_format(2, '.', ',') }} isk</p></td>
 							</tr>
 							{% if item.items %}
 								{% for containeritem in item.items %}
 									<tr>
 										<td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></td>
 										<td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
-										<td class="dropped">{{ containeritem.qtyDropped }}</td>
-										<td class="destroyed">{{ containeritem.qtyDestroyed }}</td>
-										<td class="price">0 isk</td>
+										<td class="dropped"><p align="center">{{ containeritem.qtyDropped }}</p></td>
+										<td class="destroyed"><p align="center">{{ containeritem.qtyDestroyed }}</p></td>
+										<td class="price"><p align="right">{{ containeritem.iskValue|number_format(2, '.', ',') }} isk</p></td>
 									</tr>
 								{% endfor %}
 							{% endif %}
 						{% endfor %}
 						<tr>
-							<td>Totals:</td><td></td>
-							<td class="totaldropped">0</td>
-							<td class="totaldestroyed">0</td>
-							<td class="totalprice" align="right">0 isk</td>
+							<td class="icons"><a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipType}}'><img src="{{ images.items }}{{ killdata.victim.shipTypeID }}_32.png" width="32" height="32"></a></td>
+							<td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{killdata.victim.shipType}}</a></td>
+							<td class="dropped"><p align="center">0</p></td>
+							<td class="destroyed"><p align="center">1</p></td>
+							<td class="price"><p align="right">{{ killdata.victim.iskValue|number_format(2, '.', ',') }} isk</p></td>     
+                        </tr>
+                        <tr>
+							<td><strong>Totals:</strong></td><td></td>
+							<td class="totaldropped"><p align="center">{{ killdata.totalDropped }}</p></td>
+							<td class="totaldestroyed"><p align="center">{{ killdata.totalDestroyed }}</p></td>
+							<td class="totalprice"><p align="right">{{ killdata.totalISKValue|number_format(2, '.', ',')}} isk</p></td>
 						<tr>
 					</table>
 					</div>
