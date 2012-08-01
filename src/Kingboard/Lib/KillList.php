@@ -62,6 +62,7 @@ class KillList
 
 
         $totalstats = array();
+        $count = 0;
 
         if(isset($killstats['value']['group']))
             foreach($killstats['value']['group'] as $type => $value)
@@ -69,6 +70,7 @@ class KillList
                 if(!isset($totalstats[$type]))
                     $totalstats[$type] = array('kills'=> 0, 'losses' => 0);
                 $totalstats[$type]['kills'] = $value;
+                $count += $value;
             }
 
         if(isset($lossstats['value']['group']))
@@ -77,6 +79,7 @@ class KillList
                 if(!isset($totalstats[$type]))
                     $totalstats[$type] = array('kills' => 0, 'losses' => 0);
                 $totalstats[$type]['losses'] = $value;
+                $count += $value;
             }
 
         ksort($totalstats);
@@ -85,6 +88,8 @@ class KillList
         $this->lossstats = $lossstats;
         $this->totalstats = $totalstats;
         $this->criteria = $criteria;
+        $this->count = $count;
+
     }
 
     public function getCount()
