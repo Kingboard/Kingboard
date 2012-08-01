@@ -30,4 +30,10 @@ class User extends \King23\Mongo\MongoObject
         return self::findOne(array('username' => $username, 'password' => $password));
     }
 
+    public static function findWithApiKeys()
+    {
+       return self::find(array(
+           "keys" => array('$exists' => true)
+       ));
+    }
 }

@@ -160,49 +160,26 @@ class KingboardCronTask extends \King23\Tasks\King23Task
     public function api_import(array $options)
     {
         $this->cli->message("api import running");
-        $newkills = 0;
-        $oldkills = 0;
-        $errors = 0;
-        $keys = \Kingboard\Model\EveApiKey::find();
-        foreach($keys as $key)
+
+        foreach(\Kingboard\Model\User::findWithApiKeys() as $user)
         {
-            $pheal = new \Pheal($key['userid'], $key['apikey']);
-            $pheal->scope = "account";
-            try {
-                foreach($pheal->Characters()->characters as $char)
-                {
-                    try {
-                        $this->cli->message('trying corp import on ' . $char->name ."...");
-                        $pheal->scope = 'corp';
-                        $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
-                    } catch(\PhealAPIException $e) {
-                        $this->cli->message('corp failed, trying char import now..');
-                        $pheal->scope = 'char';
-                        try {
-                            $kills = $pheal->Killlog(array('characterID' => $char->characterID))->kills;
-                        } catch (\PhealAPIException $e) {
-                            continue;
-                        }
-                    }
-                    $this->cli->message("fetch done, parsing now");
-                    $kakp = new \Kingboard\Lib\Parser\EveAPI();
-                    $info = $kakp->parseKills($kills);
-                    $oldkills += $info['oldkills'];
-                    $newkills += $info['newkills'];
-                    $errors += $info['errors'];
+            /** @var \Kingboard\Model\User $user */
+            foreach($user['keys'] as $keyid => $key)
+            {
+                // skip inactive keys
+                if(!$key['active'])
+                    continue;
+
+                try {
+                    $stats = \Kingboard\Lib\Fetcher\EveApi::fetch($key);
+                    $this->cli->message("processed key $keyid for user " . $user->name . " : ". $stats['old'] . ' known / ' . $stats['new'] ." new");
+                } catch(\PhealException $e) {
+                    // we caught a pheal exception, we should implement proper handling of errors here
+                    $this->cli->error("key $keyid caused pheal exception: " . $e->getMessage());
                 }
-            } catch (\PhealApiException $e) {
-                if(!isset($key['failed']))
-                    $key->failed = 0;
-                $key->failed++;
-                $key->save();
-            } catch (\PhealException $pe) {
-        		$this->cli->message("PhealException caught, auch!");
-    	    	continue;
-	        }
+
+            }
         }
-        $totalkills = $oldkills + $newkills;
-        $this->cli->message("found $totalkills kills, $oldkills where allready in database, $newkills added ( errors: $errors)");
     }
 
     public function item_values(array $options)

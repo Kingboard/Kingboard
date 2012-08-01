@@ -1,6 +1,6 @@
 <?php
 namespace Kingboard;
-class Kingboard_Task extends \King23\Tasks\King23Task
+class KingboardTask extends \King23\Tasks\King23Task
 {
     /**
      * documentation for the single tasks
