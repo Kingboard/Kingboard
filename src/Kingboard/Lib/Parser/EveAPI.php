@@ -11,7 +11,6 @@ class EveAPI
         $lastIntID = 0;
         foreach($kills as $kill)
         {
-            $totalISKValue = 0;
             $qtyDropped = 0;
             $qtyDestroyed = 0;
             $valueDropped = 0;
@@ -105,8 +104,13 @@ class EveAPI
                     $killObject = new \Kingboard\Model\Kill();
                     $killObject->injectDataFromMail($killdata);
                     $killObject->save();
+                    if(\King23\Core\Registry::getInstance()->stomp['post'])
+                        \Kingboard\Lib\Stomp\KillPublisher::send($killdata);
                     $newkills++;
                 } else {
+                    if(\King23\Core\Registry::getInstance()->stomp['post'])
+                        \Kingboard\Lib\Stomp\KillPublisher::send($killdata);
+
                     $oldkills++;
                 }
             } catch (\Exception $e)

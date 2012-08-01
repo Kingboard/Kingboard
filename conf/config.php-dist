@@ -97,6 +97,15 @@ $reg->oAuth2ProviderList = array(
 // choose bootstrap theme (see public/themes/*)
 $reg->theme = "default";
 
+/* highly experimental feature, dont use.
+$reg->stomp = array(
+    "post" => false,
+    "user" => "guest",
+    "passwd" => "guest",
+    "url" => "tcp://stomp.3rdpartyeve.net:61613"
+);*/
+
+
 require_once("routes.php");
 MongoCursor::$timeout = -1;
 session_start();

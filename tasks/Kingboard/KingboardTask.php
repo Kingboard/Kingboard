@@ -45,6 +45,18 @@ class KingboardTask extends \King23\Tasks\King23Task
 
     public function test(array $options)
     {
+        $reg = \King23\Core\Registry::getInstance();
+        $destination = "/topic/kills";
+
+        $stomp = new \Stomp($reg->stomp['url'],$reg->stomp['user'],$reg->stomp['passwd']);
+        $stomp->subscribe($destination);
+        while(true) {
+            $frame = $stomp->readFrame();
+            if($frame) {
+                $stomp->ack($frame);
+                $this->cli->message($frame->command . " :: (" . $frame->headers['message-id'] .') ' . $frame->body);
+            }
+        }
     }
 
 }
