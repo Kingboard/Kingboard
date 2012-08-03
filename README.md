@@ -44,7 +44,7 @@ A few assumptions are made before you start:
 you should now be able to call your kingboard.
 
 ## Links
-- [Kingboard Github](https://github.com/ppetermann/Kingboard)
+- [Kingboard Github](https://github.com/Kingboard/Kingboard)
 - [Kingboard Website](https://kingboard.3rdpartyeve.net)
 - [King23](http://king23.net)
 - [Pheal](https://github.com/ppetermann/pheal)
