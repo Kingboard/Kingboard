@@ -52,7 +52,6 @@ class KingboardTask extends \King23\Tasks\King23Task
     {
         $this->cli->header("Experimental Stomp Kill Import");
         $reg = \King23\Core\Registry::getInstance();
-        $destination = "/topic/kills";
         $stompcfg = $reg->stomp;
         if(is_null($stompcfg)|| !is_array($stompcfg))
         {
@@ -60,6 +59,7 @@ class KingboardTask extends \King23\Tasks\King23Task
             return;
         }
         $stomp = new \Stomp($reg->stomp['url'], $reg->stomp['user'], $reg->stomp['passwd']);
+        $destination = $reg->stomp['destination_read'];
         $stomp->subscribe($destination);
 
         while(true) {

@@ -102,7 +102,9 @@ $reg->stomp = array(
     "post" => false,
     "user" => "guest",
     "passwd" => "guest",
-    "url" => "tcp://stomp.3rdpartyeve.net:61613"
+    "url" => "tcp://stomp.3rdpartyeve.net:61613",
+    "destination_read" => "/topic/kills",
+    "destination_post" => array("/topic/kills", "/queue/kills")
 );*/
 
 

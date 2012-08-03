@@ -8,6 +8,12 @@ class KillPublisher
     {
         if(is_null(self::$publisherInstance))
             self::$publisherInstance = new Publisher();
-        self::$publisherInstance->send("/topic/kills", json_encode($kill));
+        $destinations = \King23\Core\Registry::getInstance()->stomp['destination_post'];
+
+        // post to multiple destinations
+        foreach($destinations as $destination)
+        {
+            self::$publisherInstance->send($destination, json_encode($kill));
+        }
     }
 }
