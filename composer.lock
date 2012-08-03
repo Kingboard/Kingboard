@@ -1,9 +1,15 @@
 {
-    "hash": "aaf1ef7ae69346f3dbb2e10e506e4d94",
+    "hash": "0ebfe57262702f104754528c4a926f88",
     "packages": [
         {
             "package": "king23/king23",
             "version": "0.1.0"
+        },
+        {
+            "package": "kingboard/ccpdump",
+            "version": "dev-master",
+            "source-reference": "055c702049cf1734c9c92cae12109da8ea195dcd",
+            "commit-date": "1344025297"
         },
         {
             "package": "pheal/pheal",
@@ -18,8 +24,8 @@
     "aliases": [
 
     ],
-    "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "kingboard/ccpdump": 20
+    }
 }
