@@ -100,6 +100,7 @@ $reg->theme = "default";
 /* highly experimental feature, dont use.
 $reg->stomp = array(
     "post" => false,
+    "read" => false,
     "user" => "guest",
     "passwd" => "guest",
     "url" => "tcp://stomp.3rdpartyeve.net:61613",
