@@ -9,6 +9,7 @@ class KingboardTask extends \King23\Tasks\King23Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "idfeed_add" => "add a idfeed to the idfeeds to be pulled",
+        "process_stomp_queue" => "process kills from a stomp queue"
     );
 
     /**
@@ -43,20 +44,49 @@ class KingboardTask extends \King23\Tasks\King23Task
         $this->cli->positive('done');
     }
 
-    public function test(array $options)
+    /**
+     * Experimental task to enable kill processing from queue.
+     * @param array $options
+     */
+    public function process_stomp_queue(array $options)
     {
+        $this->cli->header("Experimental Stomp Kill Import");
         $reg = \King23\Core\Registry::getInstance();
         $destination = "/topic/kills";
-
-        $stomp = new \Stomp($reg->stomp['url'],$reg->stomp['user'],$reg->stomp['passwd']);
+        $stompcfg = $reg->stomp;
+        if(is_null($stompcfg)|| !is_array($stompcfg))
+        {
+            $this->cli->error("stomp is not configured, see config.php for details");
+            return;
+        }
+        $stomp = new \Stomp($reg->stomp['url'], $reg->stomp['user'], $reg->stomp['passwd']);
         $stomp->subscribe($destination);
+
         while(true) {
             $frame = $stomp->readFrame();
             if($frame) {
+                $killdata = json_decode($frame->body, true);
+                $existing = \Kingboard\Model\Kill::getInstanceByIdHash($killdata["idHash"]);
+                if(!is_null($existing))
+                {
+                    $this->cli->message($frame->headers['message-id'] .'::' . $killdata["idHash"] . " kill by hash exists");
+                    $stomp->ack($frame);
+                    continue;
+                }
+                $kill = new \Kingboard\Model\Kill();
+                $kill->injectDataFromMail($killdata);
+                $kill->save();
+
+                $this->cli->message($frame->headers['message-id'] .'::' . $killdata["idHash"] . " saved");
                 $stomp->ack($frame);
-                $this->cli->message($frame->command . " :: (" . $frame->headers['message-id'] .') ' . $frame->body);
             }
         }
+
+
+    }
+
+    public function test(array $options)
+    {
     }
 
 }

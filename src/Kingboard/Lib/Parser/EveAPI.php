@@ -99,20 +99,24 @@ class EveAPI
                 $killdata['totalDestroyed'] = $qtyDestroyed;
                 $killdata['totalISKDropped'] = $valueDropped;
                 $killdata['totalISKDestroyed'] = $valueDestroyed;
+
                 if(is_null(\Kingboard\Model\Kill::getInstanceByIdHash($killdata['idHash'])))
                 {
-                    $killObject = new \Kingboard\Model\Kill();
-                    $killObject->injectDataFromMail($killdata);
-                    $killObject->save();
-                    if(\King23\Core\Registry::getInstance()->stomp['post'])
-                        \Kingboard\Lib\Stomp\KillPublisher::send($killdata);
+                    // if stomp queue read is set we assume that all saves are done through queue and don't save here
+                    if(is_null(\King23\Core\Registry::getInstance()->stomp) && !\King23\Core\Registry::getInstance()->stomp['read'])
+                    {
+                        $killObject = new \Kingboard\Model\Kill();
+                        $killObject->injectDataFromMail($killdata);
+                        $killObject->save();
+                    }
                     $newkills++;
                 } else {
-                    if(\King23\Core\Registry::getInstance()->stomp['post'])
-                        \Kingboard\Lib\Stomp\KillPublisher::send($killdata);
-
                     $oldkills++;
                 }
+                // we stomp all kills, so boards that dont have it yet can get it from there
+                if(!is_null(\King23\Core\Registry::getInstance()->stomp) && \King23\Core\Registry::getInstance()->stomp['post'])
+                    \Kingboard\Lib\Stomp\KillPublisher::send($killdata);
+
             } catch (\Exception $e)
             {
                 $errors++;
