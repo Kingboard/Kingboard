@@ -28,16 +28,13 @@ A few assumptions are made before you start:
 4. you have a vhost setup for the kingboard installation - this wont work in a subdirectory.
 
 ### Quick Install
-1. Aquire Kingboard by either cloning or downloading the latest release
- * clone: `git clone git://github.com/Kingboard/Kingboard.git`
- * release: ... (extract afterwards)
+1. run `php /path/to/composer.phar create-project kingboard/kingboard path/name` to install kingboard with its dependencies
 2. Install the DB dump for MongoDB
  * Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
  * Extract the zip file and run mongorestore <ExtractPath>
-3. Create folders cache/api cache/templates_c below your kingboard path, make sure they are writable by your webserver
+3. Create folders cache/api and cache/templates_c below your kingboard path, make sure they are writable by your webserver
 4. Make your webservers docroot point to public/ path
 5. Setup rewrite (for apache the .htaccess should do that, for lighttpd add the rule: url.rewrite-if-not-file = (".*\?(.*)$" => "/index.php?$1", "" => "/index.php")
-6. run `php /path/to/composer.phar install` to install dependencies
 7. run vendor/bin/king23 KingboardMaintenance:setup_indexes
 8. copy conf/config.php-dist to conf/config.php and edit.
 
