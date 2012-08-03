@@ -29,7 +29,7 @@ A few assumptions are made before you start:
 
 ### Quick Install
 1. Aquire Kingboard by either cloning or downloading the latest release
- * clone: `git clone git://github.com/ppetermann/Kingboard.git`
+ * clone: `git clone git://github.com/Kingboard/Kingboard.git`
  * release: ... (extract afterwards)
 2. Install the DB dump for MongoDB
  * Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
