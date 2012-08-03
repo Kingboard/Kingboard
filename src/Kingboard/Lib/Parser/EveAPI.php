@@ -103,7 +103,7 @@ class EveAPI
                 if(is_null(\Kingboard\Model\Kill::getInstanceByIdHash($killdata['idHash'])))
                 {
                     // if stomp queue read is set we assume that all saves are done through queue and don't save here
-                    if(is_null(\King23\Core\Registry::getInstance()->stomp) && !\King23\Core\Registry::getInstance()->stomp['read'])
+                    if(is_null(\King23\Core\Registry::getInstance()->stomp) || !\King23\Core\Registry::getInstance()->stomp['read'])
                     {
                         $killObject = new \Kingboard\Model\Kill();
                         $killObject->injectDataFromMail($killdata);
