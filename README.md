@@ -29,7 +29,7 @@ A few assumptions are made before you start:
 
 ### Quick Install
 1. Aquire Kingboard by either cloning or downloading the latest release
- * clone: `git clone git://github.com/ppetermann/Kingboard.git`
+ * clone: `git clone git://github.com/Kingboard/Kingboard.git`
  * release: ... (extract afterwards)
 2. Install the DB dump for MongoDB
  * Get the database dump from [github.com/beansman](https://github.com/beansman/CCP-Static-Datadump-to-MongoDB)
@@ -44,7 +44,7 @@ A few assumptions are made before you start:
 you should now be able to call your kingboard.
 
 ## Links
-- [Kingboard Github](https://github.com/ppetermann/Kingboard)
+- [Kingboard Github](https://github.com/Kingboard/Kingboard)
 - [Kingboard Website](https://kingboard.3rdpartyeve.net)
 - [King23](http://king23.net)
 - [Pheal](https://github.com/ppetermann/pheal)
