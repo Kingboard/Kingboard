@@ -104,8 +104,8 @@ class KingboardCronTask extends \King23\Tasks\King23Task
                     $user->save();
                     $token->delete();
 
-                    $body = \King23\Core\Registry::getInstance()->sith->cachedGet('mails/activate_apikey.html')->render(array('username' => $user['username'], 'apiuserid' => $apiuserid ), \King23\Core\Registry::getInstance()->sith);
-                    mail($user['username'], "Kingboard API Key Activation", $body);
+                    //$body = \King23\Core\Registry::getInstance()->sith->cachedGet('mails/activate_apikey.html')->render(array('username' => $user['username'], 'apiuserid' => $apiuserid ), \King23\Core\Registry::getInstance()->sith);
+                    //mail($user['username'], "Kingboard API Key Activation", $body);
                     break;
                 }
             }
