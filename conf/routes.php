@@ -57,8 +57,6 @@ $router->addRoute("/autocomplete/search/?/", 'Kingboard\Views\AutoCompleter', "s
 $router->addRoute("/battle/new", 'Kingboard\Views\BattleEditor', "create");
 $router->addRoute("/battle/", 'Kingboard\Views\Battle', "show", array("id"));
 
-// Post
-$router->addRoute("/post/", 'Kingboard\Views\Post', "post");
 
 // search
 $router->addRoute("/search/", 'Kingboard\Views\Search', "index");
