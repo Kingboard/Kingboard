@@ -4,12 +4,7 @@
     "type": "library",
     "require": {
         "pheal/pheal": "0.1.2",
-        "king23/king23": "0.1.0"
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.king23.net"
-        }
-    ]
+        "king23/king23": "0.1.0",
+        "kingboard/ccpdump": "dev-master"
+    }
 }
