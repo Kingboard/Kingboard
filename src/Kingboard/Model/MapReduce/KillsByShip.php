@@ -60,7 +60,8 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
         $new = $tr->lastrun;
 
         $filter = array("saved" => array('$gt' => $last, '$lte' => $new));
-        $out = array("reduce" => __CLASS__);
+        $obj = new __CLASS__;
+        $out = array("reduce" => $obj->_className);
         \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }
 
