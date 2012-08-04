@@ -29,7 +29,7 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
             info[this.victim.shipType] = 1;
             info[\"total\"] = 1;
             if(ship != null && ship.marketGroup != null)
-                emit(ship.marketGroup[0].parentGroup[0].marketGroupName, info);
+                emit(ship.marketGroup.parentGroup.marketGroupName, info);
         }";
         $reduce = "function (k, vals) {
             var sums = {}
