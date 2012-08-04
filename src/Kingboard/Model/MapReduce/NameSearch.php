@@ -68,7 +68,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
         $new = $tr->lastrun;
 
         $filter = array("saved" => array('$gt' => $last, '$lte' => $new));
-        $obj = new __CLASS__;
+        $obj = new self();
         $out = array("reduce" => $obj->_className);
 
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
