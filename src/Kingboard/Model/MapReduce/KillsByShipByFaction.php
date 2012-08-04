@@ -74,7 +74,7 @@ class KillsByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayAc
 			array('saved' => array('$gt' => $last, '$lte' => $new)),
 			array('attackers.factionID' => array('$ne' => 0))
 		));
-        $obj = new __CLASS__;
+        $obj = new self();
         $out = array("reduce" => $obj->_className);
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }
