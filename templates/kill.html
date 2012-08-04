@@ -4,6 +4,7 @@
 {% block header %}
 <h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} <small>{% if killdata.location.region %}<a href="http://evemaps.dotlan.net/map/{{ killdata.location.region }}" target="_blank">{{ killdata.location.region }}</a> / {% endif %} <a href="http://evemaps.dotlan.net/system/{{ killdata.location.solarSystem }}" target="_blank">{{ killdata.location.solarSystem }}</a> / {{ "%1.1f"|format(killdata.location.security) }}</small></h1>
 <div class="row-fluid">
+<div class="span12">
 	<div class="span4">
 		<table class="table condensed-table">
 			<tr>
@@ -80,6 +81,7 @@
 		</table>
 	</div>
 </div>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -96,8 +98,6 @@
 			</ul>
 		</li>
 		<li><a href="#fittings" data-toggle="tab">Fittings</a></li>
-		<li><a href="#related" data-toggle="tab">Related Kills</a></li>
-		<li><a href="#report" data-toggle="tab">Report Kill</a></li>
 	</ul>
 	<div class="page-header">
 	</div>
@@ -111,11 +111,11 @@
 								<thead>
 									<tr class="titles">
 										<th><strong>{% if alliance != "None" %}<a href="/alliance/name/{{ alliance|url_encode }}/">{{ alliance }}</a>{% elseif faction %}<a href="/faction/name/{{ faction|url_encode }}/">{{ faction }}</a>{% else %}"Corporation"{% endif %}</strong></th>
-										<th>Pilots</th>
+										<th> <div align="center">Pilots</div></th>
 									</tr>
 								</thead>
 								{% for corporation, value in corporations|sort|reverse %}
-									<tr><td class="corporation"> &nbsp; &nbsp; <a href="/corporation/name/{{ corporation|url_encode }}/">{{ corporation }}</a></td><td class="count"><p align="right">{{ value }}</p></td></tr>
+									<tr><td class="corporation"> &nbsp; &nbsp; <a href="/corporation/name/{{ corporation|url_encode }}/">{{ corporation }}</a></td><td class="count"><div align="center">{{ value }}</div></td></tr>
 								{% endfor %}
 							{% endfor %}
 						</table>
@@ -128,7 +128,7 @@
 							</thead>
 							{% for attacker in killdata.attackers %}
 								<tr class="attacker">
-									<td class="pilot">
+									<td class="pilotinfo">
 										<a href="/details/pilot/{{ attacker.characterID }}">
 										{% if attacker.finalBlow == true %}
 											<strong>{{ attacker.characterName }}</strong>
@@ -138,20 +138,18 @@
 										</a>
 									</td>
 									<td class="icons">
-                                        <p align="center">
+                                        <div align="center">
                                             <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'><img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32"></a>
                                             <a href="/eveinfo/{{attacker.weaponTypeID}}" rel='twipsy' title='{{attacker.weaponType}}'><img src="{{ images.items }}{{attacker.weaponTypeID}}_32.png" width="32" height="32"></a>
-                                        </p>
+                                        </div>
 									</td>
-									<td class="damage"><p align="right">{{ attacker.damageDone }}</p></td>
+									<td class="damage"><div align="center">{{ attacker.damageDone }}</div></td>
 								</tr>
 							{% endfor %}
 						</table>
 					</div>
 					<div class="span8">
-					<div class="page-header">
-						<h3>Item(s) <small>Dropped / Destroyed</small></h3>
-					</div>
+                    <h3>Item(s) <small>Dropped / Destroyed</small></h3>
 					<table class="table condensed-table zebra-striped">
 						<thead>
 							<tr class="titles">
@@ -159,42 +157,44 @@
 								<th>Item Type</th>
 								<th>Dropped</th>
 								<th>Destroyed</th>
-								<th>Price</th>
+								<th><div align="right">Price</div></th>
 							</tr>
 						</thead>
-						{% for item in killdata.items %}
-							<tr>
-								<td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a></td>
-								<td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
-								<td class="dropped"><p align="center">{{ item.qtyDropped }}</p/</td>
-								<td class="destroyed"><p align="center">{{ item.qtyDestroyed }}</p></td>
-								<td class="price"><p align="right">{{ item.iskValue|number_format(2, '.', ',') }} isk</p></td>
-							</tr>
-							{% if item.items %}
-								{% for containeritem in item.items %}
-									<tr>
-										<td class="icons"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></td>
-										<td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
-										<td class="dropped"><p align="center">{{ containeritem.qtyDropped }}</p></td>
-										<td class="destroyed"><p align="center">{{ containeritem.qtyDestroyed }}</p></td>
-										<td class="price"><p align="right">{{ containeritem.iskValue|number_format(2, '.', ',') }} isk</p></td>
-									</tr>
-								{% endfor %}
-							{% endif %}
-						{% endfor %}
-						<tr>
-							<td class="icons"><a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipType}}'><img src="{{ images.items }}{{ killdata.victim.shipTypeID }}_32.png" width="32" height="32"></a></td>
-							<td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{killdata.victim.shipType}}</a></td>
-							<td class="dropped"><p align="center">0</p></td>
-							<td class="destroyed"><p align="center">1</p></td>
-							<td class="price"><p align="right">{{ killdata.victim.iskValue|number_format(2, '.', ',') }} isk</p></td>     
-                        </tr>
-                        <tr>
-							<td><strong>Totals:</strong></td><td></td>
-							<td class="totaldropped"><p align="center">{{ killdata.totalDropped }}</p></td>
-							<td class="totaldestroyed"><p align="center">{{ killdata.totalDestroyed }}</p></td>
-							<td class="totalprice"><p align="right">{{ killdata.totalISKValue|number_format(2, '.', ',')}} isk</p></td>
-						<tr>
+                        <tbody>
+                            {% for item in killdata.items %}
+                                <tr>
+                                    <td class="icons"><div align="center"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a></div></td>
+                                    <td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
+                                    <td class="dropped"><div align="center">{{ item.qtyDropped }}</div></td>
+                                    <td class="destroyed"><div align="center">{{ item.qtyDestroyed }}</div></td>
+                                    <td class="price"><div align="right">{{ item.iskValue|number_format(2, '.', ',') }} isk</div></td>
+                                </tr>
+                                {% if item.items %}
+                                    {% for containeritem in item.items %}
+                                        <tr>
+                                            <td class="icons"><div align="center"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></div></td>
+                                            <td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
+                                            <td class="dropped"><div align="center">{{ containeritem.qtyDropped }}</div></td>
+                                            <td class="destroyed"><div align="center">{{ containeritem.qtyDestroyed }}</div></td>
+                                            <td class="price"><div align="right">{{ containeritem.iskValue|number_format(2, '.', ',') }} isk</div></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            <tr>
+                                <td class="icons"><div align="center"><a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipType}}'><img src="{{ images.items }}{{ killdata.victim.shipTypeID }}_32.png" width="32" height="32"></a></div></td>
+                                <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{killdata.victim.shipType}}</a></td>
+                                <td class="dropped"><div align="center">0</div></td>
+                                <td class="destroyed"><div align="center">1</pdiv></td>
+                                <td class="price"><div align="right">{{ killdata.victim.iskValue|number_format(2, '.', ',') }} isk</div></td>     
+                            </tr>
+                            <tr>
+                                <td><strong>Totals:</strong></td><td></td>
+                                <td class="totaldropped"><div align="center">{{ killdata.totalDropped }}</div></td>
+                                <td class="totaldestroyed"><div align="center">{{ killdata.totalDestroyed }}</div></td>
+                                <td class="totalprice"><div align="right">{{ killdata.totalISKValue|number_format(2, '.', ',')}} isk</div></td>
+                            <tr>
+                        </tbody>
 					</table>
 					</div>
 				</div>
@@ -248,15 +248,7 @@
 			</div>
 			<div id="fittings" class="tab-pane">
 				<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>
-				
-			</div>
-			<div id="related" class="tab-pane">
-				show some related kills, if possible
-			</div>
-			<div id="report" class="tab-pane">
-				show the report interface, if the mail is indeed reportable (ie. not api posted)
-			</div>
-			
+            </div>			
 		</div>
 </div>
 {% endblock %}
