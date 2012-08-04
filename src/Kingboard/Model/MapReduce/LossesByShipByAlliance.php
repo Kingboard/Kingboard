@@ -69,7 +69,8 @@ class LossesByShipByAlliance extends \King23\Mongo\MongoObject implements \Array
 			array('saved' => array('$gt' => $last, '$lte' => $new)),
 			array('victim.allianceID' => array('$ne' => 0))
 		));
-        $out = array("reduce" => __CLASS__);
+        $obj = new __CLASS__;
+        $out = array("reduce" => $obj->_className);
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }
 
