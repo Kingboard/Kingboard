@@ -20,7 +20,7 @@ class LossesByShipByCorporation extends \King23\Mongo\MongoObject implements \Ar
                 var info = {};
                 info['group'] = {};
                 info['ship'] = {}
-                info['group'][ship.marketGroup[0].parentGroup[0].marketGroupName] = 1;
+                info['group'][ship.marketGroup.parentGroup.marketGroupName] = 1;
                 info['ship'][this.victim.shipType] = 1;
                 info['total'] = 1;
                 emit(this.victim.corporationID, info);
