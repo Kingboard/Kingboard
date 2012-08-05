@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Account</h1>
+<h1 xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">My Account</h1>
 <div id="api-management">
 
 {% if active_keys %}
@@ -18,34 +18,30 @@
     </thead>
     <tbody>
     {% for key in active_keys %}
-        <tr><td>{{ key.apiuserid }}</td><td>{{ key.type}}</td><td>{{key.chars}}</td><td>&nbsp;</td></tr>
+        <tr><td>{{ key.apiuserid }}</td><td>{{ key.type}}</td><td>{{key.chars}}</td><td><div align="center"><a class="btn btn-danger" href="#"><i class="icon-trash icon-white"></i></a></div></td></tr>
     {% endfor %}
     </tbody>
 </table>
 </div>
 {% endif %}
-
-<h2>Add API Key</h2>
-<p>The API Key added here can be used for pulling standings (to create battle reports) and
-for pulling killmails. For both cases CCP currently requires a full API key to work, so currently
-only full API keys are accepted. <br />For the purpose of validating the Key you enter, a request
-to your account/AccountStatus API page will be made, however none of the data pulled from this request
-will be saved.</p>
+<br/>
 {% if error %}
     <div class="alert alert-error"><p>{{ error }}</p></div>
 {% endif %}
+    <div class="row">
+    <div class="span3">
     <form action="/account/" method="post">
         <fieldset>
-            <legend>Key Data</legend>
+            <legend>Submit new key</legend>
             <input type="hidden" value="{{XSRF}}" name="XSRF">
         <div class="clearfix">
-            <label for="apiuserid">EVE Userid</label>
+            <label for="apiuserid">Key ID</label>
             <div class="input">
                 <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid">
             </div>
         </div>
         <div class="clearfix">
-            <label for="apikey">EVE API Key</label>
+            <label for="apikey">Verification Code</label>
             <div class="input">
                 <input type="text" value="{{ apikey }}" name="apikey" id="apikey">
             </div>
@@ -55,5 +51,25 @@ will be saved.</p>
         </div>
         </fieldset>
     </form>
+    </div><div class="span9">
+    <div class="alert alert-info">
+        <i class="icon-info-sign icon-white"></i> <b>About API keys!</b>
+        <br /><br /><p>Kingboard uses API keys to pull kills and standing information (to create battle reports).
+        CCP has three different sorts of API keys you can create. </p>
+        <ul>
+            <li><b>Character</b> Character keys are keys which you get if you select a single character, and "type" setting is character.</li>
+            <li><b>Account</b> Account keys are keys which you get if you select a "all" as character, and "type" setting is character.</li>
+            <li><b>Corporation</b> Corporation keys are keys which you get if you select a single character, and "type" setting is corporation. To be able to create a corporation key the selected character needs to be a director of that corp.</li>
+        </ul>
+        <p>Kingboard requires API keys to have the minimum set of the following permissions: </p>
+        <ul>
+            <li>ContactList</li>
+            <li>KillLog</li>
+        </ul>
+        <p>If you don't have an API key with those permissions yet, you can use the Button below to create one.
+            Keep in mind that killmails can only be pulled from one location per character, so don't use the same API key that you have used with another killboard.</p>
+        <a href="https://support.eveonline.com/api/Key/CreatePredefined/272" target="_blank" class="btn btn-success"><i class="icon-file icon-white"></i>create new API key</a>
+    </div></div>
+    </div>
 </div>
 {% endblock %}
