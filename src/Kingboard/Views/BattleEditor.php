@@ -8,6 +8,39 @@ class BattleEditor extends \Kingboard\Views\Base
         parent::__construct(true);
     }
 
+    public function index(array $params)
+    {
+        $user = \Kingboard\Lib\Auth\Auth::getUser();
+        $context = array();
+
+        if(isset($user['keys']))
+            $activeKeys = $user['keys'];
+        else $activeKeys = array();
+
+        $charkeylist = array();
+        foreach($activeKeys as $id => $key)
+        {
+            try {
+                $pheal = new \Pheal($key['apiuserid'], $key['apikey']);
+                $chars = $pheal->accountScope->Characters()->characters->toArray();
+                $charlist = array();
+                foreach($chars as $char)
+                {
+                    $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'] . " (".$key['type'] .")";
+                    $charlist[] = $char['name'];
+                }
+                $activeKeys[$id]["chars"] = join(', ', $charlist);
+            } catch (\PhealAPIException $e) {
+                //print_r($e);
+            }
+        }
+        $context = array_merge($context, array(
+            'active_characters' => $charkeylist
+        ));
+        $this->render('battle/battleeditor.html', $context);
+
+    }
+
     public function create(array $params)
     {
         if(!\Kingboard\Lib\Forms\BattleCreateForm::validate($_POST))
