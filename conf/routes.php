@@ -22,11 +22,8 @@ $router->addRoute('/alliance/name/', 'Kingboard\Views\Search', "nameAlliance", a
 // corp/alliance/faction/pilot statistics
 $router->addRoute("/details/", 'Kingboard\Views\Homepage', "killlist", array("ownerType", "ownerID", "dummy", "page"));
 
-
 // kill details
 $router->addRoute("/kill/", 'Kingboard\Views\Kill', 'index', array('killID'));
-
-
 
 // authentication related routes
 if(!is_null($reg->auth) && $reg->auth)
@@ -47,6 +44,7 @@ $router->addRoute("/oauth2/callback/", 'Kingboard\Views\Auth\OAuth2', "callback"
 
 // user specific routes
 $router->addRoute("/account/", 'Kingboard\Views\User', "myKingboard");
+$router->addRoute("/account/api/delete/", 'Kingboard\Views\User', 'delete', array('xsrf', 'keyid'));
 
 // autcompleters
 $router->addRoute("/autocomplete/solarsystem", 'Kingboard\Views\AutoCompleter', 'solarSystem');
@@ -54,9 +52,9 @@ $router->addRoute("/autocomplete/region", 'Kingboard\Views\AutoCompleter', 'regi
 $router->addRoute("/autocomplete/search/?/", 'Kingboard\Views\AutoCompleter', "search", array("text"));
 
 // battles
+$router->addRoute("/battle/editor", 'Kingboard\Views\BattleEditor', "index");
 $router->addRoute("/battle/new", 'Kingboard\Views\BattleEditor', "create");
 $router->addRoute("/battle/", 'Kingboard\Views\Battle', "show", array("id"));
-
 
 // search
 $router->addRoute("/search/", 'Kingboard\Views\Search', "index");

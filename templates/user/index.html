@@ -1,118 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Kingboard</h1>
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#api-management">API / Character Management</a></li>
-        <li><a data-toggle="tab" href="#battle-editor">Battle Editor</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="api-management" class="tab-pane active">
-        <h2>Active API Keys</h2>
-        {% if active_keys %}
-            {% for key in active_keys %}
-                <p>{{ key.apiuserid }}</p>
-            {% endfor %}
-        {% else %}
-            <p>you currently do not have any active keys</p>
-        {% endif %}
+<h1>My Account</h1>
+<div id="api-management">
 
-        {% if pending_keys %}
-            <h2>Keys pending activation</h2>
-            <p>To activate a key from this list, you have to send an EVEMail to {{ apimailreceiver }} with the subject being
-               the activation key. Please keep in mind that the activation key is case sensitive!</p>
-            <table class="table condensed-table zebra-striped">
-                <thead>
-                <tr><th>EVE Userid</th><th>EVE Apikey</th><th>Activation Key</th></tr>
-                </thead>
-                {% for key in pending_keys %}
-                    <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>{{ key.activationkey }}</td></tr>
-                {% endfor %}
-            </table>
-        {% endif %}
-        <h2>Add API Key</h2>
-        <p>The API Key added here can be used for pulling standings (to create battle reports) and
-        for pulling killmails. For both cases CCP currently requires a full API key to work, so currently
-        only full API keys are accepted. <br />For the purpose of validating the Key you enter, a request
-        to your account/AccountStatus API page will be made, however none of the data pulled from this request
-        will be saved.</p>
-        {% if error %}
-            <div class="alert alert-error"><p>{{ error }}</p></div>
-        {% endif %}
-            <form action="/account/" method="post">
-                <fieldset>
-                    <legend>Key Data</legend>
-                    <input type="hidden" value="{{XSRF}}" name="XSRF">
-                <div class="clearfix">
-                    <label for="apiuserid">EVE Userid</label>
-                    <div class="input">
-                        <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid">
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <label for="apikey">EVE API Key</label>
-                    <div class="input">
-                        <input type="text" value="{{ apikey }}" name="apikey" id="apikey">
-                    </div>
-                </div>
-                <div class="actions">
-                    <input class="btn primary" type="submit" value="Add">
-                </div>
-                </fieldset>
-            </form>
+{% if active_keys %}
+<h2>Active API Keys</h2>
+<div class="row">
+<table class="table-bordered table-condensed table-striped span12">
+    <thead>
+    <tr>
+        <th>Key ID</th>
+        <th>Key Type</th>
+        <th>Key Characters</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key in active_keys %}
+        <tr><td>{{ key.apiuserid }}</td><td>{{ key.type}}</td><td>{{key.chars}}</td><td><div align="center"><a class="btn btn-danger" href="/account/api/delete/{{XSRF}}/{{key.apiuserid}}/"><i class="icon-trash icon-white"></i></a></div></td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endif %}
+<br/>
+{% if error %}
+    <div class="alert alert-error"><p>{{ error }}</p></div>
+{% endif %}
+    <div class="row">
+    <div class="span3">
+    <form action="/account/" method="post">
+        <fieldset>
+            <legend>Submit new key</legend>
+            <input type="hidden" value="{{XSRF}}" name="XSRF">
+        <div class="clearfix">
+            <label for="apiuserid">Key ID</label>
+            <div class="input">
+                <input type="text" value="{{ apiuserid }}" name="apiuserid" id="apiuserid">
+            </div>
         </div>
-        <div id="battle-editor" class="tab-pane">
-            <fieldset>
-                <legend>Add New Battle</legend>
-                <form action="/battle/new" method="post">
-                    <input type="hidden" name="XSRF" value="{{ XSRF }}" />
-                    <div class="clearfix">
-                        <label for="startdate">Start Date/Time</label>
-                        <div class="input">
-                            <input type="text" name="startdate" id="startdate" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <label for="enddate">End Date/Time</label>
-                        <div class="input">
-                            <input type="text" name="enddate" id="enddate" />
-
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <label for="system">System</label>
-                        <div class="input">
-                            <input type="text" name="system" id="system" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <label for="character">Pull standings from</label>
-                        <div class="input">
-                            <select name="character" id="character">
-                                {% for id, name in active_characters %}
-                                    <option label="{{name}}" value="{{id}}"/>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="actions"><input type="submit" name="submit" value="Add" class="btn primary"/></div>
-                </form>
-            </fieldset>
+        <div class="clearfix">
+            <label for="apikey">Verification Code</label>
+            <div class="input">
+                <input type="text" value="{{ apikey }}" name="apikey" id="apikey">
+            </div>
         </div>
+        <div class="actions">
+            <input class="btn primary" type="submit" value="Add">
+        </div>
+        </fieldset>
+    </form>
+    </div><div class="span9">
+    <div class="alert alert-info">
+        <i class="icon-info-sign icon-white"></i> <b>About API keys!</b>
+        <br /><br /><p>Kingboard uses API keys to pull kills and standing information (to create battle reports).
+        CCP has three different sorts of API keys you can create. </p>
+        <ul>
+            <li><b>Character</b> Character keys are keys which you get if you select a single character, and "type" setting is character.</li>
+            <li><b>Account</b> Account keys are keys which you get if you select a "all" as character, and "type" setting is character.</li>
+            <li><b>Corporation</b> Corporation keys are keys which you get if you select a single character, and "type" setting is corporation. To be able to create a corporation key the selected character needs to be a director of that corp.</li>
+        </ul>
+        <p>Kingboard requires API keys to have the minimum set of the following permissions: </p>
+        <ul>
+            <li>ContactList</li>
+            <li>KillLog</li>
+        </ul>
+        <p>If you don't have an API key with those permissions yet, you can use the Button below to create one.
+            Keep in mind that killmails can only be pulled from one location per character, so don't use the same API key that you have used with another killboard.</p>
+        <a href="https://support.eveonline.com/api/Key/CreatePredefined/272" target="_blank" class="btn btn-success"><i class="icon-file icon-white"></i>create new API key</a>
+    </div></div>
     </div>
 </div>
-{% endblock %}
-
-{% block script %}
-<script type="text/javascript" src="/js/jquery.ui.datetimepicker.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-   $( "#system" ).autocomplete({
-        source: "/autocomplete/solarsystem"//,
-    });
-    $("#startdate").datetimepicker({ dateFormat: 'yy-mm-dd' });
-    $("#enddate").datetimepicker({ dateFormat: 'yy-mm-dd' });
-});
-</script>
 {% endblock %}
