@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8">
   <title>Kingboard: {{ Kingboard.Name }} / {% block title %}{% endblock %}</title>
@@ -34,6 +34,12 @@
                     <li class="divider"></li>
                     <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
                     {% endif %}
+                </ul>
+            </li>
+            <li class="dropdown" id="rankings">
+                <a href="#ranking" class="dropdown-toggle" data-toggle="dropdown">Rankings<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/top/value/"><i class="icon-list"></i> top 12 by ISK</a></li>
                 </ul>
             </li>
         </ul>
