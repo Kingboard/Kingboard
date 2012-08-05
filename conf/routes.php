@@ -6,6 +6,7 @@ $router->setBaseHost(\King23\Core\Registry::getInstance()->baseHost);
 // home
 $router->addRoute("/", 'Kingboard\Views\Homepage', "index", array());
 $router->addRoute("/home/page/", 'Kingboard\Views\Homepage', "index", array('page'));
+$router->addRoute("/top/value/", 'Kingboard\Views\Homepage', 'top');
 
 // information
 $router->addRoute("/information", 'Kingboard\Views\Information', "index");
