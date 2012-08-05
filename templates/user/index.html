@@ -12,25 +12,12 @@
         <h2>Active API Keys</h2>
         {% if active_keys %}
             {% for key in active_keys %}
-                <p>{{ key.apiuserid }}</p>
+                <p>{{ key.apiuserid }} (Chars: {{key.chars}} Key type: {{ key.type}})</p>
             {% endfor %}
         {% else %}
             <p>you currently do not have any active keys</p>
         {% endif %}
 
-        {% if pending_keys %}
-            <h2>Keys pending activation</h2>
-            <p>To activate a key from this list, you have to send an EVEMail to {{ apimailreceiver }} with the subject being
-               the activation key. Please keep in mind that the activation key is case sensitive!</p>
-            <table class="table condensed-table zebra-striped">
-                <thead>
-                <tr><th>EVE Userid</th><th>EVE Apikey</th><th>Activation Key</th></tr>
-                </thead>
-                {% for key in pending_keys %}
-                    <tr><td>{{ key.apiuserid }}</td><td>{{ key.apikey }}</td><td>{{ key.activationkey }}</td></tr>
-                {% endfor %}
-            </table>
-        {% endif %}
         <h2>Add API Key</h2>
         <p>The API Key added here can be used for pulling standings (to create battle reports) and
         for pulling killmails. For both cases CCP currently requires a full API key to work, so currently

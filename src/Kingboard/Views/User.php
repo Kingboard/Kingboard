@@ -34,17 +34,11 @@ class User extends \Kingboard\Views\Base
                 else
                     $keys = $user['keys'];
 
-                // ensure to remove existing activation keys if this is an update
-                if($activationkey = \Kingboard\Model\ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $_POST['apiuserid']))
-                    $activationkey->delete();
-
-                $activationkey = \Kingboard\Model\ApiActivationToken::create($user->_id, $_POST['apiuserid']);
-
                 $keys[$_POST['apiuserid']] = array(
                     'apiuserid' => $_POST['apiuserid'],
                     'apikey' => $_POST['apikey'],
                     'type' => $keytype,
-                    'active' => false
+                    'active' => true
                 );
                 $user['keys'] = $keys;
                 $user->save();
@@ -61,34 +55,27 @@ class User extends \Kingboard\Views\Base
             die('XSRF detected');
 
         if(isset($user['keys']))
-            foreach($user['keys'] as $key)
-            {
-                if($key['active'])
-                    $activeKeys[] = $key;
-                else
-                {
-                    if(!is_array($pendingKeys))
-                        $pendingKeys = array();
-                    $key['activationkey'] = (String) \Kingboard\Model\ApiActivationToken::findOneByUseridAndApiUserid($user->_id, $key['apiuserid']);
-                    $pendingKeys[] = $key;
-                }
-            }
+            $activeKeys = $user['keys'];
+        else $activeKeys = array();
         $charkeylist = array();
-        foreach($activeKeys as $key)
+        foreach($activeKeys as $id => $key)
         {
             try {
                 $pheal = new \Pheal($key['apiuserid'], $key['apikey']);
                 $chars = $pheal->accountScope->Characters()->characters->toArray();
+                $charlist = array();
                 foreach($chars as $char)
-                    $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'];
+                {
+                    $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'] . " (".$key['type'] .")";
+                    $charlist[] = $char['name'];
+                }
+                $activeKeys[$id]["chars"] = join(', ', $charlist);
             } catch (\PhealAPIException $e) {
-                print_r($e);
+                //print_r($e);
             }
         }
         $context = array_merge($context, array(
             'active_keys' => $activeKeys,
-            'pending_keys' => $pendingKeys,
-            'apimailreceiver' => \King23\Core\Registry::getInstance()->apimailreceiver,
             'active_characters' => $charkeylist
         ));
         $this->render('user/index.html', $context);
