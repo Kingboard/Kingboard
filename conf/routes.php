@@ -44,6 +44,7 @@ $router->addRoute("/oauth2/callback/", 'Kingboard\Views\Auth\OAuth2', "callback"
 
 // user specific routes
 $router->addRoute("/account/", 'Kingboard\Views\User', "myKingboard");
+$router->addRoute("/account/api/delete/", 'Kingboard\Views\User', 'delete', array('xsrf', 'keyid'));
 
 // autcompleters
 $router->addRoute("/autocomplete/solarsystem", 'Kingboard\Views\AutoCompleter', 'solarSystem');
@@ -54,7 +55,6 @@ $router->addRoute("/autocomplete/search/?/", 'Kingboard\Views\AutoCompleter', "s
 $router->addRoute("/battle/editor", 'Kingboard\Views\BattleEditor', "index");
 $router->addRoute("/battle/new", 'Kingboard\Views\BattleEditor', "create");
 $router->addRoute("/battle/", 'Kingboard\Views\Battle', "show", array("id"));
-
 
 // search
 $router->addRoute("/search/", 'Kingboard\Views\Search', "index");

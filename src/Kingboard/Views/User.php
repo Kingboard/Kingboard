@@ -55,7 +55,6 @@ class User extends \Kingboard\Views\Base
         if(isset($user['keys']))
             $activeKeys = $user['keys'];
         else $activeKeys = array();
-        $charkeylist = array();
         foreach($activeKeys as $id => $key)
         {
             try {
@@ -75,5 +74,22 @@ class User extends \Kingboard\Views\Base
             'active_keys' => $activeKeys,
         ));
         $this->render('user/index.html', $context);
+    }
+
+    public function delete(array $params)
+    {
+        if(\Kingboard\Lib\Form::getXSRFToken() != $params['xsrf'])
+            die('xsrf token missmatch');
+
+        $user = \Kingboard\Lib\Auth\Auth::getUser();
+
+        if(isset($user['keys'])){
+            $keys = $user['keys'];
+            unset($keys[$params['keyid']]);
+            $user->keys = $keys;
+            $user->save();
+        }
+
+        $this->myKingboard(array());
     }
 }
