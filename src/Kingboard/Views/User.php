@@ -12,8 +12,6 @@ class User extends \Kingboard\Views\Base
     public function myKingboard(array $parameters)
     {
         $user = \Kingboard\Lib\Auth\Auth::getUser();
-        $activeKeys = array();
-        $pendingKeys = false;
         $context = array();
         if(isset($_POST['XSRF']) && \Kingboard\Lib\Form::getXSRFToken() == $_POST['XSRF'])
         {
@@ -66,7 +64,6 @@ class User extends \Kingboard\Views\Base
                 $charlist = array();
                 foreach($chars as $char)
                 {
-                    $charkeylist[$key['apiuserid'] . "|" . $char['characterID']] = $char['name'] . " (".$key['type'] .")";
                     $charlist[] = $char['name'];
                 }
                 $activeKeys[$id]["chars"] = join(', ', $charlist);
@@ -76,9 +73,7 @@ class User extends \Kingboard\Views\Base
         }
         $context = array_merge($context, array(
             'active_keys' => $activeKeys,
-            'active_characters' => $charkeylist
         ));
         $this->render('user/index.html', $context);
     }
-
 }
