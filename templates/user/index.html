@@ -3,13 +3,26 @@
 {% block content %}
 <h1>My Account</h1>
 <div id="api-management">
-<h2>Active API Keys</h2>
+
 {% if active_keys %}
+<h2>Active API Keys</h2>
+<div class="row">
+<table class="table-bordered table-condensed table-striped span12">
+    <thead>
+    <tr>
+        <th>Key ID</th>
+        <th>Key Type</th>
+        <th>Key Characters</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for key in active_keys %}
-        <p>{{ key.apiuserid }} (Chars: {{key.chars}} Key type: {{ key.type}})</p>
+        <tr><td>{{ key.apiuserid }}</td><td>{{ key.type}}</td><td>{{key.chars}}</td><td>&nbsp;</td></tr>
     {% endfor %}
-{% else %}
-    <p>you currently do not have any active keys</p>
+    </tbody>
+</table>
+</div>
 {% endif %}
 
 <h2>Add API Key</h2>
