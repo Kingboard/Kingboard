@@ -110,4 +110,10 @@ class Homepage extends \Kingboard\Views\Base
 
         return $this->render($template, $templateVars);
     }
+
+    public function top(array $params)
+    {
+        $data = \Kingboard\Model\Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
+        return $this->render("top.html", array("data" => $data));
+    }
 }
