@@ -1,17 +1,39 @@
 <?php
 namespace Kingboard\Lib;
+
+/**
+ *  KillList, utility class to get kill lists
+ */
 class KillList
 {
+    /**
+     * @var string
+     */
     private $ownerType;
+
+    /**
+     * @var string
+     */
     private $ownerID;
 
+    // instances that represent the mapreduce its comming from
     private $killstats;
     private $lossstats;
     private $totalstats;
+
+    // criteria to be used to get this kill list
     private $criteria = array();
+
+    /**
+     * @var int total count of kills
+     */
     private $count;
 
 
+    /**
+     * @param string $ownerType
+     * @param string $ownerID
+     */
     public function __construct($ownerType, $ownerID)
     {
         $this->ownerType = $ownerType;
@@ -92,6 +114,11 @@ class KillList
 
     }
 
+    /**
+     * if no count for this list exists yet, create a count
+     * return count
+     * @return int
+     */
     public function getCount()
     {
         if(is_null($this->count))
@@ -99,21 +126,38 @@ class KillList
         return $this->count;
     }
 
+    /**
+     * killstats
+     * @return \King23\Mongo\MongoObject
+     */
     public function getKillStats()
     {
         return $this->killstats;
     }
 
+    /**
+     * lossstats
+     * @return \King23\Mongo\MongoObject
+     */
     public function getLossStats()
     {
         return $this->lossstats;
     }
 
+    /**
+     * @return array
+     */
     public function getTotalStats()
     {
         return $this->totalstats;
     }
 
+    /**
+     * get kills for the criteria this list obeys
+     * @param int $skip
+     * @param int $killsPerPage
+     * @return mixed
+     */
     public function getKills($skip, $killsPerPage)
     {
         return \Kingboard\Model\Kill::find($this->criteria)
@@ -121,6 +165,5 @@ class KillList
                 ->skip($skip)
                 ->limit($killsPerPage);
     }
-
 
 }

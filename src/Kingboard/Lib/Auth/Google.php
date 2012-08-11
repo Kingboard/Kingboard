@@ -1,5 +1,9 @@
 <?php
 namespace Kingboard\Lib\Auth;
+
+/**
+ * Google based authentication
+ */
 class Google extends Auth
 {
     /**

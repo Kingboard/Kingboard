@@ -1,8 +1,22 @@
 <?php
 namespace Kingboard\Lib\Auth;
 
+/**
+ * Jabber based Authentication
+ * this requires XMPPHP, which is no longer bundled
+ * also this method is strongly discouraged for use
+ * since it kinda trains users to put in their jabber login to
+ * a website.
+ */
 class Jabber extends \Kingboard\Lib\Auth\Auth {
 
+    /**
+     * Login the current user
+     * @static
+     * @param string $username
+     * @param string $password
+     * @return bool|\Kingboard\Model\User
+     */
     public static function login($username, $password) {
         try {
             $reg = \King23\Core\Registry::getInstance();

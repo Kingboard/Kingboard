@@ -1,5 +1,9 @@
 <?php
 namespace Kingboard\Lib\Parser;
+
+/**
+ * parse API style kills
+ */
 class EveAPI
 {
     public function parseKills($kills)
@@ -24,11 +28,6 @@ class EveAPI
                 if(!is_null(@$kill->killInternalID) && @$kill->killInternalID > 0)
                     $lastIntID = $kill->killInternalID;
 
-                /*if(!is_null(Kingboard_Kill::getByKillId($kill->killID)))
-                {
-                    $oldkills++;
-                    continue;
-                }*/
                 $killdata = array(
                     "killID" => $kill->killID,
                     "solarSystemID" => $kill->solarSystemID,
@@ -150,6 +149,13 @@ class EveAPI
         return $item;
     }
 
+    /**
+     * ensure there is an ID placed
+     * @param string $id
+     * @param string $charname
+     * @return int
+     * @throws \Exception
+     */
     public function ensureEveEntityID($id, $charname)
     {
         $id = (int) $id;

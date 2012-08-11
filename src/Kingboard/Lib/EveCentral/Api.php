@@ -1,10 +1,17 @@
 <?php
 namespace Kingboard\Lib\EveCentral;
 
+/**
+ * Class to get values from EveCentral API
+ */
 class Api
 {
-    private $itemID;
-    
+    /**
+     * get isk value for given itemID
+     * @static
+     * @param string $itemID
+     * @return float|null
+     */
     public static function getValue($itemID)
     {
         if(empty($itemID))

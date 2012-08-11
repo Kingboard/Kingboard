@@ -1,8 +1,18 @@
 <?php
 namespace Kingboard\Lib\Fetcher;
 
-class EveApi {
+/**
+ * Fetcher to get kills for a specific API key from CCP's EVE API
+ */
+class EveApi
+{
 
+    /**
+     * fetch all kills for $key
+     * @static
+     * @param array $key
+     * @return array
+     */
     public static function fetch($key)
     {
         $newkills = 0;

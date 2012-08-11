@@ -1,5 +1,9 @@
 <?php
 namespace Kingboard\Lib\Auth;
+
+/**
+ * Facebook based authentication
+ */
 class Facebook extends Auth
 {
     /**
