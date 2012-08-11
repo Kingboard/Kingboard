@@ -1,5 +1,5 @@
 {
-    "hash": "0ebfe57262702f104754528c4a926f88",
+    "hash": "ec7c63301152506f1ea92c5d98c391ba",
     "packages": [
         {
             "package": "king23/king23",
@@ -8,8 +8,8 @@
         {
             "package": "kingboard/ccpdump",
             "version": "dev-master",
-            "source-reference": "055c702049cf1734c9c92cae12109da8ea195dcd",
-            "commit-date": "1344025297"
+            "source-reference": "b51b93f54c57ec41a64c145091c31a00aec27f57",
+            "commit-date": "1344716677"
         },
         {
             "package": "pheal/pheal",
