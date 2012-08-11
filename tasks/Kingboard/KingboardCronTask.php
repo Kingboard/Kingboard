@@ -1,5 +1,9 @@
 <?php
 namespace Kingboard;
+/**
+ * This class contains all Kingboard Tasks that need to be
+ * run on a regulary basis.
+ */
 class KingboardCronTask extends \King23\Tasks\King23Task
 {
     /**
@@ -9,10 +13,9 @@ class KingboardCronTask extends \King23\Tasks\King23Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "update_stats" => "task to update stats which will be map/reduced from the database",
-        "key_activation" => "task to check for new key activates, and activate if so",
-        "api_import" => "import",
+        "api_import" => "import killmails from api",
         "item_values" => "updates item values for all items on the market",
-        "idfeed_import" => "stuff",
+        "idfeed_import" => "import from idfeeds (param: feedidentifier)"
     );
 
     /**
@@ -21,6 +24,7 @@ class KingboardCronTask extends \King23\Tasks\King23Task
     protected $name = "KingboardCron";
 
     /**
+     * update statistics
      * @param array $options
      * @return void
      */
@@ -70,48 +74,10 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         $this->cli->positive("name list updated");
     }
 
-    public function key_activation(array $options)
-    {
-        $this->cli->header('updating key activates');
-        $reg = \King23\Core\Registry::getInstance();
-
-        $pheal = new \Pheal($reg->apimailreceiverApiUserID, $reg->apimailreceiverApiKey, 'char');
-        $messages = $pheal->MailMessages(array('characterID' => $reg->apimailreceiverCharacterID))->messages;
-        foreach($messages as $message)
-        {
-            if($message->toCharacterIDs != $reg->apimailreceiverCharacterID)
-                continue;
-
-            $token = trim($message->title);
-
-            if(strlen($token) != \Kingboard\Model\ApiActivationToken::TOKEN_LENGTH)
-                continue;
-
-            if(!$token = \Kingboard\Model\ApiActivationToken::findOneByToken($token))
-                continue;
-
-            $user = \Kingboard\Model\User::getById($token['userid']);
-            $keys = $user['keys'];
-            $apiuserid = $token['apiuserid'];
-            $phealactivate = new \Pheal($keys[$apiuserid]['apiuserid'], $keys[$apiuserid]['apikey']);
-            $characters = $phealactivate->Characters()->characters;
-            foreach($characters as $character)
-            {
-                if($character->characterID == $message->senderID)
-                {
-                    $keys[$apiuserid]['active'] = true;
-                    $user['keys'] = $keys;
-                    $user->save();
-                    $token->delete();
-
-                    //$body = \King23\Core\Registry::getInstance()->sith->cachedGet('mails/activate_apikey.html')->render(array('username' => $user['username'], 'apiuserid' => $apiuserid ), \King23\Core\Registry::getInstance()->sith);
-                    //mail($user['username'], "Kingboard API Key Activation", $body);
-                    break;
-                }
-            }
-        }
-    }
-
+    /**
+     * import kills from idfeed
+     * @param array $options
+     */
     public function idfeed_import(array $options)
     {
         if(count($options) < 1)
@@ -157,6 +123,10 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         }
     }
 
+    /**
+     * import mails from ccp's API.
+     * @param array $options
+     */
     public function api_import(array $options)
     {
         $this->cli->message("api import running");
@@ -182,6 +152,10 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         }
     }
 
+    /**
+     * update item values from eve central
+     * @param array $options
+     */
     public function item_values(array $options)
     {
         $this->cli->message("item value updating running");

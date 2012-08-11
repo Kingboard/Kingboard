@@ -9,82 +9,12 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "setup_indexes" => "Setup the indexes for MongoDB",
-        "key_check" => "run through all keys, check for validity",
-        "key_purgelist" => "list all keys that key_purge would remove, incl amount of markers.",
-        "key_purge" => "remove all keys who have more than x markers, where x is a parameter",
     );
 
     /**
      * Name of the module
      */
     protected $name = "KingboardMaintenance";
-
-    /**
-     * runs through all api keys registered, testing them for validity,
-     * will up failcount if failed
-     * @param array $options
-     * @return void
-     */
-    public function key_check(array $options)
-    {
-        $keys = \Kingboard\Model\EveApiKey::find();
-        foreach($keys as $key)
-        {
-            $this->cli->message("testing {$key['userid']}");
-            $pheal = new Pheal($key['userid'], $key['apikey']);
-            try {
-                $pheal->Characters();
-                $this->cli->positive('ok');
-            } catch(\PhealApiException $e) {
-                $this->cli->error('failed');
-                if(!isset($key['failed']))
-                    $key->failed = 0;
-                $key->failed++;
-                $key->save();
-            }
-        }
-    }
-
-    /**
-     * return a list of keys that have <amount> failmarkers, all that have at least 1 if no amount is given
-     * @param array $options, array(amount)
-     * @return void
-     */
-    public function key_purgelist(array $options)
-    {
-        if(!isset($options[0]) || empty($options[0]))
-        {
-            $this->cli->message('no parameter given, assuming to show all who have a fail marker');
-            $options[0] = 0;
-        }
-        $criteria = array('failed' => array('$gt' => (int) $options[0]));
-        $keys = \Kingboard\Model\EveApiKey::find($criteria);
-        foreach($keys as $key)
-        {
-            $this->cli->message("{$key['userid']} has {$key['failed']} markers");
-        }
-    }
-
-    /**
-     * purge all keys from the database that have more than <amount> failcounters
-     * @param array $options array(amount)
-     * @return
-     */
-    public function key_purge(array $options)
-    {
-        if(!isset($options[0]) || empty($options[0]))
-        {
-            $this->cli->error('fail value required');
-            return;
-        }
-        $criteria = array('failed' => array('$gt' => (int) $options[0]));
-        $keys = \Kingboard\Model\EveApiKey::find($criteria);
-        foreach($keys as $key)
-        {
-            $this->cli->message("purging {$key['userid']}");
-            $key->delete();
-        }
-    }
 
     /**
      * setup all indexes for Kingboard
