@@ -27,7 +27,7 @@ class User extends \King23\Mongo\MongoObject
 
     public static function findOneByUsernameAndPassword($username, $password)
     {
-        return self::findOne(array('username' => $username, 'password' => $password));
+        return self::findOne(array('username' => $username, 'password' => hash("sha256", $password)));
     }
 
     public static function findWithApiKeys()

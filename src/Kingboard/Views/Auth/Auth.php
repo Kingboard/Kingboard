@@ -75,11 +75,16 @@ class Auth extends \Kingboard\Views\Base
 
                     $user = new \Kingboard\Model\User();
                     $user->username = $_POST['login'];
-                    $user->password = $_POST['passwd'];
+                    $user->password = hash('sha256', $_POST['passwd']);
                     $user->status = \Kingboard\Model\User::STATUS_NEW;
                     $user->validationCode = $validationCode;
                     $user->save();
-                    $body = \King23\Core\Registry::getInstance()->sith->cachedGet('mails/verify_email.html')->render(array('username' => $_POST['login'], 'hostname' => $_SERVER['SERVER_NAME'], 'activationkey' => $validationCode), \King23\Core\Registry::getInstance()->sith);
+                    $body = file_get_contents(APP_PATH . 'templates/mails/verify_email.html');
+                    $body = strtr($body, array(
+                        "{{username}}" => $_POST['login'],
+                        "{{hostname}}" => \King23\Core\Registry::getInstance()->baseHost,
+                        "{{activationkey}}" => $validationCode
+                    ));
                     mail($_POST['login'], "Kingboard Activation", $body);
                     $this->redirect('/');
                 }
