@@ -1,8 +1,12 @@
 <?php
 namespace Wrapper\XMPPHP;
 
+// this is not included anymore, due to license problems
 require_once dirname(__FILE__) ."/lib/XMPPHP/XMPP.php";
 
+/**
+ * Wrapper class for XMPHP, to include it within King23's classloading
+ */
 class XMPPHPWrapper {
 
     /**
