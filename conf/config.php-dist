@@ -1,8 +1,16 @@
 <?php
+/**
+ * Kingboard Configuration file, edit to setup kingboard the way you require it
+ */
+
+// ensure APP_PATH is set, if this is not working change to the
+// directory kingboard is running from
 if(!defined("APP_PATH"))
     define("APP_PATH", realpath(dirname(__FILE__) . "/.."));
 
-// composer autload
+
+// kingboard relies on composer to install and load dependencies usually you should
+// not need to edit this
 require_once APP_PATH . "/vendor/autoload.php";
 \King23\Core\Classloader::register();
 \King23\Core\Classloader::init(APP_PATH . "/vendor/king23/king23/lib");
@@ -10,29 +18,43 @@ require_once APP_PATH . "/vendor/autoload.php";
 
 $reg = \King23\Core\Registry::getInstance();
 
-// set this to your host
+// set this to your kingboards host
 $reg->baseHost = "kingboard.eve-kill.net";
 
+// configure your MongoDB connection here
 $connection = new Mongo('localhost');
 $reg->mongo = array(
     'connection' => $connection, 
-    'db' => $connection->Kingboard
+    'db' => $connection->Kingboard   // if your database is named differently, please edit
 );
 
+// disable mongodb's timeout
+MongoCursor::$timeout = -1;
+
+// the amount of kills displayed in a kill list page
 $reg->killListConfig = array("perPage" => 25);
 
+
+// pheal is used to connect to CCP's API.
 $pc = PhealConfig::getInstance();
+
+// the path that is used for pheals cache if you have several applications
+// on your machine that use Pheal, you might want to set this to a shared location
+// or you might want to use a different Cache implementation.
 $pc->cache = new PhealFileCache(APP_PATH . "/cache/");
+
+// raise this if your cronjobs break with CCP's api timeouting alot
 $pc->http_timeout = 40;
 
 // Twig Template configuration
 Twig_Autoloader::register();
 $reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templates"), array(
-    "cache" => APP_PATH . "/cache/templates_c",
-    "debug" => true
+    "cache" => APP_PATH . "/cache/templates_c", // we use a sub directory of our cachedir here
+    "debug" => false // debug mode
 ));
 
-
+// since images are not included with Kingboard but use CCP's image servers
+// in most cases you will want to keep this this way.
 $reg->imagePaths = array(
     'ships' => 'http://image.eveonline.com/Render/',
     'items' => 'http://image.eveonline.com/Type/',
@@ -40,11 +62,6 @@ $reg->imagePaths = array(
     'corporations' => 'http://image.eveonline.com/Corporation/',
     'alliances' => 'http://image.eveonline.com/Alliance/'
 );
-
-$reg->apimailreceiver = "CHARACTERNAME";
-$reg->apimailreceiverCharacterID = 12345;
-$reg->apimailreceiverApiUserID = "456789010";
-$reg->apimailreceiverApiKey = "adfmaldsfjladfjladsjflsjflasdjfladsjflsdjflsdjkflkj";
 
 // this can be fetched from a specific ownerID provider
 // which maps host to id for example on hosted boards
@@ -56,7 +73,9 @@ $reg->ownerType = "alliance";
 // set this to something meaningfull to replace the word "Kingboard" in the top menu
 // $reg->ownerName = "Kingboard";
 
-// uncomment when using OAuth2 login opposed to regular or jabber auth
+// uncomment when using OAuth2 login opposed to regular or jabber auth.
+// you need to register with either facebook or google for your kingboard instance
+// so you can access their apis (both work aswell ;)
 /*
 $reg->auth = '\Kingboard\Views\Auth\OAuth2';
 $reg->oAuth2ProviderList = array(
@@ -97,8 +116,10 @@ $reg->oAuth2ProviderList = array(
 // choose bootstrap theme (see public/themes/*)
 $reg->theme = "default";
 
-/* highly experimental feature, dont use.
-$reg->stomp = array(
+
+// highly experimental feature, you should not use this if you don't
+// know exactly what this is doing
+/*$reg->stomp = array(
     "post" => false,
     "read" => false,
     "user" => "guest",
@@ -108,7 +129,8 @@ $reg->stomp = array(
     "destination_post" => array("/topic/kills", "/queue/kills")
 );*/
 
-
+// include the routes configuration
 require_once("routes.php");
-MongoCursor::$timeout = -1;
+
+// start session
 session_start();

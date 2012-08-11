@@ -1,5 +1,9 @@
 <?php
+/**
+ * Kingboards King23 Routing configuration, usually you should not need to touch this.
+ */
 
+// basic router configuration
 $router =  \King23\Core\Router::getInstance();
 $router->setBaseHost(\King23\Core\Registry::getInstance()->baseHost);
 
