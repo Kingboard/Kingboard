@@ -59,5 +59,8 @@ class Base extends \King23\View\TwigView
 
         // pick bootstrap theme path from public/css/themes folder
         $this->_context['theme']= !is_null($reg->theme) ? $reg->theme :"default";
+
+        //
+        $this->_context['header_image'] = !is_null($reg->them) ? $reg->headerImage : "/images/banner/kingboard.png";
    }
 }

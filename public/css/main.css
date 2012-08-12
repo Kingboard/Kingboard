@@ -6,7 +6,6 @@ body {
 .top-banner{
     height: 120px;
     margin-bottom:30px;
-    background-image: url("/images/kingboard.png");
     -webkit-border-radius:6px;
     -moz-border-radius:6px;
     border-radius:6px;
