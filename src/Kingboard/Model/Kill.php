@@ -33,6 +33,11 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public function save()
     {
+        if(!$this->_data['killTime'] instanceof \MongoDate)
+        {
+            if(is_array($this->_data['killTime']))
+                $this->_data['killTime'] = new \MongoDate($this->_data['killTime']['sec'], $this->_data['killTime']['usec']);
+        }
         $this->_data['saved'] = new \MongoDate();
         parent::save();
     }
@@ -354,6 +359,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     {
         return self::_find(__CLASS__, array())->count();
     }
+
 
     public function toArray()
     {
