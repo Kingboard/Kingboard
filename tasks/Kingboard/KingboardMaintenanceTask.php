@@ -19,7 +19,7 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
     /**
      * setup all indexes for Kingboard
      * @param array $options
-     * @return
+     * @return void
      */
     public function setup_indexes(array $options)
     {
