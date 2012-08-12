@@ -116,6 +116,8 @@ $reg->oAuth2ProviderList = array(
 // choose bootstrap theme (see public/themes/*)
 $reg->theme = "default";
 
+// choose banner grafics
+$reg->headerImage = "/images/banner/kingboard.png";
 
 // highly experimental feature, you should not use this if you don't
 // know exactly what this is doing
