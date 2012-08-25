@@ -2,8 +2,10 @@
 {% block title %}{{ battleSetting.system }}:{{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }} Battle Details{% endblock %}
 {% block content %}
 <h1>Battle for {{ battleSetting.system }}</h1>
-<p><b>Start</b>: {{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }}<br/>
-<b>End</b>: {{ battleSetting.enddate.sec|date("Y-m-d H:i:s") }}</p>
+<h2>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{ battleSetting.enddate.sec|date("Y-m-d H:i") }}</h2>
+<div class="well">
+  This Battle was created using the Standings of {{battleSetting.ownerCharacterName}} / {{battleSetting.ownerCorporationName}} / {{ battleSetting.ownerAllianceName }}. Losses / Wins are set accordingly
+</div>
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#kills">Kills</a></li>

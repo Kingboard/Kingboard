@@ -18,7 +18,7 @@ class Battle extends \King23\Mongo\MongoObject
     public static function getByBattleSettings(\Kingboard\Model\BattleSettings $battleSetting)
     {
         $battle = Battle::_getInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
-        if(is_null($battle) || time() > $battle->updated->sec + 600)
+        if(is_null($battle) || time() > $battle->updated->sec + 1)
         {
             if(is_null($battle))
                 $battle = new Battle();
@@ -43,8 +43,8 @@ class Battle extends \King23\Mongo\MongoObject
             ),
             "location.solarSystem" => $battleSetting->system,
             '$or' => array(
-                array("attackers.corporationID" => array('$in' => array_keys($battleSetting->positives))),
-                array("attackers.allianceID" => array('$in' => array_keys($battleSetting->positives)))
+                array("attackers.corporationID" => array('$in' => array_merge(array_keys($battleSetting->positives), array((int)$battleSetting->ownerCorporation)))),
+                array("attackers.allianceID" => array('$in' => array_merge(array_keys($battleSetting->positives), array((int)$battleSetting->ownerAlliance))))
             ),
             'victim.corporationID' => array('$nin' => array_keys($battleSetting->positives)),
             'victim.allianceID' => array('$nin' => array_keys($battleSetting->positives))

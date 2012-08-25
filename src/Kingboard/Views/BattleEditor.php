@@ -53,6 +53,10 @@ class BattleEditor extends \Kingboard\Views\Base
         $key = $user["keys"][$key];
         $pheal = new \Pheal($key['apiuserid'], $key['apikey'], 'char');
         $contacts = $pheal->ContactList(array('characterID' => $character));
+
+        // reset to neutral pheal
+        $pheal = new \Pheal();
+        $characterInfo = $pheal->eveScope->CharacterInfo(array('characterID' => $character));
         $positives = array();
         foreach($contacts->corporateContactList as $contact)
         {
@@ -79,7 +83,14 @@ class BattleEditor extends \Kingboard\Views\Base
         $battleSetting->enddate = new \MongoDate(strtotime($_POST['enddate']));
         $battleSetting->system = $_POST['system'];
         $battleSetting->key = $key;
-        $battleSetting->character = $character;
+
+        // lets fix some info about the creator of this report
+        $battleSetting->ownerCharacter = $character;
+        $battleSetting->ownerCharacterName = $characterInfo->characterName;
+        $battleSetting->ownerCorporation = (int) $characterInfo->corporationID;
+        $battleSetting->ownerCorporationName = $characterInfo->corporation;
+        $battleSetting->ownerAlliance = (int)$characterInfo->allianceID;
+        $battleSetting->ownerAllianceName = $characterInfo->alliance;
         $battleSetting->positives = $positives;
         $battleSetting->runs = 0;
         $battleSetting->nextRun = new \MongoDate(time());
