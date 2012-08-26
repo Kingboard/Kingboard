@@ -53,6 +53,12 @@ class EveAPI
                         "iskValue" => \Kingboard\Model\EveItem::getItemValue($kill->victim->shipTypeID)
                     )
                 );
+
+                $involvedCharacters = array((int)$killdata["victim"]["characterID"]);
+                $involvedCorporations = array((int)$killdata["victim"]["corporationID"]);
+                $involvedAlliances = array((int)$killdata["victim"]["allianceID"]);
+                $involvedFactions = array((int)$killdata["victim"]["factionID"]);
+
                 $totalISKValue = \Kingboard\Model\EveItem::getItemValue($kill->victim->shipTypeID);
                 $killdata['attackers'] = array();
                 foreach($kill->attackers as $attacker)
@@ -74,14 +80,24 @@ class EveAPI
                         "shipTypeID" => (int) $attacker->shipTypeID,
                         "shipType"  => \Kingboard\Model\EveItem::getByItemId($attacker->shipTypeID)->typeName
                     );
+
+                    if(!in_array($attacker->characterID, $involvedCharacters))
+                        $involvedCharacters[] = $attacker->characterID;
+                    if(!in_array($attacker->corporationID, $involvedCorporations))
+                        $involvedCorporations[] = $attacker->corporationID;
+                    if(!in_array($attacker->allianceID, $involvedAlliances))
+                        $involvedAlliances[] = $attacker->allianceID;
+                    if(!in_array($attacker->factionID, $involvedFactions))
+                        $involvedFactions[] = $attacker->factionID;
                 }
+
                 $killdata['items'] = array();
 
                 if(@!is_null($kill->items))
                 {
                     foreach($kill->items as $item)
                     {
-                        $item = $this->ParseItem($item);
+                        $item = $this->parseItem($item);
                         $killdata['items'][] = $item;
                         $totalISKValue += $item["iskValue"];
                         $qtyDropped += $item["qtyDropped"];
@@ -90,7 +106,12 @@ class EveAPI
                         $valueDestroyed += $item["iskValue"];
                     }
                 }
-                
+
+                $killdata["involvedCorporations"] = $involvedCorporations;
+                $killdata["involvedAlliances"] = $involvedAlliances;
+                $killdata["involvedCharacters"] = $involvedCharacters;
+                $killdata["involvedFactions"] = $involvedFactions;
+
                 $hash = \Kingboard\Lib\IdHash::getByData($killdata);
                 $killdata['idHash'] = $hash->generateHash();
                 $killdata['totalISKValue'] = $totalISKValue;
@@ -125,7 +146,7 @@ class EveAPI
     }
 
 
-    private function ParseItem($row)
+    private function parseItem($row)
     {
         // Build the standard item
         $item = array(
@@ -134,7 +155,8 @@ class EveAPI
             "flag" => $row->flag,
             "qtyDropped" => $row->qtyDropped,
             "qtyDestroyed" => $row->qtyDestroyed,
-            "iskValue" => \Kingboard\Model\EveItem::getItemValue($row->typeID)
+            "iskValue" => \Kingboard\Model\EveItem::getItemValue($row->typeID),
+            "singleton" => $row->singleton
         );
 
         // Check for nested items (container)
@@ -143,7 +165,7 @@ class EveAPI
             $item['items'] = array();
             foreach($row['items'] as $innerRow)
             {
-                $item['items'][] = $this->ParseItem($innerRow);
+                $item['items'][] = $this->parseItem($innerRow);
             }
         }
         return $item;
