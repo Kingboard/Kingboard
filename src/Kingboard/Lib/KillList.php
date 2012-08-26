@@ -44,37 +44,41 @@ class KillList
             case "alliance":
                 $killstats = \Kingboard\Model\MapReduce\KillsByShipByAlliance::getInstanceByAllianceId((int) $this->ownerID);
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByAlliance::getInstanceByAllianceId((int) $this->ownerID);
-                $criteria = array('$or' => array(
+                /*$criteria = array('$or' => array(
                     array('attackers.allianceID' => (int) $this->ownerID),
                     array('victim.allianceID' => (int) $this->ownerID)
-                ));
+                ));*/
+                $criteria = array("involvedAlliances" => (int) $this->ownerID);
                 break;
             case "faction":
                 $killstats = \Kingboard\Model\MapReduce\KillsByShipByFaction::getInstanceByFactionId((int) $this->ownerID);
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByFaction::getInstanceByFactionId((int) $this->ownerID);
-                $criteria = array('$or' => array(
+                /*$criteria = array('$or' => array(
                     array('attackers.factionID' => (int)  $this->ownerID),
                     array('victim.factionID' => (int)  $this->ownerID)
-                ));
+                ));*/
+                $criteria = array("involvedFactions" => (int) $this->ownerID);
                 break;
             case "corp":
             case "corporation":
                 $killstats = \Kingboard\Model\MapReduce\KillsByShipByCorporation::getInstanceByCorporationId((int) $this->ownerID);
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByCorporation::getInstanceByCorporationId((int) $this->ownerID);
-                $criteria = array('$or' => array(
+                /*$criteria = array('$or' => array(
                     array('attackers.corporationID' => (int) $this->ownerID),
                     array('victim.corporationID' => (int) $this->ownerID)
-                ));
+                ));*/
+                $criteria = array("involvedCorporations" => (int) $this->ownerID);
                 break;
             case "char":
             case "character":
             case "pilot":
                 $killstats = \Kingboard\Model\MapReduce\KillsByShipByPilot::getInstanceByPilotId((int) $this->ownerID);
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByPilot::getInstanceByPilotId((int) $this->ownerID);
-                $criteria = array('$or' => array(
+                /*$criteria = array('$or' => array(
                     array('attackers.characterID' => (int) $this->ownerID),
                     array('victim.characterID' => (int) $this->ownerID)
-                ));
+                ));*/
+                $criteria = array("involvedCharacters" => (int) $this->ownerID);
                 break;
             default:
                 // its not a known type of anything, so we dont need to set anything here.

@@ -87,6 +87,8 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         // faction attacker name
         $col->ensureIndex(array('attackers.factionName' =>1), array("name" => "a_factname"));
 
+
+
         // indexes for the battle queries
         // battle kills
         $col->ensureIndex(array(
@@ -105,7 +107,13 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
             'victim.corporationID' => 1,
             'victim.allianceID' => 1
         ), array('name'=> 'battlelosses'));
-        
+
+        // kill datail indexes
+        $col->ensureIndex(array('involvedCorporations' => 1, 'killTime' => -1 ), array('name' => "invcorps"));
+        $col->ensureIndex(array('involvedCharacters' => 1, 'killTime' => -1 ), array('name' => "invchars"));
+        $col->ensureIndex(array('involvedFactions' => 1, 'killTime' => -1 ), array('name' => "invfactions"));
+        $col->ensureIndex(array('involvedAlliances' => 1, 'killTime' => -1 ), array('name' => "invalliances"));
+
         // killtime Index
         $col->ensureIndex(array('killTime' => 1), array("name" => "killtime"));
 
