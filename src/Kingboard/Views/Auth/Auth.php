@@ -85,11 +85,11 @@ class Auth extends \Kingboard\Views\Base
                         "{{hostname}}" => \King23\Core\Registry::getInstance()->baseHost,
                         "{{activationkey}}" => $validationCode
                     ));
-					$headers = "From: ". \King23\Core\Registry::getInstance()->sendFromEmail ."\r\n";
-					$headers .= "Reply-To: " . \King23\Core\Registry::getInstance()->sendFromEmail . "\r\n";
-					$headers .= "X-Mailer: PHP/" . phpversion();
-					
-                    mail($_POST['login'], "Kingboard Activation", $body, $headers);
+                    $headers = "From: ". \King23\Core\Registry::getInstance()->sendFromEmail ."\r\n";
+                    $headers .= "Reply-To: " . \King23\Core\Registry::getInstance()->sendFromEmail . "\r\n";
+                    $headers .= "X-Mailer: PHP/" . phpversion();
+                    
+					mail($_POST['login'], "Kingboard Activation", $body, $headers);
                     $this->redirect('/');
                 }
             } else {
