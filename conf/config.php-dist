@@ -18,6 +18,9 @@ require_once APP_PATH . "/vendor/autoload.php";
 
 $reg = \King23\Core\Registry::getInstance();
 
+// set this to the email you want to send from
+$reg->sendFromEmail = "kingboard@eve-kill.net";
+
 // set this to your kingboards host
 $reg->baseHost = "kingboard.eve-kill.net";
 

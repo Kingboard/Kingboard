@@ -38,7 +38,7 @@ else
 
 // registration
 $router->addRoute("/user/registration", $auth, 'registerForm');
-$router->addRoute("/user/activate/", $auth, 'activateUser',array('activationkey'));
+$router->addRoute("/user/activate/", $auth, 'activateUser', array('activationkey'));
 
 // authentication
 $router->addRoute("/login", $auth, "login");
