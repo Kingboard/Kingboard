@@ -71,7 +71,7 @@ class Auth extends \Kingboard\Views\Base
                 } elseif(!\Kingboard\Lib\Form::isEmail($_POST['login'])) {
                     $this->_context['registration_failed'] = 'not a valid email adresse';
                 } else {
-                    $validationCode = sha1(mktime() . $_POST['login']);
+                    $validationCode = sha1(time() . $_POST['login']);
 
                     $user = new \Kingboard\Model\User();
                     $user->username = $_POST['login'];
@@ -79,13 +79,17 @@ class Auth extends \Kingboard\Views\Base
                     $user->status = \Kingboard\Model\User::STATUS_NEW;
                     $user->validationCode = $validationCode;
                     $user->save();
-                    $body = file_get_contents(APP_PATH . 'templates/mails/verify_email.html');
+                    $body = file_get_contents(APP_PATH . '/templates/mails/verify_email.html');
                     $body = strtr($body, array(
                         "{{username}}" => $_POST['login'],
                         "{{hostname}}" => \King23\Core\Registry::getInstance()->baseHost,
                         "{{activationkey}}" => $validationCode
                     ));
-                    mail($_POST['login'], "Kingboard Activation", $body);
+                    $headers = "From: ". \King23\Core\Registry::getInstance()->sendFromEmail ."\r\n";
+                    $headers .= "Reply-To: " . \King23\Core\Registry::getInstance()->sendFromEmail . "\r\n";
+                    $headers .= "X-Mailer: PHP/" . phpversion();
+                    
+					mail($_POST['login'], "Kingboard Activation", $body, $headers);
                     $this->redirect('/');
                 }
             } else {

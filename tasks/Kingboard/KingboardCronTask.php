@@ -15,7 +15,8 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         "update_stats" => "task to update stats which will be map/reduced from the database",
         "api_import" => "import killmails from api",
         "item_values" => "updates item values for all items on the market",
-        "idfeed_import" => "import from idfeeds (param: feedidentifier)"
+        "idfeed_import" => "import from idfeeds (param: feedidentifier)",
+        "evekill_import" => "Import all mails from EVE-KILL, you might need a key to do this ^^"
     );
 
     /**
@@ -74,6 +75,15 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         $this->cli->positive("name list updated");
     }
 
+    /**
+     * import kills from eve-kill
+     * @param string $key
+    */
+    public function evekill_import($key)
+    {
+        $this->cli->message(\Kingboard\Model\EveKillImport::import());
+    }
+    
     /**
      * import kills from idfeed
      * @param array $options
