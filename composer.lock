@@ -1,23 +1,173 @@
 {
-    "hash": "ec7c63301152506f1ea92c5d98c391ba",
+    "hash": "2bf9955842aff67cdc35008338ce1d59",
     "packages": [
         {
-            "package": "king23/king23",
-            "version": "0.1.0"
+            "name": "king23/king23",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/ppetermann/king23.git",
+                "reference": "0.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ppetermann/king23/zipball/0.1.1",
+                "reference": "0.1.1",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "1.9.2"
+            },
+            "suggest": {
+                "king23/project_template": "0.1.1"
+            },
+            "time": "2012-09-23 16:06:27",
+            "bin": [
+                "bin/king23"
+            ],
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "King23": "lib/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Petermann",
+                    "email": "ppetermann80@googlemail.com",
+                    "homepage": "http://devedge.eu"
+                }
+            ],
+            "description": "the King23 Framework",
+            "homepage": "http://king23.net",
+            "keywords": [
+                "framework",
+                "king23"
+            ]
         },
         {
-            "package": "kingboard/ccpdump",
+            "name": "kingboard/ccpdump",
             "version": "dev-master",
-            "source-reference": "b51b93f54c57ec41a64c145091c31a00aec27f57",
-            "commit-date": "1344716677"
+            "source": {
+                "type": "git",
+                "url": "git://github.com/Kingboard/ccpdump.git",
+                "reference": "b51b93f54c57ec41a64c145091c31a00aec27f57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Kingboard/ccpdump/zipball/b51b93f54c57ec41a64c145091c31a00aec27f57",
+                "reference": "b51b93f54c57ec41a64c145091c31a00aec27f57",
+                "shasum": ""
+            },
+            "time": "1344716677",
+            "type": "library",
+            "installation-source": "source",
+            "authors": [
+                {
+                    "name": "Beansman",
+                    "email": "niels+kingboard@nsbit.dk",
+                    "homepage": null,
+                    "role": null
+                }
+            ],
+            "description": "MongoDB Variant of CCP's static data dump"
         },
         {
-            "package": "pheal/pheal",
-            "version": "0.1.2"
+            "name": "pheal/pheal",
+            "version": "0.1.3",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/ppetermann/pheal.git",
+                "reference": "0.1.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/ppetermann/pheal/zipball/0.1.3",
+                "reference": "0.1.3",
+                "shasum": ""
+            },
+            "time": "2012-09-21 07:58:57",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "PhealLoadMe.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Petermann",
+                    "email": "ppetermann80@googlemail.com",
+                    "homepage": "http://devedge.eu"
+                },
+                {
+                    "name": "Wollari",
+                    "homepage": "http://evemaps.dotlan.net/"
+                }
+            ],
+            "description": "PHP Eve Api Library, a simple PHP lib to access the EVE Online API",
+            "homepage": "https://github.com/ppetermann/pheal",
+            "keywords": [
+                "EVE Online",
+                "Pheal",
+                "EVE API"
+            ]
         },
         {
-            "package": "twig/twig",
-            "version": "v1.8.3"
+            "name": "twig/twig",
+            "version": "v1.9.2",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/fabpot/Twig.git",
+                "reference": "v1.9.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/fabpot/Twig/zipball/v1.9.2",
+                "reference": "v1.9.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "time": "2012-08-25 17:32:57",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "license": [
+                "BSD-3"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ]
         }
     ],
     "packages-dev": null,
