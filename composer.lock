@@ -21,7 +21,7 @@
             "suggest": {
                 "king23/project_template": "0.1.1"
             },
-            "time": "2012-09-23 14:06:27",
+            "time": "2012-09-23 12:06:27",
             "bin": [
                 "bin/king23"
             ],
@@ -55,15 +55,15 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/Kingboard/ccpdump.git",
-                "reference": "b51b93f54c57ec41a64c145091c31a00aec27f57"
+                "reference": "1063e894b807cba26b703ab519aec9c16c0b6fd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Kingboard/ccpdump/zipball/b51b93f54c57ec41a64c145091c31a00aec27f57",
-                "reference": "b51b93f54c57ec41a64c145091c31a00aec27f57",
+                "url": "https://github.com/Kingboard/ccpdump/zipball/1063e894b807cba26b703ab519aec9c16c0b6fd5",
+                "reference": "1063e894b807cba26b703ab519aec9c16c0b6fd5",
                 "shasum": ""
             },
-            "time": "1344716677",
+            "time": "1349688602",
             "type": "library",
             "installation-source": "source",
             "authors": [
@@ -88,7 +88,7 @@
                 "reference": "0.1.5",
                 "shasum": ""
             },
-            "time": "2012-09-30 09:06:38",
+            "time": "2012-09-30 07:06:38",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -135,7 +135,7 @@
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-08-25 15:32:57",
+            "time": "2012-08-25 13:32:57",
             "type": "library",
             "extra": {
                 "branch-alias": {
