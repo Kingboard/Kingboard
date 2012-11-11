@@ -1,5 +1,5 @@
 {
-    "hash": "9d9e0472e5b90ada75f8cc14561f3cb4",
+    "hash": "44fe028622ffbed99cae9e6bf36c7888",
     "packages": [
         {
             "name": "king23/king23",
@@ -76,19 +76,19 @@
         },
         {
             "name": "pheal/pheal",
-            "version": "0.1.5",
+            "version": "0.1.6",
             "source": {
                 "type": "git",
                 "url": "git://github.com/ppetermann/pheal.git",
-                "reference": "0.1.5"
+                "reference": "0.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ppetermann/pheal/zipball/0.1.5",
-                "reference": "0.1.5",
+                "url": "https://github.com/ppetermann/pheal/zipball/0.1.6",
+                "reference": "0.1.6",
                 "shasum": ""
             },
-            "time": "2012-09-30 07:06:38",
+            "time": "2012-11-04 14:25:25",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

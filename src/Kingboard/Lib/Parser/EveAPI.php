@@ -82,13 +82,13 @@ class EveAPI
                     );
 
                     if(!in_array($attacker->characterID, $involvedCharacters))
-                        $involvedCharacters[] = $attacker->characterID;
+                        $involvedCharacters[] = (int) $attacker->characterID;
                     if(!in_array($attacker->corporationID, $involvedCorporations))
-                        $involvedCorporations[] = $attacker->corporationID;
+                        $involvedCorporations[] = (int) $attacker->corporationID;
                     if(!in_array($attacker->allianceID, $involvedAlliances))
-                        $involvedAlliances[] = $attacker->allianceID;
+                        $involvedAlliances[] = (int) $attacker->allianceID;
                     if(!in_array($attacker->factionID, $involvedFactions))
-                        $involvedFactions[] = $attacker->factionID;
+                        $involvedFactions[] = (int) $attacker->factionID;
                 }
 
                 $killdata['items'] = array();
