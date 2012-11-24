@@ -17,6 +17,15 @@ class Base extends \King23\View\TwigView
     }
 
     /**
+     * Check if this view was called from eves ingame browser
+     * @return bool
+     */
+    protected function isIGB()
+    {
+        return isset($_SERVER['HTTP_EVE_TRUSTED']);
+    }
+
+    /**
      * constructor, should be called by all derived views
      * will cause redirect if $loginrequired and not logged in
      * @param bool $loginrequired
@@ -62,5 +71,8 @@ class Base extends \King23\View\TwigView
 
         // set header image, fall back to default if non configured
         $this->_context['header_image'] = !is_null($reg->headerImage) ? $reg->headerImage : "/images/banner/kingboard.png";
+
+        // ingame browser check
+        $this->_context['igb'] = $this->isIGB();
    }
 }

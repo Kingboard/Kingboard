@@ -185,7 +185,7 @@
                                 <td class="icons"><div align="center"><a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipType}}'><img src="{{ images.items }}{{ killdata.victim.shipTypeID }}_32.png" width="32" height="32"></a></div></td>
                                 <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{killdata.victim.shipType}}</a></td>
                                 <td class="dropped"><div align="center">0</div></td>
-                                <td class="destroyed"><div align="center">1</pdiv></td>
+                                <td class="destroyed"><div align="center">1</div></td>
                                 <td class="price"><div align="right">{{ killdata.victim.iskValue|number_format(2, '.', ',') }} isk</div></td>     
                             </tr>
                             <tr>
@@ -247,8 +247,9 @@
 
 			</div>
 			<div id="fittings" class="tab-pane">
-				<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>
-            </div>			
+				{% if igb %}<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>{% endif %}
+            </div>
 		</div>
+    </div>
 </div>
 {% endblock %}
