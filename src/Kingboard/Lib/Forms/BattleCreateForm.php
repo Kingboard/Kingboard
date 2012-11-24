@@ -7,26 +7,43 @@ namespace Kingboard\Lib\Forms;
  */
 class BattleCreateForm extends \Kingboard\Lib\Form
 {
+    public $apiKey = null;
+    public $character = null;
+
+
     /**
      * validate if character is actually a character of the current user
-     * @static
      * @param $characterData
      * @return bool
-     * @todo implement me!
      */
-    protected static function validateCharacter($characterData)
+    protected function validateCharacter($characterData)
     {
+        $characterData = explode("|",$characterData);
+
+        // dont have a user, meaning not logged in..
+        if(!($user = \Kingboard\Lib\Auth\Auth::getUser()))
+            return false;
+
+        // user does not have any api keys, so can't be his character
+        if(is_null($user->keys) || !is_array($user->keys))
+            return false;
+
+        if(!isset($user->keys[$characterData[0]]) || !$user->keys[$characterData[0]]["active"])
+            return false;
+
+        // key was not found
+        $this->apiKey = $user->keys[$characterData[0]];
+        $this->character = (int) $characterData[1];
         return true;
     }
 
     /**
      * validate solar system entered by the user
-     * @static
      * @param $solarSystem
      * @return bool
      * @todo implement me
      */
-    protected static function validateSolarSystem($solarSystem)
+    protected function validateSolarSystem($solarSystem)
     {
         return true;
     }
@@ -34,13 +51,12 @@ class BattleCreateForm extends \Kingboard\Lib\Form
     /**
      * validate dates that the user entered, those shouldnt be too far
      * from eachother or this will be heavy on the database
-     * @static
      * @param $startDate
      * @param $endDate
      * @return bool
      * @todo implement me
      */
-    protected static function validateDates($startDate, $endDate)
+    protected function validateDates($startDate, $endDate)
     {
         return true;
     }
@@ -55,9 +71,9 @@ class BattleCreateForm extends \Kingboard\Lib\Form
     {
         switch(true)
         {
-            case !self::validateCharacter($formData['character']):
-            case !self::validateDates($formData['startdate'], $formData['enddate']):
-            case !self::validateSolarSystem($formData['system']):
+            case !$this->validateCharacter($formData['character']):
+            case !$this->validateDates($formData['startdate'], $formData['enddate']):
+            case !$this->validateSolarSystem($formData['system']):
                 return false;
             case !self::validateXSRF($formData['XSRF']):
                 die('xsrf!');

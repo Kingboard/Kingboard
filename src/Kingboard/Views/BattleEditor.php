@@ -43,20 +43,27 @@ class BattleEditor extends \Kingboard\Views\Base
 
     public function create(array $params)
     {
-        if(!\Kingboard\Lib\Forms\BattleCreateForm::validate($_POST))
+        $form = new \Kingboard\Lib\Forms\BattleCreateForm();
+
+        if(!$form->validate($_POST))
         {
             // @todo handle invalid
             die();
         }
         $user = \Kingboard\Lib\Auth\Auth::getUser();
-        list($key, $character) = explode('|', $_POST['character']);
-        $key = $user["keys"][$key];
-        $pheal = new \Pheal($key['apiuserid'], $key['apikey'], 'char');
-        $contacts = $pheal->ContactList(array('characterID' => $character));
+
+        $key = $form->apiKey;
+
+        $scope = "char"; // for now we default to char. Account keys are never corp keys.
+        if($key['type'] == "Character") $scope = "char";
+        if($key['type'] == "Corporation") $scope = "corp";
+
+        $pheal = new \Pheal($key['apiuserid'], $key['apikey'], $scope);
+        $contacts = $pheal->ContactList(array('characterID' => $form->character));
 
         // reset to neutral pheal
         $pheal = new \Pheal();
-        $characterInfo = $pheal->eveScope->CharacterInfo(array('characterID' => $character));
+        $characterInfo = $pheal->eveScope->CharacterInfo(array('characterID' => $form->character));
         $positives = array();
         foreach($contacts->corporateContactList as $contact)
         {
@@ -85,7 +92,7 @@ class BattleEditor extends \Kingboard\Views\Base
         $battleSetting->key = $key;
 
         // lets fix some info about the creator of this report
-        $battleSetting->ownerCharacter = $character;
+        $battleSetting->ownerCharacter = $form->character;
         $battleSetting->ownerCharacterName = $characterInfo->characterName;
         $battleSetting->ownerCorporation = (int) $characterInfo->corporationID;
         $battleSetting->ownerCorporationName = $characterInfo->corporation;
