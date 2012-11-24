@@ -1,10 +1,30 @@
 {% extends "base.html" %}
 {% block title %}{{ battleSetting.system }}:{{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }} Battle Details{% endblock %}
+
 {% block content %}
 <h1>Battle for {{ battleSetting.system }}</h1>
 <h2>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{ battleSetting.enddate.sec|date("Y-m-d H:i") }}</h2>
-<div class="well">
-  This Battle was created using the Standings of {{battleSetting.ownerCharacterName}} / {{battleSetting.ownerCorporationName}} / {{ battleSetting.ownerAllianceName }}. Losses / Wins are set accordingly
+
+<div class="row">
+    <div class="span3">
+        <h1>{{ info.characterName }}</h1>
+        <a href="/details/pilot/{{battleSetting.ownerCharacter}}" rel='twipsy' title='{{battleSetting.ownerCharacterName}}'>
+        <img src="{{ images.characters }}{{ battleSetting.ownerCharacter }}_64.jpg" width="64" height="64">
+        </a>
+        <a href="/details/corporation/{{battleSetting.ownerCorporation}}" rel='twipsy' title='{{battleSetting.ownerCorporationName}}'>
+        <img src="{{ images.corporations}}{{battleSetting.ownerCorporation}}_64.png" width="64" height="64">
+        </a>
+        {% if info.allianceID != "0" %}
+        <a href="/details/alliance/{{battleSetting.ownerAlliance}}" rel='twipsy' title='{{battleSetting.ownerAllianceName}}'>
+        <img src="{{ images.alliances }}{{battleSetting.ownerAlliance}}_64.png" width="64" height="64">
+        </a>
+        {% endif %}
+    </div>
+    <div class="span9">
+        <div class="alert alert-info">
+            <i class="icon-info-sign icon-white"></i> This Battle was created using the standings of {{battleSetting.ownerCharacterName}} ({{battleSetting.ownerCorporationName}} / {{ battleSetting.ownerAllianceName }}). <br />Losses and Wins are set accordingly
+        </div>
+    </div>
 </div>
 <div class="tabbable">
     <ul class="nav nav-tabs">

@@ -26,6 +26,9 @@ class Battle extends \Kingboard\Views\Base
 
         $battle = \Kingboard\Model\Battle::getByBattleSettings($battleSetting);
 
+
+
+
         //var_dump($battleSetting);
 
         //print_r($battle->data);
