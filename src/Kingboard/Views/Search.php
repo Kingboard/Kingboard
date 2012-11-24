@@ -43,9 +43,9 @@ class Search extends \Kingboard\Views\Base
         if(!empty($params['pilotname']))
         {
             foreach(\Kingboard\Model\MapReduce\NameSearch::search($params['pilotname'], 1) as $result)
-			{
-				$id = $result->value['id'];
-			}
+            {
+                $id = $result->value['id'];
+            }
             $this->redirect("/details/pilot/$id/");
             return;
         }
@@ -57,9 +57,9 @@ class Search extends \Kingboard\Views\Base
         if(!empty($params['corpname']))
         {
             foreach(\Kingboard\Model\MapReduce\NameSearch::search($params['corpname'], 1) as $result)
-			{
-				$id = $result->value['id'];
-			}
+            {
+                $id = $result->value['id'];
+            }
             $this->redirect("/details/corporation/$id/");
             return;
         }
@@ -70,9 +70,9 @@ class Search extends \Kingboard\Views\Base
         if(!empty($params['factionname']))
         {
             foreach(\Kingboard\Model\MapReduce\NameSearch::search($params['factionname'], 1) as $result)
-			{
-				$id = $result->value['id'];
-			}
+            {
+                $id = $result->value['id'];
+            }
             $this->redirect("/details/faction/$id/");
             return;
         }
@@ -83,9 +83,9 @@ class Search extends \Kingboard\Views\Base
         if(!empty($params['alliancename']))
         {
             foreach(\Kingboard\Model\MapReduce\NameSearch::search($params['alliancename'], 1) as $result)
-			{
-				$id = $result->value['id'];
-			}
+            {
+                $id = $result->value['id'];
+            }
             $this->redirect("/details/alliance/$id/");
             return;
         }

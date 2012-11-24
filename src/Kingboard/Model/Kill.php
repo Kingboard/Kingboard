@@ -214,7 +214,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
                 return array(
                     "allianceID" => $attacker['allianceID'],
                     "allianceName" => $attacker['allianceName'],
-					"factionID" => $attacker['factionID'],
+                    "factionID" => $attacker['factionID'],
                     "factionName" => $attacker['factionName']
                 );
             }

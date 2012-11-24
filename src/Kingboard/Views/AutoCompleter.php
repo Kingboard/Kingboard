@@ -52,13 +52,13 @@ class AutoCompleter extends \Kingboard\Views\Base
         $names = array_keys($names);
         echo json_encode($names);
     }
-	
+
     public function search(array $search)
     {
         $find = $search["text"];
 
         if(strlen($find) < 4)
-	{
+    {
             echo json_encode(array());
             return;
         }

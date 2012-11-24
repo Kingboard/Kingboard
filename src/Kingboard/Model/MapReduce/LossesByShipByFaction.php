@@ -65,10 +65,10 @@ class LossesByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayA
         $new = $tr->lastrun;
 
         $filter = array('$and' =>
-		array(
-			array('saved' => array('$gt' => $last, '$lte' => $new)),
-			array('victim.factionID' => array('$ne' => 0))
-		));
+        array(
+            array('saved' => array('$gt' => $last, '$lte' => $new)),
+            array('victim.factionID' => array('$ne' => 0))
+        ));
         $obj = new self();
         $out = array("reduce" => $obj->_className);
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
