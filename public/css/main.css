@@ -26,3 +26,7 @@ body {
     margin-bottom: 4px;
 }
 
+tr.attacker td.icons {
+    width: 290px;
+}
+
