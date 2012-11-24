@@ -9,6 +9,9 @@ class BattleCreateForm extends \Kingboard\Lib\Form
 {
     public $apiKey = null;
     public $character = null;
+    public $startTime = null;
+    public $endTime = null;
+
 
 
     /**
@@ -38,7 +41,7 @@ class BattleCreateForm extends \Kingboard\Lib\Form
     }
 
     /**
-     * validate solar system entered by the user
+     * validate solar system(s) entered by the user
      * @param $solarSystem
      * @return bool
      * @todo implement me
@@ -58,6 +61,19 @@ class BattleCreateForm extends \Kingboard\Lib\Form
      */
     protected function validateDates($startDate, $endDate)
     {
+        // cant parse this to a proper date?
+        if(!strtotime($startDate) || !strtotime($endDate)) return false;
+
+        $startDate = strtotime($startDate);
+        $endDate = strtotime($endDate);
+        // end is before start? lol, no.
+        if($endDate < $startDate) return false;
+
+        // no more than 3 days allowed
+        if(($endDate - $startDate) > 259200) return false;
+
+        $this->startTime = $startDate;
+        $this->endTime = $endDate;
         return true;
     }
 

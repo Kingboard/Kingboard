@@ -2,6 +2,8 @@
 
 {% block content %}
 <div id="battle-editor" class="tab-pane">
+<div class="row">
+    <div class="span3">
     <fieldset>
         <legend>Add New Battle</legend>
         <form action="/battle/new" method="post">
@@ -38,6 +40,21 @@
             <div class="actions"><input type="submit" name="submit" value="Add" class="btn primary"/></div>
         </form>
     </fieldset>
+    </div>
+    <div class="span9">
+        <div class="alert alert-info">
+            <i class="icon-info-sign icon-white"></i> <b>About Battles!</b>
+            <br /><br /><p>Battles in Kingboard are configured by the person who adds the battle through the battle editor.
+            The <b>Character</b> chosen by the creator of the battle will be used to pull the standings to determine the
+            sides of the battle. This allows for several different views on a more-way battle.</p>
+            <p>The System and the Time entered determines which kills are included in the battle report,
+                battles are limited to a <b>maximum of 3 days</b>, this feature is not meant to track complete conflicts.
+            </p>
+            <p>Future Versions might allow to chose more than one System, but the current version only allows for one, chose wisely.</p>
+        </div>
+
+    </div>
+</div>
 </div>
 {% endblock %}
 
