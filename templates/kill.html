@@ -90,8 +90,9 @@
     <ul class="nav nav-pills pull-left">
         <li class="active"><a href="#overview" data-toggle="tab">Quick Overview</a></li>
         <li><a href="#involved-pilots" data-toggle="tab">Involved Pilots</a></li>
-        <li><a href="#comments" data-toggle="tab" data-disqus-identifier="{{ killdata.idHash }}">Comments</a>
-        </li>
+        {% if disqus %}
+        <li><a href="#comments" data-toggle="tab" data-disqus-identifier="{{ killdata.idHash }}">Comments</a></li>
+        {% endif %}
         <li><a href="#fittings" data-toggle="tab">Fittings</a></li>
     </ul>
     <div class="page-header">
@@ -227,6 +228,7 @@
                     {% endfor %}
                 </table>
             </div>
+            {% if disqus %}
             <div id="comments" class="tab-pane">
                 <div id="disqus_thread"></div>
                         <script type="text/javascript">
@@ -251,6 +253,7 @@
                         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
             </div>
+            {% endif %}
             <div id="fittings" class="tab-pane">
                 {% if igb %}<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>{% endif %}
             </div>
