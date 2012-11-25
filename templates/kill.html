@@ -90,12 +90,7 @@
     <ul class="nav nav-pills pull-left">
         <li class="active"><a href="#overview" data-toggle="tab">Quick Overview</a></li>
         <li><a href="#involved-pilots" data-toggle="tab">Involved Pilots</a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Comments (0) <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#comments" data-toggle="tab">View Comments</a></li>
-                <li><a href="#postcomment" data-toggle="tab">Post Comment</a></li>
-            </ul>
+        <li><a href="#comments" data-toggle="tab" data-disqus-identifier="{{ killdata.idHash }}">Comments</a>
         </li>
         <li><a href="#fittings" data-toggle="tab">Fittings</a></li>
     </ul>
@@ -232,19 +227,29 @@
                     {% endfor %}
                 </table>
             </div>
-            <div id="postcomment" class="tab-pane">
-                something to post a comment here
-            </div>
             <div id="comments" class="tab-pane">
-                <h3>Persons name <small>And corp / alliance / faction</small></h3>
-                <div class="span2 well">
-                    something with the persons image, name etc.
-                </div>
-                <div class="span8 well">
-                    the comment itself
-                    Not sure on the layout here, but hey, atleast now there is something to look at!
-                </div>
+                <div id="disqus_thread"></div>
+                        <script type="text/javascript">
+                            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                            var disqus_shortname = '{{ disqus }}'; // required: replace example with your forum shortname
 
+                            /* * * DON'T EDIT BELOW THIS LINE * * */
+                            (function() {
+                                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                            })();
+
+                            (function () {
+                                var s = document.createElement('script'); s.async = true;
+                                s.type = 'text/javascript';
+                                s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+                                (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+                            }());
+
+                        </script>
+                        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
             </div>
             <div id="fittings" class="tab-pane">
                 {% if igb %}<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>{% endif %}

@@ -40,6 +40,8 @@ class Base extends \King23\View\TwigView
         $this->_context['images'] = $reg->imagePaths;
         $this->_context['baseHost'] = $reg->baseHost;
 
+        $this->_context['disqus'] = $reg->disqus;
+
         // ownerID, if this is an owned board, this should be filled, for public boards this needs to be false
         $this->_context['ownerID'] = $reg->ownerID;
 
@@ -74,5 +76,6 @@ class Base extends \King23\View\TwigView
 
         // ingame browser check
         $this->_context['igb'] = $this->isIGB();
+
    }
 }

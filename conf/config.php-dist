@@ -134,6 +134,9 @@ $reg->headerImage = "/images/banner/kingboard.png";
     "destination_post" => array("/topic/kills", "/queue/kills")
 );*/
 
+// use your own disqus shortname here, false to disable.
+$reg->disqus = false;
+
 // include the routes configuration
 require_once("routes.php");
 
