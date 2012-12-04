@@ -55,15 +55,15 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/Kingboard/ccpdump.git",
-                "reference": "1063e894b807cba26b703ab519aec9c16c0b6fd5"
+                "reference": "84e3efa485f573106fba8af943a17eddd6f53558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Kingboard/ccpdump/zipball/1063e894b807cba26b703ab519aec9c16c0b6fd5",
-                "reference": "1063e894b807cba26b703ab519aec9c16c0b6fd5",
+                "url": "https://github.com/Kingboard/ccpdump/archive/84e3efa485f573106fba8af943a17eddd6f53558.zip",
+                "reference": "84e3efa485f573106fba8af943a17eddd6f53558",
                 "shasum": ""
             },
-            "time": "1349688602",
+            "time": "1354618433",
             "type": "library",
             "installation-source": "source",
             "authors": [
