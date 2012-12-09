@@ -18,4 +18,11 @@ class Kill extends \Kingboard\Views\Base
         $context['stats'] = $stats;
         return $this->render('kill.html', $context);
     }
+
+    public function json($request) 
+    {
+         $kill = \Kingboard\Model\Kill::getInstanceByIdHash($request['killID']);
+         echo json_encode($kill->toArray());
+    }
+
 }

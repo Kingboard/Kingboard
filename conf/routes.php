@@ -29,6 +29,7 @@ $router->addRoute("/details/", 'Kingboard\Views\Homepage', "killlist", array("ow
 
 // kill details
 $router->addRoute("/kill/", 'Kingboard\Views\Kill', 'index', array('killID'));
+$router->addRoute("/jsonkill/", 'Kingboard\Views\Kill', 'json', array('killID'));
 
 // authentication related routes
 if(!is_null($reg->auth) && $reg->auth)

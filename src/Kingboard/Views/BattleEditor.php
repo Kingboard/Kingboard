@@ -1,5 +1,8 @@
 <?php
 namespace Kingboard\Views;
+use Pheal\Pheal;
+use Pheal\Exceptions\APIException;
+
 class BattleEditor extends \Kingboard\Views\Base
 {
     public function __construct()
@@ -21,7 +24,7 @@ class BattleEditor extends \Kingboard\Views\Base
         foreach($activeKeys as $id => $key)
         {
             try {
-                $pheal = new \Pheal($key['apiuserid'], $key['apikey']);
+                $pheal = new Pheal($key['apiuserid'], $key['apikey']);
                 $chars = $pheal->accountScope->Characters()->characters->toArray();
                 $charlist = array();
                 foreach($chars as $char)
@@ -30,7 +33,7 @@ class BattleEditor extends \Kingboard\Views\Base
                     $charlist[] = $char['name'];
                 }
                 $activeKeys[$id]["chars"] = join(', ', $charlist);
-            } catch (\PhealAPIException $e) {
+            } catch (APIException $e) {
                 //print_r($e);
             }
         }
@@ -58,11 +61,11 @@ class BattleEditor extends \Kingboard\Views\Base
         if($key['type'] == "Character") $scope = "char";
         if($key['type'] == "Corporation") $scope = "corp";
 
-        $pheal = new \Pheal($key['apiuserid'], $key['apikey'], $scope);
+        $pheal = new Pheal($key['apiuserid'], $key['apikey'], $scope);
         $contacts = $pheal->ContactList(array('characterID' => $form->character));
 
         // reset to neutral pheal
-        $pheal = new \Pheal();
+        $pheal = new Pheal();
         $characterInfo = $pheal->eveScope->CharacterInfo(array('characterID' => $form->character));
         $positives = array();
         foreach($contacts->corporateContactList as $contact)

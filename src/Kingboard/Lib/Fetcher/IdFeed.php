@@ -6,6 +6,8 @@ namespace Kingboard\Lib\Fetcher;
  * this method itself is problematic since it might skip kills
  * that where added out of order
  */
+use Pheal\Core\Result;
+
 class IdFeed
 {
     private $url;
@@ -43,7 +45,7 @@ class IdFeed
     {
         $url = $this->url . '&lastID=' . $lastid;
         if($sxe = @simplexml_load_file($url))
-            return new \PhealResult($sxe);
+            return new Result($sxe);
         throw new \Exception("could not load $url");
     }
 
@@ -57,7 +59,7 @@ class IdFeed
     {
         $url = $this->url . '&allkills=1&lastintID=' . $lastid;
         if($sxe = @simplexml_load_file($url))
-            return new \PhealResult($sxe);
+            return new Result($sxe);
         throw new \Exception("could not load $url");
     }
 }

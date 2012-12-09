@@ -4,6 +4,8 @@ namespace Kingboard\Lib\Parser;
 /**
  * parse API style kills
  */
+use Pheal\Pheal;
+
 class EveAPI
 {
     public function parseKills($kills)
@@ -186,7 +188,7 @@ class EveAPI
             if($id = \Kingboard\Model\MapReduce\NameSearch::getEveIdByName($charname))
                 return $id;
 
-            $pheal = new \Pheal();
+            $pheal = new Pheal();
             $result = $pheal->eveScope->typeName(array('names' => $charname))->toArray();
             if ((int) $result[0]['characterID'] > 0)
                 return (int) $result[0]['characterID'];

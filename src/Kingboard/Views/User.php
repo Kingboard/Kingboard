@@ -1,6 +1,9 @@
 <?php
 namespace Kingboard\Views;
 
+use Pheal\Pheal;
+use Pheal\Exceptions\APIException;
+
 class User extends \Kingboard\Views\Base
 {
     public function __construct()
@@ -16,7 +19,7 @@ class User extends \Kingboard\Views\Base
         if(isset($_POST['XSRF']) && \Kingboard\Lib\Form::getXSRFToken() == $_POST['XSRF'])
         {
             try {
-                $pheal = new \Pheal($_POST['apiuserid'], $_POST['apikey']);
+                $pheal = new Pheal($_POST['apiuserid'], $_POST['apikey']);
                 $pheal->detectAccess();
 
                 $keyinfo = $pheal->accountScope->ApiKeyInfo();
@@ -25,7 +28,7 @@ class User extends \Kingboard\Views\Base
                 $accessmask = $keyinfo->key->accessMask;
 
                 if(!($accessmask & 272))
-                    throw new \PhealAPIException(0, "fake exception, key invalid", "");
+                    throw new APIException(0, "fake exception, key invalid", "");
 
                 if(!isset($user['keys']))
                     $keys = array();
@@ -43,7 +46,7 @@ class User extends \Kingboard\Views\Base
                 // ensure user is refreshed in session
                 \Kingboard\Lib\Auth\Auth::getUser();
 
-            } catch (\PhealApiException $e) {
+            } catch (ApiException $e) {
                 $context = $_POST;
                 $context['error'] = $e->getMessage();
                 //$context['error'] = "the key could not be validated as a valid apikey";
@@ -58,7 +61,7 @@ class User extends \Kingboard\Views\Base
         foreach($activeKeys as $id => $key)
         {
             try {
-                $pheal = new \Pheal($key['apiuserid'], $key['apikey']);
+                $pheal = new Pheal($key['apiuserid'], $key['apikey']);
                 $chars = $pheal->accountScope->Characters()->characters->toArray();
                 $charlist = array();
                 foreach($chars as $char)
@@ -66,7 +69,7 @@ class User extends \Kingboard\Views\Base
                     $charlist[] = $char['name'];
                 }
                 $activeKeys[$id]["chars"] = join(', ', $charlist);
-            } catch (\PhealAPIException $e) {
+            } catch (APIException $e) {
                 //print_r($e);
             }
         }
