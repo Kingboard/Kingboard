@@ -8,7 +8,8 @@ $router =  \King23\Core\Router::getInstance();
 $router->setBaseHost(\King23\Core\Registry::getInstance()->baseHost);
 
 // home
-$router->addRoute("/", 'Kingboard\Views\Homepage', "index", array());
+$router->addRoute("/home", 'Kingboard\Views\Homepage', "index", array());
+$router->addRoute("/", 'Kingboard\Views\Homepage', "newIndex", array());
 $router->addRoute("/home/page/", 'Kingboard\Views\Homepage', "index", array('page'));
 $router->addRoute("/top/value/", 'Kingboard\Views\Homepage', 'top');
 
@@ -29,7 +30,6 @@ $router->addRoute("/details/", 'Kingboard\Views\Homepage', "killlist", array("ow
 
 // kill details
 $router->addRoute("/kill/", 'Kingboard\Views\Kill', 'index', array('killID'));
-$router->addRoute("/jsonkill/", 'Kingboard\Views\Kill', 'json', array('killID'));
 
 // authentication related routes
 if(!is_null($reg->auth) && $reg->auth)

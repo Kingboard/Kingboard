@@ -42,7 +42,7 @@ class Homepage extends \Kingboard\Views\Base
         $templateVars['info'] = $info;
 
         // battles
-        $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()->limit(20)->sort(array('enddate' => -1));
+        $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()->limit(5)->sort(array('enddate' => -1));
 
         return $this->render($template, $templateVars);
     }
@@ -115,5 +115,9 @@ class Homepage extends \Kingboard\Views\Base
     {
         $data = \Kingboard\Model\Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
         return $this->render("top.html", array("data" => $data));
+    }
+
+    public function newIndex(array $params) {
+        return $this->render("newindex.html", array());
     }
 }

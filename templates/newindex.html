@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="hero-unit">
+    <h2>Welcome to Kingboard <small>where your kills are king!</small></h2>
+    <div>
+        <i class="icon-info-sign"></i> currently there is nothing to announce
+
+    </div>
+</div>
+{% endblock header %}
+{% block content %}
+<ul class="thumbnails">
+    <li class="span4">
+      <a class="thumbnail" href="/home/"><img src="/images/home/kills_360x270.png" /></a>
+    </li>
+    <li class="span3">
+        <a class="thumbnail" href="/top/value/"><img src="/images/home/top12isk_260x120.png" /></a>
+    </li>
+    <li class="span3">
+        <a class="thumbnail" href="/home/"><img src="/images/home/charts_260x120.png" /></a>
+    </li>
+    <li class="span2">
+        <a class="thumbnail" href="/home/"><img src="/images/home/placeholder_160x120.png" /></a>
+    </li>
+    <li class="span3">
+        <a class="thumbnail" href="/home"><img src="/images/home/battlereports_260x120.png" /></a>
+    </li>
+    <li class="span3">
+        <a class="thumbnail" href="/top/kills/"><img src="/images/home/top12kills_260x120.png" /></a>
+    </li>
+    <li class="span2">
+        <a class="thumbnail" href="/home/"><img src="/images/home/placeholder_160x120.png" /></a>
+    </li>
+</ul>
+{% endblock %}

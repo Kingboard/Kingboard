@@ -81,42 +81,37 @@
 {% endblock %}
 
 {% block content %}
-<h1>Latest information</h1>
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#kills">Kills/Losses</a></li>
-        <li><a data-toggle="tab" href="#battlereports">Battlereports</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="kills" class="active tab-pane">
-            <h2>Kills/Losses</h2>
-            <div id="home_killspage">
-                {% include "components/kill_list.html" %}
-            </div>
-        </div>
-        <div id="battlereports" class="tab-pane">
-            <h2>Battlereports</h2>
-            <div class="row">
-            <table class="table-bordered table-striped table-condensed span12">
-                <thead>
-                <tr>
-                    <th>System</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>&nbsp;</th>
-                </tr>
-                </thead>
-            {% for report in reports %}
-                <tr>
-                    <td>{{ report.system }}</td>
-                    <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
-                    <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
-                    <td><a href="/battle/{{ report._id }}">details</a></td>
-                </tr>
-            {% endfor %}
-            </table>
-            </div>
+<div class="row-fluid">
+<div class="span12">
+    <div id="battlereports">
+        <h2>Latest Battlereports</h2>
+        <div class="row">
+        <table class="table-bordered table-striped table-condensed span12">
+            <thead>
+            <tr>
+                <th>System</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+        {% for report in reports %}
+            <tr>
+                <td>{{ report.system }}</td>
+                <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
+                <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
+                <td><a href="/battle/{{ report._id }}">details</a></td>
+            </tr>
+        {% endfor %}
+        </table>
         </div>
     </div>
+    <div id="kills">
+        <h2>Latest Kills/Losses</h2>
+        <div id="home_killspage">
+            {% include "components/kill_list.html" %}
+        </div>
+    </div>
+</div>
 </div>
 {% endblock %}
