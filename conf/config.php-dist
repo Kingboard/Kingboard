@@ -39,12 +39,12 @@ $reg->killListConfig = array("perPage" => 25);
 
 
 // pheal is used to connect to CCP's API.
-$pc = PhealConfig::getInstance();
+$pc = \Pheal\Core\Config::getInstance();
 
 // the path that is used for pheals cache if you have several applications
 // on your machine that use Pheal, you might want to set this to a shared location
 // or you might want to use a different Cache implementation.
-$pc->cache = new PhealFileCache(APP_PATH . "/cache/");
+$pc->cache = new \Pheal\Cache\FileStorage(APP_PATH . "/cache/");
 
 // raise this if your cronjobs break with CCP's api timeouting alot
 $pc->http_timeout = 40;
