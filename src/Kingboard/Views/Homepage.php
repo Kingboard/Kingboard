@@ -10,7 +10,6 @@ class Homepage extends \Kingboard\Views\Base
             $currentPage = ((int) $request['page'] <1) ?  1 : (int) $request['page'];
         }
 
-
         $info = array();
         $templateVars =array();
         // differences for owned boards
@@ -117,7 +116,8 @@ class Homepage extends \Kingboard\Views\Base
         return $this->render("top.html", array("data" => $data));
     }
 
-    public function newIndex(array $params) {
+    public function newIndex(array $params)
+    {
         return $this->render("newindex.html", array());
     }
 }

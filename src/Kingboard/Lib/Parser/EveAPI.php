@@ -5,6 +5,8 @@ namespace Kingboard\Lib\Parser;
  * parse API style kills
  */
 use Pheal\Pheal;
+use Kingboard\Model\EveItem;
+use Kingboard\Model\EveSolarSystem;
 
 class EveAPI
 {
@@ -17,6 +19,8 @@ class EveAPI
         $lastIntID = 0;
         foreach($kills as $kill)
         {
+            /** @var $kill \Pheal\Core\Result */
+            $kill= $kill->toArray();
             $qtyDropped = 0;
             $qtyDestroyed = 0;
             $valueDropped = 0;
@@ -24,83 +28,77 @@ class EveAPI
             try {
                 // this needs to be run before exit of loop, otherwise having all kills of this run
                 // will cause the lastID not being updated
-                if(!is_null($kill->killID) && $kill->killID > 0)
-                    $lastID=$kill->killID;
+                if(!is_null($kill['killID']) && $kill['killID'] > 0)
+                    $lastID=$kill['killID'];
 
-                if(!is_null(@$kill->killInternalID) && @$kill->killInternalID > 0)
-                    $lastIntID = $kill->killInternalID;
+                // @todo remove internalID
 
-                $killdata = array(
-                    "killID" => $kill->killID,
-                    "solarSystemID" => $kill->solarSystemID,
-                    "location" => array(
-                        "solarSystem" => \Kingboard\Model\EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->itemName,
-                        "security" => \Kingboard\Model\EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->security,
-                        "region" => \Kingboard\Model\EveSolarSystem::getBySolarSystemId($kill->solarSystemID)->Region['itemName'],
-                    ),
-                    "killTime" => new \MongoDate(strtotime($kill->killTime)),
-                    "moonID" => $kill->moonID,
-                    "victim" => array(
-                        "characterID" => (int) $this->ensureEveEntityID($kill->victim->characterID, $kill->victim->characterName),
-                        "characterName" => $kill->victim->characterName,
-                        "corporationID" => (int) $this->ensureEveEntityID($kill->victim->corporationID, $kill->victim->corporationName),
-                        "corporationName" => $kill->victim->corporationName,
-                        "allianceID" => (int) $kill->victim->allianceID,
-                        "allianceName" => $kill->victim->allianceName,
-                        "factionID" => (int) $kill->victim->factionID,
-                        "factionName" => $kill->victim->factionName,
-                        "damageTaken" => $kill->victim->damageTaken,
-                        "shipTypeID"  => (int)$kill->victim->shipTypeID,
-                        "shipType"  => \Kingboard\Model\EveItem::getByItemId($kill->victim->shipTypeID)->typeName,
-                        "iskValue" => \Kingboard\Model\EveItem::getItemValue($kill->victim->shipTypeID)
-                    )
+                $killdata = $kill;
+
+                // the kill needs some additional data
+
+                // location data
+                $killdata['location'] = array(
+                    "solarSystem" => EveSolarSystem::getBySolarSystemId($kill['solarSystemID'])->itemName,
+                    "security" => EveSolarSystem::getBySolarSystemId($kill['solarSystemID'])->security,
+                    "region" => EveSolarSystem::getBySolarSystemId($kill['solarSystemID'])->Region['itemName'],
                 );
+                // killtime conversion to Mongo
+                $killdata['killTime'] = new \MongoDate(strtotime($kill['killTime']));
 
+                // victim conversions / additional data
+                $killdata['victim']['characterID'] = (int) $this->ensureEveEntityID($kill['victim']['characterID'], $kill['victim']['characterName']);
+                $killdata['victim']['corporationID'] = (int) $this->ensureEveEntityID($kill['victim']['corporationID'], $kill['victim']['corporationName']);
+                $killdata['victim']['allianceID'] = (int) $kill['victim']['allianceID'];
+                $killdata['victim']['factionID'] = (int) $kill['victim']['factionID'];
+                $killdata['victim']['shipTpyeID'] = (int) $kill['victim']['shipTypeID'];
+                $killdata['victim']['shipType'] = EveItem::getByItemId($kill['victim']['shipTypeID'])->typeName;
+                $killdata['victim']['iskValue'] = EveITem::getItemValue($kill['victim']['shipTypeID']);
+
+                //  add victim to involveds
                 $involvedCharacters = array((int)$killdata["victim"]["characterID"]);
                 $involvedCorporations = array((int)$killdata["victim"]["corporationID"]);
-                $involvedAlliances = array((int)$killdata["victim"]["allianceID"]);
-                $involvedFactions = array((int)$killdata["victim"]["factionID"]);
 
-                $totalISKValue = \Kingboard\Model\EveItem::getItemValue($kill->victim->shipTypeID);
-                $killdata['attackers'] = array();
-                foreach($kill->attackers as $attacker)
+                if($killdata['victim']['allianceID'] > 0)
+                    $involvedAlliances = array((int)$killdata["victim"]["allianceID"]);
+                else  $involvedAlliances = array();
+
+                if($killdata['victim']['factionID'] > 0)
+                    $involvedFactions = array((int)$killdata["victim"]["factionID"]);
+                else
+                    $involvedFactions = array();
+
+                // Karbos ISK Value
+                $totalISKValue = EveItem::getItemValue($kill->victim->shipTypeID);
+
+                foreach($kill['attackers'] as $id => $attacker)
                 {
-                    $killdata['attackers'][] = array(
-                        "characterID" => (int)$attacker->characterID,
-                        "characterName" => $attacker->characterName,
-                        "corporationID" => (int) $this->ensureEveEntityID($attacker->corporationID, $attacker->corporationName),
-                        "corporationName" => $attacker->corporationName,
-                        "allianceID" => (int) $attacker->allianceID,
-                        "allianceName" => $attacker->allianceName,
-                        "factionID" => (int) $attacker->factionID,
-                        "factionName" => $attacker->factionName,
-                        "securityStatus" => $attacker->securityStatus,
-                        "damageDone" => $attacker->damageDone,
-                        "finalBlow"  => $attacker->finalBlow,
-                        "weaponTypeID" => (int) $attacker->weaponTypeID,
-                        "weaponType" => \Kingboard\Model\EveItem::getByItemId($attacker->weaponTypeID)->typeName,
-                        "shipTypeID" => (int) $attacker->shipTypeID,
-                        "shipType"  => \Kingboard\Model\EveItem::getByItemId($attacker->shipTypeID)->typeName
-                    );
+                    $killdata['attackers'][$id]['characterID'] = (int) $attacker['characterID'];
+                    $killdata['attackers'][$id]['corporationID'] = (int) $this->ensureEveEntityID($attacker['corporationID'], $attacker['corporationName']);
+                    $killdata['attackers'][$id]['allianceID'] = (int) $attacker['allianceID'];
+                    $killdata['attackers'][$id]['factionID'] = (int) $attacker['factionID'];
+                    $killdata['attackers'][$id]['weaponTypeID'] = (int) $attacker['weaponTypeID'];
+                    $killdata['attackers'][$id]['weaponType'] = EveItem::getByItemId($attacker['weaponTypeID'])->typeName;
+                    $killdata['attackers'][$id]['shipTypeID'] = (int) $attacker['shipTypeID'];
+                    $killdata['attackers'][$id]['shipType'] = EveItem::getByItemId($attacker['shipTypeID'])->typeName;
 
-                    if(!in_array($attacker->characterID, $involvedCharacters))
-                        $involvedCharacters[] = (int) $attacker->characterID;
-                    if(!in_array($attacker->corporationID, $involvedCorporations))
-                        $involvedCorporations[] = (int) $attacker->corporationID;
-                    if(!in_array($attacker->allianceID, $involvedAlliances))
-                        $involvedAlliances[] = (int) $attacker->allianceID;
-                    if(!in_array($attacker->factionID, $involvedFactions))
-                        $involvedFactions[] = (int) $attacker->factionID;
+                    // add involveds
+                    if(!in_array($attacker['characterID'], $involvedCharacters))
+                        $involvedCharacters[] = (int) $attacker['characterID'];
+                    if(!in_array($attacker['corporationID'], $involvedCorporations))
+                        $involvedCorporations[] = (int) $attacker['corporationID'];
+                    if(!in_array($attacker['allianceID'], $involvedAlliances) && $attacker['allianceID'] > 0)
+                        $involvedAlliances[] = (int) $attacker['allianceID'];
+                    if(!in_array($attacker['factionID'], $involvedFactions) && $attacker['factionID'] > 0)
+                        $involvedFactions[] = (int) $attacker['factionID'];
                 }
 
-                $killdata['items'] = array();
-
-                if(@!is_null($kill->items))
+                if(@!is_null($kill['items']))
                 {
-                    foreach($kill->items as $item)
+                    foreach($kill['items'] as $id => $item)
                     {
                         $item = $this->parseItem($item);
-                        $killdata['items'][] = $item;
+                        $killdata['items'][$id] = $item;
                         $totalISKValue += $item["iskValue"];
                         $qtyDropped += $item["qtyDropped"];
                         $valueDropped += $item["iskValue"];
@@ -151,23 +149,17 @@ class EveAPI
     private function parseItem($row)
     {
         // Build the standard item
-        $item = array(
-            "typeID" => $row->typeID,
-            "typeName" => \Kingboard\Model\EveItem::getByItemId($row->typeID)->typeName,
-            "flag" => $row->flag,
-            "qtyDropped" => $row->qtyDropped,
-            "qtyDestroyed" => $row->qtyDestroyed,
-            "iskValue" => \Kingboard\Model\EveItem::getItemValue($row->typeID),
-            "singleton" => $row->singleton
-        );
+        $item = $row;
+        $item['typeName'] = EveItem::getByItemId($row['typeID'])->typeName;
+        $item['iskValue'] = EveItem::getItemValue($row['typeID']);
+
 
         // Check for nested items (container)
-        if (isset($row['items']))
+        if (isset($row['items']) && is_null($row['items']))
         {
-            $item['items'] = array();
-            foreach($row['items'] as $innerRow)
+            foreach($row['items'] as $id => $innerRow)
             {
-                $item['items'][] = $this->parseItem($innerRow);
+                $item['items'][$id] = $this->parseItem($innerRow);
             }
         }
         return $item;
