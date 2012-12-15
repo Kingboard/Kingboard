@@ -86,7 +86,7 @@ class EveAPI
             $involvedFactions = array();
 
         // Karbos ISK Value
-        $totalISKValue = EveItem::getItemValue($kill->victim->shipTypeID);
+        $totalISKValue = EveItem::getItemValue($kill['victim']['shipTypeID']);
 
         foreach($kill['attackers'] as $id => $attacker)
         {
