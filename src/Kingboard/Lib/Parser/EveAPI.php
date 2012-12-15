@@ -112,15 +112,13 @@ class EveAPI
                 $killdata["involvedCharacters"] = $involvedCharacters;
                 $killdata["involvedFactions"] = $involvedFactions;
 
-                $hash = \Kingboard\Lib\IdHash::getByData($killdata);
-                $killdata['idHash'] = $hash->generateHash();
                 $killdata['totalISKValue'] = $totalISKValue;
                 $killdata['totalDropped'] = $qtyDropped;
                 $killdata['totalDestroyed'] = $qtyDestroyed;
                 $killdata['totalISKDropped'] = $valueDropped;
                 $killdata['totalISKDestroyed'] = $valueDestroyed;
 
-                if(is_null(\Kingboard\Model\Kill::getInstanceByIdHash($killdata['idHash'])))
+                if(is_null(\Kingboard\Model\Kill::getByKillId($killdata['killID'])))
                 {
                     // if stomp queue read is set we assume that all saves are done through queue and don't save here
                     if(is_null(\King23\Core\Registry::getInstance()->stomp) || !\King23\Core\Registry::getInstance()->stomp['read'])

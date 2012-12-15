@@ -7,12 +7,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getByKillId($killid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("killID" => $killid));
-    }
-
-    public static function getInstanceByIdHash($hash)
-    {
-        return self::_getInstanceByCriteria(__CLASS__, array("idHash" => $hash));
+        return self::_getInstanceByCriteria(__CLASS__, array("killID" => (int) $killid));
     }
 
     public function injectDataFromMail(array $data)

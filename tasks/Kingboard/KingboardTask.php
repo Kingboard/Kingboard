@@ -66,10 +66,10 @@ class KingboardTask extends \King23\Tasks\King23Task
             $frame = $stomp->readFrame();
             if($frame) {
                 $killdata = json_decode($frame->body, true);
-                $existing = \Kingboard\Model\Kill::getInstanceByIdHash($killdata["idHash"]);
+                $existing = \Kingboard\Model\Kill::getByKillId($killdata["killID"]);
                 if(!is_null($existing))
                 {
-                    $this->cli->message($frame->headers['message-id'] .'::' . $killdata["idHash"] . " kill by hash exists");
+                    $this->cli->message($frame->headers['message-id'] .'::' . $killdata["killID"] . " kill by killID exists");
                     $stomp->ack($frame);
                     continue;
                 }
@@ -77,7 +77,7 @@ class KingboardTask extends \King23\Tasks\King23Task
                 $kill->injectDataFromMail($killdata);
                 $kill->save();
 
-                $this->cli->message($frame->headers['message-id'] .'::' . $killdata["idHash"] . " saved");
+                $this->cli->message($frame->headers['message-id'] .'::' . $killdata["killID"] . " saved");
                 $stomp->ack($frame);
             }
         }

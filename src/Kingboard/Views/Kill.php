@@ -5,7 +5,7 @@ class Kill extends \Kingboard\Views\Base
     public function index($request)
     {
         $context = array();
-        $context['killdata'] = \Kingboard\Model\Kill::getInstanceByIdHash($request['killID']);
+        $context['killdata'] = \Kingboard\Model\Kill::getByKillId($request['killID']);
         foreach($context['killdata']['attackers'] as $attacker)
         {
             if(!isset($stats[$attacker['allianceName']]))
@@ -21,7 +21,7 @@ class Kill extends \Kingboard\Views\Base
 
     public function json($request) 
     {
-         $kill = \Kingboard\Model\Kill::getInstanceByIdHash($request['killID']);
+         $kill = \Kingboard\Model\Kill::getByKillId($request['killID']);
          echo json_encode($kill->toArray());
     }
 
