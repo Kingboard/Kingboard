@@ -36,6 +36,8 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         // Kingboard_Kill indexes
         $col = $reg->mongo['db']->Kingboard_Kill;
 
+        /* @var \MongoCollection $col */
+
         // victim Names
         $col->ensureIndex(array('victim.characterName' => 1), array("name" => "v_charname"));
 

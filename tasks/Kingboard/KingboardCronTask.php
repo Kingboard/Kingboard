@@ -15,8 +15,6 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         "update_stats" => "task to update stats which will be map/reduced from the database",
         "api_import" => "import killmails from api",
         "item_values" => "updates item values for all items on the market",
-        "idfeed_import" => "import from idfeeds (param: feedidentifier)",
-        "evekill_import" => "Import all mails from EVE-KILL, you might need a key to do this ^^"
     );
 
     /**
@@ -73,64 +71,6 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         $this->cli->message('updating name lists for search');
         \Kingboard\Model\MapReduce\NameSearch::mapReduce();
         $this->cli->positive("name list updated");
-    }
-
-    /**
-     * import kills from eve-kill
-     * @param string $key
-    */
-    public function evekill_import($key)
-    {
-        $this->cli->message(\Kingboard\Model\EveKillImport::import());
-    }
-    
-    /**
-     * import kills from idfeed
-     * @param array $options
-     */
-    public function idfeed_import(array $options)
-    {
-        if(count($options) < 1)
-        {
-            $this->cli->error('1 parameter required: handle');
-            return;
-        }
-        $this->cli->message('starting import of handle: ' . $options[0]);
-
-        $idfeed = \Kingboard\Model\IdFeed::findByHandle($options[0]);
-        if(is_null($idfeed))
-        {
-            $this->cli->error('no such handle');
-            return;
-        }
-
-        $lastid =  $idfeed->lastId;
-        if(is_null($lastid))
-            $lastid = 0;
-
-        if(!is_null($idfeed->type))
-            $kidf = new \Kingboard\Lib\Fetcher\IdFeed($idfeed->url, $idfeed->type);
-        else
-            $kidf = new \Kingboard\Lib\Fetcher\IdFeed($idfeed->url);
-
-        try {
-            $kills = $kidf->fetch($lastid)->kills;
-            $kakp = new \Kingboard\Lib\Parser\EveAPI();
-            $info = $kakp->parseKills($kills);
-            $total = $info['oldkills'] + $info['newkills'];
-            $this->cli->message("fetched $total kills, " . $info['oldkills'] . " allready known, " . $info['newkills'] . " new");
-            $this->cli->message("Last id was: " . $info['lastID'] . " internal: " . $info['lastIntID']);
-
-            if(!is_null($idfeed->type) &&  $idfeed->type == "intid")
-                $idfeed->lastId = $info['lastIntID'];
-            else
-                $idfeed->lastId = $info['lastID'];
-
-            $idfeed->save();
-        } catch (\Exception $e )
-        {
-            $this->cli->error("idfetch exception occured: " . $e->getMessage());
-        }
     }
 
     /**

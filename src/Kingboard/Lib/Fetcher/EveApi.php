@@ -4,6 +4,8 @@ namespace Kingboard\Lib\Fetcher;
 /**
  * Fetcher to get kills for a specific API key from CCP's EVE API
  */
+use Pheal\Pheal;
+
 class EveApi
 {
 
@@ -19,7 +21,7 @@ class EveApi
         $oldkills = 0;
         $errors = 0;
 
-        $pheal = new \Pheal($key['apiuserid'], $key['apikey']);
+        $pheal = new Pheal($key['apiuserid'], $key['apikey']);
         $pheal->detectAccess();
 
         $characters = $pheal->accountScope->Characters()->characters;

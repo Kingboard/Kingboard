@@ -1,5 +1,7 @@
 <?php
 namespace Kingboard;
+use Kingboard\Lib\Parser\EveAPI;
+
 class KingboardTask extends \King23\Tasks\King23Task
 {
     /**
@@ -8,7 +10,6 @@ class KingboardTask extends \King23\Tasks\King23Task
      */
     protected $tasks = array(
         "info" => "General Informative Task",
-        "idfeed_add" => "add a idfeed to the idfeeds to be pulled",
         "process_stomp_queue" => "process kills from a stomp queue"
     );
 
@@ -16,33 +17,6 @@ class KingboardTask extends \King23\Tasks\King23Task
      * Name of the module
      */
     protected $name = "Kingboard";
-
-    public function idfeed_add($options)
-    {
-        $this->cli->header('adding new idfeed');
-        if(count($options) < 2)
-        {
-            $this->cli->error('atleast two parameters (url, handle) should be given');
-            return;
-        }
-
-        if(!is_null(\Kingboard\Model\IdFeed::findByUrl($options[0])))
-        {
-            $this->cli->error('a feed by this url allready exists!');
-            return;
-        }
-
-
-        $feed = new \Kingboard\Model\IdFeed();
-        $feed->url = $options[0];
-        $feed->handle = $options[1];
-
-        if(count($options) == 3)
-            $feed->type = $options[2];
-
-        $feed->save();
-        $this->cli->positive('done');
-    }
 
     /**
      * Experimental task to enable kill processing from queue.
@@ -73,9 +47,9 @@ class KingboardTask extends \King23\Tasks\King23Task
                     $stomp->ack($frame);
                     continue;
                 }
-                $kill = new \Kingboard\Model\Kill();
-                $kill->injectDataFromMail($killdata);
-                $kill->save();
+
+                $apiParser = new EveAPI();
+                $apiParser->parseKill($killdata);
 
                 $this->cli->message($frame->headers['message-id'] .'::' . $killdata["killID"] . " saved");
                 $stomp->ack($frame);
