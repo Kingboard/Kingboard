@@ -47,12 +47,15 @@ class KingboardTask extends \King23\Tasks\King23Task
                     $stomp->ack($frame);
                     continue;
                 }
+                try {
+                    $apiParser = new EveAPI();
+                    $apiParser->parseKill($killdata);
 
-                $apiParser = new EveAPI();
-                $apiParser->parseKill($killdata);
-
-                $this->cli->message($frame->headers['message-id'] .'::' . $killdata["killID"] . " saved");
-                $stomp->ack($frame);
+                    $this->cli->message($frame->headers['message-id'] .'::' . $killdata["killID"] . " saved");
+                    $stomp->ack($frame);
+                } catch(\Exception $e) { 
+                    $this->cli->error($frame->headers['message-id'] . "could not be saved, exception: " . $e->getMessage());
+                }
             }
         }
 

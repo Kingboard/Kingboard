@@ -54,6 +54,9 @@ class EveAPI
 
         // the kill needs some additional data
 
+	// convert killId to int
+        $killdata['killId'] = (int) $killdata['killId'];
+
         // location data
         $killdata['location'] = array(
             "solarSystem" => EveSolarSystem::getBySolarSystemId($kill['solarSystemID'])->itemName,
@@ -179,12 +182,13 @@ class EveAPI
         {
             if($id = \Kingboard\Model\MapReduce\NameSearch::getEveIdByName($charname))
                 return $id;
-
-            $pheal = new Pheal();
-            $result = $pheal->eveScope->typeName(array('names' => $charname))->toArray();
-            if ((int) $result[0]['characterID'] > 0)
-                return (int) $result[0]['characterID'];
-
+            if(!empty($charname))
+            {
+                $pheal = new Pheal();
+                $result = $pheal->eveScope->typeName(array('names' => $charname))->toArray();
+                if ((int) $result[0]['characterID'] > 0)
+                   return (int) $result[0]['characterID'];
+            }
             throw new \Exception("No such characterID");
         }
         return $id;

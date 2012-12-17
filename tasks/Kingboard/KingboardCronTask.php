@@ -93,7 +93,7 @@ class KingboardCronTask extends \King23\Tasks\King23Task
                 try {
                     $stats = \Kingboard\Lib\Fetcher\EveApi::fetch($key);
                     $this->cli->message("processed key $keyid for user " . $user->name . " : ". $stats['old'] . ' known / ' . $stats['new'] ." new");
-                } catch(\PhealException $e) {
+                } catch(\Exception $e) {
                     // we caught a pheal exception, we should implement proper handling of errors here
                     $this->cli->error("key $keyid caused pheal exception: " . $e->getMessage());
                 }
