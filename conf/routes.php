@@ -8,10 +8,8 @@ $router =  \King23\Core\Router::getInstance();
 $router->setBaseHost(\King23\Core\Registry::getInstance()->baseHost);
 
 // home
-$router->addRoute("/home", 'Kingboard\Views\Homepage', "index", array());
 $router->addRoute("/", 'Kingboard\Views\Homepage', "newIndex", array());
-$router->addRoute("/home/page/", 'Kingboard\Views\Homepage', "index", array('page'));
-$router->addRoute("/top/value/", 'Kingboard\Views\Homepage', 'top');
+$router->addRoute("/top/value", 'Kingboard\Views\Homepage', 'top');
 
 // information
 $router->addRoute("/information", 'Kingboard\Views\Information', "index");
@@ -28,8 +26,12 @@ $router->addRoute('/alliance/name/', 'Kingboard\Views\Search', "nameAlliance", a
 // corp/alliance/faction/pilot statistics
 $router->addRoute("/details/", 'Kingboard\Views\Homepage', "killlist", array("ownerType", "ownerID", "dummy", "page"));
 
+
+$router->addRoute("/kills", 'Kingboard\Views\Kill', 'index');
+$router->addRoute("/kills/page/", 'Kingboard\Views\Kill', "index", array('page'));
+
 // kill details
-$router->addRoute("/kill/", 'Kingboard\Views\Kill', 'index', array('killID'));
+$router->addRoute("/kill/", 'Kingboard\Views\Kill', 'details', array('killID'));
 
 // authentication related routes
 if(!is_null($reg->auth) && $reg->auth)
@@ -58,6 +60,8 @@ $router->addRoute("/autocomplete/region", 'Kingboard\Views\AutoCompleter', 'regi
 $router->addRoute("/autocomplete/search/?/", 'Kingboard\Views\AutoCompleter', "search", array("text"));
 
 // battles
+$router->addRoute("/battles", 'Kingboard\Views\Battle', "index");
+
 $router->addRoute("/battle/editor", 'Kingboard\Views\BattleEditor', "index");
 $router->addRoute("/battle/new", 'Kingboard\Views\BattleEditor', "create");
 $router->addRoute("/battle/", 'Kingboard\Views\Battle', "show", array("id"));

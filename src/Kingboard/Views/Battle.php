@@ -9,7 +9,9 @@ class Battle extends \Kingboard\Views\Base
      */
     public function index(array $parameters)
     {
-
+        // battles
+        $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()->limit(5)->sort(array('enddate' => -1));
+        return $this->render("battle/index.html", $templateVars);
     }
 
     /**
