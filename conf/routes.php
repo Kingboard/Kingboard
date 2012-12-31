@@ -24,11 +24,10 @@ $router->addRoute('/corporation/name/', 'Kingboard\Views\Search', "nameCorporati
 $router->addRoute('/alliance/name/', 'Kingboard\Views\Search', "nameAlliance", array("alliancename"));
 
 // corp/alliance/faction/pilot statistics
-$router->addRoute("/details/", 'Kingboard\Views\Homepage', "killlist", array("ownerType", "ownerID", "dummy", "page"));
+$router->addRoute("/details/", 'Kingboard\Views\Homepage', "killlist", array("ownerType", "ownerID","page"));
 
-
-$router->addRoute("/kills", 'Kingboard\Views\Kill', 'index');
-$router->addRoute("/kills/page/", 'Kingboard\Views\Kill', "index", array('page'));
+// kills index
+$router->addRoute("/kills/", 'Kingboard\Views\Kill', 'index', array('page'));
 
 // kill details
 $router->addRoute("/kill/", 'Kingboard\Views\Kill', 'details', array('killID'));
@@ -60,7 +59,7 @@ $router->addRoute("/autocomplete/region", 'Kingboard\Views\AutoCompleter', 'regi
 $router->addRoute("/autocomplete/search/?/", 'Kingboard\Views\AutoCompleter', "search", array("text"));
 
 // battles
-$router->addRoute("/battles", 'Kingboard\Views\Battle', "index");
+$router->addRoute("/battles/", 'Kingboard\Views\Battle', "index", array("page"));
 
 $router->addRoute("/battle/editor", 'Kingboard\Views\BattleEditor', "index");
 $router->addRoute("/battle/new", 'Kingboard\Views\BattleEditor', "create");

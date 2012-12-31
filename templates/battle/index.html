@@ -6,6 +6,18 @@
 {% block content %}
 <div class="row-fluid">
 <div class="span12">
+    {% if currentPage %}
+    <div class="pagination">
+      <ul>
+        {% if currentPage != 1 %}<li><a href="{{ action }}/1">1</a></li>{% endif %}
+        <li class="prev {% if prev %}{% else %}disabled{% endif %}"><a href="{% if prev %}{{ action }}/{{ prev }}{% else %}#{% endif %}">&larr; Previous</a></li>
+        <li class="active"><a href="#">{{ currentPage }}</a></li>
+        <li class="next {% if next %}{% else %}disabled{% endif %}"><a href="{% if next %}{{ action }}/{{ next }}{% else %}#{% endif %}">Next &rarr;</a></li>
+        {% if currentPage != lastPage %}<li><a href="{{ action }}/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
+      </ul>
+    </div>
+    {% endif %}
+
     <div id="battlereports">
         <h2>Latest Battlereports</h2>
         <div class="row">
@@ -29,6 +41,17 @@
         </table>
         </div>
     </div>
+    {% if currentPage %}
+    <div class="pagination">
+      <ul>
+        {% if currentPage != 1 %}<li><a href="{{ action }}/1">1</a></li>{% endif %}
+        <li class="prev {% if prev %}{% else %}disabled{% endif %}"><a href="{% if prev %}{{ action }}/{{ prev }}{% else %}#{% endif %}">&larr; Previous</a></li>
+        <li class="active"><a href="#">{{ currentPage }}</a></li>
+        <li class="next {% if next %}{% else %}disabled{% endif %}"><a href="{% if next %}{{ action }}/{{ next }}{% else %}#{% endif %}">Next &rarr;</a></li>
+        {% if currentPage != lastPage %}<li><a href="{{ action }}/{{ lastPage }}">{{ lastPage }}</a></li>{% endif %}
+      </ul>
+    </div>
+    {% endif %}
 </div>
 </div>
 {% endblock %}

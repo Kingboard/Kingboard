@@ -7,10 +7,32 @@ class Battle extends \Kingboard\Views\Base
      * @param array $parameters
      * @return void
      */
-    public function index(array $parameters)
+    public function index(array $request)
     {
+        $templateVars = array();
+        $currentPage = 1;
+        if (!empty($request['page']))
+        {
+            $currentPage = ((int) $request['page'] <1) ?  1 : (int) $request['page'];
+        }
+
+        $count =  \Kingboard\Model\BattleSettings::find()->count();
+
+        $paginator = new \Kingboard\Lib\Paginator($currentPage, $count);
+
+        // merge in pagination data
+        $templateVars= array_merge($templateVars, $paginator->getNavArray());
+
+
         // battles
-        $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()->limit(5)->sort(array('enddate' => -1));
+        $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()
+            ->skip($paginator->getSkip())
+            ->limit($paginator->getKillsPerPage())
+            ->sort(array('enddate' => -1));
+
+        $templateVars['action'] = "/battles";
+
+
         return $this->render("battle/index.html", $templateVars);
     }
 
