@@ -13,7 +13,7 @@ a board for you or your EVE Online Corp/Alliance (seen as private use)
 Excluded from this are the holders of a special hosting license.
 
 ## COPYRIGHT
-Copyright 2010 - 2012, Peter Petermann, the Kingboard team and EVSCO
+Copyright 2010 - 2013, Peter Petermann, the Kingboard team and EVSCO
 All rights reserved.
 
 ## LICENSE
