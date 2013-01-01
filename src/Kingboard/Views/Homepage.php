@@ -1,5 +1,7 @@
 <?php
 namespace Kingboard\Views;
+use Kingboard\Lib\Paginator;
+
 class Homepage extends \Kingboard\Views\Base
 {
     public function killlist($request)
@@ -25,7 +27,7 @@ class Homepage extends \Kingboard\Views\Base
         $templateVars['lossstats'] = $killList->getLossStats();
         $templateVars['totalstats'] = $killList->getTotalStats();
 
-        $paginator = new \Kingboard\Lib\Paginator($currentPage, $killList->getCount());
+        $paginator = new Paginator($currentPage, $killList->getCount());
         // fetch kill data
         $templateVars['data'] = $killList->getKills($paginator ->getSkip(), $paginator->getKillsPerPage());
 
