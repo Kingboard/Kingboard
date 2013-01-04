@@ -1,21 +1,21 @@
 {
-    "hash": "7b26cfc7a374927bc9aee4b4ccaf683b",
+    "hash": "c2829b2b4e6d375e8c512b91a6f460ef",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
-            "version": "0.2.3",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/3rdpartyeve/phealng.git",
-                "reference": "0.2.3"
+                "reference": "0.2.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/3rdpartyeve/phealng/archive/0.2.3.zip",
-                "reference": "0.2.3",
+                "url": "https://github.com/3rdpartyeve/phealng/archive/0.2.4.zip",
+                "reference": "0.2.4",
                 "shasum": ""
             },
-            "time": "2012-12-08 15:31:50",
+            "time": "2012-12-12 07:23:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -23,6 +23,7 @@
                     "Pheal": "lib/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -100,17 +101,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/Kingboard/ccpdump.git",
-                "reference": "84e3efa485f573106fba8af943a17eddd6f53558"
+                "reference": "82e33f631aebc8599478d02b4f4212f718c974e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Kingboard/ccpdump/archive/84e3efa485f573106fba8af943a17eddd6f53558.zip",
-                "reference": "84e3efa485f573106fba8af943a17eddd6f53558",
+                "url": "https://github.com/Kingboard/ccpdump/archive/82e33f631aebc8599478d02b4f4212f718c974e1.zip",
+                "reference": "82e33f631aebc8599478d02b4f4212f718c974e1",
                 "shasum": ""
             },
-            "time": "1354618433",
+            "time": "2013-01-03 14:58:00",
             "type": "library",
             "installation-source": "source",
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Beansman",
