@@ -103,9 +103,9 @@ class EveAPI
             $killdata['attackers'][$id]['shipType'] = EveItem::getByItemId($attacker['shipTypeID'])->typeName;
 
             // add involveds
-            if(!in_array($attacker['characterID'], $involvedCharacters))
+            if(!in_array($attacker['characterID'], $involvedCharacters) && $attacker['characterID'] > 0)
                 $involvedCharacters[] = (int) $attacker['characterID'];
-            if(!in_array($attacker['corporationID'], $involvedCorporations))
+            if(!in_array($attacker['corporationID'], $involvedCorporations) && $attacker['corporationID'] > 0)
                 $involvedCorporations[] = (int) $attacker['corporationID'];
             if(!in_array($attacker['allianceID'], $involvedAlliances) && $attacker['allianceID'] > 0)
                 $involvedAlliances[] = (int) $attacker['allianceID'];
