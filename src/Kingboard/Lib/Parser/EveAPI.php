@@ -54,7 +54,7 @@ class EveAPI
 
         // the kill needs some additional data
 
-	// convert killID to int
+        // convert killID to int
         $killdata['killID'] = (int) $killdata['killID'];
 
         // location data
