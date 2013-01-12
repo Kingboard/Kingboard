@@ -40,7 +40,7 @@ class BattleEditor extends \Kingboard\Views\Base
         $context = array_merge($context, array(
             'active_characters' => $charkeylist
         ));
-        $this->render('battle/battleeditor.html', $context);
+        return $this->render('battle/battleeditor.html', $context);
 
     }
 
@@ -51,7 +51,7 @@ class BattleEditor extends \Kingboard\Views\Base
         if(!$form->validate($_POST))
         {
             // @todo handle invalid
-            die();
+            return $this->error("form is not valid");
         }
         $user = \Kingboard\Lib\Auth\Auth::getUser();
 

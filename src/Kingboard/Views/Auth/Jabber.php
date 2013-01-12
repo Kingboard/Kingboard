@@ -12,17 +12,17 @@ class Jabber extends \Kingboard\Views\Base
         $context = array();
         if(isset($_POST["login"]) && isset($_POST["passwd"]))
         {
-            if(Kingboard_Auth_Jabber::login($_POST["login"], $_POST["passwd"])) {
+            if(\Kingboard\Lib\Auth\Jabber::login($_POST["login"], $_POST["passwd"])) {
                 $this->redirect("/account/");
             }
             $context['login_failed'] = true;
         }
-        $this->render("user/login_jabber.html", $context);
+        return $this->render("user/login_jabber.html", $context);
     }
 
     public function logout($request)
     {
-        Kingboard_Auth_Jabber::logout();
+        \Kingboard\Lib\Auth\Jabber::logout();
         $this->redirect("/");
     }
 }

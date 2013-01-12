@@ -28,7 +28,7 @@ class Auth extends \Kingboard\Views\Base
             }
         }
         // not logged in yet, show login page
-        $this->render("user/login.html", $context);
+        return $this->render("user/login.html", $context);
     }
 
     public function logout($request)
@@ -89,13 +89,13 @@ class Auth extends \Kingboard\Views\Base
                     $headers .= "Reply-To: " . \King23\Core\Registry::getInstance()->sendFromEmail . "\r\n";
                     $headers .= "X-Mailer: PHP/" . phpversion();
                     
-					mail($_POST['login'], "Kingboard Activation", $body, $headers);
+                    mail($_POST['login'], "Kingboard Activation", $body, $headers);
                     $this->redirect('/');
                 }
             } else {
                 $this->_context['registration_failed'] = 'XSRF Token Invalid.';
             }
         }
-        $this->render('user/registration.html', $_POST);
+        return $this->render('user/registration.html', $_POST);
     }
 }

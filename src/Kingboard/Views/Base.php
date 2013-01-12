@@ -4,16 +4,13 @@ class Base extends \King23\View\TwigView
 {
 
     /**
-     * displays $message while sending Bad Request header
-     * @deprecated
+     * return error template with $msg
      * @param string $message
+     * @return string
      */
-    protected function sendErrorAndQuit($message)
+    protected function error($message)
     {
-        header('HTTP/1.1 400 Bad Request');
-        header('Content-Type:text/plain');
-        echo $message;
-        exit;
+        return $this->render("error.html", array("message" => $message));
     }
 
     /**

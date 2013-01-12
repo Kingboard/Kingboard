@@ -53,7 +53,7 @@ class User extends \Kingboard\Views\Base
             }
         }
         elseif(isset($_POST['XSRF']))
-            die('XSRF detected');
+            return $this->error('XSRF detected');
 
         if(isset($user['keys']))
             $activeKeys = $user['keys'];
@@ -82,7 +82,7 @@ class User extends \Kingboard\Views\Base
     public function delete(array $params)
     {
         if(\Kingboard\Lib\Form::getXSRFToken() != $params['xsrf'])
-            die('xsrf token missmatch');
+            return $this->error('xsrf token missmatch');
 
         $user = \Kingboard\Lib\Auth\Auth::getUser();
 

@@ -4,8 +4,8 @@ class Battle extends \Kingboard\Views\Base
 {
     /**
      * display a list of battles
-     * @param array $parameters
-     * @return void
+     * @param array $request
+     * @return string
      */
     public function index(array $request)
     {
@@ -39,14 +39,14 @@ class Battle extends \Kingboard\Views\Base
     /**
      * display a certain battle
      * @param array $parameters
-     * @return void
+     * @return string
      */
     public function show(array $parameters)
     {
         $battleSetting = \Kingboard\Model\BattleSettings::getById($parameters['id']);
 
         if(is_null($battleSetting))
-            $this->sendErrorAndQuit("Battle with Id " . $parameters['id'] . " does not exist");
+            return $this->error("Battle with Id " . $parameters['id'] . " does not exist");
 
         $battle = \Kingboard\Model\Battle::getByBattleSettings($battleSetting);
 
@@ -57,6 +57,6 @@ class Battle extends \Kingboard\Views\Base
 
         //print_r($battle->data);
         $this->_context['battleSetting'] = $battleSetting;
-        $this->render("battle/details.html", $battle->data);
+        return $this->render("battle/details.html", $battle->data);
     }
 }

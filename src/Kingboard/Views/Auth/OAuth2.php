@@ -8,6 +8,7 @@ class OAuth2 extends \Kingboard\Views\Base
      * it is supposed to offer a list of OAuth2 Providers
      * which the user can use to authenticate himself
      * @param array $params
+     * returns string
      */
     public function login(array $params)
     {
@@ -26,7 +27,7 @@ class OAuth2 extends \Kingboard\Views\Base
             );
         }
 
-        $this->render("user/oauth.html", array("providerlist" => $list));
+        return $this->render("user/oauth.html", array("providerlist" => $list));
     }
 
     /**
@@ -34,11 +35,12 @@ class OAuth2 extends \Kingboard\Views\Base
      * user returns from the OAuth2 Provider, and will use the auth class set
      * in config to process the data
      * @param array $params should contain one key named key, identifying which key from the config to use for this provider
+     * @return string
      */
     public function callback(array $params)
     {
         if($_GET['state'] != \Kingboard\Lib\Form::getXSRFToken())
-            die("XSRF Token mismatch");
+            return $this->error("XSRF Token mismatch");
 
         try {
             $config = \King23\Core\Registry::getInstance()->oAuth2ProviderList[$params["key"]];

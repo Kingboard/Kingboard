@@ -35,7 +35,7 @@ class Search extends \Kingboard\Views\Base
         if(count($_POST) > 0 && (is_null($results) || count($results) < 1))
             $context['no_results'] = true;
 
-        $this->render("search/index.html", $context);
+        return $this->render("search/index.html", $context);
     }
 
     public function namePilot(array $params)
@@ -49,7 +49,7 @@ class Search extends \Kingboard\Views\Base
             $this->redirect("/details/pilot/$id/");
             return;
         }
-        die('unknown character');
+        return $this->error('unknown character');
     }
 
     public function nameCorporation(array $params)
@@ -63,7 +63,7 @@ class Search extends \Kingboard\Views\Base
             $this->redirect("/details/corporation/$id/");
             return;
         }
-        die('unknown character');
+        return $this->error('unknown corporation');
     }
     public function nameFaction(array $params)
     {
@@ -76,7 +76,7 @@ class Search extends \Kingboard\Views\Base
             $this->redirect("/details/faction/$id/");
             return;
         }
-        die('unknown character');
+        return $this->error("unknown faction");
     }
     public function nameAlliance(array $params)
     {
@@ -89,6 +89,6 @@ class Search extends \Kingboard\Views\Base
             $this->redirect("/details/alliance/$id/");
             return;
         }
-        die('unknown character');
+        return $this->error("unknown alliance");
     }
 }

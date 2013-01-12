@@ -8,7 +8,7 @@ class Homepage extends \Kingboard\Views\Base
     {
 
         if(empty($request['ownerType']) || empty($request['ownerID']))
-            die("type / id not given");
+            return $this->error("type / id not given");
 
         $ownerType = $request['ownerType'];
         $ownerID = $request['ownerID'];
@@ -35,6 +35,8 @@ class Homepage extends \Kingboard\Views\Base
         $templateVars= array_merge($templateVars, $paginator->getNavArray());
 
         $templateVars['count'] = $killList->getCount();
+        $info = null;
+        $template = null;
 
         switch($ownerType)
         {
@@ -58,6 +60,12 @@ class Homepage extends \Kingboard\Views\Base
                 $info = \Kingboard\Model\Kill::getAllianceInfoFromId($ownerID);
                 break;
         }
+
+        if(is_null($template) || is_null($info))
+        {
+            return $this->error("unknown ownerType: ". $ownerType);
+        }
+
         $templateVars['info'] = $info;
 
         // we replace the defaults with the ones of the current look
