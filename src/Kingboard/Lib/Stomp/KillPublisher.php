@@ -29,8 +29,7 @@ class KillPublisher
     {
         $destinations = array();
 
-        $destinations[] = '/topic/location.solarsystem.' . $kill['location']['solarSystem'];
-        $destinations[] = '/topic/location.region.' . $kill['location']['region'];
+        $destinations[] = '/topic/location.solarsystem.' . $kill['solarSystemID'];
 
         // victim
         if($kill['victim']['characterID'] > 0)
