@@ -20,7 +20,7 @@ class EveInfo extends \Kingboard\Views\Base
             $attributes[$attribute['categoryName']][] = $attribute;
         }
         $context['item']['Attributes'] = $attributes;
-
+        $context['item']['description'] = strip_tags($context['item']['description'], "<br><br/><b><i>");
         return $this->render('eve_item.html', $context);
     }
 }

@@ -16,7 +16,7 @@
     </div>
     <div class="span14">
     <h2>Description</h2>
-        {{ item.description }}
+        {{ item.description|raw|nl2br }}
     <h2>Attributes</h2>
     <div class="row">
     {% for category, attributes in item.Attributes %}
