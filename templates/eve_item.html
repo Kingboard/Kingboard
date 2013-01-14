@@ -14,11 +14,12 @@
     <div class="span2">
         <img src="{{images.items}}{{item.typeID}}_64.png" alt="{{item.typeName}}">
     </div>
-    <div class="span14">
+    <div class="span10">
     <h2>Description</h2>
         {{ item.description|raw|nl2br }}
-    <h2>Attributes</h2>
+    </div>
     <div class="row">
+    <h2>Attributes</h2>
     {% for category, attributes in item.Attributes %}
 
     <div class="span4 item-attributes">
@@ -30,7 +31,6 @@
         {% endfor %}
     </div>
     {% endfor %}
-    </div>
     </div>
 </div>
 {% endblock %}
