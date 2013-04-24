@@ -18,6 +18,12 @@ require_once APP_PATH . "/vendor/autoload.php";
 
 $reg = \King23\Core\Registry::getInstance();
 
+// remove comments to enable logging, configure path to log as needed or use any other monolog handler.
+/*
+    $reg->logger = new \Monolog\Logger('kingboard');
+    $reg->logger->pushHandler(new \Monolog\Handler\StreamHandler("/var/log/kingboard/main.log", \Monolog\Logger::DEBUG));
+*/
+
 // set this to the email you want to send from
 $reg->sendFromEmail = "kingboard@eve-kill.net";
 
