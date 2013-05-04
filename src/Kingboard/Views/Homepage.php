@@ -1,8 +1,13 @@
 <?php
 namespace Kingboard\Views;
-use Kingboard\Lib\Paginator;
 
-class Homepage extends \Kingboard\Views\Base
+use Kingboard\Lib\KillList;
+use Kingboard\Lib\Paginator;
+use Kingboard\Model\Kill;
+use Kingboard\Model\MapReduce\KillsByShipByPilot;
+use Kingboard\Model\MapReduce\NameSearch;
+
+class Homepage extends Base
 {
     public function killlist($request)
     {
@@ -22,7 +27,7 @@ class Homepage extends \Kingboard\Views\Base
         $templateVars =array();
 
         // kill list
-        $killList = new \Kingboard\Lib\KillList($ownerType, $ownerID);
+        $killList = new KillList($ownerType, $ownerID);
         $templateVars['killstats'] = $killList->getKillStats();
         $templateVars['lossstats'] = $killList->getLossStats();
         $templateVars['totalstats'] = $killList->getTotalStats();
@@ -44,20 +49,20 @@ class Homepage extends \Kingboard\Views\Base
             case "char":
             case "pilot":
                 $template = "pilot/index.html";
-                $info = \Kingboard\Model\Kill::getPilotInfoFromId($ownerID);
+                $info = Kill::getPilotInfoFromId($ownerID);
                 break;
             case "corp":
             case "corporation":
                 $template = "corporation/index.html";
-                $info = \Kingboard\Model\Kill::getCorporationInfoFromId($ownerID);
+                $info = Kill::getCorporationInfoFromId($ownerID);
                 break;
             case "faction":
                 $template = "faction/index.html";
-                $info = \Kingboard\Model\Kill::getFactionInfoFromId($ownerID);
+                $info = Kill::getFactionInfoFromId($ownerID);
                 break;
             case "alliance":
                 $template = "alliance/index.html";
-                $info = \Kingboard\Model\Kill::getAllianceInfoFromId($ownerID);
+                $info = Kill::getAllianceInfoFromId($ownerID);
                 break;
         }
 
@@ -76,10 +81,26 @@ class Homepage extends \Kingboard\Views\Base
         return $this->render($template, $templateVars);
     }
 
-    public function top(array $params)
+    public function top_value(array $params)
     {
-        $data = \Kingboard\Model\Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
+        $data = Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
         return $this->render("top/iskvalue.html", array("data" => $data));
+    }
+
+    public function top_killer(array $params)
+    {
+        $result = KillsByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(12);
+        $data = array();
+        foreach($result as $value)
+        {
+            $name = NameSearch::getNameByEveId($value->_id);
+            $data[] = array(
+                "name" => $name,
+                "kills" => $value
+            );
+        }
+
+        $this->render("top/killer.html", array("data" => $data));
     }
 
     public function newIndex(array $params)

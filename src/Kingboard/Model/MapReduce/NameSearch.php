@@ -31,6 +31,12 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
         return false;
     }
 
+    public static function getNameByEveId($id) {
+        if($data = parent::_findOne(__CLASS__, array("value.id" => $id)))
+            return $data['_id'];
+        return false;
+    }
+
     /**
      * @static
      */

@@ -12,6 +12,11 @@ class KillsByShipByPilot extends \King23\Mongo\MongoObject implements \ArrayAcce
         return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int) $pilotid));
     }
 
+    public static function find($criteria = array(), $fields = array())
+    {
+       return parent::_find(__CLASS__, $criteria, $fields);
+    }
+
     public static function mapReduce()
     {
         $map = "function () {
