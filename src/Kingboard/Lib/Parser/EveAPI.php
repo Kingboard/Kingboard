@@ -93,7 +93,7 @@ class EveAPI
 
         foreach($kill['attackers'] as $id => $attacker)
         {
-            $killdata['attackers'][$id]['characterID'] = (int) $attacker['characterID'];
+            $killdata['attackers'][$id]['characterID'] = (int) $this->ensureEveEntityId($attacker['characterID'], $attacker['characterName']);
             $killdata['attackers'][$id]['corporationID'] = (int) $this->ensureEveEntityID($attacker['corporationID'], $attacker['corporationName']);
             $killdata['attackers'][$id]['allianceID'] = (int) $attacker['allianceID'];
             $killdata['attackers'][$id]['factionID'] = (int) $attacker['factionID'];
@@ -189,7 +189,9 @@ class EveAPI
                 if ((int) $result[0]['characterID'] > 0)
                    return (int) $result[0]['characterID'];
             }
-            throw new \Exception("No such characterID");
+            // with an empty charname we have to assume its 0
+            return 0;
+            //throw new \Exception("No such characterID");
         }
         return $id;
     }
