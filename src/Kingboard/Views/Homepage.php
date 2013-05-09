@@ -5,6 +5,7 @@ use Kingboard\Lib\KillList;
 use Kingboard\Lib\Paginator;
 use Kingboard\Model\Kill;
 use Kingboard\Model\MapReduce\KillsByShipByPilot;
+use Kingboard\Model\MapReduce\LossesByShipByPilot;
 use Kingboard\Model\MapReduce\NameSearch;
 
 class Homepage extends Base
@@ -101,6 +102,21 @@ class Homepage extends Base
         }
 
         $this->render("top/killer.html", array("data" => $data));
+    }
+
+    public function top_loser(array $params) {
+        $result = LossesByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(12);
+        $data = array();
+        foreach($result as $value)
+        {
+            $name = NameSearch::getNameByEveId($value->_id);
+            $data[] = array(
+                "name" => $name,
+                "kills" => $value
+            );
+        }
+
+        $this->render("top/loser.html", array("data" => $data));
     }
 
     public function newIndex(array $params)

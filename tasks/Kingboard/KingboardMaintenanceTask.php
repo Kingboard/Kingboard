@@ -150,6 +150,11 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         $col = $reg->mongo['db']->Kingboard_Kill_MapReduce_KillsByShipByPilot;
         $col->ensureIndex(array('value.total' => -1));
 
+        $this->cli->message("Setting up LossesByShipByPilot indexes");
+        $col = $reg->mongo['db']->Kingboard_Kill_MapReduce_LossesByShipByPilot;
+        $col->ensureIndex(array('value.total' => -1));
+
+
         $this->cli->message("Setting up NameSearch indexes");
         $col = $reg->mongo['db']->Kingboard_Kill_MapReduce_NameSearch;
         $col->ensureIndex(array('value.id' => 1));

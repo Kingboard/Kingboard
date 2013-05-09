@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Top 12 Losers by lost ship amounts</h1>
+<ul class="thumbnails">
+    {% for pilot in data %}
+    <li class="span3">
+        <div class="thumbnail">
+            <table>
+                <tr>
+                    <td rowspan="2"><a href="/details/pilot/{{ pilot.kills._id }}" rel='twipsy' title='{{ pilot.name }}'><img src="{{ images.characters }}{{ pilot.kills._id }}_512.jpg" width="128" height="128" /></a></td>
+                    <td><div style="width: 64px; height:64px; font-size: 64px; text-align: center;">{{ loop.index }}</div></td>
+                </tr>
+                <tr><td><div style="text-align: center; padding-left: 10px">
+                    <span style="font-size: 1.6em;">{{ pilot.kills.value.total }}</span><br/>ship losses
+                </div>
+                </td></tr>
+            </table>
+            <div class="caption">
+                <h5>{{ pilot.name }}</h5>
+                <a href="/details/pilot/{{ pilot.kills._id }}">Details ..</a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
