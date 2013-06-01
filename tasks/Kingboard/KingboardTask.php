@@ -89,6 +89,8 @@ class KingboardTask extends \King23\Tasks\King23Task
 
         while (true) {
             try {
+                if(!$stomp->hasFrame())
+                    continue;
                 $frame = $stomp->readFrame();
                 if ($frame) {
                     $killdata = json_decode($frame->body, true);
@@ -110,14 +112,18 @@ class KingboardTask extends \King23\Tasks\King23Task
                     }
                 }
             } catch (\StompException $e) {
+                $this->cli->error("there was some kind of error with stomp: " . $e->getMessage());
+                $this->cli->message("going to sleep for 10, retrying then");
                 // we have a stomp exception here most likely that means that the server died.
                 // so we are going to sleep for a bit and retry
                 sleep(10);
 
                 // replace stomp connection by new one
                 // @todo: check if that might cause open connections not to close over time
+                unset($stomp);
                 $stomp = new \Stomp($stompcfg['url'], $stompcfg['user'], $stompcfg['passwd']);
                 $stomp->subscribe('/dsub/' . $stompcfg['dsub_id']);
+                $this->cli->message("retrying");
 
             }
 
