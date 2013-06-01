@@ -137,7 +137,8 @@ $reg->headerImage = "/images/banner/kingboard.png";
     "passwd" => "guest",
     "url" => "tcp://stomp.3rdpartyeve.net:61613",
     "destination_read" => "/topic/kills",
-    "destination_post" => array("/topic/kills", "/queue/kills")
+    "dsub_id" => "kingboard-" . $reg->baseHost,   
+    "destination_post" => array("/topic/kills")
 );*/
 
 // use your own disqus shortname here, false to disable.
