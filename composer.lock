@@ -105,12 +105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kingboard/ccpdump.git",
-                "reference": "ab43ddd2cae63b13f60d6380a921601472f35b59"
+                "reference": "86d61e5a92a0a88db085fee6a6b6129794f2ad0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kingboard/ccpdump/zipball/ab43ddd2cae63b13f60d6380a921601472f35b59",
-                "reference": "ab43ddd2cae63b13f60d6380a921601472f35b59",
+                "url": "https://api.github.com/repos/Kingboard/ccpdump/zipball/86d61e5a92a0a88db085fee6a6b6129794f2ad0d",
+                "reference": "86d61e5a92a0a88db085fee6a6b6129794f2ad0d",
                 "shasum": ""
             },
             "type": "library",
@@ -122,7 +122,7 @@
                 }
             ],
             "description": "MongoDB Variant of CCP's static data dump",
-            "time": "2013-05-08 09:31:23"
+            "time": "2013-06-13 12:03:48"
         },
         {
             "name": "monolog/monolog",
