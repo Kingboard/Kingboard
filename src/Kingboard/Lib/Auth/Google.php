@@ -48,7 +48,7 @@ class Google extends Auth
      * @param array $config this providers config array from the registry
      * @return \Kingboard\Model\User
      */
-    public static function login($config)
+    public static function login($config, $fake)
     {
         if(isset($_GET['error']))
             throw new \Exception("Could not login: " . $_GET['error']);
