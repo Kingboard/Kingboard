@@ -33,8 +33,8 @@ A few assumptions are made before you start:
 3. Create folders cache/api and cache/templates_c below your kingboard path, make sure they are writable by your webserver
 4. Make your webservers docroot point to public/ path
 5. Setup rewrite (for apache the .htaccess should do that, for lighttpd add the rule: url.rewrite-if-not-file = (".*\?(.*)$" => "/index.php?$1", "" => "/index.php")
-6. run vendor/bin/king23 KingboardMaintenance:setup_indexes
-7. copy conf/config.php-dist to conf/config.php and edit.
+6. copy conf/config.php-dist to conf/config.php and edit.
+7. run vendor/bin/king23 KingboardMaintenance:setup_indexes
 
 you should now be able to call your kingboard.
 
