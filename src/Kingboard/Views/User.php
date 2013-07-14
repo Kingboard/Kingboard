@@ -69,7 +69,7 @@ class User extends \Kingboard\Views\Base
                     $charlist[] = $char['name'];
                 }
                 $activeKeys[$id]["chars"] = join(', ', $charlist);
-            } catch (APIException $e) {
+            } catch (\Exception $e) {
                 //print_r($e);
             }
         }
