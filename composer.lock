@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7dca398aa61833d32be73c2eb9472b32",
+    "hash": "4fd66e1e887742c53efb41d7661e16df",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
@@ -52,29 +52,35 @@
         },
         {
             "name": "king23/king23",
-            "version": "0.1.4",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/king23.git",
-                "reference": "0.1.4"
+                "reference": "0.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/king23/zipball/0.1.4",
-                "reference": "0.1.4",
+                "url": "https://api.github.com/repos/ppetermann/king23/zipball/0.2.0",
+                "reference": "0.2.0",
                 "shasum": ""
             },
             "require": {
                 "monolog/monolog": "1.5.0",
                 "twig/twig": "1.13.0"
             },
-            "suggest": {
-                "king23/project_template": "0.1.1"
+            "require-dev": {
+                "d11wtq/boris": "1.0.*",
+                "king23/project_template": "0.1.7"
             },
             "bin": [
                 "bin/king23"
             ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.7-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "King23": "lib/"
@@ -97,7 +103,7 @@
                 "framework",
                 "king23"
             ],
-            "time": "2013-05-30 22:32:11"
+            "time": "2013-08-19 15:43:09"
         },
         {
             "name": "kingboard/ccpdump",

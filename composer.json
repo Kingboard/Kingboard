@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "3rdpartyeve/phealng": "0.2.4",
-        "king23/king23": "0.1.4",
+        "king23/king23": "0.2.0",
         "kingboard/ccpdump": "dev-master"
     }
 }
