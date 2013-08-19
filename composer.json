@@ -6,5 +6,8 @@
         "3rdpartyeve/phealng": "0.2.4",
         "king23/king23": "0.2.0",
         "kingboard/ccpdump": "dev-master"
-    }
+    },
+    "require-dev": {
+        "maximebf/debugbar": ">=1.0.0"
+    } 
 }

@@ -143,6 +143,19 @@ $reg->headerImage = "/images/banner/kingboard.png";
 // use your own disqus shortname here, false to disable.
 $reg->disqus = false;
 
+// php debug bar, requires the composer package installed, and should only
+// be used in dev mode. 
+/* 
+    // initialize the DebugBar
+    $reg->debugbar = new \DebugBar\StandardDebugBar();
+
+    // add the logger to the debug bar (if using monolog)
+    if (!is_null($reg->logger)) { 
+        $reg->debugbar->addCollector(new \DebugBar\Bridge\MonologCollector($reg->logger));
+    }
+*/
+
+
 // include the routes configuration
 require_once("routes.php");
 

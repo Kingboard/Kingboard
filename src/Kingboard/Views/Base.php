@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Views;
+
 class Base extends \King23\View\TwigView
 {
 
@@ -70,6 +71,14 @@ class Base extends \King23\View\TwigView
 
         // set header image, fall back to default if non configured
         $this->_context['header_image'] = !is_null($reg->headerImage) ? $reg->headerImage : "/images/banner/kingboard.png";
+
+        $debugbar = $reg->debugbar;
+        if(!is_null($debugbar)) {
+
+             $jsrenderer = new \DebugBar\JavascriptRenderer($debugbar, '/DebugBar');
+             $this->_context['debugbar_header'] = $jsrenderer->renderhead();
+             $this->_context['debugbar'] = $jsrenderer->render();
+        } 
 
         // ingame browser check
         $this->_context['igb'] = $this->isIGB();

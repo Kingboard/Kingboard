@@ -17,6 +17,9 @@
   <script type="text/javascript" src="/js/common.js"></script>
   {% block script %}
   {% endblock %}
+  {% if debugbar %}
+     {{ debugbar_header|raw }}
+  {% endif %}
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -75,5 +78,6 @@
         This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard</a> {{ Kingboard.Version }} ({{ Kingboard.ReleaseName }}).
     </div>
 </div>
+{% if debugbar %}{{ debugbar|raw }}{% endif %}
 </body>
 </html>
