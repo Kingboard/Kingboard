@@ -8,3 +8,9 @@ cache
 tests/phpunit.xml
 conf/config.php
 .svn
+vendor
+build/api/
+build/code-browser/
+build/coverage/
+build/phpdox/
+cache.properties
