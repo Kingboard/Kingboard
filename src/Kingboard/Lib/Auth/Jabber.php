@@ -23,7 +23,7 @@ class Jabber extends \Kingboard\Lib\Auth\Auth {
             $host = $reg->authJabberHost;
             $port = $reg->authJabberPort;
             $domain = !is_null($reg->authJabberDomain) ? $reg->authJabberDomain : $reg->authJabberHost;
-            $xmpphp = XMPPHPWrapper::getXMPPHP($host, $port,$username, $password,"Kingboard", $domain);
+            $xmpphp = \Wrapper\XMPPHP\XMPPHPWrapper::getXMPPHP($host, $port,$username, $password,"Kingboard", $domain);
             $xmpphp->connect();
             $xmpphp->processUntil('session_start');
             $xmpphp->disconnect();
