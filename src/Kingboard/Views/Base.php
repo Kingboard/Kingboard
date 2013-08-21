@@ -30,8 +30,9 @@ class Base extends \King23\View\TwigView
      */
     public function __construct($loginrequired = false)
     {
-        if($loginrequired && !\Kingboard\Lib\Auth\Auth::isLoggedIn())
+        if ($loginrequired && !\Kingboard\Lib\Auth\Auth::isLoggedIn()) {
             $this->redirect("/login");
+        }
         parent::__construct();
 
         $reg = \King23\Core\Registry::getInstance();
@@ -58,30 +59,33 @@ class Base extends \King23\View\TwigView
         $this->_context['Kingboard']['Version'] = \Kingboard\Kingboard::Version;
 
         // ownerName, use Kingboard if not set
-        if(!is_null($reg->ownerName) && $reg->ownerName)
+        if (!is_null($reg->ownerName) && $reg->ownerName) {
             $this->_context['Kingboard']['Name'] = $reg->ownerName;
-        else
+        } else {
             $this->_context['Kingboard']['Name'] = \Kingboard\Kingboard::Name;
+        }
 
         // release name
         $this->_context['Kingboard']['ReleaseName'] = \Kingboard\Kingboard::ReleaseName;
 
         // pick bootstrap theme path from public/css/themes folder
-        $this->_context['theme']= !is_null($reg->theme) ? $reg->theme :"default";
+        $this->_context['theme'] = !is_null($reg->theme) ? $reg->theme : "default";
 
         // set header image, fall back to default if non configured
-        $this->_context['header_image'] = !is_null($reg->headerImage) ? $reg->headerImage : "/images/banner/kingboard.png";
+        $this->_context['header_image'] = !is_null(
+            $reg->headerImage
+        ) ? $reg->headerImage : "/images/banner/kingboard.png";
 
         $debugbar = $reg->debugbar;
-        if(!is_null($debugbar)) {
+        if (!is_null($debugbar)) {
 
-             $jsrenderer = new \DebugBar\JavascriptRenderer($debugbar, '/DebugBar');
-             $this->_context['debugbar_header'] = $jsrenderer->renderhead();
-             $this->_context['debugbar'] = $jsrenderer->render();
-        } 
+            $jsrenderer = new \DebugBar\JavascriptRenderer($debugbar, '/DebugBar');
+            $this->_context['debugbar_header'] = $jsrenderer->renderhead();
+            $this->_context['debugbar'] = $jsrenderer->render();
+        }
 
         // ingame browser check
         $this->_context['igb'] = $this->isIGB();
 
-   }
+    }
 }

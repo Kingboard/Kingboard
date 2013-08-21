@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model;
+
 class TaskRun extends \King23\Mongo\MongoObject
 {
     protected $_className = "Kingboard_Task_Run";

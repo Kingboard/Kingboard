@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model;
+
 class User extends \King23\Mongo\MongoObject
 {
     const STATUS_NEW = "NEW";
@@ -7,7 +8,7 @@ class User extends \King23\Mongo\MongoObject
     const STATUS_API_ADDED = "API_ADDED";
     const STATUS_VERIFIED_CHARACTER = "VERIFIED_CHARACTER";
     const STATUS_INACTIVE = "INACTIVE";
-    
+
     protected $_className = "Kingboard_User";
 
     public static function getById($id)
@@ -32,8 +33,10 @@ class User extends \King23\Mongo\MongoObject
 
     public static function findWithApiKeys()
     {
-       return self::find(array(
-           "keys" => array('$exists' => true)
-       ));
+        return self::find(
+            array(
+                "keys" => array('$exists' => true)
+            )
+        );
     }
 }

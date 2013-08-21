@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model\MapReduce;
+
 /**
  * creates / allows access to stats about which shiptype has been killed how often
  */
@@ -9,7 +10,7 @@ class KillsByShipByCorporation extends \King23\Mongo\MongoObject implements \Arr
 
     public static function getInstanceByCorporationId($corpid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int) $corpid));
+        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int)$corpid));
     }
 
     public static function mapReduce()
@@ -59,8 +60,7 @@ class KillsByShipByCorporation extends \King23\Mongo\MongoObject implements \Arr
         }";
 
         $tr = \Kingboard\Model\TaskRun::findByTaskType(__CLASS__);
-        if(is_null($tr))
-        {
+        if (is_null($tr)) {
             $tr = new \Kingboard\Model\TaskRun();
             $tr->type = __CLASS__;
             $tr->lastrun = new \MongoDate(0);

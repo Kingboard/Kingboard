@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model\MapReduce;
+
 /**
  * creates / allows access to stats about which shiptype has been killed how often
  */
@@ -13,10 +14,14 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
      * @param int $limit
      * @return \King23\Mongo\MongoResult
      */
-    public static function search($searchword, $limit) {
-        return parent::_find(__CLASS__, array(
-            "_id" => new \MongoRegex('/^' .$searchword . '.*/i')
-        ))->limit($limit);
+    public static function search($searchword, $limit)
+    {
+        return parent::_find(
+            __CLASS__,
+            array(
+                "_id" => new \MongoRegex('/^' . $searchword . '.*/i')
+            )
+        )->limit($limit);
     }
 
     /**
@@ -25,15 +30,19 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
      * @param String $name
      * @return int
      */
-    public static function getEveIdByName($name) {
-        if($data = parent::_findOne(__CLASS__, array("_id"=> $name), array("value.id")))
+    public static function getEveIdByName($name)
+    {
+        if ($data = parent::_findOne(__CLASS__, array("_id" => $name), array("value.id"))) {
             return $data['value']['id'];
+        }
         return false;
     }
 
-    public static function getNameByEveId($id) {
-        if($data = parent::_findOne(__CLASS__, array("value.id" => $id)))
+    public static function getNameByEveId($id)
+    {
+        if ($data = parent::_findOne(__CLASS__, array("value.id" => $id))) {
             return $data['_id'];
+        }
         return false;
     }
 
@@ -63,8 +72,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
 
 
         $tr = \Kingboard\Model\TaskRun::findByTaskType(__CLASS__);
-        if(is_null($tr))
-        {
+        if (is_null($tr)) {
             $tr = new \Kingboard\Model\TaskRun();
             $tr->type = __CLASS__;
             $tr->lastrun = new \MongoDate(0);

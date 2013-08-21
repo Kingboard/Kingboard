@@ -13,9 +13,8 @@ abstract class Form
      */
     public static function getXSRFToken()
     {
-        if(!isset($_SESSION['Kingboard_XSRF']))
-        {
-            $_SESSION['Kingboard_XSRF'] = sha1(uniqid('Kingboard_',true));
+        if (!isset($_SESSION['Kingboard_XSRF'])) {
+            $_SESSION['Kingboard_XSRF'] = sha1(uniqid('Kingboard_', true));
         }
         return $_SESSION['Kingboard_XSRF'];
     }
@@ -39,7 +38,7 @@ abstract class Form
      */
     public static function isEmail($email)
     {
-        return (boolean) preg_match('|^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]{2,})+$|i', $email);
+        return (boolean)preg_match('|^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]{2,})+$|i', $email);
     }
 
     /**

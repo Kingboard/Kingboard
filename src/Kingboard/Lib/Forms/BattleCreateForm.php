@@ -13,7 +13,6 @@ class BattleCreateForm extends \Kingboard\Lib\Form
     public $endTime = null;
 
 
-
     /**
      * validate if character is actually a character of the current user
      * @param $characterData
@@ -21,22 +20,25 @@ class BattleCreateForm extends \Kingboard\Lib\Form
      */
     protected function validateCharacter($characterData)
     {
-        $characterData = explode("|",$characterData);
+        $characterData = explode("|", $characterData);
 
         // dont have a user, meaning not logged in..
-        if(!($user = \Kingboard\Lib\Auth\Auth::getUser()))
+        if (!($user = \Kingboard\Lib\Auth\Auth::getUser())) {
             return false;
+        }
 
         // user does not have any api keys, so can't be his character
-        if(is_null($user->keys) || !is_array($user->keys))
+        if (is_null($user->keys) || !is_array($user->keys)) {
             return false;
+        }
 
-        if(!isset($user->keys[$characterData[0]]) || !$user->keys[$characterData[0]]["active"])
+        if (!isset($user->keys[$characterData[0]]) || !$user->keys[$characterData[0]]["active"]) {
             return false;
+        }
 
         // key was not found
         $this->apiKey = $user->keys[$characterData[0]];
-        $this->character = (int) $characterData[1];
+        $this->character = (int)$characterData[1];
         return true;
     }
 
@@ -62,15 +64,21 @@ class BattleCreateForm extends \Kingboard\Lib\Form
     protected function validateDates($startDate, $endDate)
     {
         // cant parse this to a proper date?
-        if(!strtotime($startDate) || !strtotime($endDate)) return false;
+        if (!strtotime($startDate) || !strtotime($endDate)) {
+            return false;
+        }
 
         $startDate = strtotime($startDate);
         $endDate = strtotime($endDate);
         // end is before start? lol, no.
-        if($endDate < $startDate) return false;
+        if ($endDate < $startDate) {
+            return false;
+        }
 
         // no more than 3 days allowed
-        if(($endDate - $startDate) > 259200) return false;
+        if (($endDate - $startDate) > 259200) {
+            return false;
+        }
 
         $this->startTime = $startDate;
         $this->endTime = $endDate;
@@ -85,8 +93,7 @@ class BattleCreateForm extends \Kingboard\Lib\Form
      */
     public function validate(array $formData)
     {
-        switch(true)
-        {
+        switch (true) {
             case !$this->validateCharacter($formData['character']):
             case !$this->validateDates($formData['startdate'], $formData['enddate']):
             case !$this->validateSolarSystem($formData['system']):

@@ -23,8 +23,7 @@ class Paginator
     public function __construct($currentPage, $count)
     {
         $this->count = $count;
-        if ($currentPage > $this->getLastPage())
-        {
+        if ($currentPage > $this->getLastPage()) {
             $currentPage = $this->getLastPage();
         }
         $this->currentPage = $currentPage;
@@ -55,7 +54,7 @@ class Paginator
     public function getLastPage()
     {
         $lastPage = ceil($this->count / $this->getKillsPerPage());
-        return ($lastPage < 1) ? 1: $lastPage;
+        return ($lastPage < 1) ? 1 : $lastPage;
     }
 
     /**
@@ -89,7 +88,8 @@ class Paginator
      * array with all necessary calculations done for navigation
      * @return array
      */
-    public function getNavArray() {
+    public function getNavArray()
+    {
         return array(
             'next' => $this->getNextPage(),
             'prev' => $this->getPreviousPage(),

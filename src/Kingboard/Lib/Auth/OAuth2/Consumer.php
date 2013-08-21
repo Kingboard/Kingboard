@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Lib\Auth\OAuth2;
+
 class Consumer
 {
     /**
@@ -13,13 +14,19 @@ class Consumer
      * @param string $accessType
      * @return string
      */
-    public static function getCodeRedirect($hostUrl, $clientId, $redirectUri = null, $state = null, $scope = null, $accessType ="online")
-    {
-        $requestString = $hostUrl."?response_type=code&client_id=$clientId";
-        $requestString .= is_null($redirectUri)? "": '&redirect_uri='. urlencode($redirectUri);
-        $requestString .= is_null($state) ? "": "&state=$state";
+    public static function getCodeRedirect(
+        $hostUrl,
+        $clientId,
+        $redirectUri = null,
+        $state = null,
+        $scope = null,
+        $accessType = "online"
+    ) {
+        $requestString = $hostUrl . "?response_type=code&client_id=$clientId";
+        $requestString .= is_null($redirectUri) ? "" : '&redirect_uri=' . urlencode($redirectUri);
+        $requestString .= is_null($state) ? "" : "&state=$state";
         $requestString .= is_null($scope) ? "" : "&scope=$scope";
-        $requestString .= "&access_type=".$accessType;
+        $requestString .= "&access_type=" . $accessType;
         return $requestString;
     }
 
@@ -45,14 +52,15 @@ class Consumer
         );
         $data = self::doPost($hostUrl, $data);
 
-        if($nojson) {
+        if ($nojson) {
             parse_str($data, $data);
         } else {
             $data = json_decode($data);
         }
 
-        if(isset($data->error))
+        if (isset($data->error)) {
             throw new \Exception("token request caused error: " . $data->error);
+        }
         return $data;
     }
 
@@ -77,8 +85,9 @@ class Consumer
 
         $context = stream_context_create($params);
         $fp = fopen($url, 'rb', false, $context);
-        if(!$fp)
+        if (!$fp) {
             throw new \Exception("could not open: $url");
+        }
 
         return stream_get_contents($fp);
     }

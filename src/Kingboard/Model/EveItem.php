@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model;
+
 class EveItem extends \King23\Mongo\MongoObject
 {
     protected $_className = "Kingboard_EveItem";
@@ -26,22 +27,28 @@ class EveItem extends \King23\Mongo\MongoObject
 
     public static function getShipIDs($typeName)
     {
-        return self::_find(__CLASS__, array('$and' =>
+        return self::_find(
+            __CLASS__,
             array(
-                array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
-                array('$or' =>
+                '$and' =>
+                array(
+                    array('marketGroup.0.parentGroup.0.marketGroupName' => $typeName),
                     array(
-                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
-                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
-                        array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
-                        array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
+                        '$or' =>
+                        array(
+                            array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+                            array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Ships'),
+                            array('marketGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures'),
+                            array('marketGroup.0.parentGroup.0.parentGroup.0.parentGroup.0.marketGroupName' => 'Starbase & Sovereignty Structures')
+                        )
                     )
                 )
+            ),
+            array(
+                'typeName' => 1,
+                'typeID' => 1
             )
-        ), array(
-            'typeName' => 1,
-            'typeID' => 1
-        ));
+        );
     }
 
     /**
@@ -60,9 +67,10 @@ class EveItem extends \King23\Mongo\MongoObject
     public static function getItemValue($itemID)
     {
         $item = self::getByItemId($itemID);
-        if(!is_null($item->iskValue))
+        if (!is_null($item->iskValue)) {
             return $item->iskValue;
-        else
-            return (int) 0;
+        } else {
+            return (int)0;
+        }
     }
 }

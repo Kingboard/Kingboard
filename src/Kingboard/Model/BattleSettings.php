@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model;
+
 class BattleSettings extends \King23\Mongo\MongoObject
 {
     protected $_className = "Kingboard_BattleSettings";
@@ -18,7 +19,7 @@ class BattleSettings extends \King23\Mongo\MongoObject
     {
         // lets only refresh the last 3 days for now
         $qry = array(
-            "startdate" => array('$gt' => \MongoDate(now() -(3600 *24 * 3)))
+            "startdate" => array('$gt' => \MongoDate(now() - (3600 * 24 * 3)))
         );
 
         return self::_find(__CLASS__, $qry);

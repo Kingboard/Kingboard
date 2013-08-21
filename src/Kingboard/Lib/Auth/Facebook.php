@@ -14,7 +14,7 @@ class Facebook extends Auth
     /**
      * @var string oauth2 auth url (redirects here)
      */
-    public static $host_url_code  = "https://www.facebook.com/dialog/oauth";
+    public static $host_url_code = "https://www.facebook.com/dialog/oauth";
 
     /**
      * @var string scope required for the api call, in googles case auth/userinfo.email
@@ -26,21 +26,30 @@ class Facebook extends Auth
      * @static
      * @return string
      */
-    public static function getScope() { return self::$scope; }
+    public static function getScope()
+    {
+        return self::$scope;
+    }
 
     /**
      * get code Url
      * @static
      * @return string
      */
-    public static function getCodeUrl() { return self::$host_url_code; }
+    public static function getCodeUrl()
+    {
+        return self::$host_url_code;
+    }
 
     /**
      * get token url
      * @static
      * @return string
      */
-    public static function getTokenUrl() { return self::$host_url_token; }
+    public static function getTokenUrl()
+    {
+        return self::$host_url_token;
+    }
 
     /**
      * execute the login
@@ -50,8 +59,9 @@ class Facebook extends Auth
      */
     public static function login($config, $fake)
     {
-        if(isset($_GET['error']))
+        if (isset($_GET['error'])) {
             throw new \Exception("Could not login: " . $_GET['error']);
+        }
 
         $tokens = \Kingboard\Lib\Auth\OAuth2\Consumer::getTokens(
             self::getTokenUrl(),
@@ -62,19 +72,20 @@ class Facebook extends Auth
             true
         );
 
-        if(is_null($tokens))
+        if (is_null($tokens)) {
             throw new \Exception("Error: could not access tokens");
+        }
 
         $userinfo = json_decode(
             file_get_contents("https://graph.facebook.com/me?access_token=" . $tokens['access_token'])
         );
 
-        if(is_null($userinfo))
+        if (is_null($userinfo)) {
             throw new \Exception("Error: could not access userinfo");
+        }
 
         $user = \Kingboard\Model\User::findOne(array("username" => $userinfo->email));
-        if(is_null($user))
-        {
+        if (is_null($user)) {
             $user = new \Kingboard\Model\User();
             $user->username = $userinfo->email;
             $user->save();

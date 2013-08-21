@@ -17,8 +17,9 @@ class Auth
     public static function login($username, $password)
     {
         $user = \Kingboard\Model\User::findOneByUsernameAndPassword($username, $password);
-        if($user)
+        if ($user) {
             $_SESSION["Kingboard_Auth"] = array("User" => $user);
+        }
         return $user;
     }
 
@@ -38,8 +39,9 @@ class Auth
      */
     public static function isLoggedIn()
     {
-        if(isset($_SESSION["Kingboard_Auth"]) && isset($_SESSION["Kingboard_Auth"]["User"]))
+        if (isset($_SESSION["Kingboard_Auth"]) && isset($_SESSION["Kingboard_Auth"]["User"])) {
             return true;
+        }
         return false;
     }
 
@@ -50,8 +52,7 @@ class Auth
      */
     public static function getUser()
     {
-        if(isset($_SESSION["Kingboard_Auth"]) && isset($_SESSION["Kingboard_Auth"]["User"]))
-        {
+        if (isset($_SESSION["Kingboard_Auth"]) && isset($_SESSION["Kingboard_Auth"]["User"])) {
             $_SESSION["Kingboard_Auth"]["User"]->refresh();
             return $_SESSION["Kingboard_Auth"]["User"];
         }

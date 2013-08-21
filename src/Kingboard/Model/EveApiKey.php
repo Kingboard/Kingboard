@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model;
+
 class EveApiKey extends \King23\Mongo\MongoObject
 {
     protected $_className = "Kingboard_EveApiKey";

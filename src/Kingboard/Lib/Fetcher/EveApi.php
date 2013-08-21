@@ -26,10 +26,8 @@ class EveApi
 
         $characters = $pheal->accountScope->Characters()->characters;
 
-        foreach($characters as $character)
-        {
-            switch($key['type'])
-            {
+        foreach ($characters as $character) {
+            switch ($key['type']) {
                 case "Corporation":
                     $pheal->scope = "corp";
                     break;
@@ -51,6 +49,6 @@ class EveApi
             $newkills += $info['newkills'];
             $errors += $info['errors'];
         }
-        return array("old" => $oldkills, "new"=>$newkills, "total" => $oldkills + $newkills, "errors" => $errors);
+        return array("old" => $oldkills, "new" => $newkills, "total" => $oldkills + $newkills, "errors" => $errors);
     }
 }

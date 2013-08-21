@@ -12,7 +12,7 @@ class EveRegion extends \King23\Mongo\MongoObject
 
     public static function find($criteria = array(), $fields = array())
     {
-        return self::_find(__CLASS__, $criteria,$fields);
+        return self::_find(__CLASS__, $criteria, $fields);
     }
 
     public static function getInstanceByCriteria($criteria)

@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Views;
+
 class Battle extends \Kingboard\Views\Base
 {
     /**
@@ -11,17 +12,16 @@ class Battle extends \Kingboard\Views\Base
     {
         $templateVars = array();
         $currentPage = 1;
-        if (!empty($request['page']))
-        {
-            $currentPage = ((int) $request['page'] <1) ?  1 : (int) $request['page'];
+        if (!empty($request['page'])) {
+            $currentPage = ((int)$request['page'] < 1) ? 1 : (int)$request['page'];
         }
 
-        $count =  \Kingboard\Model\BattleSettings::find()->count();
+        $count = \Kingboard\Model\BattleSettings::find()->count();
 
         $paginator = new \Kingboard\Lib\Paginator($currentPage, $count);
 
         // merge in pagination data
-        $templateVars= array_merge($templateVars, $paginator->getNavArray());
+        $templateVars = array_merge($templateVars, $paginator->getNavArray());
 
 
         // battles
@@ -45,12 +45,11 @@ class Battle extends \Kingboard\Views\Base
     {
         $battleSetting = \Kingboard\Model\BattleSettings::getById($parameters['id']);
 
-        if(is_null($battleSetting))
+        if (is_null($battleSetting)) {
             return $this->error("Battle with Id " . $parameters['id'] . " does not exist");
+        }
 
         $battle = \Kingboard\Model\Battle::getByBattleSettings($battleSetting);
-
-
 
 
         //var_dump($battleSetting);

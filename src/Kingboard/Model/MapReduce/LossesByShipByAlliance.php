@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard\Model\MapReduce;
+
 /**
  * creates / allows access to stats about which shiptype has been killed how often
  */
@@ -9,7 +10,7 @@ class LossesByShipByAlliance extends \King23\Mongo\MongoObject implements \Array
 
     public static function getInstanceByAllianceId($allianceid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int) $allianceid));
+        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int)$allianceid));
     }
 
     public static function mapReduce()
@@ -54,8 +55,7 @@ class LossesByShipByAlliance extends \King23\Mongo\MongoObject implements \Array
         }";
 
         $tr = \Kingboard\Model\TaskRun::findByTaskType(__CLASS__);
-        if(is_null($tr))
-        {
+        if (is_null($tr)) {
             $tr = new \Kingboard\Model\TaskRun();
             $tr->type = __CLASS__;
             $tr->lastrun = new \MongoDate(0);
@@ -64,11 +64,13 @@ class LossesByShipByAlliance extends \King23\Mongo\MongoObject implements \Array
         $tr->save();
         $new = $tr->lastrun;
 
-        $filter = array('$and' =>
-        array(
-            array('saved' => array('$gt' => $last, '$lte' => $new)),
-            array('victim.allianceID' => array('$ne' => 0))
-        ));
+        $filter = array(
+            '$and' =>
+            array(
+                array('saved' => array('$gt' => $last, '$lte' => $new)),
+                array('victim.allianceID' => array('$ne' => 0))
+            )
+        );
         $obj = new self();
         $out = array("reduce" => $obj->_className);
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);

@@ -15,8 +15,7 @@ class OAuth2 extends \Kingboard\Views\Base
         $reg = \King23\Core\Registry::getInstance();
         $state = \Kingboard\Lib\Form::getXSRFToken();
         $list = array();
-        foreach($reg->oAuth2ProviderList as $provider => $config)
-        {
+        foreach ($reg->oAuth2ProviderList as $provider => $config) {
             $class = $config['auth_class'];
             $list[$provider] = \Kingboard\Lib\Auth\OAuth2\Consumer::getCodeRedirect(
                 $class::getCodeUrl(),
@@ -39,8 +38,9 @@ class OAuth2 extends \Kingboard\Views\Base
      */
     public function callback(array $params)
     {
-        if($_GET['state'] != \Kingboard\Lib\Form::getXSRFToken())
+        if ($_GET['state'] != \Kingboard\Lib\Form::getXSRFToken()) {
             return $this->error("XSRF Token mismatch");
+        }
 
         try {
             $config = \King23\Core\Registry::getInstance()->oAuth2ProviderList[$params["key"]];

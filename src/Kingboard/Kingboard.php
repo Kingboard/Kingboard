@@ -1,5 +1,6 @@
 <?php
 namespace Kingboard;
+
 /**
  * Class containing Kingboard Globals
  */

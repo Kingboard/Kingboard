@@ -13,19 +13,19 @@ class Homepage extends Base
     public function killlist($request)
     {
 
-        if(empty($request['ownerType']) || empty($request['ownerID']))
+        if (empty($request['ownerType']) || empty($request['ownerID'])) {
             return $this->error("type / id not given");
+        }
 
         $ownerType = $request['ownerType'];
         $ownerID = $request['ownerID'];
 
         $currentPage = 1;
-        if (!empty($request['page']))
-        {
-            $currentPage = ((int) $request['page'] <1) ?  1 : (int) $request['page'];
+        if (!empty($request['page'])) {
+            $currentPage = ((int)$request['page'] < 1) ? 1 : (int)$request['page'];
         }
 
-        $templateVars =array();
+        $templateVars = array();
 
         // kill list
         $killList = new KillList($ownerType, $ownerID);
@@ -35,17 +35,16 @@ class Homepage extends Base
 
         $paginator = new Paginator($currentPage, $killList->getCount());
         // fetch kill data
-        $templateVars['data'] = $killList->getKills($paginator ->getSkip(), $paginator->getKillsPerPage());
+        $templateVars['data'] = $killList->getKills($paginator->getSkip(), $paginator->getKillsPerPage());
 
         // merge in pagination data
-        $templateVars= array_merge($templateVars, $paginator->getNavArray());
+        $templateVars = array_merge($templateVars, $paginator->getNavArray());
 
         $templateVars['count'] = $killList->getCount();
         $info = null;
         $template = null;
 
-        switch($ownerType)
-        {
+        switch ($ownerType) {
             case "character":
             case "char":
             case "pilot":
@@ -67,9 +66,8 @@ class Homepage extends Base
                 break;
         }
 
-        if(is_null($template) || is_null($info))
-        {
-            return $this->error("unknown ownerType: ". $ownerType);
+        if (is_null($template) || is_null($info)) {
+            return $this->error("unknown ownerType: " . $ownerType);
         }
 
         $templateVars['info'] = $info;
@@ -90,10 +88,11 @@ class Homepage extends Base
 
     public function top_killer(array $params)
     {
-        $result = KillsByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(12);
+        $result = KillsByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(
+            12
+        );
         $data = array();
-        foreach($result as $value)
-        {
+        foreach ($result as $value) {
             $name = NameSearch::getNameByEveId($value->_id);
             $data[] = array(
                 "name" => $name,
@@ -104,11 +103,13 @@ class Homepage extends Base
         $this->render("top/killer.html", array("data" => $data));
     }
 
-    public function top_loser(array $params) {
-        $result = LossesByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(12);
+    public function top_loser(array $params)
+    {
+        $result = LossesByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(
+            12
+        );
         $data = array();
-        foreach($result as $value)
-        {
+        foreach ($result as $value) {
             $name = NameSearch::getNameByEveId($value->_id);
             $data[] = array(
                 "name" => $name,
