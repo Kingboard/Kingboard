@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b2792ca6ff1fb16a958b3c600ca9d2c8",
+    "hash": "7508ba1aa529670b37a17864073106db",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
-            "version": "0.2.4",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/3rdpartyeve/phealng.git",
-                "reference": "0.2.4"
+                "reference": "7ce955815de9b60a03d8b058199685578ce89423"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/3rdpartyeve/phealng/archive/0.2.4.zip",
-                "reference": "0.2.4",
+                "url": "https://api.github.com/repos/3rdpartyeve/phealng/zipball/7ce955815de9b60a03d8b058199685578ce89423",
+                "reference": "7ce955815de9b60a03d8b058199685578ce89423",
                 "shasum": ""
             },
             "type": "library",
@@ -48,7 +48,7 @@
                 "Pheal",
                 "PhealNG"
             ],
-            "time": "2012-12-12 07:23:00"
+            "time": "2013-08-25 17:51:47"
         },
         {
             "name": "king23/king23",
