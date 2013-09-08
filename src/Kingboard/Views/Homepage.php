@@ -80,13 +80,13 @@ class Homepage extends Base
         return $this->render($template, $templateVars);
     }
 
-    public function top_value(array $params)
+    public function topValue(array $params)
     {
         $data = Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
         return $this->render("top/iskvalue.html", array("data" => $data));
     }
 
-    public function top_killer(array $params)
+    public function topKiller(array $params)
     {
         $result = KillsByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(
             12
@@ -103,7 +103,7 @@ class Homepage extends Base
         $this->render("top/killer.html", array("data" => $data));
     }
 
-    public function top_loser(array $params)
+    public function topLoser(array $params)
     {
         $result = LossesByShipByPilot::find(array("_id" => array('$gt' => 0)))->sort(array("value.total" => -1))->limit(
             12

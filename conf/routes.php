@@ -9,9 +9,9 @@ $router->setBaseHost(\King23\Core\Registry::getInstance()->baseHost);
 
 // home
 $router->addRoute("/", 'Kingboard\Views\Homepage', "newIndex", array());
-$router->addRoute("/top/value", 'Kingboard\Views\Homepage', 'top_value');
-$router->addRoute("/top/killer", 'Kingboard\Views\Homepage', 'top_killer');
-$router->addRoute("/top/loser", 'Kingboard\Views\Homepage', 'top_loser');
+$router->addRoute("/top/value", 'Kingboard\Views\Homepage', 'topValue');
+$router->addRoute("/top/killer", 'Kingboard\Views\Homepage', 'topKiller');
+$router->addRoute("/top/loser", 'Kingboard\Views\Homepage', 'topLoser');
 
 // information
 $router->addRoute("/information", 'Kingboard\Views\Information', "index");
