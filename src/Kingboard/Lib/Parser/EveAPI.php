@@ -18,8 +18,9 @@ class EveAPI
         $newkills = 0;
         $errors = 0;
         foreach ($kills as $kill) {
-            if (!is_null(\King23\Core\Registry::getInstance()->stomp) && \King23\Core\Registry::getInstance(
-                )->stomp['post']
+            if (
+                !is_null(\King23\Core\Registry::getInstance()->stomp)
+                && \King23\Core\Registry::getInstance()->stomp['post']
             ) {
                 KillPublisher::send($kill->toArray());
             }
@@ -170,23 +171,6 @@ class EveAPI
         }
     }
 
-
-    private function parseItem($row)
-    {
-        // Build the standard item
-        $item = $row;
-        $item['typeName'] = EveItem::getByItemId($row['typeID'])->typeName;
-        $item['iskValue'] = EveItem::getItemValue($row['typeID']);
-
-        // Check for nested items (container)
-        if (isset($row['items']) && is_null($row['items'])) {
-            foreach ($row['items'] as $id => $innerRow) {
-                $item['items'][$id] = $this->parseItem($innerRow);
-            }
-        }
-        return $item;
-    }
-
     /**
      * ensure there is an ID placed
      * @param string $id
@@ -213,5 +197,21 @@ class EveAPI
             //throw new \Exception("No such characterID");
         }
         return $id;
+    }
+
+    private function parseItem($row)
+    {
+        // Build the standard item
+        $item = $row;
+        $item['typeName'] = EveItem::getByItemId($row['typeID'])->typeName;
+        $item['iskValue'] = EveItem::getItemValue($row['typeID']);
+
+        // Check for nested items (container)
+        if (isset($row['items']) && is_null($row['items'])) {
+            foreach ($row['items'] as $id => $innerRow) {
+                $item['items'][$id] = $this->parseItem($innerRow);
+            }
+        }
+        return $item;
     }
 }
