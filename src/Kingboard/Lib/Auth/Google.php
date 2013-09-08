@@ -59,7 +59,7 @@ class Google extends Auth
      * @throws \Exception
      * @return \Kingboard\Model\User
      */
-    public static function login($config, $fake=null)
+    public static function login($config, $fake = null)
     {
         if (isset($_GET['error'])) {
             throw new \Exception("Could not login: " . $_GET['error']);
