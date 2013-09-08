@@ -10,14 +10,6 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         return self::_getInstanceByCriteria(__CLASS__, array("killID" => (int)$killid));
     }
 
-    public function injectDataFromMail(array $data)
-    {
-        if (is_null($this->_data)) {
-            $this->_data = array();
-        }
-        $this->_data = array_merge($data, $this->_data);
-    }
-
     public static function find($criteria = array(), $fields = array())
     {
         return self::_find(__CLASS__, $criteria, $fields);
@@ -26,16 +18,6 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function findOne($criteria)
     {
         return self::_findOne(__CLASS__, $criteria);
-    }
-
-    public function save()
-    {
-        if (!$this->_data['killTime'] instanceof \MongoDate) {
-            if (is_array($this->_data['killTime']))
-                $this->_data['killTime'] = new \MongoDate($this->_data['killTime']['sec'], $this->_data['killTime']['usec']);
-        }
-        $this->_data['saved'] = new \MongoDate();
-        parent::save();
     }
 
     /**
@@ -59,8 +41,9 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
         $kill->next();
 
-        if (!($kill = $kill->current()))
+        if (!($kill = $kill->current())) {
             return null;
+        }
 
         if ($kill['victim']['characterID'] == $id) {
             return array(
@@ -112,8 +95,9 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
         $kill->next();
 
-        if (!($kill = $kill->current()))
+        if (!($kill = $kill->current())) {
             return null;
+        }
 
         if ($kill['victim']['corporationID'] == $id) {
             return array(
@@ -161,8 +145,9 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
         $kill->next();
 
-        if (!($kill = $kill->current()))
+        if (!($kill = $kill->current())) {
             return null;
+        }
 
         if ($kill['victim']['factionID'] == $id) {
             return array(
@@ -202,8 +187,9 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
         $kill->next();
 
-        if (!($kill = $kill->current()))
+        if (!($kill = $kill->current())) {
             return null;
+        }
 
         if ($kill['victim']['allianceID'] == $id) {
             return array(
@@ -226,7 +212,6 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         return null;
     }
 
-
     public static function getPilotNameFromId($id)
     {
         // find a random kill with characterID $id
@@ -240,12 +225,13 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             )
         );
 
-        if ($kill['victim']['characterID'] == $id)
+        if ($kill['victim']['characterID'] == $id) {
             return $kill['victim']['characterName'];
-        else {
+        } else {
             foreach ($kill['attackers'] as $attacker) {
-                if ($attacker['characterID'] == $id)
+                if ($attacker['characterID'] == $id) {
                     return $attacker['characterName'];
+                }
             }
         }
         return false;
@@ -276,12 +262,13 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
                 )
             );
 
-            if ($kill['victim']['characterName'] == $name)
+            if ($kill['victim']['characterName'] == $name) {
                 return $kill['victim']['characterID'];
-            else {
+            } else {
                 foreach ($kill['attackers'] as $attacker) {
-                    if ($attacker['characterName'] == $name)
+                    if ($attacker['characterName'] == $name) {
                         return $attacker['characterID'];
+                    }
                 }
             }
             return false;
@@ -313,12 +300,13 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
                 )
             );
 
-            if ($kill['victim']['corporationName'] == $name)
+            if ($kill['victim']['corporationName'] == $name) {
                 return $kill['victim']['corporationID'];
-            else {
+            } else {
                 foreach ($kill['attackers'] as $attacker) {
-                    if ($attacker['corporationName'] == $name)
+                    if ($attacker['corporationName'] == $name) {
                         return $attacker['corporationID'];
+                    }
                 }
             }
             return false;
@@ -350,12 +338,13 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
                 )
             );
 
-            if ($kill['victim']['factionName'] == $name)
+            if ($kill['victim']['factionName'] == $name) {
                 return $kill['victim']['factionID'];
-            else {
+            } else {
                 foreach ($kill['attackers'] as $attacker) {
-                    if ($attacker['factionName'] == $name)
+                    if ($attacker['factionName'] == $name) {
                         return $attacker['factionID'];
+                    }
                 }
             }
             return false;
@@ -367,6 +356,24 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         return self::_find(__CLASS__, array())->count();
     }
 
+    public function injectDataFromMail(array $data)
+    {
+        if (is_null($this->_data)) {
+            $this->_data = array();
+        }
+        $this->_data = array_merge($data, $this->_data);
+    }
+
+    public function save()
+    {
+        if (!$this->_data['killTime'] instanceof \MongoDate) {
+            if (is_array($this->_data['killTime'])) {
+                $this->_data['killTime'] = new \MongoDate($this->_data['killTime']['sec'], $this->_data['killTime']['usec']);
+            }
+        }
+        $this->_data['saved'] = new \MongoDate();
+        parent::save();
+    }
 
     public function toArray()
     {
