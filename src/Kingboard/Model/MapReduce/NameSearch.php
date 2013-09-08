@@ -87,5 +87,4 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
 
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }
-
 }

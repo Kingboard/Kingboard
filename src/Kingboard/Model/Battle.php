@@ -115,5 +115,4 @@ class Battle extends \King23\Mongo\MongoObject
         );
 
     }
-
 }

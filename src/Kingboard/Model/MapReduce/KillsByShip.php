@@ -85,5 +85,4 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
     {
         return self::_find(__CLASS__, array())->count();
     }
-
 }

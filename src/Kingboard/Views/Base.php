@@ -56,17 +56,17 @@ class Base extends \King23\View\TwigView
         // Global Kingboard information
 
         // pass version information
-        $this->_context['Kingboard']['Version'] = \Kingboard\Kingboard::Version;
+        $this->_context['Kingboard']['Version'] = \Kingboard\Kingboard::VERSION;
 
         // ownerName, use Kingboard if not set
         if (!is_null($reg->ownerName) && $reg->ownerName) {
             $this->_context['Kingboard']['Name'] = $reg->ownerName;
         } else {
-            $this->_context['Kingboard']['Name'] = \Kingboard\Kingboard::Name;
+            $this->_context['Kingboard']['Name'] = \Kingboard\Kingboard::NAME;
         }
 
         // release name
-        $this->_context['Kingboard']['ReleaseName'] = \Kingboard\Kingboard::ReleaseName;
+        $this->_context['Kingboard']['ReleaseName'] = \Kingboard\Kingboard::RELEASE_NAME;
 
         // pick bootstrap theme path from public/css/themes folder
         $this->_context['theme'] = !is_null($reg->theme) ? $reg->theme : "default";

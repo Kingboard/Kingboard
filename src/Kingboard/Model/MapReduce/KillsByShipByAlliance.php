@@ -81,5 +81,4 @@ class KillsByShipByAlliance extends \King23\Mongo\MongoObject implements \ArrayA
 
         return \King23\Mongo\Mongo::mapReduce("Kingboard_Kill", $out, $map, $reduce, $filter);
     }
-
 }
