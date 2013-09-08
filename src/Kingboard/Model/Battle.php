@@ -25,7 +25,6 @@ class Battle extends \King23\Mongo\MongoObject
             $battle->data = Battle::generateBattle($battleSetting);
             $battle->updated = new \MongoDate(time());
             $battle->settingsId = $battleSetting->_id;
-//            print_r($battle);
             $battle->save();
         }
         return $battle;
