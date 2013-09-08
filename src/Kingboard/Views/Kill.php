@@ -66,5 +66,4 @@ class Kill extends \Kingboard\Views\Base
         $kill = \Kingboard\Model\Kill::getByKillId($request['killID']);
         echo json_encode($kill->toArray());
     }
-
 }

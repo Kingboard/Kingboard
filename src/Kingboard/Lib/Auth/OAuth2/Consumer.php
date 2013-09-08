@@ -38,8 +38,9 @@ class Consumer
      * @param string $clientSecret
      * @param string $code
      * @param string $redirectUri
-     * @return array
+     * @param bool $nojson
      * @throws \Exception
+     * @return array
      */
     public static function getTokens($hostUrl, $clientId, $clientSecret, $code, $redirectUri, $nojson = false)
     {
@@ -91,5 +92,4 @@ class Consumer
 
         return stream_get_contents($fp);
     }
-
 }

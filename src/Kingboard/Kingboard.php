@@ -15,5 +15,4 @@ class Kingboard
 
     // basic name, to be used when no owner name is set
     const Name = "Kingboard";
-
 }

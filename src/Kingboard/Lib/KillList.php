@@ -183,5 +183,4 @@ class KillList
             ->skip($skip)
             ->limit($killsPerPage);
     }
-
 }
