@@ -24,4 +24,4 @@ class EveSolarSystem extends \King23\Mongo\MongoObject
     {
         return self::_getInstanceByCriteria(__CLASS__, array('itemID' => (int)$solarSystemID));
     }
-} 
+}
