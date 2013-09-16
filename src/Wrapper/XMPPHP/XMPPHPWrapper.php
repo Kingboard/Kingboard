@@ -20,7 +20,7 @@ class XMPPHPWrapper
      * @param null $server
      * @param bool $printlog
      * @param null $loglevel
-     * @return XMPPHP_XMPP
+     * @return \XMPPHP_XMPP
      */
     public static function getXMPPHP(
         $host,
