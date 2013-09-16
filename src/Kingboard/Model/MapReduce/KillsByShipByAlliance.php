@@ -10,7 +10,7 @@ class KillsByShipByAlliance extends \King23\Mongo\MongoObject implements \ArrayA
 
     public static function getInstanceByAllianceId($allianceid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int)$allianceid));
+        return parent::getInstanceByCriteria(__CLASS__, array("_id" => (int)$allianceid));
     }
 
     public static function mapReduce()

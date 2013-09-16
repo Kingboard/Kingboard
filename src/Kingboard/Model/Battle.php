@@ -7,17 +7,17 @@ class Battle extends \King23\Mongo\MongoObject
 
     public static function getById($id)
     {
-        return self::_getInstanceById(__CLASS__, $id);
+        return parent::getInstanceById(__CLASS__, $id);
     }
 
     public static function find($criteria = array())
     {
-        return self::_find(__CLASS__, $criteria);
+        return parent::find(__CLASS__, $criteria);
     }
 
     public static function getByBattleSettings(\Kingboard\Model\BattleSettings $battleSetting)
     {
-        $battle = Battle::_getInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
+        $battle = Battle::getInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
         if (is_null($battle) || time() > $battle->updated->sec + 1) {
             if (is_null($battle)) {
                 $battle = new Battle();

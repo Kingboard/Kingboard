@@ -7,17 +7,17 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getByKillId($killid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("killID" => (int)$killid));
+        return parent::getInstanceByCriteria(__CLASS__, array("killID" => (int)$killid));
     }
 
     public static function find($criteria = array(), $fields = array())
     {
-        return self::_find(__CLASS__, $criteria, $fields);
+        return parent::find(__CLASS__, $criteria, $fields);
     }
 
     public static function findOne($criteria)
     {
-        return self::_findOne(__CLASS__, $criteria);
+        return parent::findOne(__CLASS__, $criteria);
     }
 
     /**
@@ -29,7 +29,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getPilotInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = self::_find(
+        $kill = parent::find(
             __CLASS__,
             array(
                 '$or' => array(
@@ -83,7 +83,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getCorporationInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = self::_find(
+        $kill = parent::find(
             __CLASS__,
             array(
                 '$or' => array(
@@ -133,7 +133,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getFactionInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = self::_find(
+        $kill = parent::find(
             __CLASS__,
             array(
                 '$or' => array(
@@ -175,7 +175,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getAllianceInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = self::_find(
+        $kill = parent::find(
             __CLASS__,
             array(
                 '$or' => array(
@@ -215,7 +215,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getPilotNameFromId($id)
     {
         // find a random kill with characterID $id
-        $kill = self::_findOne(
+        $kill = parent::findOne(
             __CLASS__,
             array(
                 '$or' => array(
@@ -246,7 +246,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             return $id;
         } else {
             // find a random kill with characterID $id
-            $kill = self::_findOne(
+            $kill = parent::findOne(
                 __CLASS__,
                 array(
                     '$or' => array(
@@ -284,7 +284,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             return $id;
         } else {
             // find a random kill with characterID $id
-            $kill = self::_findOne(
+            $kill = parent::findOne(
                 __CLASS__,
                 array(
                     '$or' => array(
@@ -322,7 +322,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             return $id;
         } else {
             // find a random kill with characterID $id
-            $kill = self::_findOne(
+            $kill = parent::findOne(
                 __CLASS__,
                 array(
                     '$or' => array(
@@ -353,7 +353,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function count()
     {
-        return self::_find(__CLASS__, array())->count();
+        return parent::find(__CLASS__, array())->count();
     }
 
     public function injectDataFromMail(array $data)

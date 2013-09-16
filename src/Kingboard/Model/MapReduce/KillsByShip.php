@@ -73,7 +73,7 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
      */
     public static function find()
     {
-        return self::_find(__CLASS__, array());
+        return parent::find(__CLASS__, array());
     }
 
     /**
@@ -83,6 +83,6 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
      */
     public static function count()
     {
-        return self::_find(__CLASS__, array())->count();
+        return parent::find(__CLASS__, array())->count();
     }
 }

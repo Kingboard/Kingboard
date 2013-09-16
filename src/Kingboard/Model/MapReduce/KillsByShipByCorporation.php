@@ -10,7 +10,7 @@ class KillsByShipByCorporation extends \King23\Mongo\MongoObject implements \Arr
 
     public static function getInstanceByCorporationId($corpid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int)$corpid));
+        return parent::getInstanceByCriteria(__CLASS__, array("_id" => (int)$corpid));
     }
 
     public static function mapReduce()

@@ -16,7 +16,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
      */
     public static function search($searchword, $limit)
     {
-        return parent::_find(
+        return parent::find(
             __CLASS__,
             array(
                 "_id" => new \MongoRegex('/^' . $searchword . '.*/i')
@@ -32,7 +32,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
      */
     public static function getEveIdByName($name)
     {
-        if ($data = parent::_findOne(__CLASS__, array("_id" => $name), array("value.id"))) {
+        if ($data = parent::findOne(__CLASS__, array("_id" => $name), array("value.id"))) {
             return $data['value']['id'];
         }
         return false;
@@ -40,7 +40,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getNameByEveId($id)
     {
-        if ($data = parent::_findOne(__CLASS__, array("value.id" => $id))) {
+        if ($data = parent::findOne(__CLASS__, array("value.id" => $id))) {
             return $data['_id'];
         }
         return false;

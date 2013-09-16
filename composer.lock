@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7508ba1aa529670b37a17864073106db",
+    "hash": "7e0e87b92d3466a53507647bd18146ac",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
@@ -52,16 +52,16 @@
         },
         {
             "name": "king23/king23",
-            "version": "0.2.0",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/king23.git",
-                "reference": "0.2.0"
+                "reference": "04feff64b400527e4322ee4c9f10d4dcf50bcfa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/king23/zipball/0.2.0",
-                "reference": "0.2.0",
+                "url": "https://api.github.com/repos/ppetermann/king23/zipball/04feff64b400527e4322ee4c9f10d4dcf50bcfa8",
+                "reference": "04feff64b400527e4322ee4c9f10d4dcf50bcfa8",
                 "shasum": ""
             },
             "require": {
@@ -70,7 +70,7 @@
             },
             "require-dev": {
                 "d11wtq/boris": "1.0.*",
-                "king23/project_template": "0.1.7"
+                "king23/project_template": "0.2.0"
             },
             "bin": [
                 "bin/king23"
@@ -78,7 +78,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.7-dev"
+                    "dev-master": "0.2.2-dev"
                 }
             },
             "autoload": {
@@ -103,7 +103,7 @@
                 "framework",
                 "king23"
             ],
-            "time": "2013-08-19 15:43:09"
+            "time": "2013-09-16 15:49:25"
         },
         {
             "name": "kingboard/ccpdump",
@@ -111,12 +111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kingboard/ccpdump.git",
-                "reference": "86d61e5a92a0a88db085fee6a6b6129794f2ad0d"
+                "reference": "daf04f2e760cca2c67ffb0cef22b8c5d0290ba2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kingboard/ccpdump/zipball/86d61e5a92a0a88db085fee6a6b6129794f2ad0d",
-                "reference": "86d61e5a92a0a88db085fee6a6b6129794f2ad0d",
+                "url": "https://api.github.com/repos/Kingboard/ccpdump/zipball/daf04f2e760cca2c67ffb0cef22b8c5d0290ba2a",
+                "reference": "daf04f2e760cca2c67ffb0cef22b8c5d0290ba2a",
                 "shasum": ""
             },
             "type": "library",
@@ -128,7 +128,7 @@
                 }
             ],
             "description": "MongoDB Variant of CCP's static data dump",
-            "time": "2013-06-13 12:03:48"
+            "time": "2013-09-16 10:59:13"
         },
         {
             "name": "michelf/php-markdown",
@@ -334,16 +334,16 @@
     "packages-dev": [
         {
             "name": "maximebf/debugbar",
-            "version": "1.5.1",
+            "version": "1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "1.5.1"
+                "reference": "861ddc302e49fcc7bd792eaeb532cc20ff4d6b7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/1.5.1",
-                "reference": "1.5.1",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/861ddc302e49fcc7bd792eaeb532cc20ff4d6b7c",
+                "reference": "861ddc302e49fcc7bd792eaeb532cc20ff4d6b7c",
                 "shasum": ""
             },
             "require": {
@@ -379,7 +379,7 @@
             "keywords": [
                 "debug"
             ],
-            "time": "2013-08-17 02:02:49"
+            "time": "2013-09-15 17:06:20"
         }
     ],
     "aliases": [

@@ -10,7 +10,7 @@ class KillsByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayAc
 
     public static function getInstanceByFactionId($factionid)
     {
-        return self::_getInstanceByCriteria(__CLASS__, array("_id" => (int)$factionid));
+        return parent::getInstanceByCriteria(__CLASS__, array("_id" => (int)$factionid));
     }
 
     public static function mapReduce()
