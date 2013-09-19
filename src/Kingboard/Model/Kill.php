@@ -31,12 +31,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         // find latest kill with characterID $id
         $kill = parent::find(
             __CLASS__,
-            array(
-                '$or' => array(
-                    array('victim.characterID' => (int)$id),
-                    array('attackers.characterID' => (int)$id)
-                )
-            )
+            array("involvedCharacters" => (int) $id)
         )->sort(array('killTime' => -1))->limit(1);
 
         $kill->next();
@@ -86,10 +81,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         $kill = parent::find(
             __CLASS__,
             array(
-                '$or' => array(
-                    array('victim.corporationID' => (int)$id),
-                    array('attackers.corporationID' => (int)$id)
-                )
+                "involvedCorporations" => (int) $id
             )
         )->sort(array('killTime' => -1))->limit(1);
 
@@ -136,10 +128,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         $kill = parent::find(
             __CLASS__,
             array(
-                '$or' => array(
-                    array('victim.factionID' => (int)$id),
-                    array('attackers.factionID' => (int)$id)
-                )
+                "involvedFactions" => (int) $id
             )
         )->sort(array('killTime' => -1))->limit(1);
 
@@ -178,10 +167,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         $kill = parent::find(
             __CLASS__,
             array(
-                '$or' => array(
-                    array('victim.allianceID' => (int)$id),
-                    array('attackers.allianceID' => (int)$id)
-                )
+                "involvedAlliances" => (int) $id
             )
         )->sort(array('killTime' => -1))->limit(1);
 
@@ -218,10 +204,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
         $kill = parent::findOne(
             __CLASS__,
             array(
-                '$or' => array(
-                    array('victim.characterID' => (int)$id),
-                    array('attackers.characterID' => (int)$id)
-                )
+                "involvedCharacters" => (int) $id
             )
         );
 

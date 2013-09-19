@@ -116,6 +116,10 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         // killtime Index
         $col->ensureIndex(array('killTime' => 1), array("name" => "killtime"));
 
+	// killtime for kills by pilot
+	$col->ensureIndex(array('victim.characterID' => 1, 'attackers.characterID' => 1, 'killTime => -1'), array('name' => 'kbpindex'));
+	
+
         // location.solarSystem
         $col->ensureIndex(array('location.solarSystem' => 1), array("name" => "systemname"));
 
