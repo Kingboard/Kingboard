@@ -82,7 +82,12 @@ class KingboardTask extends \King23\Tasks\King23Task
                 // @todo: check if that might cause open connections not to close over time
                 unset($stomp);
                 $stomp = new \Stomp($stompcfg['url'], $stompcfg['user'], $stompcfg['passwd']);
-                $stomp->subscribe('/dsub/' . $stompcfg['dsub_id']);
+                $stomp->subscribe($destination, array(
+                    "id" => $reg->stomp['dsub_id'], // dsub id, this one should be some unique identifier that identifies your board
+                                                    // multiple boards using the same dsub_id will consume each others subscription
+                    "persistent" => "true",         // this flag enables the dsub itself
+                    "ack" => "client"               // ensure we don't auto-ack (serverside) but have the client acknowledge his subscription
+                ));
                 $this->cli->message("retrying");
 
             }
