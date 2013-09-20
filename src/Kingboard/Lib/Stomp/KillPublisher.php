@@ -18,7 +18,9 @@ class KillPublisher
         if (is_null(self::$publisherInstance)) {
             self::$publisherInstance = new Publisher();
         }
-        self::$publisherInstance->send(self::getDestinations($kill), json_encode($kill));
+        foreach (self::getDestinations($kill) as $destination) {
+            self::$publisherInstance->send($destination, json_encode($kill));
+        }
     }
 
     /**
@@ -67,6 +69,6 @@ class KillPublisher
             $destinations,
             \King23\Core\Registry::getInstance()->stomp['destination_post']
         );
-        return join(',', $destinations);
+        return $destinations;
     }
 }

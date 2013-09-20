@@ -11,61 +11,13 @@ class KingboardTask extends \King23\Tasks\King23Task
     protected $tasks = array(
         "info" => "General Informative Task",
         "stomp_process_queue" => "process kills from a stomp queue",
-        "stomp_register_dsub" => "register a dsub queue for stomp queing",
-        "stomp_drop_dsub"     => "drop a dsub registration (Optional parameter: id to drop, if parameter not given it will drop the one from the config)"
     );
     /**
      * Name of the module
      */
     protected $name = "Kingboard";
 
-    /**
-     * Register a dsub for the stomp topic
-     * @param array $options
-     */
-    public function stomp_register_dsub(array $options)
-    {
-        $reg = \King23\Core\Registry::getInstance();
-        // create new stomp client
-        $stomp = new \Stomp($reg->stomp['url'], $reg->stomp['user'], $reg->stomp['passwd']);
 
-        // destination has the destination topic (for example /topic/kills)
-        $destination = $reg->stomp['destination_read'];
-
-        // we subscribe with additional parameters
-        $stomp->subscribe($destination, array(
-            "id" => $reg->stomp['dsub_id'], // dsub id, this one should be some unique identifier that identifies your board
-                                            // multiple boards using the same dsub_id will consume each others subscription
-            "persistent" => "true",         // this flag enables the dsub itself
-            "ack" => "client"               // ensure we don't auto-ack (serverside) but have the client acknowledge his subscription
-        ));
-    }
-
-
-    /**
-     * utility function, allows to drop dsubs
-     * @param array $options
-     */
-    public function stomp_drop_dsub(array $options)
-    {
-        $reg = \King23\Core\Registry::getInstance();
-        // create new stomp client
-        $stomp = new \Stomp($reg->stomp['url'], $reg->stomp['user'], $reg->stomp['passwd']);
-
-        // destination has the destination topic (for example /topic/kills)
-        $destination = $reg->stomp['destination_read'];
-
-        if(isset($options[0]) && !empty($options[0]))
-            $dsub_id = $options[0];
-        else
-            $dsub_id = $reg->stomp['dsub_id'];
-
-        // we subscribe with additional parameters
-        $stomp->unsubscribe($destination, array(
-            "id" => $dsub_id,
-            "persistent" => "true"
-        ));
-    }
 
     /**
      * Experimental task to enable kill processing from queue.
@@ -84,8 +36,16 @@ class KingboardTask extends \King23\Tasks\King23Task
 
         $stomp = new \Stomp($stompcfg['url'], $stompcfg['user'], $stompcfg['passwd']);
 
-        // subscribe to the dsub we created
-        $stomp->subscribe('/dsub/' . $stompcfg['dsub_id']);
+        // destination has the destination topic (for example /topic/kills)
+        $destination = $reg->stomp['destination_read'];
+
+        // we subscribe with additional parameters
+        $stomp->subscribe($destination, array(
+            "id" => $reg->stomp['dsub_id'], // dsub id, this one should be some unique identifier that identifies your board
+                                            // multiple boards using the same dsub_id will consume each others subscription
+            "persistent" => "true",         // this flag enables the dsub itself
+            "ack" => "client"               // ensure we don't auto-ack (serverside) but have the client acknowledge his subscription
+        ));
 
         while (true) {
             try {

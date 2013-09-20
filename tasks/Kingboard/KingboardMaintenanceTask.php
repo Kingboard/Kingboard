@@ -74,7 +74,7 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         // alliance attacker name
         $col->ensureIndex(array('attackers.allianceName' =>1), array("name" => "a_alliname"));
 
-		// faction victim id
+        // faction victim id
         $col->ensureIndex(array('victim.factionID' =>1), array("name" => "v_factid"));
 
         // faction attacker id
