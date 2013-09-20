@@ -21,18 +21,14 @@ class KillsByShipByPilot extends \King23\Mongo\MongoObject implements \ArrayAcce
     public static function mapReduce()
     {
         $map = "function () {
-            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)},{'marketGroup.parentGroup.marketGroupName':1});
-            if(ship != null && ship.marketGroup != null) {
-                var info = {};
-                info['group'] = {};
-                info['ship'] = {}
-                info['group'][ship.marketGroup.parentGroup.marketGroupName] = 1;
-                info['ship'][this.victim.shipType] = 1;
-                info['total'] = 1;
-                this.attackers.forEach(function(attacker) {
-                    emit(attacker.characterID, info);
-                });
-            }
+            var info = {};
+            info['group'] = {};
+            info['ship'] = {}
+            info['ship'][this.victim.shipType] = 1;
+            info['total'] = 1;
+            this.attackers.forEach(function(attacker) {
+                emit(attacker.characterID, info);
+            });
         }";
         $reduce = "function (k, vals) {
             var sums = {}

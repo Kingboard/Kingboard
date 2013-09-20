@@ -62,7 +62,6 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
                 emit(attacker.corporationName, {id: attacker.corporationID, type: \"corporation\"});
                 emit(attacker.allianceName, {id: attacker.allianceID, type: \"alliance\"});
             });
-            }
         }";
 
 

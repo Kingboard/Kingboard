@@ -17,20 +17,10 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function mapReduce()
     {
         $map = "function () {
-            if(arguments.callee.shipcache === undefined)
-            {
-                arguments.callee.shipcache = {}
-            }
-            if(arguments.callee.shipcache[this.victim.shipTypeID] === undefined)
-            {
-                arguments.callee.shipcache[this.victim.shipTypeID] = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)},{'marketGroup.parentGroup.marketGroupName':1});
-            }
-            var ship = arguments.callee.shipcache[this.victim.shipTypeID];
             var info = {}
             info[this.victim.shipType] = 1;
             info[\"total\"] = 1;
-            if(ship != null && ship.marketGroup != null)
-                emit(ship.marketGroup.parentGroup.marketGroupName, info);
+            emit(this.victim.shipType, info);
         }";
         $reduce = "function (k, vals) {
             var sums = {}

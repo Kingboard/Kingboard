@@ -101,8 +101,8 @@ class KillList
         $totalstats = array();
         $count = 0;
 
-        if (isset($killstats['value']['group'])) {
-            foreach ($killstats['value']['group'] as $type => $value) {
+        if (isset($killstats['value']['ship'])) {
+            foreach ($killstats['value']['ship'] as $type => $value) {
                 if (!isset($totalstats[$type])) {
                     $totalstats[$type] = array('kills' => 0, 'losses' => 0);
                 }
@@ -111,8 +111,8 @@ class KillList
             }
         }
 
-        if (isset($lossstats['value']['group'])) {
-            foreach ($lossstats['value']['group'] as $type => $value) {
+        if (isset($lossstats['value']['ship'])) {
+            foreach ($lossstats['value']['ship'] as $type => $value) {
                 if (!isset($totalstats[$type])) {
                     $totalstats[$type] = array('kills' => 0, 'losses' => 0);
                 }

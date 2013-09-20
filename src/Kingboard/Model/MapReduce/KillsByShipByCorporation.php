@@ -16,21 +16,17 @@ class KillsByShipByCorporation extends \King23\Mongo\MongoObject implements \Arr
     public static function mapReduce()
     {
         $map = "function () {
-            var ship = db.Kingboard_EveItem.findOne({typeID: parseInt(this.victim.shipTypeID)},{'marketGroup.parentGroup.marketGroupName':1});
-            if(ship != null && ship.marketGroup != null) {
-                var info = {};
-                info['group'] = {};
-                info['ship'] = {}
-                info['group'][ship.marketGroup.parentGroup.marketGroupName] = 1;
-                info['ship'][this.victim.shipType] = 1;
-                info['total'] = 1;
-                var done = {};
-                this.attackers.forEach(function(attacker) {
-                    if(done[attacker.corporationID] === undefined)
-                        emit(attacker.corporationID, info);
-                    done[attacker.corporationID] = true;
-                });
-            }
+            var info = {};
+            info['group'] = {};
+            info['ship'] = {}
+            info['ship'][this.victim.shipType] = 1;
+            info['total'] = 1;
+            var done = {};
+            this.attackers.forEach(function(attacker) {
+                if(done[attacker.corporationID] === undefined)
+                    emit(attacker.corporationID, info);
+                done[attacker.corporationID] = true;
+            });
         }";
         $reduce = "function (k, vals) {
             var sums = {}
