@@ -10,7 +10,7 @@ class LossesByShipByCorporation extends \King23\Mongo\MongoObject implements \Ar
 
     public static function getInstanceByCorporationId($corpid)
     {
-        return parent::getInstanceByCriteria(__CLASS__, array("_id" => (int)$corpid));
+        return parent::doGetInstanceByCriteria(__CLASS__, array("_id" => (int)$corpid));
     }
 
     public static function mapReduce()

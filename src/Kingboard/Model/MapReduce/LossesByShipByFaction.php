@@ -10,7 +10,7 @@ class LossesByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayA
 
     public static function getInstanceByFactionId($factionid)
     {
-        return parent::getInstanceByCriteria(__CLASS__, array("_id" => (int)$factionid));
+        return parent::doGetInstanceByCriteria(__CLASS__, array("_id" => (int)$factionid));
     }
 
     public static function mapReduce()

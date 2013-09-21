@@ -7,12 +7,12 @@ class Battle extends \King23\Mongo\MongoObject
 
     public static function getById($id)
     {
-        return parent::getInstanceById(__CLASS__, $id);
+        return parent::doGetInstanceById(__CLASS__, $id);
     }
 
     public static function find($criteria = array())
     {
-        return parent::find(__CLASS__, $criteria);
+        return parent::doFind(__CLASS__, $criteria);
     }
 
     public static function getByBattleSettings(\Kingboard\Model\BattleSettings $battleSetting)

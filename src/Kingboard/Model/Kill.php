@@ -7,17 +7,17 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getByKillId($killid)
     {
-        return parent::getInstanceByCriteria(__CLASS__, array("killID" => (int)$killid));
+        return parent::doGetInstanceByCriteria(__CLASS__, array("killID" => (int)$killid));
     }
 
     public static function find($criteria = array(), $fields = array())
     {
-        return parent::find(__CLASS__, $criteria, $fields);
+        return parent::doFind(__CLASS__, $criteria, $fields);
     }
 
     public static function findOne($criteria)
     {
-        return parent::findOne(__CLASS__, $criteria);
+        return parent::doFindOne(__CLASS__, $criteria);
     }
 
     /**
@@ -29,7 +29,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getPilotInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = parent::find(
+        $kill = parent::doFind(
             __CLASS__,
             array("involvedCharacters" => (int) $id)
         )->sort(array('killTime' => -1))->limit(1);
@@ -78,7 +78,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getCorporationInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = parent::find(
+        $kill = parent::doFind(
             __CLASS__,
             array(
                 "involvedCorporations" => (int) $id
@@ -125,7 +125,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getFactionInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = parent::find(
+        $kill = parent::doFind(
             __CLASS__,
             array(
                 "involvedFactions" => (int) $id
@@ -164,7 +164,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getAllianceInfoFromId($id)
     {
         // find latest kill with characterID $id
-        $kill = parent::find(
+        $kill = parent::doFind(
             __CLASS__,
             array(
                 "involvedAlliances" => (int) $id
@@ -201,7 +201,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
     public static function getPilotNameFromId($id)
     {
         // find a random kill with characterID $id
-        $kill = parent::findOne(
+        $kill = parent::doFindOne(
             __CLASS__,
             array(
                 "involvedCharacters" => (int) $id
@@ -229,7 +229,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             return $id;
         } else {
             // find a random kill with characterID $id
-            $kill = parent::findOne(
+            $kill = parent::doFindOne(
                 __CLASS__,
                 array(
                     '$or' => array(
@@ -267,7 +267,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             return $id;
         } else {
             // find a random kill with characterID $id
-            $kill = parent::findOne(
+            $kill = parent::doFindOne(
                 __CLASS__,
                 array(
                     '$or' => array(
@@ -305,7 +305,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
             return $id;
         } else {
             // find a random kill with characterID $id
-            $kill = parent::findOne(
+            $kill = parent::doFindOne(
                 __CLASS__,
                 array(
                     '$or' => array(
@@ -336,7 +336,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function count()
     {
-        return parent::find(__CLASS__, array())->count();
+        return parent::doFind(__CLASS__, array())->count();
     }
 
     public function injectDataFromMail(array $data)

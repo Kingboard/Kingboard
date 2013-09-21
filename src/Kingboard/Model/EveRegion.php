@@ -7,16 +7,16 @@ class EveRegion extends \King23\Mongo\MongoObject
 
     public static function getById($id)
     {
-        return parent::getInstanceById(__CLASS__, $id);
+        return parent::doGetInstanceById(__CLASS__, $id);
     }
 
     public static function find($criteria = array(), $fields = array())
     {
-        return parent::find(__CLASS__, $criteria, $fields);
+        return parent::doFind(__CLASS__, $criteria, $fields);
     }
 
     public static function getInstanceByCriteria($criteria)
     {
-        return parent::getInstanceByCriteria(__CLASS__, $criteria);
+        return parent::doGetInstanceByCriteria(__CLASS__, $criteria);
     }
 }

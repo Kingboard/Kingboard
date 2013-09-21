@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7e0e87b92d3466a53507647bd18146ac",
+    "hash": "a84dbdac3629ba5a235af47287b3f48c",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
@@ -52,16 +52,16 @@
         },
         {
             "name": "king23/king23",
-            "version": "0.2.2",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/king23.git",
-                "reference": "04feff64b400527e4322ee4c9f10d4dcf50bcfa8"
+                "reference": "93a3aa513745dcf6d6a4c2c21cc95768a23a947a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/king23/zipball/04feff64b400527e4322ee4c9f10d4dcf50bcfa8",
-                "reference": "04feff64b400527e4322ee4c9f10d4dcf50bcfa8",
+                "url": "https://api.github.com/repos/ppetermann/king23/zipball/93a3aa513745dcf6d6a4c2c21cc95768a23a947a",
+                "reference": "93a3aa513745dcf6d6a4c2c21cc95768a23a947a",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.2.2-dev"
+                    "dev-master": "0.3.1-dev"
                 }
             },
             "autoload": {
@@ -103,7 +103,7 @@
                 "framework",
                 "king23"
             ],
-            "time": "2013-09-16 15:49:25"
+            "time": "2013-09-21 22:14:37"
         },
         {
             "name": "kingboard/ccpdump",
@@ -334,16 +334,16 @@
     "packages-dev": [
         {
             "name": "maximebf/debugbar",
-            "version": "1.6",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "861ddc302e49fcc7bd792eaeb532cc20ff4d6b7c"
+                "reference": "6330bca1c7eb26f1b54db46e27e8ecba810115d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/861ddc302e49fcc7bd792eaeb532cc20ff4d6b7c",
-                "reference": "861ddc302e49fcc7bd792eaeb532cc20ff4d6b7c",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/6330bca1c7eb26f1b54db46e27e8ecba810115d9",
+                "reference": "6330bca1c7eb26f1b54db46e27e8ecba810115d9",
                 "shasum": ""
             },
             "require": {
@@ -379,7 +379,7 @@
             "keywords": [
                 "debug"
             ],
-            "time": "2013-09-15 17:06:20"
+            "time": "2013-09-19 22:05:12"
         }
     ],
     "aliases": [
