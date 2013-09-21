@@ -12,6 +12,7 @@
         <li><a data-toggle="tab" href="#license">License</a></li>
         <li><a data-toggle="tab" href="#contributions">Contributions</a></li>
         <li><a data-toggle="tab" href="#ccp">CCP Copyright Notice</a></li>
+        <li><a data-toggle="tab" href="#libs">Libraries used</a></li>
     </ul>
     <div class="tab-content">
         <div id="readme" class="active tab-pane">
@@ -25,6 +26,21 @@
         </div>
         <div id="ccp" class="tab-pane">
             {{ ccp_copyright|raw }}
+        </div>
+        <div id="libs" class="tab-pane">
+            <h1>3rd Party Libraries Used</h1>
+            Kingboard uses a variety of opensource libraries / tools. This list might not be complete since
+            some of the used components might depend on further libs.
+            <ul>
+                <li>King23 (V{{king23version}})</li>
+                <li>PhealNG (V{{phealversion}})</li>
+                <li>PHP Debug Bar</li>
+                <li>PHP Markdown Lib</li>
+                <li>Monolog</li>
+                <li>Twig</li>
+                <li>Bootstrap</li>
+                <li>Composer</li>
+            </ul>
         </div>
     </div>
 </div>

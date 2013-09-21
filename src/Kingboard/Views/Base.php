@@ -1,6 +1,12 @@
 <?php
 namespace Kingboard\Views;
 
+use DebugBar\JavascriptRenderer;
+use King23\Core\Registry;
+use Kingboard\Kingboard;
+use Kingboard\Lib\Auth\Auth;
+use Kingboard\Lib\Form;
+
 class Base extends \King23\View\TwigView
 {
 
@@ -30,12 +36,12 @@ class Base extends \King23\View\TwigView
      */
     public function __construct($loginrequired = false)
     {
-        if ($loginrequired && !\Kingboard\Lib\Auth\Auth::isLoggedIn()) {
+        if ($loginrequired && !Auth::isLoggedIn()) {
             $this->redirect("/login");
         }
         parent::__construct();
 
-        $reg = \King23\Core\Registry::getInstance();
+        $reg = Registry::getInstance();
         $this->_context['images'] = $reg->imagePaths;
         $this->_context['baseHost'] = $reg->baseHost;
 
@@ -48,25 +54,25 @@ class Base extends \King23\View\TwigView
         $this->_context['ownerType'] = $reg->ownerType;
 
         // when user is logged in we provide user object to all pages, false otherwise
-        $this->_context['user'] = \Kingboard\Lib\Auth\Auth::getUser();
+        $this->_context['user'] = Auth::getUser();
 
         // make sure all views have the XSRF Token available
-        $this->_context['XSRF'] = \Kingboard\Lib\Form::getXSRFToken();
+        $this->_context['XSRF'] = Form::getXSRFToken();
 
         // Global Kingboard information
 
         // pass version information
-        $this->_context['Kingboard']['Version'] = \Kingboard\Kingboard::VERSION;
+        $this->_context['Kingboard']['Version'] = Kingboard::VERSION;
 
         // ownerName, use Kingboard if not set
         if (!is_null($reg->ownerName) && $reg->ownerName) {
             $this->_context['Kingboard']['Name'] = $reg->ownerName;
         } else {
-            $this->_context['Kingboard']['Name'] = \Kingboard\Kingboard::NAME;
+            $this->_context['Kingboard']['Name'] = Kingboard::NAME;
         }
 
         // release name
-        $this->_context['Kingboard']['ReleaseName'] = \Kingboard\Kingboard::RELEASE_NAME;
+        $this->_context['Kingboard']['ReleaseName'] = Kingboard::RELEASE_NAME;
 
         // pick bootstrap theme path from public/css/themes folder
         $this->_context['theme'] = !is_null($reg->theme) ? $reg->theme : "default";
@@ -79,7 +85,7 @@ class Base extends \King23\View\TwigView
         $debugbar = $reg->debugbar;
         if (!is_null($debugbar)) {
 
-            $jsrenderer = new \DebugBar\JavascriptRenderer($debugbar, '/DebugBar');
+            $jsrenderer = new JavascriptRenderer($debugbar, '/DebugBar');
             $this->_context['debugbar_header'] = $jsrenderer->renderhead();
             $this->_context['debugbar'] = $jsrenderer->render();
         }
