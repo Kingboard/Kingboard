@@ -40,7 +40,7 @@ you should now be able to call your kingboard.
 
 ## Links
 - [Kingboard Github](https://github.com/Kingboard/Kingboard)
-- [Kingboard Website](https://kingboard.3rdpartyeve.net)
+- [Kingboard.net (running installation)](https://kingboard.net)
 - [King23](http://king23.net)
 - [Pheal](https://github.com/ppetermann/pheal)
 - [EVSCO](http://evsco.net)
