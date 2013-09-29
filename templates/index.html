@@ -28,9 +28,9 @@
       // Set chart options
       var options = {
                      'width':940,
-                     'height':350,
-                     'is3D': true,
-                     'sliceVisibilityThreshold': 1/45
+                     'height':550,
+                     'is3D': false,
+                     'sliceVisibilityThreshold': 1/2500
       };
 
       // Instantiate and draw our chart, passing in some options.
@@ -44,15 +44,30 @@
 
 
 {% block header %}
-{% block stats %}
+{% endblock %}
+
+{% block content %}
 <h1>Global Statistics</h1>
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#numbers">Numbers</a></li>
+        <li class="active"><a data-toggle="tab" href="#killstab">Latest Kills</a></li>
+        <li><a data-toggle="tab" href="#numbers">Numbers</a></li>
         <li><a data-toggle="tab" href="#chart">Chart</a></li>
     </ul>
     <div class="tab-content">
-    <div id="numbers" class="tab-pane active">
+    <div id="killstab" class="tab-pane active">
+        <div class="row-fluid">
+        <div class="span12">
+            <div id="kills">
+                <h2>Latest Kills/Losses</h2>
+                <div id="home_killspage">
+                    {% include "components/kill_list.html" %}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div id="numbers" class="tab-pane">
         <h2>killed ships by type</h2>
         <div class="row">
             {% for group in stats %}
@@ -77,18 +92,5 @@
         </div>
     </div>
 </div>
-    {% endblock %}
-{% endblock %}
 
-{% block content %}
-<div class="row-fluid">
-<div class="span12">
-    <div id="kills">
-        <h2>Latest Kills/Losses</h2>
-        <div id="home_killspage">
-            {% include "components/kill_list.html" %}
-        </div>
-    </div>
-</div>
-</div>
 {% endblock %}
