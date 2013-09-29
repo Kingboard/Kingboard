@@ -58,7 +58,7 @@
             {% for group in stats %}
                 <div class="span4">
                 <div class="row">
-                    <div class="span3">{{ group._id }}</div>
+                    <div class="span3">{% if group._id %}{{ group._id[:28] }}{% else %} Unknown {% endif %}</div>
                     <div class="span1" style="text-align: right">{{ group.value.total }}</div>
                 </div>
                 </div>
