@@ -46,7 +46,7 @@ class KingboardTask extends \King23\Tasks\King23Task
                                             // multiple boards using the same dsub_id will consume each others subscription
             "persistent" => "true",         // this flag enables the dsub itself
             "ack" => "client",              // ensure we don't auto-ack (serverside) but have the client acknowledge his subscription,
-            "prefetch-count" => 20
+            "prefetch-count" => 1
         ));
 
         while (true) {
@@ -88,7 +88,8 @@ class KingboardTask extends \King23\Tasks\King23Task
                     "id" => $reg->stomp['dsub_id'], // dsub id, this one should be some unique identifier that identifies your board
                                                     // multiple boards using the same dsub_id will consume each others subscription
                     "persistent" => "true",         // this flag enables the dsub itself
-                    "ack" => "client"               // ensure we don't auto-ack (serverside) but have the client acknowledge his subscription
+                    "ack" => "client",              // ensure we don't auto-ack (serverside) but have the client acknowledge his subscription
+                    "prefetch-count" => 1
                 ));
                 $this->cli->message("retrying");
 
