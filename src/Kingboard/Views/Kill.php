@@ -24,6 +24,11 @@ class Kill extends \Kingboard\Views\Base
             $killList = new \Kingboard\Lib\KillList(null, null);
             $stats = \Kingboard\Model\MapReduce\KillsByShip::find();
             $stats = $stats->sort(array("value.value" => -1));
+            $total = 0;
+            foreach($stats as $stat) {
+                $total += $stat['value']['total'];
+            }
+            $killList->setCount($total);
             $templateVars['stats'] = $stats;
             $template = "index.html";
         }

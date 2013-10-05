@@ -140,8 +140,13 @@ class KillList
     {
         if (is_null($this->count)) {
             $this->count = \Kingboard\Model\Kill::find($this->criteria, array("_id" => true))->count();
+            //$this->count = 31337;
         }
         return $this->count;
+    }
+
+    public function setCount($count) {
+        $this->count = $count;
     }
 
     /**

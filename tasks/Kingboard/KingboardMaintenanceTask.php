@@ -122,7 +122,7 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         // location.solarSystem
         $col->ensureIndex(array('location.solarSystem' => 1), array("name" => "systemname"));
 
-        $col->ensureIndex(array('killID' =>1), array("name" => "killid", "unique" => true, "dropDups" => true));
+        $col->ensureIndex(array('killID' =>1), array("name" => "killid", "unique" => true));
 
         $col->ensureIndex(array('totalISKValue' => -1), array("name" => "iskvalue"));
 
@@ -161,7 +161,5 @@ class KingboardMaintenanceTask extends \King23\Tasks\King23Task
         $this->cli->message("Setting up NameSearch indexes");
         $col = $reg->mongo['db']->Kingboard_Kill_MapReduce_NameSearch;
         $col->ensureIndex(array('value.id' => 1));
-
-
     }
 }
