@@ -83,7 +83,11 @@ class Homepage extends Base
     public function topValue(array $params)
     {
         $data = Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
-        return $this->render("top/iskvalue.html", array("data" => $data));
+        $items = array();
+        foreach ($data as $item) {
+            $items[] = $item;
+        }
+        return $this->render("top/iskvalue.html", array("data" => $items));
     }
 
     public function topKiller(array $params)
