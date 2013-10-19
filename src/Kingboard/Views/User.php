@@ -27,7 +27,7 @@ class User extends \Kingboard\Views\Base
                 $accessmask = $keyinfo->key->accessMask;
 
                 if (!($accessmask & 272)) {
-                    throw new APIException(0, "fake exception, key invalid", "");
+                    throw new \Exception("Key invalid, or wrong permissions!");
                 }
 
                 if (!isset($user['keys'])) {
@@ -47,7 +47,7 @@ class User extends \Kingboard\Views\Base
                 // ensure user is refreshed in session
                 \Kingboard\Lib\Auth\Auth::getUser();
 
-            } catch (ApiException $e) {
+            } catch (\Exception $e) {
                 $context = $_POST;
                 $context['error'] = $e->getMessage();
                 //$context['error'] = "the key could not be validated as a valid apikey";
