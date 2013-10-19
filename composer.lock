@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "7e030a525b526231c27d1f75b4ed8b5a",
+    "hash": "9a244881e6400010b27e5ce9b93ce3d2",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
@@ -506,6 +506,39 @@
                 "templating"
             ],
             "time": "2013-10-03 06:41:20"
+        },
+        {
+            "name": "twitter/typeahead.js",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twitter/typeahead.js.git",
+                "reference": "2bd1119ecdd5ed4bb6b78c83b904d70adc49e023"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twitter/typeahead.js/zipball/2bd1119ecdd5ed4bb6b78c83b904d70adc49e023",
+                "reference": "2bd1119ecdd5ed4bb6b78c83b904d70adc49e023",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twitter Inc.",
+                    "homepage": "https://twitter.com/twitteross"
+                }
+            ],
+            "description": "fast and fully-featured autocomplete library",
+            "homepage": "http://twitter.github.com/typeahead.js",
+            "keywords": [
+                "autocomplete",
+                "typeahead"
+            ],
+            "time": "2013-08-08 05:45:20"
         }
     ],
     "packages-dev": [
@@ -565,7 +598,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kingboard/ccpdump": 20
+        "kingboard/ccpdump": 20,
+        "twitter/typeahead.js": 20
     },
     "platform": [
 

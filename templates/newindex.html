@@ -4,33 +4,33 @@
 <div class="jumbotron">
     <h2>Welcome to Kingboard <small>where your kills are king!</small></h2>
     <div>
-        <i class="icon-info-sign"></i> currently there is nothing to announce
+        <i class="glyphicon glyphicon-info-sign"></i> currently there is nothing to announce
 
     </div>
 </div>
 {% endblock header %}
 {% block content %}
-<ul class="thumbnails">
-    <li class="col-md-4">
-      <a class="thumbnail" href="/kills/"><img src="/images/home/kills_360x270.png" /></a>
-    </li>
-    <li class="col-md-3">
-        <a class="thumbnail" href="/top/value"><img src="/images/home/top12isk_260x120.png" /></a>
-    </li>
-    <li class="col-md-3">
-        <a class="thumbnail" href="/charts"><img src="/images/home/charts_260x120.png" /></a>
-    </li>
-    <li class="col-md-2">
-        <a class="thumbnail" href="/kills/"><img src="/images/home/placeholder_160x120.png" /></a>
-    </li>
-    <li class="col-md-3">
-        <a class="thumbnail" href="/battles/"><img src="/images/home/battlereports_260x120.png" /></a>
-    </li>
-    <li class="col-md-3">
-        <a class="thumbnail" href="/top/killer"><img src="/images/home/top12kills_260x120.png" /></a>
-    </li>
-    <li class="col-md-2">
-        <a class="thumbnail" href="/kills/"><img src="/images/home/placeholder_160x120.png" /></a>
-    </li>
-</ul>
+<div>
+    <div class="col-md-4">
+      <a href="/kills/"><img class="img-thumbnail" src="/images/home/kills_360x270.png" /></a>
+    </div>
+    <div class="col-md-3" style="padding-bottom: 20px">
+        <a href="/top/value"><img class="img-thumbnail" src="/images/home/top12isk_260x120.png" /></a>
+    </div>
+    <div class="col-md-3" style="padding-bottom: 20px">
+        <a href="/charts"><img class="img-thumbnail" src="/images/home/charts_260x120.png" /></a>
+    </div>
+    <div class="col-md-2" style="padding-bottom: 20px">
+        <a href="/kills/"><img class="img-thumbnail" src="/images/home/placeholder_160x120.png" /></a>
+    </div>
+    <div class="col-md-3">
+        <a href="/battles/"><img class="img-thumbnail" src="/images/home/battlereports_260x120.png" /></a>
+    </div>
+    <div class="col-md-3">
+        <a href="/top/killer"><img class="img-thumbnail" src="/images/home/top12kills_260x120.png" /></a>
+    </div>
+    <div class="col-md-2">
+        <a href="/kills/"><img class="img-thumbnail" src="/images/home/placeholder_160x120.png" /></a>
+    </div>
+</div>
 {% endblock %}

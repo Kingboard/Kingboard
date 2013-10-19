@@ -2,10 +2,10 @@
 
 {% block content %}
 <h1>Top 12 Kills by ISK Value</h1>
-<ul class="thumbnails">
+<div>
     {% for kill in data %}
-    <li class="col-md-3">
-        <div class="thumbnail">
+    <div class="col-md-3">
+        <div class="thumbnail" style="margin-bottom:20px;">
             <table>
                 <tr>
                     <td rowspan="2"><a href="/eveinfo/{{kill.victim.shipTypeID}}/" rel='twipsy' title='{{kill.victim.shipType}}'><img src="{{ images.ships }}{{ kill.victim.shipTypeID }}_128.png" width="128" height="128" /></a></td>
@@ -19,7 +19,7 @@
                 <a href="/kill/{{ kill.killID }}/">Details ..</a>
             </div>
         </div>
-    </li>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

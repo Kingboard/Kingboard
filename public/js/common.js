@@ -8,31 +8,21 @@ $(document).ready(function() {
     });
     $('.dropdown-toggle').dropdown();
 
-
-    $("#searchbox").typeahead({
-        source: function(typeahead, query){
-
-            //clear the old rate limiter
-            clearTimeout($('#typeahead').data('limiter'));
-
-            //wrap the ajax stuff into a closure
-            var ajax_request = function()
-            {
-                $.ajax({
-                    url: '/autocomplete/search/',
-                    type: 'GET',
-                    data: '/' + query,
-                    dataType: 'JSON',
-                    async: true,
-                    success: function(data){typeahead.process(data);}
-                });
+    $('#searchbox').typeahead(
+      {
+          name: 'search',
+          remote: '/autocomplete/search/%QUERY'
+      }
+    ).bind("typeahead:selected",
+            function() {
+                $('#search').submit();
             }
+    );
 
-            //start the new timer
-            $('#typeahead').data('limiter', setTimeout(ajax_request, 250));
-        },
-        onselect: function(obj) {
-            $('form[name="search"]').submit();
-        }
-   });
+    $('#searchbox').keypress(function (e) {
+      if (e.which == 13) {
+        $('#search').submit();
+        return false;
+      }
+    });
 });

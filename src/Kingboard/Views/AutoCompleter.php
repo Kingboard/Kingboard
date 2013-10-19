@@ -65,6 +65,7 @@ class AutoCompleter extends \Kingboard\Views\Base
 
     public function search(array $search)
     {
+        $result = array();
         $find = $search["text"];
 
         if (strlen($find) < 4) {

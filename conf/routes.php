@@ -65,7 +65,7 @@ $router->addRoute("/account/api/delete/", 'Kingboard\Views\User', 'delete', arra
 // autcompleters
 $router->addRoute("/autocomplete/solarsystem", 'Kingboard\Views\AutoCompleter', 'solarSystem');
 $router->addRoute("/autocomplete/region", 'Kingboard\Views\AutoCompleter', 'region');
-$router->addRoute("/autocomplete/search/?/", 'Kingboard\Views\AutoCompleter', "search", array("text"));
+$router->addRoute("/autocomplete/search/", 'Kingboard\Views\AutoCompleter', "search", array("text"));
 
 // battles
 $router->addRoute("/battles/", 'Kingboard\Views\Battle', "index", array("page"));

@@ -2,9 +2,9 @@
 
 {% block content %}
 <h1>Top 12 Losers by lost ship amounts</h1>
-<ul class="thumbnails">
+<div>
     {% for pilot in data %}
-    <li class="col-md-3">
+    <div class="col-md-3" style="margin-bottom: 20px;">
         <div class="thumbnail">
             <table>
                 <tr>
@@ -21,7 +21,7 @@
                 <a href="/details/pilot/{{ pilot.kills._id }}">Details ..</a>
             </div>
         </div>
-    </li>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}
