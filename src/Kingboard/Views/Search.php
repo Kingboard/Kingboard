@@ -13,7 +13,7 @@ class Search extends \Kingboard\Views\Base
         $results = null;
 
         if (isset($_POST['searchbox'])) {
-            if (strlen($_POST['searchbox']) <= 3) {
+            if (strlen($_POST['searchbox']) < 3) {
                 $context['searchbox_length_to_short'] = true;
             } else {
                 foreach (\Kingboard\Model\MapReduce\NameSearch::search($_POST['searchbox'], 50) as $result) {
