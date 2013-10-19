@@ -13,7 +13,7 @@
         <tr>
             <!-- page -->
             <td>{{ kill.killTime.sec|date("Y-m-d H:i:s") }}<br />
-            {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="badge badge-error">loss</span>{% elseif ownerID %}<span class="badge badge-success">kill</span>{% endif %}
+            {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="label label-danger">loss</span>{% elseif ownerID %}<span class="label label-success">kill</span>{% endif %}
             </td>
             <!-- /page -->
             <!-- shiptype -->
