@@ -4,17 +4,12 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8">
   <title>Kingboard: {{ Kingboard.Name }} / {% block title %}{% endblock %}</title>
   <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" media="screen" rel="stylesheet" type="text/css">
-  <link href="/css/themes/{{theme}}/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="/css/main.css" media="screen" rel="stylesheet" type="text/css" />
+
+  <link href="/assets/css/" media="screen" rel="stylesheet" type="text/css" />
   {% block style %}
 
   {% endblock %}
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/js/bootstrap-typeahead.js"></script>
-  <script type="text/javascript" src="/js/common.js"></script>
+  <script type="text/javascript" src="/assets/js/"></script>
   {% block script %}
   {% endblock %}
   {% if debugbar %}
@@ -22,44 +17,56 @@
   {% endif %}
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
+<div class="navbar-wrapper">
     <div class="container">
-        <a class="brand" href="/">{{ Kingboard.Name }}</a>
-        <ul class="nav">
-            <li><a href="/"><i class="icon-home icon-white"></i></a></li>
-            <li class="dropdown" id="mykingboard">
-                <a href="#mykingboard" class="dropdown-toggle" data-toggle="dropdown">My Kingboard<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="/account/"><i class="icon-user"></i> My Account</a></li>
-                    <li><a href="/battle/editor"><i class="icon-fire"></i> Battle Editor</a></li>
-                    {% if user %}
-                    <li class="divider"></li>
-                    <li><a href="/logout"><i class="icon-off"></i> Logout</a></li>
-                    {% endif %}
+    <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">{{ Kingboard.Name }}</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-header navbar-right">
+                <ul class="nav navbar-nav">
+                <li><a href="/information/"><i class="glyphicon glyphicon-info-sign icon-white"></i></a></li>
+                {% if user %}
+                    <li><a href="/logout"><i class="glyphicon glyphicon-off icon-white"></i></a></li>
+                {% else %}
+                    <li><a href="/login"><i class="glyphicon glyphicon-user icon-white"></i></a></li>
+                {% endif %}
                 </ul>
-            </li>
-            <li class="dropdown" id="rankings">
-                <a href="#ranking" class="dropdown-toggle" data-toggle="dropdown">Rankings<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a href="/top/value/"><i class="icon-list"></i> top 12 kills by ISK</a></li>
-                    <li><a href="/top/killers"><i class="icon-list"></i> top 12 killers by ship kills</a></li>
-                    <li><a href="/top/losers"><i class="icon-list"></i> top 12 losers by lost ship amount</a></li>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/"><i class="glyphicon glyphicon-home icon-white"></i></a></li>
+                    <li class="dropdown" id="mykingboard">
+                        <a href="#mykingboard" class="dropdown-toggle" data-toggle="dropdown">My Kingboard<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/account/"><i class="glyphicon glyphicon-user"></i> My Account</a></li>
+                            <li><a href="/battle/editor"><i class="glyphicon glyphicon-fire"></i> Battle Editor</a></li>
+                            {% if user %}
+                            <li class="divider"></li>
+                            <li><a href="/logout"><i class="glyphicon-off"></i> Logout</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="rankings">
+                        <a href="#ranking" class="dropdown-toggle" data-toggle="dropdown">Rankings<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/top/value/"><i class="glyphicon glyphicon-list"></i> top 12 kills by ISK</a></li>
+                            <li><a href="/top/killers"><i class="glyphicon glyphicon-list"></i> top 12 killers by ship kills</a></li>
+                            <li><a href="/top/losers"><i class="glyphicon glyphicon-list"></i> top 12 losers by lost ship amount</a></li>
+                        </ul>
+                    </li>
                 </ul>
-            </li>
-        </ul>
-        <form id="search" name="search" class="navbar-search pull-left" action="/search/" method="POST">
-            <input type="text" class="search-query" placeholder="Search" autocomplete="off" data-provide="typeahead" id="searchbox" name="searchbox">
-        </form>
-
-        <ul class="nav pull-right">
-            <li><a href="/information/"><i class="icon-info-sign icon-white"></i></a></li>
-            {% if user %}
-                <li><a href="/logout"><i class="icon-off icon-white"></i></a></li>
-            {% else %}
-                <li><a href="/login"><i class="icon-user icon-white"></i></a></li>
-            {% endif %}
-        </ul>
+                <form id="search" name="search" class="navbar-form navbar-left" role="search" action="/search/" method="POST">
+                    <div class="form-group"><input type="text" class="form-control" placeholder="Search" autocomplete="off" data-provide="typeahead" id="searchbox" name="searchbox"></div>
+                </form>
+            </div>
+        </div>
     </div>
     </div>
 </div>

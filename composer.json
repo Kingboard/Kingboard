@@ -7,7 +7,9 @@
         "king23/king23": "0.3.*",
         "kingboard/ccpdump": "dev-master",
         "michelf/php-markdown": "1.3",
-        "twbs/bootstrap": "3.0.0"
+        "twbs/bootstrap": "3.0.0",
+        "kriswallsmith/assetic": "1.1.2",
+        "frameworks/jquery": "1.10.2"
     },
     "require-dev": {
         "maximebf/debugbar": ">=1.0.0"

@@ -3,9 +3,9 @@
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 {% block header %}
 <h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} <small>{% if killdata.location.region %}<a href="http://evemaps.dotlan.net/map/{{ killdata.location.region }}" target="_blank">{{ killdata.location.region }}</a> / {% endif %} <a href="http://evemaps.dotlan.net/system/{{ killdata.location.solarSystem }}" target="_blank">{{ killdata.location.solarSystem }}</a> / {{ "%1.1f"|format(killdata.location.security) }}</small></h1>
-<div class="row-fluid">
-<div class="span12">
-    <div class="span4">
+<div class="row">
+<div class="col-md-12">
+    <div class="col-md-4">
         <table class="table condensed-table">
             <tr>
                 <th>Victim:</th>
@@ -37,7 +37,7 @@
             </tr>
         </table>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
         <table class="table condensed-table">
             <tbody>
                 <tr>
@@ -100,7 +100,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="overview">
                 <div class="row">
-                    <div class="span4">
+                    <div class="col-md-4">
                         <h3>Involved <small>Alliance(s) / Corp(s)</small></h3>
                         <table class="table well condensed-table zebra-striped">
                             {% for alliance, corporations, faction in stats %}
@@ -144,7 +144,7 @@
                             {% endfor %}
                         </table>
                     </div>
-                    <div class="span8">
+                    <div class="col-md-8">
                     <h3>Item(s) <small>Dropped / Destroyed</small></h3>
                     <table class="table condensed-table zebra-striped">
                         <thead>

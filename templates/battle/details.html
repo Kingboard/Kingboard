@@ -6,7 +6,7 @@
 <h2>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{ battleSetting.enddate.sec|date("Y-m-d H:i") }}</h2>
 
 <div class="row">
-    <div class="span3">
+    <div class="col-md-3">
         <h1>{{ info.characterName }}</h1>
         <a href="/details/pilot/{{battleSetting.ownerCharacter}}" rel='twipsy' title='{{battleSetting.ownerCharacterName}}'>
         <img src="{{ images.characters }}{{ battleSetting.ownerCharacter }}_64.jpg" width="64" height="64">
@@ -20,9 +20,9 @@
         </a>
         {% endif %}
     </div>
-    <div class="span9">
+    <div class="col-md-9">
         <div class="alert alert-info">
-            <i class="icon-info-sign icon-white"></i> This Battle was created using the standings of {{battleSetting.ownerCharacterName}} ({{battleSetting.ownerCorporationName}} / {{ battleSetting.ownerAllianceName }}). <br />Losses and Wins are set accordingly
+            <i class="glyphicon glyphicon-info-sign icon-white"></i> This Battle was created using the standings of {{battleSetting.ownerCharacterName}} ({{battleSetting.ownerCorporationName}} / {{ battleSetting.ownerAllianceName }}). <br />Losses and Wins are set accordingly
         </div>
     </div>
 </div>

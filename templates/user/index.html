@@ -18,7 +18,7 @@
     </thead>
     <tbody>
     {% for key in active_keys %}
-        <tr><td>{{ key.apiuserid }}</td><td>{{ key.type}}</td><td>{{key.chars}}</td><td><div align="center"><a class="btn btn-danger" href="/account/api/delete/{{XSRF}}/{{key.apiuserid}}/"><i class="icon-trash icon-white"></i></a></div></td></tr>
+        <tr><td>{{ key.apiuserid }}</td><td>{{ key.type}}</td><td>{{key.chars}}</td><td><div align="center"><a class="btn btn-danger" href="/account/api/delete/{{XSRF}}/{{key.apiuserid}}/"><i class="glyphicon glyphicon-trash icon-white"></i></a></div></td></tr>
     {% endfor %}
     </tbody>
 </table>
@@ -29,7 +29,7 @@
     <div class="alert alert-error"><p>{{ error }}</p></div>
 {% endif %}
     <div class="row">
-    <div class="span3">
+    <div class="col-md-3">
     <form action="/account/" method="post">
         <fieldset>
             <legend>Submit new key</legend>
@@ -51,9 +51,9 @@
         </div>
         </fieldset>
     </form>
-    </div><div class="span9">
+    </div><div class="col-md-9">
     <div class="alert alert-info">
-        <i class="icon-info-sign icon-white"></i> <b>About API keys!</b>
+        <i class="glyphicon glyphicon-info-sign icon-white"></i> <b>About API keys!</b>
         <br /><br /><p>Kingboard uses API keys to pull kills and standing information (to create battle reports).
         CCP has three different sorts of API keys you can create. </p>
         <ul>
@@ -68,7 +68,7 @@
         </ul>
         <p>If you don't have an API key with those permissions yet, you can use the Button below to create one.
             Keep in mind that killmails can only be pulled from one location per character, so don't use the same API key that you have used with another killboard.</p>
-        <a href="https://support.eveonline.com/api/Key/CreatePredefined/272" target="_blank" class="btn btn-success"><i class="icon-file icon-white"></i>create new API key</a>
+        <a href="https://support.eveonline.com/api/Key/CreatePredefined/272" target="_blank" class="btn btn-success"><i class="glyphicon glyphicon-file icon-white"></i>create new API key</a>
     </div></div>
     </div>
 </div>

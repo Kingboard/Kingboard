@@ -157,7 +157,8 @@ $reg->disqus = false;
 
 
 // include the routes configuration
-require_once("routes.php");
-
+require_once "routes.php";
+// require asset config
+require_once "assets.php";
 // start session
 session_start();

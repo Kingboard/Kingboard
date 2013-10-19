@@ -9,18 +9,18 @@
                 <h2>Total ships killed/lost</h2>
                 <div class="row">
                     {% for ship, values in totalstats %}
-                    <div class="span6">
+                    <div class="col-md-6">
                         <div class="row">
-                            <div class="span4">{{ ship }}</div>
-                            <div class="span2" style="text-align: right"><span class="badge badge-success">{{ values.kills }}</span> / <span class="badge badge-error">{{ values.losses }}</span></div>
+                            <div class="col-md-4">{{ ship }}</div>
+                            <div class="col-md-2" style="text-align: right"><span class="badge badge-success">{{ values.kills }}</span> / <span class="badge badge-error">{{ values.losses }}</span></div>
 
                         </div>
                     </div>
                     {% endfor %}
-                    <div class="span6">
+                    <div class="col-md-6">
                         <div class="row">
-                            <div class="span4"><strong>Total</strong></div>
-                            <div class="span2" style="text-align: right"><span class="badge badge-success">{{ killstats.value.total }}</span> / <span class="badge badge-error">{{ lossstats.value.total }}</span></div>
+                            <div class="col-md-4"><strong>Total</strong></div>
+                            <div class="col-md-2" style="text-align: right"><span class="badge badge-success">{{ killstats.value.total }}</span> / <span class="badge badge-error">{{ lossstats.value.total }}</span></div>
                         </div>
                     </div>
                 </div>

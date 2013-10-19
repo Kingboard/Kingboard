@@ -16,6 +16,11 @@ $router->addRoute("/top/loser", 'Kingboard\Views\Homepage', 'topLoser');
 // information
 $router->addRoute("/information", 'Kingboard\Views\Information', "index");
 
+// assetic
+$router->addRoute("/assets/js/", 'Kingboard\Views\Assetic', "js");
+$router->addRoute("/assets/css/", 'Kingboard\Views\Assetic', "css");
+$router->addRoute("/assets/fonts/", 'Kingboard\Views\Assetic', 'fonts', array('font'));
+
 // eve information
 $router->addRoute("/eveinfo/", 'Kingboard\Views\EveInfo', "eveItem", array('itemid'));
 
