@@ -29,7 +29,6 @@ class KillList
      */
     private $count;
 
-
     /**
      * @param string $ownerType
      * @param string $ownerID
@@ -47,10 +46,6 @@ class KillList
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByAlliance::getInstanceByAllianceId(
                     (int)$this->ownerID
                 );
-                /*$criteria = array('$or' => array(
-                    array('attackers.allianceID' => (int) $this->ownerID),
-                    array('victim.allianceID' => (int) $this->ownerID)
-                ));*/
                 $criteria = array("involvedAlliances" => (int)$this->ownerID);
                 break;
             case "faction":
@@ -60,10 +55,6 @@ class KillList
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByFaction::getInstanceByFactionId(
                     (int)$this->ownerID
                 );
-                /*$criteria = array('$or' => array(
-                    array('attackers.factionID' => (int)  $this->ownerID),
-                    array('victim.factionID' => (int)  $this->ownerID)
-                ));*/
                 $criteria = array("involvedFactions" => (int)$this->ownerID);
                 break;
             case "corp":
@@ -74,10 +65,6 @@ class KillList
                 $lossstats = \Kingboard\Model\MapReduce\LossesByShipByCorporation::getInstanceByCorporationId(
                     (int)$this->ownerID
                 );
-                /*$criteria = array('$or' => array(
-                    array('attackers.corporationID' => (int) $this->ownerID),
-                    array('victim.corporationID' => (int) $this->ownerID)
-                ));*/
                 $criteria = array("involvedCorporations" => (int)$this->ownerID);
                 break;
             case "char":
@@ -96,7 +83,6 @@ class KillList
                 // but can return
                 return;
         }
-
 
         $totalstats = array();
         $count = 0;
@@ -128,7 +114,6 @@ class KillList
         $this->totalstats = $totalstats;
         $this->criteria = $criteria;
         $this->count = $count;
-
     }
 
     /**
@@ -145,7 +130,8 @@ class KillList
         return $this->count;
     }
 
-    public function setCount($count) {
+    public function setCount($count)
+    {
         $this->count = $count;
     }
 

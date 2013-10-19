@@ -25,7 +25,7 @@ class Kill extends \Kingboard\Views\Base
             $stats = \Kingboard\Model\MapReduce\KillsByShip::find();
             $stats = $stats->sort(array("value.value" => -1));
             $total = 0;
-            foreach($stats as $stat) {
+            foreach ($stats as $stat) {
                 $total += $stat['value']['total'];
             }
             $killList->setCount($total);

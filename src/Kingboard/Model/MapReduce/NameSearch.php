@@ -64,11 +64,9 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
             });
         }";
 
-
         $reduce = "function(k, vals) {
             return vals[0]; // we only need the contents of the first hit for this key
         }";
-
 
         $tr = \Kingboard\Model\TaskRun::findByTaskType(__CLASS__);
         if (is_null($tr)) {

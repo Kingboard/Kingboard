@@ -23,7 +23,6 @@ class Battle extends \Kingboard\Views\Base
         // merge in pagination data
         $templateVars = array_merge($templateVars, $paginator->getNavArray());
 
-
         // battles
         $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()
             ->skip($paginator->getSkip())
@@ -31,7 +30,6 @@ class Battle extends \Kingboard\Views\Base
             ->sort(array('enddate' => -1));
 
         $templateVars['action'] = "/battles";
-
 
         return $this->render("battle/index.html", $templateVars);
     }
@@ -51,10 +49,6 @@ class Battle extends \Kingboard\Views\Base
 
         $battle = \Kingboard\Model\Battle::getByBattleSettings($battleSetting);
 
-
-        //var_dump($battleSetting);
-
-        //print_r($battle->data);
         $this->_context['battleSetting'] = $battleSetting;
         return $this->render("battle/details.html", $battle->data);
     }
