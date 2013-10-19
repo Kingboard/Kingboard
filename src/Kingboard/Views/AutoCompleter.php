@@ -18,7 +18,7 @@ class AutoCompleter extends \Kingboard\Views\Base
     {
         $output = array();
         $result = \Kingboard\Model\EveSolarSystem::find(
-            array('itemName' => new \MongoRegex('/^' . $_GET['term'] . '.*/i')),
+            array('itemName' => new \MongoRegex('/^' . $parameters['term'] . '.*/i')),
             array('itemName' => 1)
         )->limit(10);
         foreach ($result as $system) {
@@ -31,7 +31,7 @@ class AutoCompleter extends \Kingboard\Views\Base
     {
         $output = array();
         $result = \Kingboard\Model\EveRegion::find(
-            array('itemName' => new \MongoRegex('/^' . $_GET['term'] . '.*/i')),
+            array('itemName' => new \MongoRegex('/^' . $parameters['term'] . '.*/i')),
             array("itemName" => 1)
         )->limit(10);
         foreach ($result as $system) {

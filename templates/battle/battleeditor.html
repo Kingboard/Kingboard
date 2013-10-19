@@ -61,14 +61,22 @@
 
 
 {% block script %}
-<script type="text/javascript" src="/js/jquery.ui.datetimepicker.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $( "#system" ).autocomplete({
-            source: "/autocomplete/solarsystem"//,
+        $("#startdate").datetimepicker({
+            format: "yyyy-mm-dd hh:ii"
         });
-        $("#startdate").datetimepicker({ dateFormat: 'yy-mm-dd' });
-        $("#enddate").datetimepicker({ dateFormat: 'yy-mm-dd' });
+        $("#enddate").datetimepicker({
+            format: "yyyy-mm-dd hh:ii"
+        });
+
+        $('#system').typeahead(
+          {
+              name: 'system',
+              remote: '/autocomplete/solarsystem/%QUERY'
+          }
+        );
     });
+
 </script>
 {% endblock %}
