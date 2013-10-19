@@ -19,6 +19,8 @@ $router->addRoute("/information", 'Kingboard\Views\Information', "index");
 // eve information
 $router->addRoute("/eveinfo/", 'Kingboard\Views\EveInfo', "eveItem", array('itemid'));
 
+$router->addRoute("/day/", 'Kingboard\Views\Date', 'index');
+
 // url search
 $router->addRoute('/faction/name/', 'Kingboard\Views\Search', "nameFaction", array("factionname"));
 $router->addRoute("/pilot/name/", 'Kingboard\Views\Search', "namePilot", array('pilotname'));
