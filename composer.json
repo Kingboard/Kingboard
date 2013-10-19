@@ -3,10 +3,11 @@
     "description": "MongoDB / PHP based Killboard for EVE Online",
     "type": "library",
     "require": {
-        "3rdpartyeve/phealng": "0.3.0",
+        "3rdpartyeve/phealng": "0.3.1",
         "king23/king23": "0.3.*",
         "kingboard/ccpdump": "dev-master",
-        "michelf/php-markdown": "1.3"
+        "michelf/php-markdown": "1.3",
+        "twbs/bootstrap": "3.0.0"
     },
     "require-dev": {
         "maximebf/debugbar": ">=1.0.0"
