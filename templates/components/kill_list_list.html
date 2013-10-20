@@ -1,0 +1,59 @@
+<table class="table-bordered table-condensed table-striped col-md-12">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Ship</th>
+            <th colspan="2">Victim</th>
+            <th>Location</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>{% for kill in data %}
+        <tr>
+            <!-- page -->
+            <td>{{ kill.killTime.sec|date("Y-m-d H:i:s") }}<br />
+            {% if ownerID and ((ownerID == kill.victim.allianceID) or (ownerID == kill.victim.corporationID) or (ownerID == kill.victim.characterID)) %}<span class="label label-danger">loss</span>{% elseif ownerID %}<span class="label label-success">kill</span>{% endif %}
+            </td>
+            <!-- /page -->
+            <!-- shiptype -->
+            <td class="icon">
+                <a href="/eveinfo/{{kill.victim.shipTypeID}}/" rel='twipsy' title='{{kill.victim.shipType}}'>
+                    <img src="{{images.ships}}{{kill.victim.shipTypeID}}_32.png" alt="{{kill.victim.shipType}}">
+                </a>
+            </td>
+            <!--td class="ship">{{kill.victim.shipType }}</td-->
+            <!-- /shiptype -->
+
+            <!-- victim -->
+            <td class="icon">
+                <a href="/details/pilot/{{kill.victim.characterID}}/" rel='twipsy' title='{{kill.victim.characterName}}'>
+                    <img src="{{ images.characters }}{{kill.victim.characterID}}_32.jpg" alt="{{ kill.victim.characterName }}">
+                </a>
+            {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}
+                <a href="/details/faction/{{kill.victim.factionID}}/" rel='twipsy' title='{{kill.victim.factionName}}'>
+                <img src="{{images.alliances}}{{kill.victim.factionID}}_32.png" alt="{{kill.victim.factionName}}">
+                </a>
+            {% endif %}
+
+            {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}
+                <a href="/details/alliance/{{kill.victim.allianceID}}/" rel='twipsy' title='{{kill.victim.allianceName}}'>
+                <img src="{{ images.alliances }}{{kill.victim.allianceID}}_32.png" alt="{{kill.victim.allianceName}}">
+                </a>
+            {% endif %}
+                <a href="/details/corporation/{{kill.victim.corporationID}}/" rel='twipsy' title='{{kill.victim.corporationName}}'>
+                <img src="{{ images.corporations }}{{kill.victim.corporationID}}_32.png" alt="{{kill.victim.corporationName}}">
+                </a>
+            </td>
+
+            <td class="victim">
+                {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}<a href="/details/alliance/{{ kill.victim.allianceID }}/">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
+                {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}<a href="/details/faction/{{ kill.victim.factionID }}/">{{ kill.victim.factionName }}</a> <br /> {% endif %}
+                <a href="/details/corporation/{{ kill.victim.corporationID }}/">{{ kill.victim.corporationName }}</a>
+            </td>
+            <!-- /victim -->
+            <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|replace({" ":"_"}) }}" rel="external" target="new">{{ kill.location.region }}</a> / {% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|replace({" ": "-"}) }}" rel="external" target="new">{{ kill.location.solarSystem }}</a> ({{ "%1.1f"|format(kill.location.security) }})</td>
+            <td style="text-align: center"><a href="/kill/{{ kill.killID }}/">Details ..</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

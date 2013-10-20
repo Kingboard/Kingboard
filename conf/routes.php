@@ -24,7 +24,7 @@ $router->addRoute("/assets/fonts/", 'Kingboard\Views\Assetic', 'fonts', array('f
 // eve information
 $router->addRoute("/eveinfo/", 'Kingboard\Views\EveInfo', "eveItem", array('itemid'));
 
-$router->addRoute("/day/", 'Kingboard\Views\Date', 'index');
+$router->addRoute("/day/", 'Kingboard\Views\Date', 'index', array('date', 'page'));
 
 // url search
 $router->addRoute('/faction/name/', 'Kingboard\Views\Search', "nameFaction", array("factionname"));

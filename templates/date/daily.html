@@ -1,10 +1,75 @@
 {% extends "datedbase.html" %}
 
 {% block title %}Kingboard: {{ date }} {% endblock %}
-{% block header %}
-
-{% endblock %}
 
 {% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Daily Report</h3>
+            </div>
+            <div class="panel-body" style="text-align: center; height: 113px;">
+                For Date:<h3>{{ date }}</h3>
+                <br/>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Total Kills</h3>
+            </div>
+          <div class="panel-body" style="text-align: center; height: 113px;">
+              Ships + Pods
+            <h3>{{ kills|length }}</h3>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Most Valuable Loss</h3>
+            </div>
+            <div class="panel-body" style="text-align: center;">
+                <div class="row">
+                    <a href="/eveinfo/{{topValue.victim.shipTypeID}}/" rel='twipsy' title='{{topValue.victim.shipType}}'><img src="{{ images.ships }}{{ topValue.victim.shipTypeID }}_64.png" width="64" height="64" /></a>
+                    <a href="/details/pilot/{{topValue.victim.characterID}}/" rel='twipsy' title='{{topValue.victim.characterName}}'><img src="{{ images.characters }}{{topValue.victim.characterID}}_64.jpg" width="64" height="64" /></a>
+                </div>
+                <div class="row">
+                {{ topValue.totalISKValue|number_format(2, '.', ',') }} ISK
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Kills</h3>
+          </div>
+          <div class="panel-body">
+              {% set data = kills %}
+              {% include "components/kill_list_list.html" %}
+          </div>
+        </div>
+    </div>
+    {% set currentPage = 1 %}
+    {% if currentPage %}
+    <div class="col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Page</h3>
+            </div>
+          <div class="panel-body" style="text-align: center;">
+              <a href="{% if prev %}{{ action }}/{{ prev }}{% else %}#{% endif %}"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                {{ currentPage }} / {{ lastPage }}
+              <a href="{% if next %}{{ action }}/{{ next }}{% else %}#{% endif %}"><i class="glyphicon glyphicon-arrow-right"></i>
+          </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
