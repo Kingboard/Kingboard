@@ -1,6 +1,10 @@
 <?php
 namespace Kingboard\Views;
 
+use Kingboard\Lib\Paginator;
+use Kingboard\Model\Battle as BattleData;
+use Kingboard\Model\BattleSettings;
+
 class Battle extends \Kingboard\Views\Base
 {
     /**
@@ -16,15 +20,15 @@ class Battle extends \Kingboard\Views\Base
             $currentPage = ((int)$request['page'] < 1) ? 1 : (int)$request['page'];
         }
 
-        $count = \Kingboard\Model\BattleSettings::find()->count();
+        $count = BattleSettings::find()->count();
 
-        $paginator = new \Kingboard\Lib\Paginator($currentPage, $count);
+        $paginator = new Paginator($currentPage, $count);
 
         // merge in pagination data
         $templateVars = array_merge($templateVars, $paginator->getNavArray());
 
         // battles
-        $templateVars['reports'] = \Kingboard\Model\BattleSettings::find()
+        $templateVars['reports'] = BattleSettings::find()
             ->skip($paginator->getSkip())
             ->limit($paginator->getKillsPerPage())
             ->sort(array('enddate' => -1));
@@ -41,13 +45,13 @@ class Battle extends \Kingboard\Views\Base
      */
     public function show(array $parameters)
     {
-        $battleSetting = \Kingboard\Model\BattleSettings::getById($parameters['id']);
+        $battleSetting = BattleSettings::getById($parameters['id']);
 
         if (is_null($battleSetting)) {
             return $this->error("Battle with Id " . $parameters['id'] . " does not exist");
         }
 
-        $battle = \Kingboard\Model\Battle::getByBattleSettings($battleSetting);
+        $battle = BattleData::getByBattleSettings($battleSetting);
 
         $this->_context['battleSetting'] = $battleSetting;
         return $this->render("battle/details.html", $battle->data);

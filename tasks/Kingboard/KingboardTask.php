@@ -2,6 +2,7 @@
 namespace Kingboard;
 use King23\Core\Registry;
 use Kingboard\Lib\Parser\EveAPI;
+use Kingboard\Model\MapReduce\KillsByDay;
 
 class KingboardTask extends \King23\Tasks\King23Task
 {
@@ -100,8 +101,12 @@ class KingboardTask extends \King23\Tasks\King23Task
 
     }
 
+
+
+
     public function test(array $options)
     {
+        KillsByDay::mapReduce();
     }
 
 }

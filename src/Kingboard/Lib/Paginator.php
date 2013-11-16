@@ -1,6 +1,8 @@
 <?php
 namespace Kingboard\Lib;
 
+use King23\Core\Registry;
+
 /**
  *  class to simplify pagination
  */
@@ -35,7 +37,7 @@ class Paginator
      */
     public function getKillsPerPage()
     {
-        return \King23\Core\Registry::getInstance()->killListConfig["perPage"];
+        return Registry::getInstance()->killListConfig["perPage"];
     }
 
     /**

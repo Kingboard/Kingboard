@@ -1,5 +1,17 @@
 <?php
 namespace Kingboard;
+
+use Kingboard\Model\MapReduce\KillsByShip;
+use Kingboard\Model\MapReduce\KillsByShipByAlliance;
+use Kingboard\Model\MapReduce\KillsByShipByCorporation;
+use Kingboard\Model\MapReduce\KillsByShipByFaction;
+use Kingboard\Model\MapReduce\KillsByShipByPilot;
+use Kingboard\Model\MapReduce\LossesByShipByAlliance;
+use Kingboard\Model\MapReduce\LossesByShipByCorporation;
+use Kingboard\Model\MapReduce\LossesByShipByFaction;
+use Kingboard\Model\MapReduce\LossesByShipByPilot;
+use Kingboard\Model\MapReduce\NameSearch;
+
 /**
  * This class contains all Kingboard Tasks that need to be
  * run on a regulary basis.
@@ -33,44 +45,48 @@ class KingboardCronTask extends \King23\Tasks\King23Task
 
         $this->cli->message('updating Kills by Shiptype');
         // stats table of how often all ships have been killed
-        \Kingboard\Model\MapReduce\KillsByShip::mapReduce();
+        KillsByShip::mapReduce();
         $this->cli->positive('update of KillsByShip stats completed');
 
         $this->cli->message('updating pilot loss stats');
-        \Kingboard\Model\MapReduce\LossesByShipByPilot::mapReduce();
+        LossesByShipByPilot::mapReduce();
         $this->cli->positive('update of pilot loss stats completed');
 
         $this->cli->message('updating pilot kill stats');
-        \Kingboard\Model\MapReduce\KillsByShipByPilot::mapReduce();
+        KillsByShipByPilot::mapReduce();
         $this->cli->positive('update of pilot kill stats completed');
 
         $this->cli->message('updating corporation loss stats');
-        \Kingboard\Model\MapReduce\LossesByShipByCorporation::mapReduce();
+        LossesByShipByCorporation::mapReduce();
         $this->cli->positive('update of corporation loss stats completed');
 
         $this->cli->message('updating corporation kill stats');
-        \Kingboard\Model\MapReduce\KillsByShipByCorporation::mapReduce();
+        KillsByShipByCorporation::mapReduce();
         $this->cli->positive('update of corporation kill stats completed');
 
         $this->cli->message('updating alliance loss stats');
-        \Kingboard\Model\MapReduce\LossesByShipByAlliance::mapReduce();
+        LossesByShipByAlliance::mapReduce();
         $this->cli->positive('update of alliance loss stats completed');
 
         $this->cli->message('updating alliance kill stats');
-        \Kingboard\Model\MapReduce\KillsByShipByAlliance::mapReduce();
+        KillsByShipByAlliance::mapReduce();
         $this->cli->positive('update of alliance kill stats completed');
 
         $this->cli->message('updating faction loss stats');
-        \Kingboard\Model\MapReduce\LossesByShipByFaction::mapReduce();
+        LossesByShipByFaction::mapReduce();
         $this->cli->positive('update of faction loss stats completed');
 
         $this->cli->message('updating faction kill stats');
-        \Kingboard\Model\MapReduce\KillsByShipByFaction::mapReduce();
+        KillsByShipByFaction::mapReduce();
         $this->cli->positive('update of faction kill stats completed');
 
         $this->cli->message('updating name lists for search');
-        \Kingboard\Model\MapReduce\NameSearch::mapReduce();
+        NameSearch::mapReduce();
         $this->cli->positive("name list updated");
+
+        $this->cli->message('updating daily stats');
+        KillsByDay::mapReduce();
+        $this->cli->positive("daily stats updated");
     }
 
     /**
