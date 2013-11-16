@@ -17,7 +17,7 @@ class Battle extends \King23\Mongo\MongoObject
 
     public static function getByBattleSettings(\Kingboard\Model\BattleSettings $battleSetting)
     {
-        $battle = Battle::getInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
+        $battle = Battle::doGetInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
         if (is_null($battle) || time() > $battle->updated->sec + 1) {
             if (is_null($battle)) {
                 $battle = new Battle();
