@@ -93,12 +93,8 @@ class KingboardTask extends \King23\Tasks\King23Task
                     "prefetch-count" => 1
                 ));
                 $this->cli->message("retrying");
-
             }
-
         }
-
-
     }
 
 

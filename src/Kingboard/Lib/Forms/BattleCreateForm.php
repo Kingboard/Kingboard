@@ -76,9 +76,9 @@ class BattleCreateForm extends \Kingboard\Lib\Form
         }
 
         // no more than 3 days allowed
-        if (($endDate - $startDate) > 259200) {
-            return false;
-        }
+        //if (($endDate - $startDate) > 259200) {
+        //    return false;
+        //}
 
         $this->startTime = $startDate;
         $this->endTime = $endDate;

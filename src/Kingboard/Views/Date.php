@@ -19,6 +19,18 @@ class Date extends Base
             $context["date"] = $params['date'];
         }
 
+        // get previous day
+        $dt = new DateTime($context['date']);
+        $context["previousDate"] = date("Y-m-d", $dt->sub(new \DateInterval("P1D"))->getTimestamp());
+
+        $dt = new DateTime($context['date']);
+        $ts = $dt->add(new \DateInterval("P1D"))->getTimestamp();
+        if ($ts < time()) {
+            $context["nextDate"] = date("Y-m-d", $ts);
+        } else {
+            $context["nextDate"] = date("Y-m-d");
+        }
+
 
         if (!isset($params['page']) || empty($params['page'])) {
             $page = 1;
@@ -27,7 +39,7 @@ class Date extends Base
         }
 
         // reset date
-        $dt = new DateTime($context['date'], new \DateTimeZone("UTC"));
+        $dt = new DateTime($context['date']);
         $mdt = new MongoDate($dt->getTimestamp());
 
         $stats = KillsByDay::findOne($mdt);
@@ -47,20 +59,10 @@ class Date extends Base
         ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
 
         $context['kills'] = $kills;
-
-        // reset date
-        $dt = new DateTime($context['date']);
-        $context['topValue']= Kill::find(array(
-            '$and' => array(
-                array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
-                array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())))
-            )
-        ))->sort(array("totalISKValue" => -1))->limit(1);
-
-        $context['topValue']->next();
-        $context['topValue'] = $context['topValue']->current();
-
         $context['action'] = "/day/" . $context['date'];
         $this->render("date/daily.html", $context);
+
+
+
     }
 }

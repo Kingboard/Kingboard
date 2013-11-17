@@ -10,8 +10,9 @@
                 <h3 class="panel-title">Daily Report</h3>
             </div>
             <div class="panel-body" style="text-align: center; height: 113px;">
-                For Date:<h3>{{ date }}</h3>
-                <br/>
+                <h3>{{ date }}</h3>
+                <a href="/day/{{ previousDate}}/"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                <a href="/day/{{ nextDate}}/"><i class="glyphicon glyphicon-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -33,11 +34,11 @@
             </div>
             <div class="panel-body" style="text-align: center;">
                 <div class="row">
-                    <a href="/eveinfo/{{topValue.victim.shipTypeID}}/" rel='twipsy' title='{{topValue.victim.shipType}}'><img src="{{ images.ships }}{{ topValue.victim.shipTypeID }}_64.png" width="64" height="64" /></a>
-                    <a href="/details/pilot/{{topValue.victim.characterID}}/" rel='twipsy' title='{{topValue.victim.characterName}}'><img src="{{ images.characters }}{{topValue.victim.characterID}}_64.jpg" width="64" height="64" /></a>
+                    <a href="/eveinfo/{{stats.topValue.victim.shipTypeID}}/" rel='twipsy' title='{{stats.topValue.victim.shipType}}'><img src="{{ images.ships }}{{ stats.topValue.victim.shipTypeID }}_64.png" width="64" height="64" /></a>
+                    <a href="/details/pilot/{{stats.topValue.victim.characterID}}/" rel='twipsy' title='{{stats.topValue.victim.characterName}}'><img src="{{ images.characters }}{{stats.topValue.victim.characterID}}_64.jpg" width="64" height="64" /></a>
                 </div>
                 <div class="row">
-                {{ topValue.totalISKValue|number_format(2, '.', ',') }} ISK
+                {{ stats.topValue.totalISKValue|number_format(2, '.', ',') }} ISK
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ use Kingboard\Lib\Paginator;
 use Kingboard\Model\Battle as BattleData;
 use Kingboard\Model\BattleSettings;
 
-class Battle extends \Kingboard\Views\Base
+class Battle extends Base
 {
     /**
      * display a list of battles
