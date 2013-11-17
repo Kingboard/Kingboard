@@ -10,7 +10,8 @@
         "twbs/bootstrap": "3.0.0",
         "kriswallsmith/assetic": "1.1.2",
         "frameworks/jquery": "1.10.2",
-        "twitter/typeahead.js": "dev-master"
+        "twitter/typeahead.js": "dev-master",
+        "twig/extensions": "*"
     },
     "require-dev": {
         "maximebf/debugbar": ">=1.0.0"
