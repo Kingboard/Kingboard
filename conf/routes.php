@@ -8,8 +8,8 @@ $router =  \King23\Core\Router::getInstance();
 $router->setBaseHost(\King23\Core\Registry::getInstance()->baseHost);
 
 // home
-//$router->addRoute("/", 'Kingboard\Views\Homepage', "newIndex", array());
-$router->addRoute("/", 'Kingboard\Views\Date', 'index', array('date', 'page'));
+$router->addRoute("/", 'Kingboard\Views\Homepage', "newIndex", array());
+//$router->addRoute("/", 'Kingboard\Views\Date', 'index', array('date', 'page'));
 $router->addRoute("/top/value", 'Kingboard\Views\Homepage', 'topValue');
 $router->addRoute("/top/killer", 'Kingboard\Views\Homepage', 'topKiller');
 $router->addRoute("/top/loser", 'Kingboard\Views\Homepage', 'topLoser');
