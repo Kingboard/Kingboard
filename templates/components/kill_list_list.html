@@ -51,8 +51,8 @@
                 {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}<a href="/details/faction/{{ kill.victim.factionID }}/">{{ kill.victim.factionName }}</a> <br /> {% endif %}
                 -->
                 <a href="/details/faction/{{ kill.victim.characterID }}/">{{ kill.victim.characterName }}</a> <br />
-                <a href="/details/corporation/{{ kill.victim.corporationID }}/">{{ kill.victim.corporationName }}</a>
-                {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %} / <a href="/details/alliance/{{ kill.victim.allianceID }}/">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
+                <a href="/details/corporation/{{ kill.victim.corporationID }}/">{{ kill.victim.corporationName|truncate(20) }}</a>
+                {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %} / <a href="/details/alliance/{{ kill.victim.allianceID }}/">{{ kill.victim.allianceName|truncate(20) }}</a> <br /> {% endif %}
             </td>
             <!-- /victim -->
             <td>{% if kill.location.region %}<a href="http://evemaps.dotlan.net/map/{{ kill.location.region|replace({" ":"_"}) }}" rel="external" target="new">{{ kill.location.region }}</a><br />{% endif %}<a href="http://evemaps.dotlan.net/system/{{ kill.location.solarSystem|replace({" ": "-"}) }}" rel="external" target="new">{{ kill.location.solarSystem }}</a> ({{ "%1.1f"|format(kill.location.security) }})</td>

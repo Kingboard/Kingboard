@@ -60,6 +60,7 @@ $reg->twig = new Twig_Environment(new Twig_Loader_Filesystem(APP_PATH ."/templat
     "cache" => APP_PATH . "/cache/templates_c", // we use a sub directory of our cachedir here
     "debug" => false // debug mode
 ));
+$reg->twig->addExtension(new \Twig_Extensions_Extension_Text());
 
 // since images are not included with Kingboard but use CCP's image servers
 // in most cases you will want to keep this this way.

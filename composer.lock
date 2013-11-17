@@ -75,16 +75,16 @@
         },
         {
             "name": "king23/king23",
-            "version": "0.3.1",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ppetermann/king23.git",
-                "reference": "0129433d047e2adc420dbf190eac6ba32b45e442"
+                "reference": "e702cb23e24bdf1b69f8b9b81f1c3b67d730009c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ppetermann/king23/zipball/0129433d047e2adc420dbf190eac6ba32b45e442",
-                "reference": "0129433d047e2adc420dbf190eac6ba32b45e442",
+                "url": "https://api.github.com/repos/ppetermann/king23/zipball/e702cb23e24bdf1b69f8b9b81f1c3b67d730009c",
+                "reference": "e702cb23e24bdf1b69f8b9b81f1c3b67d730009c",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.3.1-dev"
+                    "dev-master": "0.3.2-dev"
                 }
             },
             "autoload": {
@@ -125,7 +125,7 @@
                 "framework",
                 "king23"
             ],
-            "time": "2013-10-13 18:36:17"
+            "time": "2013-11-17 14:34:29"
         },
         {
             "name": "kingboard/ccpdump",
