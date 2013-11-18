@@ -11,6 +11,7 @@ use Kingboard\Model\MapReduce\LossesByShipByCorporation;
 use Kingboard\Model\MapReduce\LossesByShipByFaction;
 use Kingboard\Model\MapReduce\LossesByShipByPilot;
 use Kingboard\Model\MapReduce\NameSearch;
+use Kingboard\Model\MapReduce\KillsByDay;
 
 /**
  * This class contains all Kingboard Tasks that need to be
