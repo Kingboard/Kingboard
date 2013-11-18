@@ -75,16 +75,18 @@
     <div class="top-banner" style="background-image:url('{{header_image}}');">
         &nbsp;
     </div>
-    <div class="">
+    <div id="content-container">
+        <div class="header" id="headbar">
+
+        </div>
     {% block header %}
     {% endblock %}
     {% block content %}Default Content{% endblock %}
+        <div class="footer" id="footer">
+            This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard</a> {{ Kingboard.Version }} ({{ Kingboard.ReleaseName }}).
+        </div>
     </div>
-</div>
-<div class="container" id="footer">
-    <div class="footer">
-        This killboard is running on <a href="https://github.com/ppetermann/Kingboard">Kingboard</a> {{ Kingboard.Version }} ({{ Kingboard.ReleaseName }}).
-    </div>
+
 </div>
 {% if debugbar %}{{ debugbar|raw }}{% endif %}
 </body>

@@ -6,6 +6,7 @@ $assets['fonts'] = array();
 
 // css files
 $assets['css'][] = APP_PATH . "/vendor/twbs/bootstrap/dist/css/bootstrap.css";
+$assets['css'][] = APP_PATH . "/public/css/bootstrap_theme.css";
 $assets['css'][] = APP_PATH . "/public/css/main.css";
 $assets['css'][] = APP_PATH . "/public/css/datetimepicker.css";
 

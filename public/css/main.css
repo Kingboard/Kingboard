@@ -2,6 +2,16 @@ html, body {
 }
 body {
     padding-top: 40px;
+    background-color:#000000;
+    background-image:url("/images/background/SOE_frigate_1920x1080.jpg");
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    background-attachment:fixed;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.myBackground.jpg',sizingMethod='scale');
+    -ms-filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(src='myBackground.jpg', sizingMethod='scale')";
+
 }
 .top-banner{
     height: 140px;
@@ -18,9 +28,19 @@ body {
     margin-bottom: 20px;
 }
 
-#footer {
-    text-align: center;
+#content-container {
+    background-color: rgba(0, 0, 0, 0.75);
 }
+
+#footer, #headbar {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #0F0F0F;
+}
+
+
 
 .item-attributes {
 /*    background-color: #eee;*/
