@@ -1,35 +1,46 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Register as a new User</h1>
-{% if registration_failed %}
-<div class="alert alert-danger">Please use a valid email address and make sure the passwords match</div>
-{% endif %}
-        <form name="registration" method="post" action="/user/registration">
-            <fieldset>
-                <input type="hidden" name="XSRF" value="{{ XSRF }}">
-                <legend>User Information</legend>
-                <div class="clearfix">
-                    <label for="login">email/login</label>
-                    <div class="input">
-                        <input id="login" name="login" type="email" placeholder="email/login" value="{{ login }}">
-                    </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Register as a new User</h3>
+            </div>
+            <div class="panel-body">
+                {% if registration_failed %}
+                <div class="alert alert-danger">Please use a valid email address and make sure the passwords match</div>
+                {% endif %}
+                        <form name="registration" method="post" action="/user/registration">
+                            <fieldset>
+                                <input type="hidden" name="XSRF" value="{{ XSRF }}">
+                                <legend>User Information</legend>
+                                <div class="clearfix">
+                                    <label for="login">email/login</label>
+                                    <div class="input">
+                                        <input id="login" name="login" type="email" placeholder="email/login" value="{{ login }}">
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <label for="passwd">password</label>
+                                    <div class="input">
+                                        <input id="passwd" name="passwd" type="password" placeholder="password" value="{{ passwd }}">
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <label for="passwd">password confirmation</label>
+                                    <div class="input">
+                                        <input id="passwdc" name="passwd2" type="password" placeholder="password confirmation" value="{{ passwd2 }}">
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <input type="submit" value="Register" class="btn primary" />
+                                </div>
+                            </fieldset>
+                        </form>
                 </div>
-                <div class="clearfix">
-                    <label for="passwd">password</label>
-                    <div class="input">
-                        <input id="passwd" name="passwd" type="password" placeholder="password" value="{{ passwd }}">
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <label for="passwd">password confirmation</label>
-                    <div class="input">
-                        <input id="passwdc" name="passwd2" type="password" placeholder="password confirmation" value="{{ passwd2 }}">
-                    </div>
-                </div>
-                <div class="actions">
-                    <input type="submit" value="Register" class="btn primary" />
-                </div>
-            </fieldset>
-        </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

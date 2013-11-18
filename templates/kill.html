@@ -2,262 +2,432 @@
 
 {% block title %}Kingboard: {{killdata.killID}}{% endblock %}
 {% block header %}
-<h1>{{ killdata.killTime.sec|date("Y-m-d H:i:s") }} <small>{% if killdata.location.region %}<a href="http://evemaps.dotlan.net/map/{{ killdata.location.region }}" target="_blank">{{ killdata.location.region }}</a> / {% endif %} <a href="http://evemaps.dotlan.net/system/{{ killdata.location.solarSystem }}" target="_blank">{{ killdata.location.solarSystem }}</a> / {{ "%1.1f"|format(killdata.location.security) }}</small></h1>
 <div class="row">
-<div class="col-md-12">
-    <div class="col-md-4">
-        <table class="table condensed-table">
-            <tr>
-                <th>Victim:</th>
-                <td><a href="/details/pilot/{{ killdata.victim.characterID }}">{{ killdata.victim.characterName }}</a></td>
-            </tr>
-            <tr>
-                <th>Corporation:</th>
-                <td><a href="/details/corporation/{{killdata.victim.corporationID}}">{{ killdata.victim.corporationName }}</a></td>
-            </tr>
-            {% if killdata.victim.factionName %}
-                <tr>
-                    <th>Faction:</th>
-                    <td><a href="/details/faction/{{killdata.victim.factionID}}">{{ killdata.victim.factionName }}</a></td>
-                </tr>
-            {% endif %}
-            {% if killdata.victim.allianceName %}
-                <tr>
-                    <th>Alliance:</th>
-                    <td><a href="/details/alliance/{{killdata.victim.allianceID}}">{{ killdata.victim.allianceName }}</a></td>
-                </tr>
-            {% endif %}
-            <tr>
-                <th>Ship:</th>
-                <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{ killdata.victim.shipType }}</a></td>
-            </tr>
-            <tr>
-                <th>Damage Taken:</th>
-                <td><a href="#">{{ killdata.victim.damageTaken }}</a></td>
-            </tr>
-        </table>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ killdata.killTime.sec|date("Y-m-d H:i:s") }}
+                <small>{% if killdata.location.region %}<a
+                        href="http://evemaps.dotlan.net/map/{{ killdata.location.region }}"
+                        target="_blank">{{ killdata.location.region }}</a> / {% endif %} <a
+                        href="http://evemaps.dotlan.net/system/{{ killdata.location.solarSystem }}" target="_blank">{{
+                    killdata.location.solarSystem }}</a> / {{ "%1.1f"|format(killdata.location.security) }}
+                </small></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <table class="table condensed-table">
+                                <tr>
+                                    <th>Victim:</th>
+                                    <td><a href="/details/pilot/{{ killdata.victim.characterID }}">{{
+                                        killdata.victim.characterName
+                                        }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Corporation:</th>
+                                    <td><a href="/details/corporation/{{killdata.victim.corporationID}}">{{
+                                        killdata.victim.corporationName }}</a></td>
+                                </tr>
+                                {% if killdata.victim.factionName %}
+                                <tr>
+                                    <th>Faction:</th>
+                                    <td><a href="/details/faction/{{killdata.victim.factionID}}">{{
+                                        killdata.victim.factionName }}</a>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                {% if killdata.victim.allianceName %}
+                                <tr>
+                                    <th>Alliance:</th>
+                                    <td><a href="/details/alliance/{{killdata.victim.allianceID}}">{{
+                                        killdata.victim.allianceName
+                                        }}</a></td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <th>Ship:</th>
+                                    <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{ killdata.victim.shipType
+                                        }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>Damage Taken:</th>
+                                    <td><a href="#">{{ killdata.victim.damageTaken }}</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table condensed-table">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel="twipsy"
+                                           title="{{killdata.victim.shipType}}">
+                                            <img src="{{ images.ships }}{{killdata.victim.shipTypeID}}_128.png"
+                                                 width="123"
+                                                 height="123">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/details/pilot/{{killdata.victim.characterID}}" rel="twipsy"
+                                           title="{{killdata.victim.characterName}}">
+                                            <img src="{{ images.characters }}{{killdata.victim.characterID}}_128.jpg"
+                                                 width="123"
+                                                 height="123">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/details/corporation/{{killdata.victim.corporationID}}" rel="twipsy"
+                                           title="{{killdata.victim.corporationName}}">
+                                            <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png"
+                                                 width="123"
+                                                 height="123">
+                                        </a>
+                                    </td>
+                                    {% if killdata.victim.allianceID != 0 %}
+                                    <td>
+                                        <a href="/details/alliance/{{killdata.victim.allianceID}}" rel="twipsy"
+                                           title="{{killdata.victim.allianceName}}">
+                                            <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png"
+                                                 width="123"
+                                                 height="123">
+                                        </a>
+                                    </td>
+                                    {% endif %}
+                                    {% if killdata.victim.factionID != 0 %}
+                                    <td>
+                                        <a href="/details/faction/{{killdata.victim.factionID}}" rel="twipsy"
+                                           title="{{killdata.victim.factionName}}">
+                                            <img src="{{ images.alliances }}{{killdata.victim.factionID}}_128.png"
+                                                 width="123"
+                                                 height="123">
+                                        </a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <th>ISK Lost:</th>
+                                    <td>{{ killdata.totalISKValue|number_format(2, '.', ',') }} isk</td>
+                                    <th>ISK Dropped:</th>
+                                    <td>{{ killdata.totalISKDropped|number_format(2, '.', ',') }} isk</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <table class="table condensed-table">
-            <tbody>
-                <tr>
-                    <td>
-                        <a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel="twipsy" title="{{killdata.victim.shipType}}">
-                            <img src="{{ images.ships }}{{killdata.victim.shipTypeID}}_128.png" width="123" height="123">
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/details/pilot/{{killdata.victim.characterID}}" rel="twipsy" title="{{killdata.victim.characterName}}">
-                            <img src="{{ images.characters }}{{killdata.victim.characterID}}_128.jpg" width="123" height="123">
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/details/corporation/{{killdata.victim.corporationID}}" rel="twipsy" title="{{killdata.victim.corporationName}}">
-                            <img src="{{ images.corporations}}{{killdata.victim.corporationID}}_128.png" width="123" height="123">
-                        </a>
-                    </td>
-                    {% if killdata.victim.allianceID != 0 %}
-                        <td>
-                            <a href="/details/alliance/{{killdata.victim.allianceID}}" rel="twipsy" title="{{killdata.victim.allianceName}}">
-                                <img src="{{ images.alliances }}{{killdata.victim.allianceID}}_128.png" width="123" height="123">
-                            </a>
-                        </td>
-                    {% endif %}
-                    {% if killdata.victim.factionID != 0 %}
-                        <td>
-                            <a href="/details/faction/{{killdata.victim.factionID}}" rel="twipsy" title="{{killdata.victim.factionName}}">
-                                <img src="{{ images.alliances }}{{killdata.victim.factionID}}_128.png" width="123" height="123">
-                            </a>
-                        </td>
-                    {% endif %}
-                </tr>
-                <tr>
-                <th>ISK Lost:</th>
-                <td>{{ killdata.totalISKValue|number_format(2, '.', ',') }} isk</td>
-                <th>ISK Dropped:</th>
-                <td>{{ killdata.totalISKDropped|number_format(2, '.', ',') }} isk</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
+<div class="row">
+<div class="col-md-12">
+<div class="panel panel-default">
+<div class="panel-body">
 <div class="tabbable">
-    <ul class="nav nav-pills pull-left">
-        <li class="active"><a href="#overview" data-toggle="tab">Quick Overview</a></li>
-        <li><a href="#involved-pilots" data-toggle="tab">Involved Pilots</a></li>
-        {% if disqus %}
-        <li><a href="#comments" data-toggle="tab" data-disqus-identifier="{{ killdata.killID }}">Comments</a></li>
-        {% endif %}
-        <li><a href="#fittings" data-toggle="tab">Fittings</a></li>
-    </ul>
-    <div class="page-header">
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane active" id="overview">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3>Involved <small>Alliance(s) / Corp(s)</small></h3>
-                        <table class="table well condensed-table zebra-striped">
-                            {% for alliance, corporations, faction in stats %}
-                                <thead>
-                                    <tr class="titles">
-                                        <th><strong>{% if alliance != "None" %}<a href="/alliance/name/{{ alliance|url_encode }}/">{{ alliance }}</a>{% elseif faction %}<a href="/faction/name/{{ faction|url_encode }}/">{{ faction }}</a>{% else %}"Corporation"{% endif %}</strong></th>
-                                        <th> <div align="center">Pilots</div></th>
-                                    </tr>
-                                </thead>
-                                {% for corporation, value in corporations|sort|reverse %}
-                                    <tr><td class="corporation"> &nbsp; &nbsp; <a href="/corporation/name/{{ corporation|url_encode }}/">{{ corporation }}</a></td><td class="count"><div align="center">{{ value }}</div></td></tr>
-                                {% endfor %}
-                            {% endfor %}
-                        </table>
-                        <h3>Involved <small>Pilot(s)</small></h3>
-                        <table class="table well condensed-table zebra-striped">
-                            <thead>
-                                <tr class="titles">
-                                    <th>Attacker</th><th>Ship / Weapon</th><th>Damage</th>
-                                </tr>
-                            </thead>
-                            {% for attacker in killdata.attackers %}
-                                <tr class="attacker">
-                                    <td class="pilotinfo">
-                                        <a href="/details/pilot/{{ attacker.characterID }}">
-                                        {% if attacker.finalBlow == true %}
-                                            <strong>{{ attacker.characterName }}</strong>
-                                        {% else %}
-                                            {{ attacker.characterName }}
-                                        {% endif %}
-                                        </a>
-                                    </td>
-                                    <td class="icons">
-                                        <div align="center">
-                                            <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'><img src="{{ images.ships }}{{attacker.shipTypeID}}_32.png" width="32" height="32"></a>
-                                            <a href="/eveinfo/{{attacker.weaponTypeID}}" rel='twipsy' title='{{attacker.weaponType}}'><img src="{{ images.items }}{{attacker.weaponTypeID}}_32.png" width="32" height="32"></a>
-                                        </div>
-                                    </td>
-                                    <td class="damage"><div align="center">{{ attacker.damageDone }}</div></td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    <div class="col-md-8">
-                    <h3>Item(s) <small>Dropped / Destroyed</small></h3>
-                    <table class="table condensed-table zebra-striped">
-                        <thead>
-                            <tr class="titles">
-                                <th>&nbsp;</th>
-                                <th>Item Type</th>
-                                <th>Dropped</th>
-                                <th>Destroyed</th>
-                                <th><div align="right">Price</div></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in killdata.items %}
-                                <tr>
-                                    <td class="icons"><div align="center"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a></div></td>
-                                    <td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
-                                    <td class="dropped"><div align="center">{{ item.qtyDropped }}</div></td>
-                                    <td class="destroyed"><div align="center">{{ item.qtyDestroyed }}</div></td>
-                                    <td class="price"><div align="right">{{ item.iskValue|number_format(2, '.', ',') }} isk</div></td>
-                                </tr>
-                                {% if item.items %}
-                                    {% for containeritem in item.items %}
-                                        <tr>
-                                            <td class="icons"><div align="center"><a href="/eveinfo/{{item.typeID}}" rel='twipsy' title='{{item.typeName}}'><img src="{{ images.items }}{{ item.typeID }}_32.png" width="32" height="32"></a><a href="/eveinfo/{{containeritem.typeID}}" rel='twipsy' title='{{containeritem.typeName}}'><img src="{{ images.items }}{{ containeritem.typeID }}_32.png" width="32" height="32"></a></div></td>
-                                            <td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a></td>
-                                            <td class="dropped"><div align="center">{{ containeritem.qtyDropped }}</div></td>
-                                            <td class="destroyed"><div align="center">{{ containeritem.qtyDestroyed }}</div></td>
-                                            <td class="price"><div align="right">{{ containeritem.iskValue|number_format(2, '.', ',') }} isk</div></td>
-                                        </tr>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                            <tr>
-                                <td class="icons"><div align="center"><a href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy' title='{{killdata.victim.shipType}}'><img src="{{ images.items }}{{ killdata.victim.shipTypeID }}_32.png" width="32" height="32"></a></div></td>
-                                <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{killdata.victim.shipType}}</a></td>
-                                <td class="dropped"><div align="center">0</div></td>
-                                <td class="destroyed"><div align="center">1</div></td>
-                                <td class="price"><div align="right">{{ killdata.victim.iskValue|number_format(2, '.', ',') }} isk</div></td>     
-                            </tr>
-                            <tr>
-                                <td><strong>Totals:</strong></td><td></td>
-                                <td class="totaldropped"><div align="center">{{ killdata.totalDropped }}</div></td>
-                                <td class="totaldestroyed"><div align="center">{{ killdata.totalDestroyed }}</div></td>
-                                <td class="totalprice"><div align="right">{{ killdata.totalISKValue|number_format(2, '.', ',')}} isk</div></td>
-                            <tr>
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-            </div>
-            <div id="involved-pilots" class="tab-pane">
-                <table class="table condensed-table zebra-striped">
-                    <thead>
-                    <tr class="titles">
-                        <th>&nbsp;</th><th>Attacker</th><th>Equipment</th><th>Damage</th>
-                    </tr>
-                    </thead>
-                    {% for attacker in killdata.attackers %}
-                    <tr class="attacker">
-                        <td class="icons">
-                            <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy' title='{{attacker.shipType}}'><img src="{{ images.ships }}{{attacker.shipTypeID}}_64.png" width="64" height="64"></a>
-                            <a href="/details/pilot/{{attacker.characterID}}" rel='twipsy' title='{{attacker.characterName}}'><img src="{{ images.characters }}{{attacker.characterID}}_64.jpg" width="64" height="64"></a>
-                            <a href="/details/corporation/{{attacker.corporationID}}" rel='twipsy' title='{{attacker.corporationName}}'><img src="{{ images.corporations }}{{attacker.corporationID}}_64.png" width="64" height="64"></a>
-                            {% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %}
-                                <a href="/details/faction/{{killdata.victim.factionID}}" rel='twipsy' title='{{attacker.factionName}}'><img src="{{ images.alliances }}{{attacker.factionID}}_64.png"  width="64" height="64"></a>
+<ul class="nav nav-pills pull-left">
+    <li class="active"><a href="#overview" data-toggle="tab">Quick Overview</a></li>
+    <li><a href="#involved-pilots" data-toggle="tab">Involved Pilots</a></li>
+    {% if disqus %}
+    <li><a href="#comments" data-toggle="tab" data-disqus-identifier="{{ killdata.killID }}">Comments</a>
+    </li>
+    {% endif %}
+    <li><a href="#fittings" data-toggle="tab">Fittings</a></li>
+</ul>
+<div class="page-header">
+</div>
+<div class="tab-content">
+<div class="tab-pane active" id="overview">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Involved
+                <small>Alliance(s) / Corp(s)</small>
+            </h3>
+            <table class="table well condensed-table zebra-striped">
+                {% for alliance, corporations, faction in stats %}
+                <thead>
+                <tr class="titles">
+                    <th><strong>{% if alliance != "None" %}<a
+                            href="/alliance/name/{{ alliance|url_encode }}/">{{ alliance
+                        }}</a>{% elseif faction %}<a
+                            href="/faction/name/{{ faction|url_encode }}/">{{ faction }}</a>{%
+                        else %}"Corporation"{% endif %}</strong></th>
+                    <th>
+                        <div align="center">Pilots</div>
+                    </th>
+                </tr>
+                </thead>
+                {% for corporation, value in corporations|sort|reverse %}
+                <tr>
+                    <td class="corporation"> &nbsp; &nbsp; <a
+                            href="/corporation/name/{{ corporation|url_encode }}/">{{
+                        corporation }}</a></td>
+                    <td class="count">
+                        <div align="center">{{ value }}</div>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </table>
+            <h3>Involved
+                <small>Pilot(s)</small>
+            </h3>
+            <table class="table well condensed-table zebra-striped">
+                <thead>
+                <tr class="titles">
+                    <th>Attacker</th>
+                    <th>Ship / Weapon</th>
+                    <th>Damage</th>
+                </tr>
+                </thead>
+                {% for attacker in killdata.attackers %}
+                <tr class="attacker">
+                    <td class="pilotinfo">
+                        <a href="/details/pilot/{{ attacker.characterID }}">
+                            {% if attacker.finalBlow == true %}
+                            <strong>{{ attacker.characterName }}</strong>
+                            {% else %}
+                            {{ attacker.characterName }}
                             {% endif %}
-                            {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %}
-                                <a href="/details/alliance/{{killdata.victim.allianceID}}" rel='twipsy' title='{{attacker.allianceName}}'><img src="{{ images.alliances }}{{attacker.allianceID}}_64.png"  width="64" height="64"></a>
-                            {% endif %}
-
-                        </td>
-                        <td class="pilot">
-                            <a href="/details/pilot/{{ attacker.characterID }}">{{ attacker.characterName }}</a> /
-                            <a href="/details/corporation/{{ attacker.corporationID }}/">{{ attacker.corporationName }}</a>
-                            {% if attacker.allianceName and attacker.allianceName != "Unknown" and attacker.allianceName != "None" %} / <a href="/details/alliance/{{attacker.allianceID}}/">{{ attacker.allianceName }}</a>{% endif %}
-                            {% if attacker.factionName and attacker.factionName != "Unknown" and attacker.factionName != "None" %} / <a href="/details/faction/{{attacker.factionID}}/">{{ attacker.factionName }}</a>{% endif %}
-                        </td>
-                        <td class="equipment"><a href="/eveinfo/{{attacker.shipTypeID}}">{{ attacker.shipType }}</a> / <a href="/eveinfo/{{attacker.weaponTypeID}}">{{ attacker.weaponType }}</a></td>
-                        <td class="damage">{{ attacker.damageDone }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            {% if disqus %}
-            <div id="comments" class="tab-pane">
-                <div id="disqus_thread"></div>
-                        <script type="text/javascript">
-                            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                            var disqus_shortname = '{{ disqus }}'; // required: replace example with your forum shortname
-
-                            /* * * DON'T EDIT BELOW THIS LINE * * */
-                            (function() {
-                                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                            })();
-
-                            (function () {
-                                var s = document.createElement('script'); s.async = true;
-                                s.type = 'text/javascript';
-                                s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-                                (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-                            }());
-
-                        </script>
-                        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-            </div>
-            {% endif %}
-            <div id="fittings" class="tab-pane">
-                {% if igb %}<a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>{% endif %}
-            </div>
+                        </a>
+                    </td>
+                    <td class="icons">
+                        <div align="center">
+                            <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy'
+                               title='{{attacker.shipType}}'><img
+                                    src="{{ images.ships }}{{attacker.shipTypeID}}_32.png"
+                                    width="32" height="32"></a>
+                            <a href="/eveinfo/{{attacker.weaponTypeID}}" rel='twipsy'
+                               title='{{attacker.weaponType}}'><img
+                                    src="{{ images.items }}{{attacker.weaponTypeID}}_32.png"
+                                    width="32" height="32"></a>
+                        </div>
+                    </td>
+                    <td class="damage">
+                        <div align="center">{{ attacker.damageDone }}</div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-8">
+            <h3>Item(s)
+                <small>Dropped / Destroyed</small>
+            </h3>
+            <table class="table condensed-table zebra-striped">
+                <thead>
+                <tr class="titles">
+                    <th>&nbsp;</th>
+                    <th>Item Type</th>
+                    <th>Dropped</th>
+                    <th>Destroyed</th>
+                    <th>
+                        <div align="right">Price</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in killdata.items %}
+                <tr>
+                    <td class="icons">
+                        <div align="center"><a href="/eveinfo/{{item.typeID}}" rel='twipsy'
+                                               title='{{item.typeName}}'><img
+                                src="{{ images.items }}{{ item.typeID }}_32.png" width="32"
+                                height="32"></a></div>
+                    </td>
+                    <td><a href="/eveinfo/{{item.typeID}}">{{ item.typeName }}</a></td>
+                    <td class="dropped">
+                        <div align="center">{{ item.qtyDropped }}</div>
+                    </td>
+                    <td class="destroyed">
+                        <div align="center">{{ item.qtyDestroyed }}</div>
+                    </td>
+                    <td class="price">
+                        <div align="right">{{ item.iskValue|number_format(2, '.', ',') }}
+                            isk
+                        </div>
+                    </td>
+                </tr>
+                {% if item.items %}
+                {% for containeritem in item.items %}
+                <tr>
+                    <td class="icons">
+                        <div align="center"><a href="/eveinfo/{{item.typeID}}" rel='twipsy'
+                                               title='{{item.typeName}}'><img
+                                src="{{ images.items }}{{ item.typeID }}_32.png" width="32"
+                                height="32"></a><a href="/eveinfo/{{containeritem.typeID}}"
+                                                   rel='twipsy'
+                                                   title='{{containeritem.typeName}}'><img
+                                src="{{ images.items }}{{ containeritem.typeID }}_32.png"
+                                width="32" height="32"></a></div>
+                    </td>
+                    <td><a href="/eveinfo/{{item.typeID}}">{{ containeritem.typeName }}</a>
+                    </td>
+                    <td class="dropped">
+                        <div align="center">{{ containeritem.qtyDropped }}</div>
+                    </td>
+                    <td class="destroyed">
+                        <div align="center">{{ containeritem.qtyDestroyed }}</div>
+                    </td>
+                    <td class="price">
+                        <div align="right">{{ containeritem.iskValue|number_format(2, '.',
+                            ',') }} isk
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+                <tr>
+                    <td class="icons">
+                        <div align="center"><a
+                                href="/eveinfo/{{killdata.victim.shipTypeID}}" rel='twipsy'
+                                title='{{killdata.victim.shipType}}'><img
+                                src="{{ images.items }}{{ killdata.victim.shipTypeID }}_32.png"
+                                width="32" height="32"></a></div>
+                    </td>
+                    <td><a href="/eveinfo/{{killdata.victim.shipTypeID}}">{{killdata.victim.shipType}}</a>
+                    </td>
+                    <td class="dropped">
+                        <div align="center">0</div>
+                    </td>
+                    <td class="destroyed">
+                        <div align="center">1</div>
+                    </td>
+                    <td class="price">
+                        <div align="right">{{ killdata.victim.iskValue|number_format(2, '.',
+                            ',') }} isk
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Totals:</strong></td>
+                    <td></td>
+                    <td class="totaldropped">
+                        <div align="center">{{ killdata.totalDropped }}</div>
+                    </td>
+                    <td class="totaldestroyed">
+                        <div align="center">{{ killdata.totalDestroyed }}</div>
+                    </td>
+                    <td class="totalprice">
+                        <div align="right">{{ killdata.totalISKValue|number_format(2, '.',
+                            ',')}} isk
+                        </div>
+                    </td>
+                <tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+<div id="involved-pilots" class="tab-pane">
+    <table class="table condensed-table zebra-striped">
+        <thead>
+        <tr class="titles">
+            <th>&nbsp;</th>
+            <th>Attacker</th>
+            <th>Equipment</th>
+            <th>Damage</th>
+        </tr>
+        </thead>
+        {% for attacker in killdata.attackers %}
+        <tr class="attacker">
+            <td class="icons">
+                <a href="/eveinfo/{{attacker.shipTypeID}}" rel='twipsy'
+                   title='{{attacker.shipType}}'><img
+                        src="{{ images.ships }}{{attacker.shipTypeID}}_64.png" width="64"
+                        height="64"></a>
+                <a href="/details/pilot/{{attacker.characterID}}" rel='twipsy'
+                   title='{{attacker.characterName}}'><img
+                        src="{{ images.characters }}{{attacker.characterID}}_64.jpg"
+                        width="64" height="64"></a>
+                <a href="/details/corporation/{{attacker.corporationID}}" rel='twipsy'
+                   title='{{attacker.corporationName}}'><img
+                        src="{{ images.corporations }}{{attacker.corporationID}}_64.png"
+                        width="64" height="64"></a>
+                {% if attacker.factionName and attacker.factionName != "Unknown" and
+                attacker.factionName != "None" %}
+                <a href="/details/faction/{{killdata.victim.factionID}}" rel='twipsy'
+                   title='{{attacker.factionName}}'><img
+                        src="{{ images.alliances }}{{attacker.factionID}}_64.png" width="64"
+                        height="64"></a>
+                {% endif %}
+                {% if attacker.allianceName and attacker.allianceName != "Unknown" and
+                attacker.allianceName != "None" %}
+                <a href="/details/alliance/{{killdata.victim.allianceID}}" rel='twipsy'
+                   title='{{attacker.allianceName}}'><img
+                        src="{{ images.alliances }}{{attacker.allianceID}}_64.png"
+                        width="64" height="64"></a>
+                {% endif %}
+
+            </td>
+            <td class="pilot">
+                <a href="/details/pilot/{{ attacker.characterID }}">{{
+                    attacker.characterName }}</a> /
+                <a href="/details/corporation/{{ attacker.corporationID }}/">{{
+                    attacker.corporationName }}</a>
+                {% if attacker.allianceName and attacker.allianceName != "Unknown" and
+                attacker.allianceName != "None" %} / <a
+                    href="/details/alliance/{{attacker.allianceID}}/">{{
+                attacker.allianceName }}</a>{% endif %}
+                {% if attacker.factionName and attacker.factionName != "Unknown" and
+                attacker.factionName != "None" %} / <a
+                    href="/details/faction/{{attacker.factionID}}/">{{ attacker.factionName
+                }}</a>{% endif %}
+            </td>
+            <td class="equipment"><a href="/eveinfo/{{attacker.shipTypeID}}">{{
+                attacker.shipType }}</a> / <a href="/eveinfo/{{attacker.weaponTypeID}}">{{
+                attacker.weaponType }}</a></td>
+            <td class="damage">{{ attacker.damageDone }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% if disqus %}
+<div id="comments" class="tab-pane">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = '{{ disqus }}'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a
+            href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+    </noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span
+            class="logo-disqus">Disqus</span></a>
+</div>
+{% endif %}
+<div id="fittings" class="tab-pane">
+    {% if igb %}<a
+        href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA
+    Fitting</a>{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 {% endblock %}

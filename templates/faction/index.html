@@ -3,10 +3,6 @@
 {% block title %}{{ info.factionName }} Details{% endblock %}
 
 {% block header %}
-<h1>{{ info.factionName }}</h1>
-<a href="#" rel='twipsy' title='{{info.factionName}}'>
-<img src="{{ images.alliances }}{{info.factionID}}_64.png" width="64" height="64">
-</a>
 {% endblock %}
 
 {% block script %}
@@ -37,21 +33,36 @@
 {% endblock script %}
 
 {% block content %}
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#stats">Statistics</a></li>
-        <li><a data-toggle="tab" href="#kills">Kills & Losses</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="stats" class="tab-pane active">
-        {% include "components/entity_home_stats.html" %}
-        </div>
-        <div id="kills" class="tab-pane">
-            <h2>Kills & Losses</h2>
-            <div id="home_killspage">
-            {% include "components/kill_list.html" %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ info.factionName }}</h3>
+            </div>
+            <div class="panel-body">
+                <a href="#" rel='twipsy' title='{{info.factionName}}'>
+                <img src="{{ images.alliances }}{{info.factionID}}_64.png" width="64" height="64">
+                </a>
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#stats">Statistics</a></li>
+                        <li><a data-toggle="tab" href="#kills">Kills & Losses</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="stats" class="tab-pane active">
+                        {% include "components/entity_home_stats.html" %}
+                        </div>
+                        <div id="kills" class="tab-pane">
+                            <h2>Kills & Losses</h2>
+                            <div id="home_killspage">
+                            {% include "components/kill_list.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

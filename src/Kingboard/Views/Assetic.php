@@ -66,4 +66,20 @@ class Assetic extends View
         }
         return true;
     }
+
+    public function background(array $params)
+    {
+        $backgrounds = Registry::getInstance()->assets['backgrounds'];
+
+        $dt = new \DateTime();
+        $dt->setTime(date("H"),0,0);
+        srand($dt->getTimestamp());
+
+        $asset = new \Assetic\Asset\FileAsset($backgrounds[rand(0, count($backgrounds) -1)]);
+        header('Content-Type: image/jpeg');
+        header("Cache-Control: public, max-age=3600, s-max-age=1800");
+        echo $asset->dump();
+
+        return true;
+    }
 }

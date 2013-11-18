@@ -5,32 +5,42 @@
 
 {% block content %}
 <div class="row">
-<div class="col-md-12">
-    {% include "components/pagination.html" %}
-    <div id="battlereports">
-        <h2>Latest Battlereports</h2>
-        <div class="row">
-        <table class="table-bordered table-striped table-condensed col-md-12">
-            <thead>
-            <tr>
-                <th>System</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>&nbsp;</th>
-            </tr>
-            </thead>
-        {% for report in reports %}
-            <tr>
-                <td>{{ report.system }}</td>
-                <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
-                <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
-                <td><a href="/battle/{{ report._id }}">details</a></td>
-            </tr>
-        {% endfor %}
-        </table>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Latest Battlereports</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include "components/pagination.html" %}
+                        <div id="battlereports">
+                            <div class="tab-pane">
+                                <table class="table-bordered table-condensed table-striped col-md-12">
+                                    <thead>
+                                    <tr>
+                                        <th>System</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    {% for report in reports %}
+                                    <tr>
+                                        <td>{{ report.system }}</td>
+                                        <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
+                                        <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
+                                        <td><a href="/battle/{{ report._id }}">details</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        {% include "components/pagination.html" %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    {% include "components/pagination.html" %}
-</div>
 </div>
 {% endblock %}

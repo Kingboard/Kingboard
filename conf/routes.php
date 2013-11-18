@@ -21,6 +21,7 @@ $router->addRoute("/information", 'Kingboard\Views\Information', "index");
 $router->addRoute("/assets/js/", 'Kingboard\Views\Assetic', "js");
 $router->addRoute("/assets/css/", 'Kingboard\Views\Assetic', "css");
 $router->addRoute("/assets/fonts/", 'Kingboard\Views\Assetic', 'fonts', array('font'));
+$router->addRoute("/assets/background/", 'Kingboard\Views\Assetic', 'background');
 
 // eve information
 $router->addRoute("/eveinfo/", 'Kingboard\Views\EveInfo', "eveItem", array('itemid'));

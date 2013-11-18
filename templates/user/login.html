@@ -1,32 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Kingboard</h1>
-{% if login_failed %}
-<div class="alert alert-danger">Login/Password combination wrong!</div>
-{% else %}
-<div class="alert alert-info">Please login to use this functionality!</div>
-{% endif %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">My Kingboard</h3>
+            </div>
+            <div class="panel-body">
+                {% if login_failed %}
+                <div class="alert alert-danger">Login/Password combination wrong!</div>
+                {% else %}
+                <div class="alert alert-info">Please login to use this functionality!</div>
+                {% endif %}
 
-<form name="login" method="post" action="/login">
-    <fieldset>
-        <legend>Login</legend>
-        <div class="clearfix">
-            <label for="login">email/login</label>
-            <div class="input">
-                <input id="login" name="login" type="email" placeholder="email/login">
+                <form name="login" method="post" action="/login">
+                    <fieldset>
+                        <legend>Login</legend>
+                        <div class="clearfix">
+                            <label for="login">email/login</label>
+                            <div class="input">
+                                <input id="login" name="login" type="email" placeholder="email/login">
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <label for="passwd">password</label>
+                            <div class="input">
+                                <input id="passwd" name="passwd" type="password" placeholder="password">
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <input type="submit" value="Login" class="btn default primary">
+                            <a href="/user/registration" class="btn">Register</a>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
         </div>
-        <div class="clearfix">
-            <label for="passwd">password</label>
-            <div class="input">
-                <input id="passwd" name="passwd" type="password" placeholder="password">
-            </div>
-        </div>
-        <div class="actions">
-            <input type="submit" value="Login" class="btn default primary">
-            <a href="/user/registration" class="btn">Register</a>
-        </div>
-    </fieldset>
-</form>
+    </div>
+</div>
 {% endblock %}

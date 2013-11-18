@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
 {% block header %}
-<div class="jumbotron">
-    <h2>An Error occured<small> yes, that means something went wrong!</small></h2>
-    <div class="alert-danger">
-        <i class="glyphicon glyphicon-remove-circle"></i> {{ message }}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">ERROR!</h3>
+            </div>
+            <div class="panel-body">
+                <div class="jumbotron">
+                    <h2>An Error occured<small> yes, that means something went wrong!</small></h2>
+                    <div class="alert-danger">
+                        <i class="glyphicon glyphicon-remove-circle"></i> {{ message }}
 
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock header %}

@@ -1,52 +1,64 @@
 {% extends "base.html" %}
 {% block title %}Search{% endblock %}
 {% block content %}
-<form id="search" name="search" method="post" action="/search/">
-    <fieldset>
-        <legend>Searchbox</legend>
-        <div class="clearfix">
-            <label for="searchbox">Search Term:</label>
-            <div class="input">
-                <input id="searchbox" name="searchbox" type="text" autocomplete="off" data-provide="typeahead" placeholder="Corp/Pilot/Alliance/Faction..">
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Search</h3>
+            </div>
+            <div class="panel-body">
+
+                <form id="search" name="search" method="post" action="/search/">
+                    <fieldset>
+                        <legend>Searchbox</legend>
+                        <div class="clearfix">
+                            <label for="searchbox">Search Term:</label>
+                            <div class="input">
+                                <input id="searchbox" name="searchbox" type="text" autocomplete="off" data-provide="typeahead" placeholder="Corp/Pilot/Alliance/Faction..">
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <input type="submit" value="Search" class="btn default primary">
+                        </div>
+                    </fieldset>
+                </form>
+                {% if not searchbox_length_to_short and no_results %}
+                    <div class="alert alert-info">No Character/Corp/Alliance by that name could be found!</div>
+                {% endif %}
+                {% if searchbox_length_to_short %}
+                <div class="alert alert-danger">Please enter at least 4 characters!</div>
+                {% endif %}
+
+                {% if results %}
+                <h2>Result</h2>
+                <table class="table condensed-table zebra-striped">
+                    <thead>
+                        <tr class="titles">
+                            <th>&nbsp;</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for result in results %}
+                        <tr>
+                            <td class="icon">
+                                 <a href="/details/{{result.type}}/{{result.id}}/" rel='twipsy' title='{{result.name}}'>
+                                    <img src="{% if result.type == "faction" %}{{images.alliances}}{%endif%}{% if result.type == "character" %}{{images.characters}}{%endif%}{% if result.type == "corporation" %}{{images.corporations}}{%endif%}{% if result.type == "alliance" %}{{images.alliances}}{%endif%}{{result.id}}_64.{% if result.type == "character" %}jpg{% else %}png{% endif %}" alt="{{result.name}}">
+                                 </a>
+                            </td>
+                            <td>
+                                <a href="/details/{{result.type}}/{{result.id}}/" title="{{result.name}}">
+                                {{ result.name }} ({{ result.type }})
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
             </div>
         </div>
-        <div class="actions">
-            <input type="submit" value="Search" class="btn default primary">
-        </div>
-    </fieldset>
-</form>
-{% if not searchbox_length_to_short and no_results %}
-    <div class="alert alert-info">No Character/Corp/Alliance by that name could be found!</div>
-{% endif %}
-{% if searchbox_length_to_short %}
-<div class="alert alert-danger">Please enter at least 4 characters!</div>
-{% endif %}
-        
-{% if results %}
-<h2>Result</h2>
-<table class="table condensed-table zebra-striped">
-    <thead>
-        <tr class="titles">
-            <th>&nbsp;</th>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for result in results %}
-        <tr>
-            <td class="icon">
-                 <a href="/details/{{result.type}}/{{result.id}}/" rel='twipsy' title='{{result.name}}'>
-                    <img src="{% if result.type == "faction" %}{{images.alliances}}{%endif%}{% if result.type == "character" %}{{images.characters}}{%endif%}{% if result.type == "corporation" %}{{images.corporations}}{%endif%}{% if result.type == "alliance" %}{{images.alliances}}{%endif%}{{result.id}}_64.{% if result.type == "character" %}jpg{% else %}png{% endif %}" alt="{{result.name}}">
-                 </a>
-            </td>
-            <td>
-                <a href="/details/{{result.type}}/{{result.id}}/" title="{{result.name}}">
-                {{ result.name }} ({{ result.type }})
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+    </div>
+</div>
 {% endblock %}

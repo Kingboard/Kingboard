@@ -1,19 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Kingboard</h1>
-{% if login_failed %}
-<div class="alert alert-danger">{{ login_failed }}</div>
-{% else %}
-<div class="alert alert-info">Please login to use this functionality!</div>
-{% endif %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">My Kingboard</h3>
+            </div>
+            <div class="panel-body">
+                {% if login_failed %}
+                <div class="alert alert-danger">{{ login_failed }}</div>
+                {% else %}
+                <div class="alert alert-info">Please login to use this functionality!</div>
+                {% endif %}
 
-<div class="well">
-    <ul class="nav nav-list">
-     <li class="nav-header">Login using:</li>
-    {% for name, url in providerlist %}
-        <li><a href="{{url}}">{{name}}</a></li>
-    {% endfor %}
-    </ul>
+                <div class="well">
+                    <ul class="nav nav-list">
+                     <li class="nav-header">Login using:</li>
+                    {% for name, url in providerlist %}
+                        <li><a href="{{url}}">{{name}}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

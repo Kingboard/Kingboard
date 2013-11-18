@@ -2,61 +2,82 @@
 {% block title %}{{ battleSetting.system }}:{{ battleSetting.startdate.sec|date("Y-m-d H:i:s") }} Battle Details{% endblock %}
 
 {% block content %}
-<h1>Battle for {{ battleSetting.system }}</h1>
-<h2>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{ battleSetting.enddate.sec|date("Y-m-d H:i") }}</h2>
-
 <div class="row">
-    <div class="col-md-3">
-        <h1>{{ info.characterName }}</h1>
-        <a href="/details/pilot/{{battleSetting.ownerCharacter}}" rel='twipsy' title='{{battleSetting.ownerCharacterName}}'>
-        <img src="{{ images.characters }}{{ battleSetting.ownerCharacter }}_64.jpg" width="64" height="64">
-        </a>
-        <a href="/details/corporation/{{battleSetting.ownerCorporation}}" rel='twipsy' title='{{battleSetting.ownerCorporationName}}'>
-        <img src="{{ images.corporations}}{{battleSetting.ownerCorporation}}_64.png" width="64" height="64">
-        </a>
-        {% if info.allianceID != "0" %}
-        <a href="/details/alliance/{{battleSetting.ownerAlliance}}" rel='twipsy' title='{{battleSetting.ownerAllianceName}}'>
-        <img src="{{ images.alliances }}{{battleSetting.ownerAlliance}}_64.png" width="64" height="64">
-        </a>
-        {% endif %}
-    </div>
-    <div class="col-md-9">
-        <div class="alert alert-info">
-            <i class="glyphicon glyphicon-info-sign icon-white"></i> This Battle was created using the standings of {{battleSetting.ownerCharacterName}} ({{battleSetting.ownerCorporationName}} / {{ battleSetting.ownerAllianceName }}). <br />Losses and Wins are set accordingly
-        </div>
-    </div>
-</div>
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#kills">Kills</a></li>
-        <li><a data-toggle="tab" href="#losses">Losses</a></li>
-        <li><a data-toggle="tab" href="#timeline">Timeline</a></li>
-        <!--li><a data-toggle="tab" href="#fleetcompositions">Fleetcompositions</a></li-->
-    </ul>
-    <div class="tab-content">
-        <div id="kills" class="tab-pane active">
-        <h1>Kills</h1>
-            <div id="home_killspage">
-            {% set data = kills %}
-            {% include "components/kill_list.html" %}
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Battle for {{ battleSetting.system }}
+                    <small>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{
+                        battleSetting.enddate.sec|date("Y-m-d H:i") }}
+                    </small>
+                </h3>
             </div>
-        </div>
-        <div id="losses" class="tab-pane">
-        <h1>Losses</h1>
-            <div id="home_losspage">
-            {% set data = losses %}
-            {% include "components/kill_list.html" %}
-            </div>
-        </div>
-        <div id="timeline" class="tab-pane">
-        <h1>Battle Timeline</h1>
-            {% include "components/kill_timeline.html" %}
-        </div>
-        <!--div id="fleetcompositions" class="tab-pane">
-            <h1>Fleetcompositions</h1>
-            not yet.
-        </div-->
-    </div>
-</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h1>{{ info.characterName }}</h1>
+                        <a href="/details/pilot/{{battleSetting.ownerCharacter}}" rel='twipsy'
+                           title='{{battleSetting.ownerCharacterName}}'>
+                            <img src="{{ images.characters }}{{ battleSetting.ownerCharacter }}_64.jpg" width="64"
+                                 height="64">
+                        </a>
+                        <a href="/details/corporation/{{battleSetting.ownerCorporation}}" rel='twipsy'
+                           title='{{battleSetting.ownerCorporationName}}'>
+                            <img src="{{ images.corporations}}{{battleSetting.ownerCorporation}}_64.png" width="64"
+                                 height="64">
+                        </a>
+                        {% if info.allianceID != "0" %}
+                        <a href="/details/alliance/{{battleSetting.ownerAlliance}}" rel='twipsy'
+                           title='{{battleSetting.ownerAllianceName}}'>
+                            <img src="{{ images.alliances }}{{battleSetting.ownerAlliance}}_64.png" width="64"
+                                 height="64">
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <div class="alert alert-info">
+                            <i class="glyphicon glyphicon-info-sign icon-white"></i> This Battle was created using the
+                            standings of {{battleSetting.ownerCharacterName}} ({{battleSetting.ownerCorporationName}} /
+                            {{ battleSetting.ownerAllianceName }}). <br/>Losses and Wins are set accordingly
+                        </div>
+                    </div>
+                </div>
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#kills">Kills</a></li>
+                        <li><a data-toggle="tab" href="#losses">Losses</a></li>
+                        <li><a data-toggle="tab" href="#timeline">Timeline</a></li>
+                        <!--li><a data-toggle="tab" href="#fleetcompositions">Fleetcompositions</a></li-->
+                    </ul>
+                    <div class="tab-content">
+                        <div id="kills" class="tab-pane active">
+                            <h1>Kills</h1>
 
+                            <div id="home_killspage">
+                                {% set data = kills %}
+                                {% include "components/kill_list.html" %}
+                            </div>
+                        </div>
+                        <div id="losses" class="tab-pane">
+                            <h1>Losses</h1>
+
+                            <div id="home_losspage">
+                                {% set data = losses %}
+                                {% include "components/kill_list.html" %}
+                            </div>
+                        </div>
+                        <div id="timeline" class="tab-pane">
+                            <h1>Battle Timeline</h1>
+                            {% include "components/kill_timeline.html" %}
+                        </div>
+                        <!--div id="fleetcompositions" class="tab-pane">
+                            <h1>Fleetcompositions</h1>
+                            not yet.
+                        </div-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

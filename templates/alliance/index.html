@@ -2,15 +2,6 @@
 
 {% block title %}{{ info.allianceName }} Details{% endblock %}
 {% block header %}
-<h1>{{ info.allianceName }}</h1>
-<a href="#" rel='twipsy' title='{{info.allianceName}}'>
-<img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
-</a>
-{% if info.factionID != 0 %}
-<a href="#" rel='twipsy' title='{{info.factionName}}'>
-<img src="{{ images.alliances }}{{info.factionID}}_64.png" width="64" height="64">
-</a>
-{% endif %}
 {% endblock %}
 
 {% block script %}
@@ -41,25 +32,44 @@
 {% endblock script %}
 
 {% block content %}
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#stats" data-toggle="tab">Statistics</a></li>
-        <li><a href="#kills" data-toggle="tab">Kills & Losses</a></li>
-        <!--li><a href="#memberactivity" data-toggle="tab">Member Activities</a></li-->
-    </ul>
-    <div class="tab-content">
-        <div id="stats" class="tab-pane active">
-        {% include "components/entity_home_stats.html" %}
-        </div>
-        <div id="kills" class="tab-pane">
-            <h2>Kills & Losses</h2>
-            <div id="home_killspage">
-            {% include "components/kill_list.html" %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ info.allianceName }}</h3>
+            </div>
+            <div class="panel-body">
+                <a href="#" rel='twipsy' title='{{info.allianceName}}'>
+                <img src="{{ images.alliances }}{{info.allianceID}}_64.png" width="64" height="64">
+                </a>
+                {% if info.factionID != 0 %}
+                <a href="#" rel='twipsy' title='{{info.factionName}}'>
+                <img src="{{ images.alliances }}{{info.factionID}}_64.png" width="64" height="64">
+                </a>
+                {% endif %}
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#stats" data-toggle="tab">Statistics</a></li>
+                        <li><a href="#kills" data-toggle="tab">Kills & Losses</a></li>
+                        <!--li><a href="#memberactivity" data-toggle="tab">Member Activities</a></li-->
+                    </ul>
+                    <div class="tab-content">
+                        <div id="stats" class="tab-pane active">
+                        {% include "components/entity_home_stats.html" %}
+                        </div>
+                        <div id="kills" class="tab-pane">
+                            <h2>Kills & Losses</h2>
+                            <div id="home_killspage">
+                            {% include "components/kill_list.html" %}
+                            </div>
+                        </div>
+                        <!--div id="memberactivity" class="tab-pane">
+                            not here yet
+                        </div-->
+                    </div>
+                </div>
             </div>
         </div>
-        <!--div id="memberactivity" class="tab-pane">
-            not here yet
-        </div-->
     </div>
 </div>
 {% endblock %}
