@@ -3,7 +3,7 @@ html, body {
 body {
     padding-top: 40px;
     background-color:#000000;
-    background-image:url("/assets/background/");
+    background-image:url("/assets/background/fake.jpg");
     -webkit-background-size:cover;
     -moz-background-size:cover;
     -o-background-size:cover;
