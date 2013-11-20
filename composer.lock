@@ -133,12 +133,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Kingboard/ccpdump.git",
-                "reference": "daf04f2e760cca2c67ffb0cef22b8c5d0290ba2a"
+                "reference": "1754c17d06699dd5221ef267e7cf5c725157c8cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Kingboard/ccpdump/zipball/daf04f2e760cca2c67ffb0cef22b8c5d0290ba2a",
-                "reference": "daf04f2e760cca2c67ffb0cef22b8c5d0290ba2a",
+                "url": "https://api.github.com/repos/Kingboard/ccpdump/zipball/1754c17d06699dd5221ef267e7cf5c725157c8cf",
+                "reference": "1754c17d06699dd5221ef267e7cf5c725157c8cf",
                 "shasum": ""
             },
             "type": "library",
@@ -150,7 +150,7 @@
                 }
             ],
             "description": "MongoDB Variant of CCP's static data dump",
-            "time": "2013-09-16 10:59:13"
+            "time": "2013-11-20 16:31:15"
         },
         {
             "name": "kriswallsmith/assetic",
