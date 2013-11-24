@@ -3,6 +3,7 @@ namespace Kingboard;
 use King23\Core\Registry;
 use Kingboard\Lib\Parser\EveAPI;
 use Kingboard\Model\MapReduce\KillsByDay;
+use Kingboard\Model\MapReduce\KillsByDayByEntity;
 
 class KingboardTask extends \King23\Tasks\King23Task
 {
@@ -102,7 +103,7 @@ class KingboardTask extends \King23\Tasks\King23Task
 
     public function test(array $options)
     {
-        KillsByDay::mapReduce();
+        var_dump(KillsByDayByEntity::mapReduce());
     }
 
 }

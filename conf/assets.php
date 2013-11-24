@@ -29,7 +29,7 @@ $assets['fonts']["glyphicons-halflings-regular.woff"]
     = APP_PATH . '/vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff';
 
 $assets['backgrounds'] = [];
-$assets['backgrounds'][] = APP_PATH . "/public/images/background/EVE_Rubicon_1600x900_EN_resized.jpg";
-$assets['backgrounds'][] = APP_PATH . "/public/images/background/Kronos_wallpaper_1600x900_EN_resized.jpg";
-$assets['backgrounds'][] = APP_PATH . "/public/images/background/SOE_frigate_1600x900_resized.jpg";
+$assets['backgrounds'][] = APP_PATH . "/public/images/background/background1.jpg";
+$assets['backgrounds'][] = APP_PATH . "/public/images/background/background2.jpg";
+$assets['backgrounds'][] = APP_PATH . "/public/images/background/background3.jpg";
 \King23\Core\Registry::getInstance()->assets = $assets;

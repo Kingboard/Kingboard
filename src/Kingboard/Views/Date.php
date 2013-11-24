@@ -5,6 +5,7 @@ use DateTime;
 use Kingboard\Lib\Paginator;
 use Kingboard\Model\Kill;
 use Kingboard\Model\MapReduce\KillsByDay;
+use Kingboard\Model\MapReduce\KillsByDayByEntity;
 use MongoDate;
 
 
@@ -42,7 +43,11 @@ class Date extends Base
         $dt = new DateTime($context['date']);
         $mdt = new MongoDate($dt->getTimestamp());
 
-        $stats = KillsByDay::findOne($mdt);
+        if ($this->_context['ownerID']) {
+            $stats = KillsByDayByEntity::findOne($mdt, $this->_context['ownerID']);
+        } else {
+            $stats = KillsByDay::findOne($mdt);
+        }
         $context['stats'] = $stats['value'];
 
         $paginator = new Paginator($page, $context['stats']['total']);
@@ -51,12 +56,42 @@ class Date extends Base
         // reset date
         $dt = new DateTime($context['date']);
 
-        $kills = Kill::find(array(
-            '$and' => array(
-                array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
-                array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())))
-            )
-        ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
+        if ($this->_context['ownerID']) {
+            switch ($this->_context['ownerType']) {
+                case "alliance":
+                    $involvedType = "involvedAlliances";
+                    break;
+                case "faction":
+                    $involvedType = "involvedFactions";
+                    break;
+                case "corp":
+                case "corporation":
+                    $involvedType = "involvedCorporations";
+                    break;
+                case "char":
+                case "character":
+                case "pilot":
+                    $involvedType = "involvedCharacters";
+                    break;
+                default:
+                    throw new \Exception("Configuration has set unknown ownerType!");
+                    return;
+            }
+            $kills = Kill::find(array(
+                '$and' => array(
+                    array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
+                    array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp()))),
+                    array($involvedType => $this->_context['ownerID'])
+                )
+            ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
+        } else {
+            $kills = Kill::find(array(
+                '$and' => array(
+                    array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
+                    array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())))
+                )
+            ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
+        }
 
         $context['kills'] = $kills;
         $context['action'] = "/day/" . $context['date'];
