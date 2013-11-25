@@ -44,7 +44,7 @@ class Date extends Base
         $mdt = new MongoDate($dt->getTimestamp());
 
         if ($this->_context['ownerID']) {
-            $stats = KillsByDayByEntity::findOne($mdt, $this->_context['ownerID']);
+            $stats = KillsByDayByEntity::findOne($dt->getTimestamp(), $this->_context['ownerID']);
         } else {
             $stats = KillsByDay::findOne($mdt);
         }

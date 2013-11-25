@@ -34,7 +34,7 @@ class KillsByDayByEntity extends MongoObject implements ArrayAccess
             date.setUTCHours(0);
             date.setUTCMinutes(0);
             date.setUTCSeconds(0);
-            datestring = Date.parse(date);
+            datestring = Date.parse(date) / 1000;
             
             // collect the date needed for the most valuable each day
             info['topValue'] = {
@@ -108,11 +108,11 @@ class KillsByDayByEntity extends MongoObject implements ArrayAccess
     /**
      * find stats about the day
      * @static
-     * @param MongoDate $date day to get
+     * @param int $date day to get
      * @param String $entity
      * @return MongoResult
      */
-    public static function findOne(MongoDate $date, $entity)
+    public static function findOne($date, $entity)
     {
         return parent::doFindOne(__CLASS__, array("_id" => $date . "-" . $entity));
     }

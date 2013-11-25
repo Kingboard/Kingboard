@@ -88,6 +88,12 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         $this->cli->message('updating daily stats');
         KillsByDay::mapReduce();
         $this->cli->positive("daily stats updated");
+
+        $this->cli->message('updating daily stats by entity');
+        KillsByDayByEntity::mapReduce();
+        $this->cli->positive("daily stats by entity updated");
+
+
     }
 
     /**
