@@ -12,7 +12,7 @@ use Kingboard\Model\MapReduce\LossesByShipByFaction;
 use Kingboard\Model\MapReduce\LossesByShipByPilot;
 use Kingboard\Model\MapReduce\NameSearch;
 use Kingboard\Model\MapReduce\KillsByDay;
-
+use Kingboard\Model\MapReduce\KillsByDayByEntity;
 /**
  * This class contains all Kingboard Tasks that need to be
  * run on a regulary basis.
