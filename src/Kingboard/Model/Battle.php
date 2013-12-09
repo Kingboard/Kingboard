@@ -44,7 +44,7 @@ class Battle extends \King23\Mongo\MongoObject
                 "location.solarSystem" => $battleSetting->system,
                 '$or' => array(
                     array(
-                        "attackers.corporationID" => array(
+                        "involvedCharacters" => array(
                             '$in' => array_merge(
                                 array_keys($battleSetting->positives),
                                 array((int)$battleSetting->ownerCorporation)
@@ -52,29 +52,30 @@ class Battle extends \King23\Mongo\MongoObject
                         )
                     ),
                     array(
-                        "attackers.allianceID" => array(
+                        "involvedCorporations" => array(
                             '$in' => array_merge(
                                 array_keys($battleSetting->positives),
-                                array((int)$battleSetting->ownerAlliance)
+                                array((int)$battleSetting->ownerCorporation)
                             )
                         )
-                    )
+                    ),
+                    array(
+                        "involvedAlliances" => array(
+                            '$in' => array_merge(
+                                array_keys($battleSetting->positives),
+                                array((int)$battleSetting->ownerCorporation)
+                            )
+                        )
+                    ),
+                    array(
+                        "involvedFactions" => array(
+                            '$in' => array_merge(
+                                array_keys($battleSetting->positives),
+                                array((int)$battleSetting->ownerCorporation)
+                            )
+                        )
+                    ),
                 ),
-                'victim.corporationID' => array('$nin' => array_keys($battleSetting->positives)),
-                'victim.allianceID' => array('$nin' => array_keys($battleSetting->positives))
-            )
-        );
-        $losses = \Kingboard\Model\Kill::find(
-            array(
-                "killTime" => array(
-                    '$gt' => $battleSetting->startdate,
-                    '$lt' => $battleSetting->enddate
-                ),
-                "location.solarSystem" => $battleSetting->system,
-                '$or' => array(
-                    array("victim.corporationID" => array('$in' => array_keys($battleSetting->positives))),
-                    array("victim.allianceID" => array('$in' => array_keys($battleSetting->positives)))
-                )
             )
         );
 
@@ -88,22 +89,27 @@ class Battle extends \King23\Mongo\MongoObject
                 );
             }
 
-            $timeline[$killTime]['kills'][] = $kill->toArray();
-            $okills[] = $kill->toArray();
-        }
+            if(
+                (isset($battleSetting->positives[$kill['victim']['factionID']]) && !empty($battleSetting->positives[$kill['victim']['factionID']]))
+                || (isset($battleSetting->positives[$kill['victim']['characterID']]) && !empty($battleSetting->positives[$kill['victim']['characterID']]))
+                || (isset($battleSetting->positives[$kill['victim']['corporationID']]) && !empty($battleSetting->positives[$kill['victim']['corporationID']]))
+                || (isset($battleSetting->positives[$kill['victim']['allianceID']]) && !empty($battleSetting->positives[$kill['victim']['allianceID']]))
+                || ($battleSetting->ownerCorporation == $kill['victim']['corporationID'])
+            ) {
+                if($kill['victim']['characterID'] == 1540862716) {
+                print_r($kill['victim']);
+                print_r($battleSetting->positives);
+                die();
+                }
+                $timeline[$killTime]['losses'][] = $kill->toArray();
+                $olosses[] = $kill->toArray();
 
-        foreach ($losses as $kill) {
-            $killTime = date("Y-m-d H:i:s", $kill->killTime->sec);
-            if (!isset($timeline[$killTime])) {
-                $timeline[$killTime] = array(
-                    "kills" => array(),
-                    "losses" => array()
-                );
+            } else {
+                $timeline[$killTime]['kills'][] = $kill->toArray();
+                $okills[] = $kill->toArray();
             }
-
-            $timeline[$killTime]['losses'][] = $kill->toArray();
-            $olosses[] = $kill->toArray();
         }
+
         ksort($timeline);
 
         return array(
