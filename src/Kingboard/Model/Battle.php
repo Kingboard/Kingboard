@@ -96,11 +96,6 @@ class Battle extends \King23\Mongo\MongoObject
                 || (isset($battleSetting->positives[$kill['victim']['allianceID']]) && !empty($battleSetting->positives[$kill['victim']['allianceID']]))
                 || ($battleSetting->ownerCorporation == $kill['victim']['corporationID'])
             ) {
-                if($kill['victim']['characterID'] == 1540862716) {
-                print_r($kill['victim']);
-                print_r($battleSetting->positives);
-                die();
-                }
                 $timeline[$killTime]['losses'][] = $kill->toArray();
                 $olosses[] = $kill->toArray();
 
