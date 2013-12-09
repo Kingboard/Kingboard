@@ -50,7 +50,7 @@
                 {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %}<a href="/details/alliance/{{ kill.victim.allianceID }}/">{{ kill.victim.allianceName }}</a> <br /> {% endif %}
                 {% if kill.victim.factionName and kill.victim.factionName != "Unknown" and kill.victim.factionName != "None" %}<a href="/details/faction/{{ kill.victim.factionID }}/">{{ kill.victim.factionName }}</a> <br /> {% endif %}
                 -->
-                <a href="/details/faction/{{ kill.victim.characterID }}/">{{ kill.victim.characterName }}</a> <br />
+                <a href="/details/character/{{ kill.victim.characterID }}/">{{ kill.victim.characterName }}</a> <br />
                 <a href="/details/corporation/{{ kill.victim.corporationID }}/">{{ kill.victim.corporationName|truncate(20) }}</a>
                 {% if kill.victim.allianceName and kill.victim.allianceName != "Unknown" and kill.victim.allianceName != "None" %} / <a href="/details/alliance/{{ kill.victim.allianceID }}/">{{ kill.victim.allianceName|truncate(20) }}</a> <br /> {% endif %}
             </td>
