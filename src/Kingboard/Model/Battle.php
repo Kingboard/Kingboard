@@ -15,7 +15,16 @@ class Battle extends \King23\Mongo\MongoObject
         return parent::doFind(__CLASS__, $criteria);
     }
 
-    public static function getByBattleSettings(\Kingboard\Model\BattleSettings $battleSetting)
+    public static function getByBattleSettings(BattleSettings $battleSetting)
+    {
+        $battle = Battle::doGetInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
+        if (is_null($battle)) {
+            $battle = self::generateForSettings($battleSetting);
+        }
+        return $battle;
+    }
+
+    public static function generateForSettings(BattleSettings $battleSetting)
     {
         $battle = Battle::doGetInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
         if (is_null($battle) || time() > $battle->updated->sec + 600) {
@@ -30,7 +39,7 @@ class Battle extends \King23\Mongo\MongoObject
         return $battle;
     }
 
-    public static function generateBattle(\Kingboard\Model\BattleSettings $battleSetting)
+    public static function generateBattle(BattleSettings $battleSetting)
     {
         $okills = array();
         $olosses = array();
@@ -89,7 +98,7 @@ class Battle extends \King23\Mongo\MongoObject
                 );
             }
 
-            if(
+            if (
                 (isset($battleSetting->positives[$kill['victim']['factionID']]) && !empty($battleSetting->positives[$kill['victim']['factionID']]))
                 || (isset($battleSetting->positives[$kill['victim']['characterID']]) && !empty($battleSetting->positives[$kill['victim']['characterID']]))
                 || (isset($battleSetting->positives[$kill['victim']['corporationID']]) && !empty($battleSetting->positives[$kill['victim']['corporationID']]))
