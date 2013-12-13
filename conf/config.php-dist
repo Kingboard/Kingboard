@@ -21,6 +21,13 @@ $reg = \King23\Core\Registry::getInstance();
 /*
     $reg->logger = new \Monolog\Logger('kingboard');
     $reg->logger->pushHandler(new \Monolog\Handler\StreamHandler("/var/log/kingboard/main.log", \Monolog\Logger::DEBUG));
+
+    // the next two lines are only required for even more verbose output, and will add filename (incl. path,
+    // class name, function etc. from which the log call came, as well as a call-unique uuid (8 characters)
+
+    //    $reg->logger->pushProcessor(new IntrospectionProcessor());
+    //    $reg->logger->pushProcessor(new \Monolog\Processor\UidProcessor(8));
+
 */
 
 // set this to the email you want to send from
