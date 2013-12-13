@@ -1,6 +1,12 @@
 <?php
 namespace Kingboard;
 
+use King23\Core\Registry;
+use King23\Tasks\King23Task;
+use Kingboard\Lib\Fetcher\EveApi;
+use Kingboard\Model\EveItem;
+use Kingboard\Model\MapReduce\KillsByDay;
+use Kingboard\Model\MapReduce\KillsByDayByEntity;
 use Kingboard\Model\MapReduce\KillsByShip;
 use Kingboard\Model\MapReduce\KillsByShipByAlliance;
 use Kingboard\Model\MapReduce\KillsByShipByCorporation;
@@ -11,13 +17,13 @@ use Kingboard\Model\MapReduce\LossesByShipByCorporation;
 use Kingboard\Model\MapReduce\LossesByShipByFaction;
 use Kingboard\Model\MapReduce\LossesByShipByPilot;
 use Kingboard\Model\MapReduce\NameSearch;
-use Kingboard\Model\MapReduce\KillsByDay;
-use Kingboard\Model\MapReduce\KillsByDayByEntity;
+use Kingboard\Model\User;
+
 /**
  * This class contains all Kingboard Tasks that need to be
  * run on a regulary basis.
  */
-class KingboardCronTask extends \King23\Tasks\King23Task
+class KingboardCronTask extends King23Task
 {
     /**
      * documentation for the single tasks
@@ -29,7 +35,6 @@ class KingboardCronTask extends \King23\Tasks\King23Task
         "api_import" => "import killmails from api",
         "item_values" => "updates item values for all items on the market",
     );
-
     /**
      * Name of the module
      */
@@ -42,56 +47,57 @@ class KingboardCronTask extends \King23\Tasks\King23Task
      */
     public function update_stats(array $options)
     {
-        $this->cli->header('updating stats');
+        $log = Registry::getInstance()->getLogger();
+        $log->info('start updating stats');
 
-        $this->cli->message('updating Kills by Shiptype');
+        $log->info('updating kills by Shiptype');
         // stats table of how often all ships have been killed
         KillsByShip::mapReduce();
-        $this->cli->positive('update of KillsByShip stats completed');
+        $log->info('update of KillsByShip stats completed');
 
-        $this->cli->message('updating pilot loss stats');
+        $log->info('updating pilot loss stats');
         LossesByShipByPilot::mapReduce();
-        $this->cli->positive('update of pilot loss stats completed');
+        $log->info('update of pilot loss stats completed');
 
-        $this->cli->message('updating pilot kill stats');
+        $log->info('updating pilot kill stats');
         KillsByShipByPilot::mapReduce();
-        $this->cli->positive('update of pilot kill stats completed');
+        $log->info('update of pilot kill stats completed');
 
-        $this->cli->message('updating corporation loss stats');
+        $log->info('updating corporation loss stats');
         LossesByShipByCorporation::mapReduce();
-        $this->cli->positive('update of corporation loss stats completed');
+        $log->info('update of corporation loss stats completed');
 
-        $this->cli->message('updating corporation kill stats');
+        $log->info('updating corporation kill stats');
         KillsByShipByCorporation::mapReduce();
-        $this->cli->positive('update of corporation kill stats completed');
+        $log->info('update of corporation kill stats completed');
 
-        $this->cli->message('updating alliance loss stats');
+        $log->info('updating alliance loss stats');
         LossesByShipByAlliance::mapReduce();
-        $this->cli->positive('update of alliance loss stats completed');
+        $log->info('update of alliance loss stats completed');
 
-        $this->cli->message('updating alliance kill stats');
+        $log->info('updating alliance kill stats');
         KillsByShipByAlliance::mapReduce();
-        $this->cli->positive('update of alliance kill stats completed');
+        $log->info('update of alliance kill stats completed');
 
-        $this->cli->message('updating faction loss stats');
+        $log->info('updating faction loss stats');
         LossesByShipByFaction::mapReduce();
-        $this->cli->positive('update of faction loss stats completed');
+        $log->info('update of faction loss stats completed');
 
-        $this->cli->message('updating faction kill stats');
+        $log->info('updating faction kill stats');
         KillsByShipByFaction::mapReduce();
-        $this->cli->positive('update of faction kill stats completed');
+        $log->info('update of faction kill stats completed');
 
-        $this->cli->message('updating name lists for search');
+        $log->info('updating name lists for search');
         NameSearch::mapReduce();
-        $this->cli->positive("name list updated");
+        $log->info("name list updated");
 
-        $this->cli->message('updating daily stats');
+        $log->info('updating daily stats');
         KillsByDay::mapReduce();
-        $this->cli->positive("daily stats updated");
+        $log->info("daily stats updated");
 
-        $this->cli->message('updating daily stats by entity');
+        $log->info('updating daily stats by entity');
         KillsByDayByEntity::mapReduce();
-        $this->cli->positive("daily stats by entity updated");
+        $log->info("daily stats by entity updated");
 
 
     }
@@ -102,25 +108,32 @@ class KingboardCronTask extends \King23\Tasks\King23Task
      */
     public function api_import(array $options)
     {
-        $this->cli->message("api import running");
+        $log = Registry::getInstance()->getLogger();
+        $log->info("api import running");
 
-        foreach(\Kingboard\Model\User::findWithApiKeys() as $user)
-        {
-            /** @var \Kingboard\Model\User $user */
-            foreach($user['keys'] as $keyid => $key)
-            {
+        foreach (User::findWithApiKeys() as $user) {
+            /** @var User $user */
+            foreach ($user['keys'] as $keyid => $key) {
                 // skip inactive keys
-                if(!$key['active'])
+                if (!$key['active']) {
                     continue;
-
-                try {
-                    $stats = \Kingboard\Lib\Fetcher\EveApi::fetch($key);
-                    $this->cli->message("processed key $keyid for user " . $user->name . " : ". $stats['old'] . ' known / ' . $stats['new'] ." new");
-                } catch(\Exception $e) {
-                    // we caught a pheal exception, we should implement proper handling of errors here
-                    $this->cli->error("key $keyid caused pheal exception: " . $e->getMessage());
                 }
 
+                try {
+                    $stats = EveApi::fetch($key);
+                    $log->info(
+                        "processed key $keyid for user "
+                        . $user->name
+                        . " : "
+                        . $stats['old']
+                        . ' known / '
+                        . $stats['new']
+                        . " new"
+                    );
+                } catch (\Exception $e) {
+                    // we caught a pheal exception, we should implement proper handling of errors here
+                    $log->warning("key $keyid caused pheal exception: " . $e->getMessage());
+                }
             }
         }
     }
@@ -131,23 +144,22 @@ class KingboardCronTask extends \King23\Tasks\King23Task
      */
     public function item_values(array $options)
     {
-        $this->cli->message("item value updating running");
-        $result = \Kingboard\Model\EveItem::getMarketIDs();
-        $total = $result->count();
-        foreach($result as $item)
-        {
-            $isk = \Kingboard\Lib\EveCentral\Api::getValue($item->typeID);
-            if($isk > 0)
-            {
+        $log = Registry::getInstance()->getLogger();
+        $log->info("item value updating running");
+        $result = EveItem::getMarketIDs();
 
-                $instance = \Kingboard\Model\EveItem::getByItemId($item->typeID);
+        foreach ($result as $item) {
+            $isk = \Kingboard\Lib\EveCentral\Api::getValue($item->typeID);
+            if ($isk > 0) {
+
+                $instance = EveItem::getByItemId($item->typeID);
                 $instance->iskValue = $isk;
                 $instance->save();
 
-                $this->cli->message("Successfully updated ".$item->typeID." to ".$isk);
+                $log->info("Successfully updated " . $item->typeID . " to " . $isk);
+            } else {
+                $log->info("Did not update " . $item->typeID . ", it had a value of 0");
             }
-            else
-                $this->cli->message("Did not update ".$item->typeID.", it had a value of 0");
         }
     }
 }
