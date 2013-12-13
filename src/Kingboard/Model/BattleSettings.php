@@ -1,6 +1,8 @@
 <?php
 namespace Kingboard\Model;
 
+use King23\Core\Registry;
+
 class BattleSettings extends \King23\Mongo\MongoObject
 {
     protected $_className = "Kingboard_BattleSettings";
@@ -15,11 +17,18 @@ class BattleSettings extends \King23\Mongo\MongoObject
         return parent::doFind(__CLASS__, $criteria);
     }
 
-    public static function getActiveSettings()
+    /**
+     * get all settings for battles which have started within the time span from $hours to now, 7 days by default
+
+     * @param int $hours
+     * @return \King23\Mongo\MongoResult
+     */
+    public static function getActiveSettings($hours = 168)
     {
+        $ts = 3600 * $hours;
         // lets only refresh the last 3 days for now
         $qry = array(
-            "startdate" => array('$gt' => \MongoDate(now() - (3600 * 24 * 3)))
+            "startdate" => array('$gt' => new \MongoDate(time() - $ts))
         );
 
         return parent::doFind(__CLASS__, $qry);

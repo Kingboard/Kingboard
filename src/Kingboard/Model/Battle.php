@@ -18,6 +18,8 @@ class Battle extends \King23\Mongo\MongoObject
     public static function getByBattleSettings(BattleSettings $battleSetting)
     {
         $battle = Battle::doGetInstanceByCriteria(__CLASS__, array('settingsId' => $battleSetting->_id));
+
+        // only if it is null we are supposed to generate
         if (is_null($battle)) {
             $battle = self::generateForSettings($battleSetting);
         }

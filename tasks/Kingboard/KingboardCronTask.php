@@ -4,6 +4,8 @@ namespace Kingboard;
 use King23\Core\Registry;
 use King23\Tasks\King23Task;
 use Kingboard\Lib\Fetcher\EveApi;
+use Kingboard\Model\Battle;
+use Kingboard\Model\BattleSettings;
 use Kingboard\Model\EveItem;
 use Kingboard\Model\MapReduce\KillsByDay;
 use Kingboard\Model\MapReduce\KillsByDayByEntity;
@@ -34,6 +36,7 @@ class KingboardCronTask extends King23Task
         "update_stats" => "task to update stats which will be map/reduced from the database",
         "api_import" => "import killmails from api",
         "item_values" => "updates item values for all items on the market",
+        "battle_updates" => "update battle reports"
     );
     /**
      * Name of the module
@@ -161,5 +164,22 @@ class KingboardCronTask extends King23Task
                 $log->info("Did not update " . $item->typeID . ", it had a value of 0");
             }
         }
+    }
+
+    public function battle_updates(array $options) {
+        $log = Registry::getInstance()->getLogger();
+        $hours = 168;
+        if (isset($options[0]) && $options[0] > 0) {
+            $hours = $options[0];
+        }
+
+        $log->info("updating battles for the last $hours hours");
+
+        $settings = BattleSettings::getActiveSettings($hours);
+        foreach ($settings as $battleSetting) {
+            $log->info("Generating battle for " . $battleSetting->_id);
+            Battle::generateForSettings($battleSetting);
+        }
+        $log->info("done updating battles");
     }
 }
