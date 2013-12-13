@@ -4,10 +4,12 @@ namespace Kingboard\Lib\Parser;
 /**
  * parse API style kills
  */
+use King23\Core\Registry;
 use Kingboard\Lib\Stomp\KillPublisher;
 use Kingboard\Model\EveItem;
 use Kingboard\Model\EveSolarSystem;
 use Kingboard\Model\Kill;
+use Kingboard\Model\MapReduce\NameSearch;
 use Pheal\Pheal;
 
 class EveAPI
@@ -182,16 +184,18 @@ class EveAPI
     {
         $id = (int)$id;
         if ($id == 0) {
-            if ($id = \Kingboard\Model\MapReduce\NameSearch::getEveIdByName($charname)) {
+            if ($id = NameSearch::getEveIdByName($charname)) {
                 return $id;
             }
             if (!empty($charname)) {
+                Registry::getInstance()->getLogger()->debug("$charname not found, trying to fetch from API");
                 $pheal = new Pheal();
                 $result = $pheal->eveScope->typeName(array('names' => $charname))->toArray();
                 if ((int)$result[0]['characterID'] > 0) {
                     return (int)$result[0]['characterID'];
                 }
             }
+            Registry::getInstance()->getLogger()->warning("no id found for $charname");
             // with an empty charname we have to assume its 0
             return 0;
             //throw new \Exception("No such characterID");
