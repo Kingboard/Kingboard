@@ -126,4 +126,9 @@ class Battle extends \King23\Mongo\MongoObject
         );
 
     }
+
+    public function toArray()
+    {
+        return $this->_data;
+    }
 }

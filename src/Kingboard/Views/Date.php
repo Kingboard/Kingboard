@@ -3,6 +3,7 @@ namespace Kingboard\Views;
 
 use DateTime;
 use Kingboard\Lib\Paginator;
+use Kingboard\Model\BattleSettings;
 use Kingboard\Model\Kill;
 use Kingboard\Model\MapReduce\KillsByDay;
 use Kingboard\Model\MapReduce\KillsByDayByEntity;
@@ -95,9 +96,34 @@ class Date extends Base
 
         $context['kills'] = $kills;
         $context['action'] = "/day/" . $context['date'];
+
+        $dt = new DateTime($context['date']);
+
+        $criteria = array(
+            '$and' => array(
+                array("startdate" => array('$gt' => new MongoDate($dt->getTimestamp() -1))),
+                array("startdate" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())))
+            )
+        );
+
+        if ($this->_context['ownerID']) {
+            $criteria['$or'] = array(
+                array("ownerCharacter" => $this->_context['ownerID']),
+                array("ownerCorporation" => $this->_context['ownerID']),
+                array("ownerAlliance" => $this->_context['ownerID']),
+                array("ownerFaction" => $this->_context['ownerID'])
+            );
+        }
+
+
+        $battles = BattleSettings::find($criteria);
+        // resolve collection to avoid count() of doom
+        $context["battles"] = array();
+        foreach ($battles as $battle) {
+            $context["battles"][] = $battle->toArray();
+        }
+
         $this->render("date/daily.html", $context);
-
-
 
     }
 }

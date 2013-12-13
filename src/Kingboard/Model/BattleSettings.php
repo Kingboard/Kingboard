@@ -33,4 +33,9 @@ class BattleSettings extends \King23\Mongo\MongoObject
 
         return parent::doFind(__CLASS__, $qry);
     }
+
+    public function toArray()
+    {
+        return $this->_data;
+    }
 }

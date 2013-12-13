@@ -78,7 +78,29 @@
               <h3 class="panel-title">Battles</h3>
           </div>
           <div class="panel-body">
-              working on it
+              <div id="battlereports">
+                  <div class="tab-pane">
+                      <table class="table-bordered table-condensed table-striped col-md-12">
+                          <thead>
+                          <tr>
+                              <th>System</th>
+                              <th>Start</th>
+                              <th>End</th>
+                              <th>&nbsp;</th>
+                          </tr>
+                          </thead>
+                          {% for report in battles%}
+                          <tr>
+                              <td>{{ report.system }}</td>
+                              <td>{{ report.startdate.sec|date("Y-m-d H:i:s") }}</td>
+                              <td>{{ report.enddate.sec|date("Y-m-d H:i:s") }}</td>
+                              <td><a href="/battle/{{ report._id }}">details</a></td>
+                          </tr>
+                          {% endfor %}
+                      </table>
+                  </div>
+              </div>
+
           </div>
         </div>
     </div>
