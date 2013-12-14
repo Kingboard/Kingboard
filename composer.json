@@ -11,7 +11,8 @@
         "kriswallsmith/assetic": "1.1.2",
         "frameworks/jquery": "1.10.2",
         "twitter/typeahead.js": "dev-master",
-        "twig/extensions": "*"
+        "twig/extensions": "*",
+        "packagist/yuicompressor-bin": "2.4.*"
     },
     "require-dev": {
         "maximebf/debugbar": ">=1.0.0"

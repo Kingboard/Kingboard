@@ -1,8 +1,12 @@
 <?php
 namespace Kingboard\Views;
 
+use Assetic\Asset\AssetCache;
 use Assetic\Asset\AssetCollection;
 use Assetic\Asset\FileAsset;
+use Assetic\Cache\FilesystemCache;
+use Assetic\Filter\Yui\CssCompressorFilter;
+use Assetic\Filter\Yui\JsCompressorFilter;
 use King23\Core\Registry;
 use King23\View\View;
 
@@ -14,11 +18,23 @@ class Assetic extends View
 
         $collection = new AssetCollection();
         foreach ($cssfiles as $file) {
-            $collection->add(new FileAsset($file));
+            $collection->add(
+                new FileAsset(
+                    $file,
+                    array(
+                        new CssCompressorFilter(APP_PATH . "/vendor/bin/yuicompressor.jar")
+                    )
+                )
+            );
         }
 
+        $cache = new AssetCache(
+            $collection,
+            new FilesystemCache(APP_PATH . "/cache/assetic/")
+        );
+
         header('Content-Type: text/css');
-        echo $collection->dump();
+        echo $cache->dump();
     }
 
     public function js(array $params)
@@ -27,11 +43,22 @@ class Assetic extends View
 
         $collection = new AssetCollection();
         foreach ($jsfiles as $file) {
-            $collection->add(new FileAsset($file));
+            $collection->add(
+                new FileAsset(
+                    $file, array(
+                        new JsCompressorFilter(APP_PATH . "/vendor/bin/yuicompressor.jar")
+                    )
+                )
+            );
         }
 
+        $cache = new AssetCache(
+            $collection,
+            new FilesystemCache(APP_PATH . "/cache/assetic/")
+        );
+
         header('Content-Type: text/javascript');
-        echo $collection->dump();
+        echo $cache->dump();
     }
 
     public function fonts(array $params)
@@ -44,7 +71,7 @@ class Assetic extends View
         $fontfiles = Registry::getInstance()->assets['fonts'];
         if (isset($fontfiles[$font])) {
 
-            $asset= new FileAsset($fontfiles[$font]);
+            $asset = new FileAsset($fontfiles[$font]);
             switch (strtolower(substr($font, strpos($font, ".")))) {
                 case ".eot":
                     $type = "application/vnd.ms-fontobject";
@@ -61,7 +88,7 @@ class Assetic extends View
                 default:
                     $type = "application/x-font";
             }
-            header('Content-Type: '. $type);
+            header('Content-Type: ' . $type);
             echo $asset->dump();
         }
         return true;
@@ -72,10 +99,10 @@ class Assetic extends View
         $backgrounds = Registry::getInstance()->assets['backgrounds'];
 
         $dt = new \DateTime();
-        $dt->setTime(date("H"),0,0);
+        $dt->setTime(date("H"), 0, 0);
         srand($dt->getTimestamp());
 
-        $asset = new \Assetic\Asset\FileAsset($backgrounds[rand(0, count($backgrounds) -1)]);
+        $asset = new \Assetic\Asset\FileAsset($backgrounds[rand(0, count($backgrounds) - 1)]);
         header('Content-Type: image/jpeg');
         header("Cache-Control: public, max-age=3600, s-max-age=1800");
         echo $asset->dump();
