@@ -89,7 +89,7 @@ class BattleCreateForm extends \Kingboard\Lib\Form
      * Method to be implemented by all forms,
      * should get the array containing the forms values passed
      * @param array $formData
-     * @return boolean
+     * @return null|boolean
      */
     public function validate(array $formData)
     {

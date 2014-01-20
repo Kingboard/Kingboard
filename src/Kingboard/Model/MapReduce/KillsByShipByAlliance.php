@@ -8,6 +8,9 @@ class KillsByShipByAlliance extends \King23\Mongo\MongoObject implements \ArrayA
 {
     protected $_className = "Kingboard_Kill_MapReduce_KillsByShipByAlliance";
 
+    /**
+     * @param integer $allianceid
+     */
     public static function getInstanceByAllianceId($allianceid)
     {
         return parent::doGetInstanceByCriteria(__CLASS__, array("_id" => (int)$allianceid));

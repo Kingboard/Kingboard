@@ -130,6 +130,9 @@ class KillList
         return $this->count;
     }
 
+    /**
+     * @param integer $count
+     */
     public function setCount($count)
     {
         $this->count = $count;
@@ -165,7 +168,7 @@ class KillList
      * get kills for the criteria this list obeys
      * @param int $skip
      * @param int $killsPerPage
-     * @return mixed
+     * @return \King23\Mongo\MongoResult
      */
     public function getKills($skip, $killsPerPage)
     {

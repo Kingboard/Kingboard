@@ -1,7 +1,6 @@
 <?php
 namespace Kingboard\Views;
 
-use Pheal\Exceptions\APIException;
 use Pheal\Pheal;
 
 class User extends \Kingboard\Views\Base

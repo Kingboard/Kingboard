@@ -8,6 +8,9 @@ class KillsByShipByCorporation extends \King23\Mongo\MongoObject implements \Arr
 {
     protected $_className = "Kingboard_Kill_MapReduce_KillsByShipByCorporation";
 
+    /**
+     * @param integer $corpid
+     */
     public static function getInstanceByCorporationId($corpid)
     {
         return parent::doGetInstanceByCriteria(__CLASS__, array("_id" => (int)$corpid));
