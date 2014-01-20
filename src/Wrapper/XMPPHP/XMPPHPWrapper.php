@@ -14,9 +14,9 @@ class XMPPHPWrapper
      * @static
      * @param $host
      * @param $port
-     * @param $user
-     * @param $password
-     * @param $resource
+     * @param string $user
+     * @param string $password
+     * @param string $resource
      * @param null $server
      * @param bool $printlog
      * @param null $loglevel

@@ -8,6 +8,9 @@ class LossesByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayA
 {
     protected $_className = "Kingboard_Kill_MapReduce_LossesByShipByFaction";
 
+    /**
+     * @param integer $factionid
+     */
     public static function getInstanceByFactionId($factionid)
     {
         return parent::doGetInstanceByCriteria(__CLASS__, array("_id" => (int)$factionid));

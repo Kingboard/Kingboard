@@ -8,6 +8,9 @@ class LossesByShipByPilot extends \King23\Mongo\MongoObject implements \ArrayAcc
 {
     protected $_className = "Kingboard_Kill_MapReduce_LossesByShipByPilot";
 
+    /**
+     * @param integer $pilotid
+     */
     public static function getInstanceByPilotId($pilotid)
     {
         return parent::doGetInstanceByCriteria(__CLASS__, array("_id" => (int)$pilotid));

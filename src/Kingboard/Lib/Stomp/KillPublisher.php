@@ -27,7 +27,7 @@ class KillPublisher
      * get a combination of the configured destinations as well as the automated post
      * location, such as solarSystem and involved entities
      * @param array $kill
-     * @return string
+     * @return string[]
      */
     private static function getDestinations(array $kill)
     {
