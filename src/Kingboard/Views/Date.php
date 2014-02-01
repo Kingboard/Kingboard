@@ -9,11 +9,11 @@ use Kingboard\Model\MapReduce\KillsByDay;
 use Kingboard\Model\MapReduce\KillsByDayByEntity;
 use MongoDate;
 
-
 class Date extends Base
 {
     public function index(array $params)
     {
+        $context = array();
 
         if (!isset($params['date'])) {
             $context["date"] = date("Y-m-d");
@@ -81,7 +81,11 @@ class Date extends Base
             $kills = KillModel::find(array(
                 '$and' => array(
                     array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
-                    array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp()))),
+                    array(
+                        "killTime" => array(
+                            '$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())
+                        )
+                    ),
                     array($involvedType => $this->_context['ownerID'])
                 )
             ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
@@ -89,7 +93,9 @@ class Date extends Base
             $kills = KillModel::find(array(
                 '$and' => array(
                     array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
-                    array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())))
+                    array("killTime" => array(
+                        '$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp()))
+                    )
                 )
             ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
         }
