@@ -23,6 +23,7 @@ class Battle extends \King23\Mongo\MongoObject
         if (is_null($battle)) {
             $battle = self::generateForSettings($battleSetting);
         }
+
         return $battle;
     }
 
@@ -38,17 +39,13 @@ class Battle extends \King23\Mongo\MongoObject
             $battle->settingsId = $battleSetting->_id;
             $battle->save();
         }
+
         return $battle;
     }
 
-    public static function generateBattle(BattleSettings $battleSetting)
+    private static function findKills(BattleSettings $battleSetting)
     {
-        $okills = array();
-        $olosses = array();
-
-        $stats = array();
-
-        $kills = \Kingboard\Model\Kill::find(
+        return \Kingboard\Model\Kill::find(
             array(
                 "killTime" => array(
                     '$gt' => $battleSetting->startdate,
@@ -60,7 +57,7 @@ class Battle extends \King23\Mongo\MongoObject
                         "involvedCharacters" => array(
                             '$in' => array_merge(
                                 array_keys($battleSetting->positives),
-                                array((int)$battleSetting->ownerCorporation)
+                                array((int) $battleSetting->ownerCorporation)
                             )
                         )
                     ),
@@ -68,7 +65,7 @@ class Battle extends \King23\Mongo\MongoObject
                         "involvedCorporations" => array(
                             '$in' => array_merge(
                                 array_keys($battleSetting->positives),
-                                array((int)$battleSetting->ownerCorporation)
+                                array((int) $battleSetting->ownerCorporation)
                             )
                         )
                     ),
@@ -76,7 +73,7 @@ class Battle extends \King23\Mongo\MongoObject
                         "involvedAlliances" => array(
                             '$in' => array_merge(
                                 array_keys($battleSetting->positives),
-                                array((int)$battleSetting->ownerCorporation)
+                                array((int) $battleSetting->ownerCorporation)
                             )
                         )
                     ),
@@ -84,25 +81,54 @@ class Battle extends \King23\Mongo\MongoObject
                         "involvedFactions" => array(
                             '$in' => array_merge(
                                 array_keys($battleSetting->positives),
-                                array((int)$battleSetting->ownerCorporation)
+                                array((int) $battleSetting->ownerCorporation)
                             )
                         )
                     ),
                 ),
             ),
             array(
-              "killID" => 1,
-              "solarSystemID" => 1,
-              "killTime" => 1,
-              "moonID" => 1,
-              "victim" => 1,
-              "location" => 1,
+                "killID" => 1,
+                "solarSystemID" => 1,
+                "killTime" => 1,
+                "moonID" => 1,
+                "victim" => 1,
+                "location" => 1,
             )
         );
+    }
+
+
+    private static function isLoss($kill, $battleSetting)
+    {
+        return (
+                isset($battleSetting->positives[$kill['victim']['factionID']])
+                && !empty($battleSetting->positives[$kill['victim']['factionID']])
+            ) || (
+                isset($battleSetting->positives[$kill['victim']['characterID']])
+                && !empty($battleSetting->positives[$kill['victim']['characterID']])
+            ) || (
+                isset($battleSetting->positives[$kill['victim']['corporationID']])
+                && !empty($battleSetting->positives[$kill['victim']['corporationID']])
+            ) || (
+                isset($battleSetting->positives[$kill['victim']['allianceID']])
+                && !empty($battleSetting->positives[$kill['victim']['allianceID']])
+            ) || ($battleSetting->ownerCorporation == $kill['victim']['corporationID']);
+    }
+
+    public static function generateBattle(BattleSettings $battleSetting)
+    {
+        $okills = array();
+        $olosses = array();
+
+        $stats = array();
+
+        $kills = self::findKills($battleSetting);
 
         $timeline = array();
         foreach ($kills as $kill) {
             $killTime = date("Y-m-d H:i:s", $kill->killTime->sec);
+
             if (!isset($timeline[$killTime])) {
                 $timeline[$killTime] = array(
                     "kills" => array(),
@@ -117,13 +143,7 @@ class Battle extends \King23\Mongo\MongoObject
                 );
             }
 
-            if (
-                (isset($battleSetting->positives[$kill['victim']['factionID']]) && !empty($battleSetting->positives[$kill['victim']['factionID']]))
-                || (isset($battleSetting->positives[$kill['victim']['characterID']]) && !empty($battleSetting->positives[$kill['victim']['characterID']]))
-                || (isset($battleSetting->positives[$kill['victim']['corporationID']]) && !empty($battleSetting->positives[$kill['victim']['corporationID']]))
-                || (isset($battleSetting->positives[$kill['victim']['allianceID']]) && !empty($battleSetting->positives[$kill['victim']['allianceID']]))
-                || ($battleSetting->ownerCorporation == $kill['victim']['corporationID'])
-            ) {
+            if (self::isLoss($kill, $battleSetting)) {
                 $timeline[$killTime]['losses'][] = $kill->toArray();
 
                 $stats[$kill['victim']['shipType']]['losses']++;
