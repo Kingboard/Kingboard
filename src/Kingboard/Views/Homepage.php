@@ -3,7 +3,7 @@ namespace Kingboard\Views;
 
 use Kingboard\Lib\KillList;
 use Kingboard\Lib\Paginator;
-use Kingboard\Model\Kill;
+use Kingboard\Model\Kill as KillModel;
 use Kingboard\Model\MapReduce\KillsByShipByPilot;
 use Kingboard\Model\MapReduce\LossesByShipByPilot;
 use Kingboard\Model\MapReduce\NameSearch;
@@ -49,20 +49,20 @@ class Homepage extends Base
             case "char":
             case "pilot":
                 $template = "pilot/index.html";
-                $info = Kill::getPilotInfoFromId($ownerID);
+                $info = KillModel::getPilotInfoFromId($ownerID);
                 break;
             case "corp":
             case "corporation":
                 $template = "corporation/index.html";
-                $info = Kill::getCorporationInfoFromId($ownerID);
+                $info = KillModel::getCorporationInfoFromId($ownerID);
                 break;
             case "faction":
                 $template = "faction/index.html";
-                $info = Kill::getFactionInfoFromId($ownerID);
+                $info = KillModel::getFactionInfoFromId($ownerID);
                 break;
             case "alliance":
                 $template = "alliance/index.html";
-                $info = Kill::getAllianceInfoFromId($ownerID);
+                $info = KillModel::getAllianceInfoFromId($ownerID);
                 break;
         }
 
@@ -82,7 +82,7 @@ class Homepage extends Base
 
     public function topValue(array $params)
     {
-        $data = Kill::find()->sort(array("totalISKValue" => -1))->limit(12);
+        $data = KillModel::find()->sort(array("totalISKValue" => -1))->limit(12);
         $items = array();
         foreach ($data as $item) {
             $items[] = $item;
