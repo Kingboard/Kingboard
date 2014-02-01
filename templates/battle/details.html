@@ -71,7 +71,7 @@
     <div class="col-md-8">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Timeline
+                <h3 class="panel-title">Battle Timeline
                     <small>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{
                         battleSetting.enddate.sec|date("Y-m-d H:i") }}
                     </small>
@@ -79,7 +79,6 @@
             </div>
             <div class="panel-body">
                 <div id="timeline">
-                    <h1>Battle Timeline</h1>
                     {% include "components/kill_timeline.html" %}
                 </div>
             </div>
