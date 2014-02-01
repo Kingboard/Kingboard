@@ -222,6 +222,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getPilotIdFromName($name)
     {
+        $id = 0;
         foreach (\Kingboard\Model\MapReduce\NameSearch::search($name, 1) as $result) {
             $id = $result->value['id'];
         }
@@ -260,6 +261,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getCorporationIdFromName($name)
     {
+        $id = 0;
         foreach (\Kingboard\Model\MapReduce\NameSearch::search($name, 1) as $result) {
             $id = $result->value['id'];
         }
@@ -298,6 +300,7 @@ class Kill extends \King23\Mongo\MongoObject implements \ArrayAccess
 
     public static function getFactionIdFromName($name)
     {
+        $id = 0;
         foreach (\Kingboard\Model\MapReduce\NameSearch::search($name, 1) as $result) {
             $id = $result->value['id'];
         }
