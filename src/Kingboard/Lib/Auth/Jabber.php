@@ -44,7 +44,7 @@ class Jabber extends \Kingboard\Lib\Auth\Auth
             $_SESSION["Kingboard_Auth"] = array("User" => $user);
             return $_SESSION["Kingboard_Auth"]["User"];
         } catch (\Exception $e) {
-
+            // just skip the error, we'll return false
         }
         return false;
     }
