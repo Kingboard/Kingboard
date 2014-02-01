@@ -87,6 +87,14 @@ class Battle extends \King23\Mongo\MongoObject
                         )
                     ),
                 ),
+            ),
+            array(
+              "killID" => 1,
+              "solarSystemID" => 1,
+              "killTime" => 1,
+              "moonID" => 1,
+              "victim" => 1,
+              "location" => 1,
             )
         );
 
