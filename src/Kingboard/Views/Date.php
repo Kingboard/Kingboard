@@ -4,7 +4,7 @@ namespace Kingboard\Views;
 use DateTime;
 use Kingboard\Lib\Paginator;
 use Kingboard\Model\BattleSettings;
-use Kingboard\Model\Kill;
+use Kingboard\Model\Kill as KillModel;
 use Kingboard\Model\MapReduce\KillsByDay;
 use Kingboard\Model\MapReduce\KillsByDayByEntity;
 use MongoDate;
@@ -78,7 +78,7 @@ class Date extends Base
                     throw new \Exception("Configuration has set unknown ownerType!");
                     return;
             }
-            $kills = Kill::find(array(
+            $kills = KillModel::find(array(
                 '$and' => array(
                     array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
                     array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp()))),
@@ -86,7 +86,7 @@ class Date extends Base
                 )
             ))->hint(array("killTime" => 1 ))->sort(array("killTime" => -1))->skip($paginator->getSkip())->limit(10);
         } else {
-            $kills = Kill::find(array(
+            $kills = KillModel::find(array(
                 '$and' => array(
                     array("killTime" => array('$gt' => new MongoDate($dt->getTimestamp()))),
                     array("killTime" => array('$lt' => new MongoDate($dt->add(new \DateInterval("P1D"))->getTimestamp())))
