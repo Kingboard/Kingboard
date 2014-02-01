@@ -26,6 +26,10 @@ class User extends \King23\Mongo\MongoObject
         return parent::doGetInstanceByCriteria(__CLASS__, $criteria);
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     */
     public static function findOneByUsernameAndPassword($username, $password)
     {
         return self::findOne(array('username' => $username, 'password' => hash("sha256", $password)));

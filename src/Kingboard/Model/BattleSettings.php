@@ -1,8 +1,6 @@
 <?php
 namespace Kingboard\Model;
 
-use King23\Core\Registry;
-
 class BattleSettings extends \King23\Mongo\MongoObject
 {
     protected $_className = "Kingboard_BattleSettings";

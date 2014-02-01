@@ -67,7 +67,7 @@ class EveItem extends \King23\Mongo\MongoObject
     public static function getItemValue($itemID)
     {
         $item = self::getByItemId($itemID);
-        if (!is_null($item->iskValue)) {
+        if (!is_null($item) && !is_null($item->iskValue)) {
             return $item->iskValue;
         } else {
             return (int)0;
