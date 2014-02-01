@@ -99,6 +99,10 @@ class Battle extends \King23\Mongo\MongoObject
     }
 
 
+    /**
+     * @param \King23\Mongo\MongoObject $kill
+     * @param BattleSettings $battleSetting
+     */
     private static function isLoss($kill, $battleSetting)
     {
         return (
