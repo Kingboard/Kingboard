@@ -36,7 +36,13 @@ class Base extends \King23\View\TwigView
      */
     public function __construct($loginrequired = false)
     {
+
+        if (isset($_COOKIE['PHPSESSID'])) {
+            session_start();
+        }
+
         if ($loginrequired && !Auth::isLoggedIn()) {
+            session_start();
             $this->redirect("/login");
         }
         parent::__construct();

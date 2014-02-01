@@ -60,6 +60,7 @@ class OAuth2 extends \Kingboard\Views\Base
     public function logout(array $params)
     {
         \Kingboard\Lib\Auth\Auth::logout();
+        session_destroy();
         $this->redirect("/");
     }
 }

@@ -168,5 +168,3 @@ $reg->disqus = false;
 require_once "routes.php";
 // require asset config
 require_once "assets.php";
-// start session
-session_start();
