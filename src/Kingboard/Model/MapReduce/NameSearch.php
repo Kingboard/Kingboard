@@ -56,7 +56,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
             emit(this.victim.factionName, {id: this.victim.factionID, type: \"faction\"});
             emit(this.victim.corporationName, {id: this.victim.corporationID, type: \"corporation\"});
             emit(this.victim.allianceName, {id: this.victim.allianceID, type: \"alliance\"});
-            this.attackers.forEach(function(attacker) {
+            this.attackers.forEach(function (attacker) {
                 emit(attacker.characterName, {id: attacker.characterID, type: \"character\"});
                 emit(attacker.factionName, {id: attacker.factionID, type: \"faction\"});
                 emit(attacker.corporationName, {id: attacker.corporationID, type: \"corporation\"});
@@ -64,7 +64,7 @@ class NameSearch extends \King23\Mongo\MongoObject implements \ArrayAccess
             });
         }";
 
-        $reduce = "function(k, vals) {
+        $reduce = "function (k, vals) {
             return vals[0]; // we only need the contents of the first hit for this key
         }";
 

@@ -32,18 +32,16 @@ class LossesByShipByAlliance extends \King23\Mongo\MongoObject implements \Array
             sums['ship'] = {}
             sums['total'] = 0;
             var total = 0;
-            vals.forEach(function(info) {
+            vals.forEach(function (info) {
                 sums['total'] += info['total'];
 
-                for (var key in info['group'])
-                {
+                for (var key in info['group']) {
                     if(sums['group'][key] === undefined)
                         sums['group'][key] = 0;
                     sums['group'][key] += info['group'][key];
                 }
 
-                for (var key in info['ship'])
-                {
+                for (var key in info['ship']) {
                     if(sums['ship'][key] === undefined)
                         sums['ship'][key] = 0;
                     sums['ship'][key] += info['ship'][key];

@@ -25,10 +25,9 @@ class KillsByShip extends \King23\Mongo\MongoObject implements \ArrayAccess
         $reduce = "function (k, vals) {
             var sums = {}
             var total = 0;
-            vals.forEach(function(info) {
+            vals.forEach(function (info) {
                 info[\"total\"] = 0;
-                for (var key in info)
-                {
+                for (var key in info) {
                     if(sums[key] === undefined)
                         sums[key] = 0;
                     sums[key] += info[key];
