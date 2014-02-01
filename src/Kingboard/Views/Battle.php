@@ -54,6 +54,7 @@ class Battle extends Base
         $battle = BattleData::getByBattleSettings($battleSetting);
 
         $this->_context['battleSetting'] = $battleSetting;
+
         return $this->render("battle/details.html", $battle->data);
     }
 }

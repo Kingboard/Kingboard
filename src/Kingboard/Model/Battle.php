@@ -46,6 +46,8 @@ class Battle extends \King23\Mongo\MongoObject
         $okills = array();
         $olosses = array();
 
+        $stats = array();
+
         $kills = \Kingboard\Model\Kill::find(
             array(
                 "killTime" => array(
@@ -108,6 +110,13 @@ class Battle extends \King23\Mongo\MongoObject
                 );
             }
 
+            if (!isset($stats[$kill['victim']['shipType']])) {
+                $stats[$kill['victim']['shipType']] = array(
+                    "losses" => 0,
+                    "kills" => 0
+                );
+            }
+
             if (
                 (isset($battleSetting->positives[$kill['victim']['factionID']]) && !empty($battleSetting->positives[$kill['victim']['factionID']]))
                 || (isset($battleSetting->positives[$kill['victim']['characterID']]) && !empty($battleSetting->positives[$kill['victim']['characterID']]))
@@ -116,20 +125,26 @@ class Battle extends \King23\Mongo\MongoObject
                 || ($battleSetting->ownerCorporation == $kill['victim']['corporationID'])
             ) {
                 $timeline[$killTime]['losses'][] = $kill->toArray();
-                $olosses[] = $kill->toArray();
 
+                $stats[$kill['victim']['shipType']]['losses']++;
+                $olosses[] = $kill->toArray();
             } else {
                 $timeline[$killTime]['kills'][] = $kill->toArray();
+
+                $stats[$kill['victim']['shipType']]['kills']++;
+
                 $okills[] = $kill->toArray();
             }
         }
 
         ksort($timeline);
+        ksort($stats);
 
         return array(
             "kills" => $okills,
             "losses" => $olosses,
             "timeline" => $timeline,
+            "stats" => $stats,
             //"battleSetting" => $battleSetting
         );
 

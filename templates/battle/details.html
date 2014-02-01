@@ -42,39 +42,45 @@
                         </div>
                     </div>
                 </div>
-                <div class="tabbable">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#kills">Kills</a></li>
-                        <li><a data-toggle="tab" href="#losses">Losses</a></li>
-                        <li><a data-toggle="tab" href="#timeline">Timeline</a></li>
-                        <!--li><a data-toggle="tab" href="#fleetcompositions">Fleetcompositions</a></li-->
-                    </ul>
-                    <div class="tab-content">
-                        <div id="kills" class="tab-pane active">
-                            <h1>Kills</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ships destroyed</h3>
+            </div>
+            <div class="panel-body">
+                <div id="numbers">
+                    {% for name, vals in stats %}
+                        <div class="row">
+                            <div class="col-md-8">{{ name[:32] }}</div>
+                            <div class="col-md-4" style="text-align: right"><span class="label label-success">{{ vals.kills }}</span> / <span class="label label-danger">{{ vals.losses }}</span></div>
+                        </div>
 
-                            <div id="home_killspage">
-                                {% set data = kills %}
-                                {% include "components/kill_list.html" %}
-                            </div>
-                        </div>
-                        <div id="losses" class="tab-pane">
-                            <h1>Losses</h1>
-
-                            <div id="home_losspage">
-                                {% set data = losses %}
-                                {% include "components/kill_list.html" %}
-                            </div>
-                        </div>
-                        <div id="timeline" class="tab-pane">
-                            <h1>Battle Timeline</h1>
-                            {% include "components/kill_timeline.html" %}
-                        </div>
-                        <!--div id="fleetcompositions" class="tab-pane">
-                            <h1>Fleetcompositions</h1>
-                            not yet.
-                        </div-->
+                    {% endfor %}
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-8"><strong>Total</strong></div>
+                        <div class="col-md-4" style="text-align: right"><span class="label label-success">{{ kills|length}}</span> / <span class="label label-danger">{{ losses|length }}</span></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Timeline
+                    <small>{{ battleSetting.startdate.sec|date("Y-m-d H:i") }} - {{
+                        battleSetting.enddate.sec|date("Y-m-d H:i") }}
+                    </small>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div id="timeline">
+                    <h1>Battle Timeline</h1>
+                    {% include "components/kill_timeline.html" %}
                 </div>
             </div>
         </div>
