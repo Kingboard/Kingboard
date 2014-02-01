@@ -55,7 +55,7 @@ class KillsByDay extends MongoObject implements ArrayAccess
             };
 
 
-            vals.forEach(function(info) {
+            vals.forEach(function (info) {
                 sums[\"total\"]+= info[\"total\"];
 
                 // for each reduced value check if the kills totalISKValue is the higher one,

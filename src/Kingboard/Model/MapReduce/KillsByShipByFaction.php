@@ -25,7 +25,7 @@ class KillsByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayAc
             info['ship'][this.victim.shipType] = 1;
             info['total'] = 1;
             var done = {};
-            this.attackers.forEach(function(attacker) {
+            this.attackers.forEach(function (attacker) {
                 if(done[attacker.factionID] === undefined)
                     emit(attacker.factionID, info);
                 done[attacker.factionID] = true;
@@ -37,18 +37,16 @@ class KillsByShipByFaction extends \King23\Mongo\MongoObject implements \ArrayAc
             sums['ship'] = {}
             sums['total'] = 0;
             var total = 0;
-            vals.forEach(function(info) {
+            vals.forEach(function (info) {
                 sums['total'] += info['total'];
 
-                for (var key in info['group'])
-                {
+                for (var key in info['group']) {
                     if(sums['group'][key] === undefined)
                         sums['group'][key] = 0;
                     sums['group'][key] += info['group'][key];
                 }
 
-                for (var key in info['ship'])
-                {
+                for (var key in info['ship']) {
                     if(sums['ship'][key] === undefined)
                         sums['ship'][key] = 0;
                     sums['ship'][key] += info['ship'][key];

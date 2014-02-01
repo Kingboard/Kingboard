@@ -35,7 +35,7 @@ class KillsByDayByEntity extends MongoObject implements ArrayAccess
             date.setUTCMinutes(0);
             date.setUTCSeconds(0);
             datestring = Date.parse(date) / 1000;
-            
+
             // collect the date needed for the most valuable each day
             info['topValue'] = {
                 victim: this.victim,
@@ -43,22 +43,22 @@ class KillsByDayByEntity extends MongoObject implements ArrayAccess
             }
 
             // emit for each possible type
-            this.involvedCorporations.forEach(function(entity) {
+            this.involvedCorporations.forEach(function (entity) {
                 if (entity != 0) {
                     emit(datestring + \"-\" + entity, info);
                 }
             });
-            this.involvedAlliances.forEach(function(entity) {
+            this.involvedAlliances.forEach(function (entity) {
                 if (entity != 0) {
                     emit(datestring + \"-\" + entity, info);
                 }
             });
-            this.involvedFactions.forEach(function(entity) {
+            this.involvedFactions.forEach(function (entity) {
                 if (entity != 0) {
                     emit(datestring + \"-\" + entity, info);
                 }
             });
-            this.involvedCharacters.forEach(function(entity) {
+            this.involvedCharacters.forEach(function (entity) {
                 if (entity != 0) {
                     emit(datestring + \"-\" + entity, info);
                 }
@@ -76,7 +76,7 @@ class KillsByDayByEntity extends MongoObject implements ArrayAccess
             };
 
 
-            vals.forEach(function(info) {
+            vals.forEach(function (info) {
                 sums[\"total\"]+= info[\"total\"];
 
                 // for each reduced value check if the kills totalISKValue is the higher one,
