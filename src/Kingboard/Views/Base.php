@@ -29,6 +29,10 @@ class Base extends \King23\View\TwigView
         return isset($_SERVER['HTTP_EVE_TRUSTED']);
     }
 
+    protected function isCacheable() {
+        return false;
+    }
+
     /**
      * constructor, should be called by all derived views
      * will cause redirect if $loginrequired and not logged in

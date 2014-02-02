@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9ecad73528f060ce710760a1dcc23c46",
+    "hash": "8c2834e77fa0f032a22c2f00410a81ff",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",
@@ -52,16 +52,16 @@
         },
         {
             "name": "frameworks/jquery",
-            "version": "1.10.2",
+            "version": "1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/frameworks/jquery.git",
-                "reference": "d6515f72038304d7715e2d33b41cd1188dbbedb8"
+                "reference": "da40352ae00dedefa2a584a5a9de7eadb9d3a35d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/frameworks/jquery/zipball/d6515f72038304d7715e2d33b41cd1188dbbedb8",
-                "reference": "d6515f72038304d7715e2d33b41cd1188dbbedb8",
+                "url": "https://api.github.com/repos/frameworks/jquery/zipball/da40352ae00dedefa2a584a5a9de7eadb9d3a35d",
+                "reference": "da40352ae00dedefa2a584a5a9de7eadb9d3a35d",
                 "shasum": ""
             },
             "type": "library",
@@ -71,7 +71,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2013-07-10 19:38:37"
+            "time": "2014-01-24 18:21:08"
         },
         {
             "name": "king23/king23",
@@ -420,17 +420,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "87738ff42e2467730ed74d941866e95513844b70"
+                "reference": "58fdccb311e44f28866f976c2d7b3227e9f713db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/87738ff42e2467730ed74d941866e95513844b70",
-                "reference": "87738ff42e2467730ed74d941866e95513844b70",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/58fdccb311e44f28866f976c2d7b3227e9f713db",
+                "reference": "58fdccb311e44f28866f976c2d7b3227e9f713db",
                 "shasum": ""
             },
             "require": {
@@ -463,35 +463,40 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-26 16:40:27"
+            "time": "2014-01-05 02:10:50"
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "e8a1df5f060bf7e6631554648e0abde150aedbe4"
+                "reference": "1409cde7e800ca83fd761f87e5ad8f0d259e38d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e8a1df5f060bf7e6631554648e0abde150aedbe4",
-                "reference": "e8a1df5f060bf7e6631554648e0abde150aedbe4",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/1409cde7e800ca83fd761f87e5ad8f0d259e38d1",
+                "reference": "1409cde7e800ca83fd761f87e5ad8f0d259e38d1",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "sugeng tigefa",
-                    "email": "tigefa@gmail.com"
-                },
-                {
                     "name": "Jacob Thornton",
                     "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
                 }
             ],
             "description": "Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.",
@@ -500,7 +505,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-08-19 21:18:20"
+            "time": "2014-01-30 16:30:37"
         },
         {
             "name": "twig/extensions",
@@ -604,12 +609,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twitter/typeahead.js.git",
-                "reference": "2bd1119ecdd5ed4bb6b78c83b904d70adc49e023"
+                "reference": "d5402b3b62c3659a9107c014ba56322ff17ab170"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twitter/typeahead.js/zipball/2bd1119ecdd5ed4bb6b78c83b904d70adc49e023",
-                "reference": "2bd1119ecdd5ed4bb6b78c83b904d70adc49e023",
+                "url": "https://api.github.com/repos/twitter/typeahead.js/zipball/d5402b3b62c3659a9107c014ba56322ff17ab170",
+                "reference": "d5402b3b62c3659a9107c014ba56322ff17ab170",
                 "shasum": ""
             },
             "type": "library",
@@ -629,22 +634,22 @@
                 "autocomplete",
                 "typeahead"
             ],
-            "time": "2013-08-08 05:45:20"
+            "time": "2014-02-02 10:17:51"
         }
     ],
     "packages-dev": [
         {
             "name": "maximebf/debugbar",
-            "version": "1.7.1",
+            "version": "1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "1dc21f08efd52ed9a31ab401e64c8913f400f845"
+                "reference": "0412fe76f798948c7f31bd8ecb648d39287a28c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/1dc21f08efd52ed9a31ab401e64c8913f400f845",
-                "reference": "1dc21f08efd52ed9a31ab401e64c8913f400f845",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/0412fe76f798948c7f31bd8ecb648d39287a28c2",
+                "reference": "0412fe76f798948c7f31bd8ecb648d39287a28c2",
                 "shasum": ""
             },
             "require": {
@@ -681,7 +686,7 @@
             "keywords": [
                 "debug"
             ],
-            "time": "2013-10-24 21:13:26"
+            "time": "2014-01-29 18:10:09"
         }
     ],
     "aliases": [

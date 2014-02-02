@@ -136,13 +136,13 @@
     <li><a href="#comments" data-toggle="tab" data-disqus-identifier="{{ killdata.killID }}">Comments</a>
     </li>
     {% endif %}
-    <li><a href="#fittings" data-toggle="tab">Fittings</a></li>
+    {% if igb %} <li><a href="#fittings" data-toggle="tab">Fittings</a></li>{% endif %}
 </ul>
 <div class="page-header">
 </div>
 <div class="tab-content">
 <div class="tab-pane active" id="overview">
-    <div class="row">
+    <div class="col-md-12">
         <div class="col-md-4">
             <h3>Involved
                 <small>Alliance(s) / Corp(s)</small>
@@ -419,11 +419,11 @@
             class="logo-disqus">Disqus</span></a>
 </div>
 {% endif %}
+{% if igb %}
 <div id="fittings" class="tab-pane">
-    {% if igb %}<a
-        href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA
-    Fitting</a>{% endif %}
+    <a href="javascript:CCPEVE.showFitting('{{ killdata.victim.shipTypeID }}:{% for item in killdata.items %}{{ item.typeID }};{{ item.qtyDropped + item.qtyDestroyed }}:{% endfor %}:')">DNA Fitting</a>
 </div>
+{% endif %}
 </div>
 </div>
 </div>
