@@ -14,7 +14,8 @@ $assets['css'][] = APP_PATH . "/public/css/datetimepicker.css";
 // js files
 $assets['js'][] = APP_PATH . "/vendor/frameworks/jquery/jquery.js";
 $assets['js'][] = APP_PATH . "/vendor/twbs/bootstrap/dist/js/bootstrap.min.js";
-$assets['js'][] = APP_PATH . "/vendor/twitter/typeahead.js/dist/typeahead.jquery.js";
+//$assets['js'][] = APP_PATH . "/vendor/twitter/typeahead.js/dist/typeahead.jquery.js";
+$assets['js'][] = APP_PATH . "/public/typeahead.js-0.9.3/dist/typeahead.min.js";
 $assets['js'][] = APP_PATH . "/public/js/common.js";
 $assets['js'][] = APP_PATH . "/public/js/bootstrap-datetimepicker.js";
 
