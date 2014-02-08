@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /battle/*
+
+User-agent: BLEXBot
+Disallow: /
