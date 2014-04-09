@@ -30,7 +30,7 @@ class Assetic extends View
 
         $cache = new AssetCache(
             $collection,
-            new FilesystemCache(APP_PATH . "/cache/assetic/")
+            new FilesystemCache(APP_PATH . "/cache/assetic/css")
         );
 
         header('Content-Type: text/css');
@@ -54,7 +54,7 @@ class Assetic extends View
 
         $cache = new AssetCache(
             $collection,
-            new FilesystemCache(APP_PATH . "/cache/assetic/")
+            new FilesystemCache(APP_PATH . "/cache/assetic/js")
         );
 
         header('Content-Type: text/javascript');
