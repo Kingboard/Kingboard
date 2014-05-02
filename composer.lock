@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3cba6c4d13d98b240a38e998f9b72280",
+    "hash": "3861038e170d8e85d158aeb47542e373",
     "packages": [
         {
             "name": "3rdpartyeve/phealng",

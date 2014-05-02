@@ -17,9 +17,8 @@
         "maximebf/debugbar": ">=1.0.0"
     },
     "autoload": {
-        "psr-0": {
-            "Kingboard\\": "src/",
-            "Kingboard\\": "tasks/"
+        "psr-4": {
+            "Kingboard\\": ["src/Kingboard", "tasks/Kingboard"]
         }
     }
 }
