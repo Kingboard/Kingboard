@@ -1,5 +1,8 @@
 User-agent: *
-Disallow: /battle/*
+Disallow: /
 
 User-agent: BLEXBot
+Disallow: /
+
+User-agent: spbot
 Disallow: /

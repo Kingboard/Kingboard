@@ -4,14 +4,16 @@
     "type": "library",
     "require": {
         "3rdpartyeve/phealng": "0.3.1",
-        "king23/king23": "0.6.*",
+        "king23/king23": "0.9.*",
         "kingboard/ccpdump": "dev-master",
         "michelf/php-markdown": "1.3",
         "twbs/bootstrap": "3.1.*",
         "kriswallsmith/assetic": "1.1.2",
         "frameworks/jquery": "1.11.*",
         "twig/extensions": "*",
-        "packagist/yuicompressor-bin": "2.4.*"
+        "packagist/yuicompressor-bin": "2.4.*",
+        "mongofill/mongofill": "dev-master",
+        "monolog/monolog": "1.16.*"
     },
     "require-dev": {
         "maximebf/debugbar": ">=1.0.0"
